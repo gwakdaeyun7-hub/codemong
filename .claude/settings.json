@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm --filter remotion:*)",
+      "Bash(npx remotion:*)",
+      "Bash(py videos/_assets/_synth_sample.py:*)",
+      "Bash(python videos/_assets/_synth_sample.py:*)",
+      "Read(videos/**)",
+      "Read(remotion/**)"
+    ]
+  }
+}

@@ -46,3 +46,15 @@ next-env.d.ts
 # claude code (keep agent definitions, exclude local state)
 .claude/settings.local.json
 .claude/agent-memory/
+
+# video pipeline (rendered/generated artifacts only — keep scripts, compositions, pronunciation dict)
+videos/**/04-out.mp4
+videos/**/02-audio/voiceover.mp3
+videos/**/02-audio/timestamps.json
+videos/**/02-audio/captions.srt
+videos/_assets/voice-sample-*.mp3
+
+# remotion build artifacts (workspace member)
+remotion/node_modules/
+remotion/.remotion/
+remotion/out/
