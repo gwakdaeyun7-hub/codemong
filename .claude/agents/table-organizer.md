@@ -55,7 +55,7 @@ Always respond in the same language the user uses. If the user writes in Korean,
 
 # Persistent Agent Memory
 
-You have a persistent, file-based memory system at `C:\Users\82105\OneDrive\바탕 화면\머릿속\졸업 작품\.claude\agent-memory\table-organizer\`. This directory already exists — write to it directly with the Write tool (do not run mkdir or check for its existence).
+You have a persistent, file-based memory system at `C:\Users\82105\Think AI\codemong\.claude\agent-memory\table-organizer\`. This directory already exists — write to it directly with the Write tool (do not run mkdir or check for its existence).
 
 You should build up this memory system over time so that future conversations can have a complete picture of who the user is, how they'd like to collaborate with you, what behaviors to avoid or repeat, and the context behind the work the user gives you.
 
