@@ -1,10 +1,27 @@
 import "./index.css";
 import { Composition, Folder } from "remotion";
 import { MyComposition } from "./Composition";
+import {
+  FPS,
+  HEIGHT,
+  Lesson1,
+  TOTAL_DURATION_FRAMES,
+  WIDTH,
+} from "../../videos/python/lesson-1/03-composition";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Folder name="Python">
+        <Composition
+          id="python-lesson-1"
+          component={Lesson1}
+          durationInFrames={TOTAL_DURATION_FRAMES}
+          fps={FPS}
+          width={WIDTH}
+          height={HEIGHT}
+        />
+      </Folder>
       <Folder name="Sandbox">
         <Composition
           id="MyComp"

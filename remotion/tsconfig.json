@@ -2,14 +2,32 @@
   "compilerOptions": {
     "target": "ES2018",
     "module": "commonjs",
+    "moduleResolution": "node",
     "jsx": "react-jsx",
     "strict": true,
     "noEmit": true,
-    "lib": ["es2015"],
+    "lib": ["es2018", "dom"],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "baseUrl": ".",
+    "paths": {
+      "remotion": ["./node_modules/remotion"],
+      "remotion/*": ["./node_modules/remotion/*"],
+      "@remotion/*": ["./node_modules/@remotion/*"],
+      "react": ["./node_modules/react"],
+      "react/*": ["./node_modules/react/*"]
+    }
   },
-  "exclude": ["remotion.config.ts"]
+  "include": [
+    "src/**/*",
+    "../videos/**/*.ts",
+    "../videos/**/*.tsx"
+  ],
+  "exclude": [
+    "remotion.config.ts",
+    "node_modules",
+    "../videos/**/scripts/**"
+  ]
 }
