@@ -118,8 +118,8 @@ export type LessonContent = {
 export const pythonLesson1Content: LessonContent = {
   lessonId: "lesson-1",
   lessonNumber: 1,
-  title: "Python이란?",
-  durationMinutes: 10,
+  title: "파이썬 개요 & 개발환경",
+  durationMinutes: 18,
   subtabs: ["개념", "응용", "시각자료"],
   activeSubtab: "개념",
   conceptIntro: {
@@ -287,7 +287,7 @@ print("오늘 식비는", lunch_price + dinner_price, "원이에요.")`,
   ],
   navigation: {
     previous: null,
-    next: { number: 2, title: "개발 환경 설치하고 첫 실행하기" },
+    next: { number: 2, title: "코딩의 표현 방법" },
   },
 }
 
