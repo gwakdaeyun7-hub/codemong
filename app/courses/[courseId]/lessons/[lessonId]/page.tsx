@@ -11,15 +11,9 @@
 import { notFound } from "next/navigation"
 
 import { CourseDetailSidebar } from "@/components/course-detail/course-detail-sidebar"
-import { ConceptIntroCard } from "@/components/lesson-content/concept-intro-card"
-import { ExampleCodeCard } from "@/components/lesson-content/example-code-card"
-import { KeyPointsCard } from "@/components/lesson-content/key-points-card"
 import { LessonContentHeader } from "@/components/lesson-content/lesson-content-header"
 import { LessonNavigation } from "@/components/lesson-content/lesson-navigation"
 import { LessonVideoCard } from "@/components/lesson-content/lesson-video-card"
-import { RealWorldUsesCard } from "@/components/lesson-content/real-world-uses-card"
-import { StructureDiagramCard } from "@/components/lesson-content/structure-diagram-card"
-import { SyntaxGuideCard } from "@/components/lesson-content/syntax-guide-card"
 import { BadgesCard } from "@/components/lessons/badges-card"
 import { CourseProgressHeader } from "@/components/lessons/course-progress-header"
 import { ProgressStatCard } from "@/components/lessons/progress-stat-card"
@@ -96,31 +90,13 @@ export default async function LessonContentPage({
                 activeSubtab={content.activeSubtab}
               />
 
-              {/* 2. 개념 소개 */}
-              <ConceptIntroCard intro={content.conceptIntro} />
-
-              {/* 3. 강의 영상 */}
+              {/* 2. 강의 영상 */}
               <LessonVideoCard
                 video={content.video}
                 durationMinutes={content.durationMinutes}
               />
 
-              {/* 4. 코드 흐름 다이어그램 */}
-              <StructureDiagramCard diagram={content.structureDiagram} />
-
-              {/* 5. 문법 가이드 */}
-              <SyntaxGuideCard guide={content.syntaxGuide} />
-
-              {/* 6. 예시 코드 (Client Component — 복사 버튼) */}
-              <ExampleCodeCard example={content.exampleCode} />
-
-              {/* 7. 핵심 포인트 정리 */}
-              <KeyPointsCard points={content.keyPoints} />
-
-              {/* 8. 일상 속 활용 */}
-              <RealWorldUsesCard uses={content.realWorldUses} />
-
-              {/* 9. 이전/다음 강의 */}
+              {/* 3. 이전/다음 강의 */}
               <LessonNavigation navigation={content.navigation} />
             </div>
 
