@@ -7,6 +7,8 @@
 export type LessonVideo = {
   posterDescription: string
   transcriptSummary: string
+  /** Next.js public/ 기준 절대 경로. 없으면 placeholder 카드만 노출. */
+  videoSrc?: string
 }
 
 export type LessonNavTarget = {
@@ -43,6 +45,7 @@ export const pythonLesson1Content: LessonContent = {
     posterDescription: "Python의 첫 인사 — Hello, World!",
     transcriptSummary:
       "이 영상에서는 Python이 어떤 언어인지, 코드가 어떤 흐름으로 실행되는지 한눈에 보여드려요. 가장 짧은 코드 한 줄로 컴퓨터에게 인사하는 모습을 함께 따라가 볼게요.",
+    videoSrc: "/videos/python-lesson-1.mp4",
   },
   navigation: {
     previous: null,
