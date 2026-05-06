@@ -26,8 +26,8 @@
 |------|------|-------|
 | `/` | 홈 = 코드학습 페이지 | 프론트 6 + 백엔드 1(Python) 카드 |
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
-| `/courses/[courseId]/lessons` | 강의 목록 (15강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
-| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1` (Python이란?) 만 매칭 |
+| `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
+| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1` (파이썬 개요 & 개발환경) 만 매칭. 본문은 옛 "Python이란?" 그대로 — 새 커리큘럼에 맞춰 재작성 필요 |
 
 **Next 16 dynamic route 규칙**: `params: Promise<{...}>` + `await params` 정확히 사용. (위 페이지들 모두 그렇게 짜여있음.)
 
@@ -41,7 +41,7 @@
 |------|---------|
 | `lib/courses.ts` | `Course` 타입 + `courses` 7개 + `frontendCourses` / `backendCourses` |
 | `lib/course-detail.ts` | `CourseDetail` 타입 + `pythonCourseDetail` + `getCourseDetail(id)` |
-| `lib/lesson-plan.ts` | `Lesson` / `LessonStatus` 타입 + `pythonLessonPlan` (15강) + `getLessonPlan(id)` |
+| `lib/lesson-plan.ts` | `Lesson` / `LessonStatus` 타입 + `pythonLessonPlan` (12강) + `getLessonPlan(id)` |
 | `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` + `getLessonContent(courseId, lessonId)` |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
@@ -122,9 +122,9 @@ videos/
 **발음 사전**: `videos/_assets/pronunciation.json` (현재 시드 18개). 영상 대본 작성 시 자동 적용.
 
 **영상 정책**:
-- 영상 1편 = 강의 1개 (lesson 1대1 매핑). Python 기초 = 15강 = 영상 15편 예정.
+- 영상 1편 = 강의 1개 (lesson 1대1 매핑). **Python 기초 = 12강 = 영상 12편 예정** (확정 커리큘럼은 메모리 `python_curriculum_12.md` 참조).
 - 길이 기본 180초.
-- 카피 톤은 기존 CodeMong 톤 (한국어, 입문자 친화·정직, 과장/이모지 자제) — 별도 영상 톤 없음.
+- 카피 톤은 기존 CodeMong 톤 (한국어, 입문자 친화·정직, 과장/이모지 자제) + **"입문자 수준 + 정석적인 강의 느낌"** (학원 인강 스타일, 차분·구조화, 쇼츠톤·과장 X).
 - 디자인 토큰: Remotion도 Tailwind v4 → 메인 앱과 violet-500 액센트 등 공유 가능 (의도된 결과).
 
 **Git 권장사항** (강제 아님):
@@ -158,6 +158,6 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 
 - 백엔드 Route Handler / Server Action — Prisma schema 비어있음
 - 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub
-- Python 1강 외 다른 강의 콘텐츠 (영상도 동일 — 1강만 시도 가능)
+- Python 1강 외 다른 강의 콘텐츠 (영상은 12편 모두 미제작 — 옛 시범작 제거됨, 새 커리큘럼으로 처음부터 시작)
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - Supabase Auth UI (middleware/helper 만 wired)
