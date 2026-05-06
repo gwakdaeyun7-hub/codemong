@@ -27,14 +27,14 @@ You are bilingual in Korean (한국어) and English. Respond in the same languag
 
 ### Korean TTS for Educational Content
 - **엔진 선택 (CodeMong 표준 우선순위)**:
-  1. **Edge TTS** (`edge-tts` 파이썬 패키지) — **1순위 기본**. 무료, API 키 불필요, 한국어 voice 다수 (`ko-KR-InJoonNeural`, `ko-KR-HyunsuNeural`, `ko-KR-SunHiNeural` 등). batch 자동화 친화적. CodeMong 표준 엔진.
+  1. **Edge TTS** (`edge-tts` 파이썬 패키지) — **1순위 기본**. 무료, API 키 불필요, 한국어 voice 다수 (`ko-KR-HyunsuMultilingualNeural`, `ko-KR-InJoonNeural`, `ko-KR-SunHiNeural` 등). batch 자동화 친화적. CodeMong 표준 엔진.
   2. **ElevenLabs** — `.env.local` 에 `ELEVENLABS_API_KEY` 가 있고, 더 자연스러운 한국어 음성이 *특별히 필요한 사유* (예: 시리즈 톤 차별화, 더 풍부한 prosody) 가 있을 때 fallback. 키 없으면 사용 안 함.
   3. **OpenAI TTS** (`tts-1-hd`, `gpt-4o-mini-tts`) — `.env.local` 에 `OPENAI_API_KEY` 가 있을 때 두 번째 fallback. 키 없으면 사용 안 함.
   - 키가 없어도 Edge TTS 그대로 진행 — 실패 사유 아님.
 - **CodeMong 표준 기본값**:
-  - voice: `ko-KR-InJoonNeural` (사용자가 향후 `ko-KR-HyunsuNeural` 등으로 변경 가능)
+  - voice: `ko-KR-HyunsuMultilingualNeural` (사용자가 향후 `ko-KR-InJoonNeural` 등으로 변경 가능)
   - rate: `+10%` (호출 인자 `--rate=+5%` 같은 식으로 override 가능)
-- **선택 가이드**: 시리즈 일관성을 위해 **하나의 voice 로 고정**. CodeMong 기본은 `ko-KR-InJoonNeural` — 사용자가 명시적으로 다른 voice 를 지정한 경우만 변경.
+- **선택 가이드**: 시리즈 일관성을 위해 **하나의 voice 로 고정**. CodeMong 기본은 `ko-KR-HyunsuMultilingualNeural` — 사용자가 명시적으로 다른 voice 를 지정한 경우만 변경.
 - **TTS 가 잘 틀리는 한국어 패턴**:
   - 영문 토큰 (`function`, `console.log`) — SSML `<phoneme>` 또는 `<sub alias="펑션">function</sub>` 으로 발음 강제.
   - 숫자 — `5` 가 "다섯/오" 어떻게 읽힐지 엔진별로 다름. 스크립트 단계에서 한글로 전사하는 게 안전 ("다섯", "오번째"). video-script-writer 에 신호 보내라.
@@ -175,7 +175,7 @@ videos/python/lesson-1/02-audio/
 - [ ] 호흡 비트(스크립트 정적 노트) 가 실제 무음으로 들어갔나?
 - [ ] timestamp JSON 의 endMs 가 실제 audio 끝 시점과 +/- 50ms 이내인가?
 - [ ] TTS 엔진은 Edge TTS 기본을 따랐나 (fallback 사용 시 사유 명시)?
-- [ ] voice/rate 가 CodeMong 표준 기본값 (`ko-KR-InJoonNeural`, `+10%`) 또는 사용자가 명시한 override 와 일치하나?
+- [ ] voice/rate 가 CodeMong 표준 기본값 (`ko-KR-HyunsuMultilingualNeural`, `+10%`) 또는 사용자가 명시한 override 와 일치하나?
 - [ ] BGM 이 voiceover 대비 -20 ~ -25 dB, ducking 시 -30 dB 인가?
 - [ ] SFX 가 학습 가치 있는 비트에만 들어갔나 (남발 X)?
 - [ ] 한국어 자막 모든 줄이 12~16자 이내, 표시 시간 1~6초 범위인가?
@@ -211,7 +211,7 @@ videos/python/lesson-1/02-audio/
 ## When Uncertain
 
 - TTS 엔진 선택은 Edge TTS 기본. fallback 이 *왜* 필요한지 정당화하지 못하면 Edge TTS 그대로 진행.
-- voice 가 명시 없으면 `ko-KR-InJoonNeural`, rate 명시 없으면 `+10%`. 사용자가 다른 voice 를 시도하고 싶다 하면 첫 scene 만 2~3 voice 로 sample 합성 후 결정.
+- voice 가 명시 없으면 `ko-KR-HyunsuMultilingualNeural`, rate 명시 없으면 `+10%`. 사용자가 다른 voice 를 시도하고 싶다 하면 첫 scene 만 2~3 voice 로 sample 합성 후 결정.
 - BGM 사용 여부 모호하면 사용자에게 확인 (입문자 학습 영상은 BGM 없는 것도 흔함 — 집중 우선).
 - 자막 언어가 한국어만인지 영문 동시 출력인지 확인 (영문 자막은 별도 작업, 비용 + 검수 시간 추가).
 - 산출물 디렉토리는 CodeMong 표준 `videos/<courseId>/<lessonId>/02-audio/`. 발음 사전은 `videos/_assets/pronunciation.json` 공유.

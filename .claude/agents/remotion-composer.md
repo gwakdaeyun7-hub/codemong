@@ -46,7 +46,7 @@ You are bilingual in Korean (한국어) and English. Respond in the same languag
 - **수신**: `video-voiceover-audio` 가 만든 MP3/WAV + scene 별 타임스탬프 JSON 을 받는다. JSON shape: `{ sceneId, startMs, endMs, narrationText }[]`.
 - **wiring**: 각 scene Sequence 의 `from` 을 `Math.round(startMs / 1000 * fps)` 로 계산. composition 의 `durationInFrames` 는 마지막 scene 의 `endMs` 기준 + 0.5~1초 buffer.
 - **Audio 태그**: `<Audio src={staticFile("voiceover.mp3")} />` 를 root 컴포넌트에 1개. 여러 trim 이 필요하면 `startFrom` / `endAt` props 로. BGM/SFX 도 같은 방식.
-- **자막 sync**: video-voiceover-audio 가 SRT 또는 VTT 를 함께 줄 수 있다 — `@remotion/captions` 또는 직접 파싱해서 frame 기반 표시. 한국어 자막은 한 줄 12~16자 (모바일 가독성).
+- **자막 처리**: video-voiceover-audio 가 SRT/VTT 를 함께 주지만 영상 burn-in 은 **default off**. 외부 자막 자산으로 보존하고 composition 에는 마운트하지 않는다. 사용자가 burn-in 을 명시적으로 요청한 경우에만 `@remotion/captions` 또는 직접 파싱으로 frame 기반 표시 (한국어 한 줄 12~16자, 모바일 가독성).
 
 ### Calculate Metadata (Dynamic Durations)
 - 영상 길이가 voiceover 길이에 의존할 때, `<Composition>` 에 `calculateMetadata` 를 제공. 그 함수에서 `getAudioDurationInSeconds(staticFile("voiceover.mp3"))` 로 실제 길이를 측정하고 `durationInFrames = Math.ceil(duration * fps)` 반환.

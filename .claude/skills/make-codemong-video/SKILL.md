@@ -75,7 +75,7 @@ CodeMong 루트에 `videos/` 와 `videos/_assets/` 두 디렉토리가 있는지
 | `topic` | 강의 제목 (참고용, slug 안 만듦) | "파이썬 개요 & 개발환경" |
 | `length-seconds` | 명시 없으면 **180초 (3분)** | 180 |
 | `orientation` | 명시 없으면 **landscape (1920x1080)** | landscape |
-| `tts-voice` | 명시 없으면 **`ko-KR-InJoonNeural`**. 향후 변경 가능 (`ko-KR-HyunsuNeural` 등) | `ko-KR-InJoonNeural` |
+| `tts-voice` | 명시 없으면 **`ko-KR-HyunsuMultilingualNeural`**. 향후 변경 가능 (`ko-KR-InJoonNeural` 등) | `ko-KR-HyunsuMultilingualNeural` |
 | `tts-rate` | 명시 없으면 **`+10%`** | `+10%` |
 
 사용자가 lesson 매핑 없이 ad-hoc 주제만 던지면 어느 강의에 매핑할지 확인 후 진행.
@@ -153,7 +153,7 @@ videos/
 > - `captions.srt` — 한국어 자막, 한 줄 14자 내외
 >
 > **TTS 엔진**: Edge TTS 1순위 (무료, 키 불필요). `.env.local` 에 ElevenLabs/OpenAI 키 있고 더 자연스러운 음성이 필요하면 fallback 으로 사용 가능.
-> **기본값**: voice `ko-KR-InJoonNeural`, rate `+10%`. 사용자가 인자로 override 가능.
+> **기본값**: voice `ko-KR-HyunsuMultilingualNeural`, rate `+10%`. 사용자가 인자로 override 가능.
 > **발음 사전 2차 검수**: TTS 합성 *직전* 단계로 `videos/_assets/pronunciation.json` 을 다시 로드해서, 대본에 누락된 영어 약어/외래어가 있으면 치환하고 합성해라. 사전에 없는 신규 단어 발견 시 사용자에게 보고 + 사전 추가 후 재실행.
 > BGM/SFX 는 이번 라운드에서는 생략 (필요시 별도 라운드).
 
@@ -186,7 +186,7 @@ videos/
 > 단계 2에서 만든 컴포지션에 오디오를 wire 해라.
 > - `timestamps.json` 의 startMs/endMs 로 각 scene `<Sequence>` 의 from/durationInFrames 정확히 맞춤
 > - `voiceover.mp3` 를 `<Audio>` 컴포넌트로 마운트
-> - `captions.srt` 를 화면 자막으로 렌더 (모바일 무음 시청자 가정 — 항상 ON)
+> - `captions.srt` 는 외부 자막 파일로 *보존만* 한다. 영상 자체에 burn-in 하지 마라 (**default off**). 사용자가 `--burn-captions` 같이 명시적으로 요청한 경우에만 `@remotion/captions` / 직접 파싱으로 화면 자막 렌더.
 > - `npx remotion render <courseId>-<lessonId> videos/<courseId>/<lessonId>/04-out.mp4` 로 최종 렌더
 >
 > 렌더 실패 시 에러 원문 그대로 보고. 추측으로 우회하지 말 것.
@@ -268,8 +268,8 @@ videos/
 - 영상 기본 길이: **180초 (3분)**.
 - 액센트 컬러: violet-500 ~ purple-600.
 - 폰트: Pretendard 또는 Noto Sans KR (한국어 fallback 포함). 최종 결정은 remotion-composer.
-- 자막 항상 ON 가정 (모바일 무음 시청자 다수).
-- **TTS 기본값**: voice `ko-KR-InJoonNeural`, rate `+10%`. 사용자 인자로 override 가능 (예: `ko-KR-HyunsuNeural`, `--rate=+5%`).
+- 자막 burn-in 은 **default off**. `captions.srt` 는 외부 자막 자산 (YouTube upload 등) 으로만 보존하고, 영상 자체에는 마운트하지 않는다. 사용자가 명시적으로 burn-in 을 요청한 경우만 화면 자막 렌더.
+- **TTS 기본값**: voice `ko-KR-HyunsuMultilingualNeural`, rate `+10%`. 사용자 인자로 override 가능 (예: `ko-KR-InJoonNeural`, `--rate=+5%`).
 
 ## 9. 완료 후 사용자에게 보여줄 형태
 

@@ -52,7 +52,9 @@ videos/**/04-out.mp4
 videos/**/02-audio/voiceover.mp3
 videos/**/02-audio/timestamps.json
 videos/**/02-audio/captions.srt
+videos/**/02-audio/_scenes/
 videos/_assets/voice-sample-*.mp3
+videos/_assets/voice-test/
 
 # remotion build artifacts (workspace member)
 remotion/node_modules/
