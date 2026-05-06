@@ -27,7 +27,7 @@
 | `/` | 홈 = 코드학습 페이지 | 프론트 6 + 백엔드 1(Python) 카드 |
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
 | `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
-| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1` (파이썬 개요 & 개발환경) 만 매칭. 본문은 옛 "Python이란?" 그대로 — 새 커리큘럼에 맞춰 재작성 필요 |
+| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1` (파이썬 개요 & 개발환경) 만 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시 |
 
 **Next 16 dynamic route 규칙**: `params: Promise<{...}>` + `await params` 정확히 사용. (위 페이지들 모두 그렇게 짜여있음.)
 
@@ -55,10 +55,10 @@
 | `components/` (root) | 글로벌: `top-nav`, `course-card`, `status-badge`, `level-badge`, `course-icon`, `learning-mode-toggle` |
 | `components/course-detail/` | 소개 탭 섹션 (header, sidebar, learning-outcomes, roadmap, checklist, reviews, cta, section-card) |
 | `components/lessons/` | 강의 목록 페이지 (course-progress-header, lesson-list, lesson-card, progress-stat-card, stats-card, tips-card, badges-card) |
-| `components/lesson-content/` | 강의 상세 본문 (lesson-content-header, concept-intro, lesson-video, structure-diagram, syntax-guide, example-code, key-points, real-world-uses, lesson-navigation) |
+| `components/lesson-content/` | 강의 상세 영상 영역 (lesson-content-header, lesson-video-card, lesson-navigation — 영상-only 모드) |
 | `components/ui/` | shadcn 원본 (현재는 거의 안 씀 — 향후 디자인 시스템화하면 cva variant로 흡수) |
 
-**각 도메인 폴더에 `icon-map.ts`** — lucide 아이콘 화이트리스트. 어떤 컴포넌트도 lucide에서 직접 동적 import 하지 않음.
+**각 도메인 폴더에 `icon-map.ts`** — lucide 아이콘 화이트리스트. 어떤 컴포넌트도 lucide에서 직접 동적 import 하지 않음. 단, 사용 아이콘이 적어 직접 import 만으로 충분한 폴더는 예외 — 현재 `components/lesson-content/` 가 그 케이스.
 
 ---
 
@@ -161,3 +161,4 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 - Python 1강 외 다른 강의 콘텐츠 (영상은 12편 모두 미제작 — 옛 시범작 제거됨, 새 커리큘럼으로 처음부터 시작)
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - Supabase Auth UI (middleware/helper 만 wired)
+- 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능
