@@ -97,6 +97,7 @@ pip install edge-tts        # 처음 한 번 (Python 3.10+)
   `next-env.d.ts` 가 `.next/types/routes.d.ts` 를 import하는데 그 파일은 `next dev` 또는 `next build` 가 한 번 돌아야 생성됨. 작업 후 검증 시 `pnpm dev` 한 번 실행 후 종료하고 lint/typecheck 돌릴 것. ESLint 9 + pnpm hoisting 의 `Cannot find module 'debug'` 오류도 같은 맥락.
 - **dev mode 첫 클릭 ~2s 지연**: Next.js JIT 정상 동작. 사용자 노트북 탓 아님.
 - **`pnpm install` 시 `cd remotion && pnpm install` 하지 말 것**: pnpm이 root `pnpm-workspace.yaml`을 보고 root install을 돌려서 의도한 remotion install이 안 됨. root에서 `pnpm install`로 둘 다 install 되거나, 특정 프로젝트만이면 `pnpm --filter remotion install`.
+- **Vercel build 가 `Cannot find module 'remotion'` 으로 실패**: `videos/<courseId>/<lessonId>/03-composition/*.tsx` 가 `import ... from "remotion"` 하는데, 메인 앱 `tsconfig.json` 의 `include` 가 모든 .tsx 를 잡아 그 파일들도 type check 대상이 됨. `remotion` 은 `remotion/` 워크스페이스에만 있어 메인 앱은 모듈을 못 찾음. 해결: `tsconfig.json` 의 `exclude` 에 `"videos"`, `"remotion"` 명시 (적용됨). Remotion 워크스페이스 자체 `tsconfig` 가 `../videos/**/*.tsx` 를 include 해 그쪽에서 type check 됨.
 
 ---
 
