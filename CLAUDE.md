@@ -126,7 +126,7 @@ videos/
 - 영상 1편 = 강의 1개 (lesson 1대1 매핑). **Python 기초 = 12강 = 영상 12편 예정** (확정 커리큘럼은 메모리 `python_curriculum_12.md` 참조).
 - 길이 기본 180초.
 - 카피 톤은 기존 CodeMong 톤 (한국어, 입문자 친화·정직, 과장/이모지 자제) + **"입문자 수준 + 정석적인 강의 느낌"** (학원 인강 스타일, 차분·구조화, 쇼츠톤·과장 X).
-- 자막은 영상에 burn-in 하지 않는 것이 default. `02-audio/captions.srt` 는 외부 자막 자산 (YouTube upload 등) 으로 보존만 함. 사용자가 명시적으로 burn-in 을 요청한 경우에만 화면 자막 렌더.
+- **자막 (SRT/VTT) 은 만들지 않는 것이 정책**. 영상에 burn-in 도, 외부 자산 보존도 하지 않는다 — `02-audio/captions.srt` 같은 파일 자체를 생성하지 않음. narration 이 모든 정보를 음성으로 전달한다는 가정. 사용자가 향후 자막을 요청하면 별도 합의 후 별도 라운드. *lower-third 같은 씬별 디자인 텍스트 카드는 자막이 아니라 시각 디자인 요소 — 정책 영향 없음.*
 - 디자인 토큰: Remotion도 Tailwind v4 → 메인 앱과 violet-500 액센트 등 공유 가능 (의도된 결과).
 
 **Git 권장사항** (강제 아님):
@@ -147,7 +147,7 @@ videos/
 - **table-organizer** — 표 정리/포맷 변환
 - **video-script-writer** — 영상 대본 (narration + scene visual direction). 한국어, 발음 사전 적용.
 - **remotion-composer** — Remotion 컴포지션 React 코드. `useCurrentFrame()`/`interpolate()` 강제, CSS transition / Tailwind animate-* 금지.
-- **video-voiceover-audio** — Edge TTS 1순위 (`ko-KR-HyunsuMultilingualNeural`, rate `+10%`), ElevenLabs/OpenAI는 키 있을 때만 fallback. BGM/SFX/자막 SRT.
+- **video-voiceover-audio** — Edge TTS 1순위 (`ko-KR-HyunsuMultilingualNeural`, rate `+10%`), ElevenLabs/OpenAI는 키 있을 때만 fallback. BGM/SFX. 자막(SRT/VTT) 은 정책상 미생성.
 - **video-director** — 영상 end-to-end 오케스트레이터. 단일 craft 작업엔 호출 X.
 
 UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **frontend-developer + programming-language-education-expert 동시 호출**이 사용자의 표준 워크플로우.
@@ -160,7 +160,7 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 
 - 백엔드 Route Handler / Server Action — Prisma schema 비어있음
 - 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub
-- Python 2~12강 영상 (1강은 본 시리즈 첫 완성작 — Hyunsu voice + 자막 burn-in default off, lesson detail 페이지 임베드 완료)
+- Python 2~12강 영상 (1강은 본 시리즈 첫 완성작 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료)
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - Supabase Auth UI (middleware/helper 만 wired)
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능

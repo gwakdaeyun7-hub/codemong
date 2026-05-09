@@ -46,7 +46,7 @@ You are bilingual in Korean (한국어) and English. Respond in the same languag
 - **수신**: `video-voiceover-audio` 가 만든 MP3/WAV + scene 별 타임스탬프 JSON 을 받는다. JSON shape: `{ sceneId, startMs, endMs, narrationText }[]`.
 - **wiring**: 각 scene Sequence 의 `from` 을 `Math.round(startMs / 1000 * fps)` 로 계산. composition 의 `durationInFrames` 는 마지막 scene 의 `endMs` 기준 + 0.5~1초 buffer.
 - **Audio 태그**: `<Audio src={staticFile("voiceover.mp3")} />` 를 root 컴포넌트에 1개. 여러 trim 이 필요하면 `startFrom` / `endAt` props 로. BGM/SFX 도 같은 방식.
-- **자막 처리**: video-voiceover-audio 가 SRT/VTT 를 함께 주지만 영상 burn-in 은 **default off**. 외부 자막 자산으로 보존하고 composition 에는 마운트하지 않는다. 사용자가 burn-in 을 명시적으로 요청한 경우에만 `@remotion/captions` 또는 직접 파싱으로 frame 기반 표시 (한국어 한 줄 12~16자, 모바일 가독성).
+- **자막 처리**: **금지** — CodeMong 영상은 자막 OFF 정책. SRT/VTT 자막을 받지도 않고, `@remotion/captions` 호출도 하지 않으며, 영상에 burn-in 도 안 한다. 사용자가 자막을 요청해도 정책을 안내하고 진행 여부 확인 후에만 별도 라운드로 처리. (lower-third 같은 *씬별 디자인 텍스트 카드* 는 자막이 아니라 시각 디자인 요소이므로 정책 영향 없음 — 그건 정상 작업.)
 
 ### Calculate Metadata (Dynamic Durations)
 - 영상 길이가 voiceover 길이에 의존할 때, `<Composition>` 에 `calculateMetadata` 를 제공. 그 함수에서 `getAudioDurationInSeconds(staticFile("voiceover.mp3"))` 로 실제 길이를 측정하고 `durationInFrames = Math.ceil(duration * fps)` 반환.
@@ -153,7 +153,7 @@ You are bilingual in Korean (한국어) and English. Respond in the same languag
    - 텍스트/코드 애니메이션: `rules/text-animations.md`
    - scene 전환: `rules/transitions.md`
    - 보이스오버 wiring: `rules/voiceover.md`, `rules/audio.md`, `rules/get-audio-duration.md`, `rules/calculate-metadata.md`
-   - 자막: `rules/subtitles.md`, `rules/display-captions.md`, `rules/import-srt-captions.md`
+   - 자막 관련 룰 (`rules/subtitles.md`, `rules/display-captions.md`, `rules/import-srt-captions.md`) — **CodeMong 자막 OFF 정책으로 참조 안 함.**
    - 폰트: `rules/google-fonts.md`, `rules/local-fonts.md`
    - 영상/이미지 자산: `rules/videos.md`, `rules/images.md`
    - 효과: `rules/light-leaks.md`, `rules/sfx.md`, `rules/lottie.md`, `rules/3d.md`

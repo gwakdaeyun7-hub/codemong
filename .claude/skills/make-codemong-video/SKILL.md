@@ -92,8 +92,7 @@ videos/
         ├── 01-script.md           # video-script-writer
         ├── 02-audio/              # video-voiceover-audio
         │   ├── voiceover.mp3
-        │   ├── timestamps.json    # [{ sceneId, startMs, endMs, narrationText }]
-        │   └── captions.srt
+        │   └── timestamps.json    # [{ sceneId, startMs, endMs, narrationText }]
         ├── 03-composition/        # remotion-composer (Remotion repo로 symlink/복사 결정은 composer가)
         │   └── *.tsx
         └── 04-out.mp4             # remotion-composer (final render)
@@ -150,8 +149,8 @@ videos/
 > `videos/<courseId>/<lessonId>/01-script.md` 의 narration 을 한국어 TTS로 합성해라. 출력 디렉토리는 `videos/<courseId>/<lessonId>/02-audio/`. 산출물:
 > - `voiceover.mp3` — 최종 보이스오버 (silence 다듬기 포함)
 > - `timestamps.json` — `[{ sceneId, startMs, endMs, narrationText }]` 배열, scene 경계와 정확히 일치
-> - `captions.srt` — 한국어 자막, 한 줄 14자 내외
 >
+> **자막 (SRT/VTT) 은 생성하지 마라**. CodeMong 영상은 자막 OFF 정책 — 외부 자산으로도 만들지 않는다.
 > **TTS 엔진**: Edge TTS 1순위 (무료, 키 불필요). `.env.local` 에 ElevenLabs/OpenAI 키 있고 더 자연스러운 음성이 필요하면 fallback 으로 사용 가능.
 > **기본값**: voice `ko-KR-HyunsuMultilingualNeural`, rate `+10%`. 사용자가 인자로 override 가능.
 > **발음 사전 2차 검수**: TTS 합성 *직전* 단계로 `videos/_assets/pronunciation.json` 을 다시 로드해서, 대본에 누락된 영어 약어/외래어가 있으면 치환하고 합성해라. 사전에 없는 신규 단어 발견 시 사용자에게 보고 + 사전 추가 후 재실행.
@@ -174,19 +173,19 @@ videos/
 
 **참고**: `remotion-composer` 는 호출되면 자동으로 `.claude/skills/remotion-best-practices/` 를 참조한다. Skill 본문에서 명시적으로 그 스킬을 호출하지 말 것.
 
-**검증**: 두 작업 끝난 뒤 `02-audio/voiceover.mp3` + `timestamps.json` + `captions.srt` 와 `03-composition/*.tsx` 가 모두 있는지 확인.
+**검증**: 두 작업 끝난 뒤 `02-audio/voiceover.mp3` + `timestamps.json` 과 `03-composition/*.tsx` 가 모두 있는지 확인. (`captions.srt` 는 더 이상 생성하지 않으므로 검증 항목 아님.)
 
 ### 단계 3 — wire & render
 
 **호출 에이전트**: `remotion-composer` (재호출)
 
-**입력**: `02-audio/timestamps.json` + `02-audio/voiceover.mp3` + `02-audio/captions.srt` + `03-composition/`.
+**입력**: `02-audio/timestamps.json` + `02-audio/voiceover.mp3` + `03-composition/`.
 
 **요청 내용**:
 > 단계 2에서 만든 컴포지션에 오디오를 wire 해라.
 > - `timestamps.json` 의 startMs/endMs 로 각 scene `<Sequence>` 의 from/durationInFrames 정확히 맞춤
 > - `voiceover.mp3` 를 `<Audio>` 컴포넌트로 마운트
-> - `captions.srt` 는 외부 자막 파일로 *보존만* 한다. 영상 자체에 burn-in 하지 마라 (**default off**). 사용자가 `--burn-captions` 같이 명시적으로 요청한 경우에만 `@remotion/captions` / 직접 파싱으로 화면 자막 렌더.
+> - **자막 burn-in 절대 금지**. CodeMong 영상은 자막 OFF 정책 — `@remotion/captions` 호출도, SRT 파싱도, 화면 자막 렌더도 하지 마라. (lower-third 같은 *씬별 디자인 텍스트* 는 자막이 아니므로 별개 — 그건 그대로 진행.)
 > - `npx remotion render <courseId>-<lessonId> videos/<courseId>/<lessonId>/04-out.mp4` 로 최종 렌더
 >
 > 렌더 실패 시 에러 원문 그대로 보고. 추측으로 우회하지 말 것.
@@ -225,7 +224,7 @@ videos/
 1. 디렉토리 스캔으로 **어디까지 산출물이 있는지** 감지:
    - `00-objectives.md` 있음 → 단계 0 skip 가능
    - `01-script.md` 있음 → 단계 1 skip 가능
-   - `02-audio/voiceover.mp3` + `timestamps.json` + `captions.srt` 모두 있음 → 단계 2a skip 가능
+   - `02-audio/voiceover.mp3` + `timestamps.json` 모두 있음 → 단계 2a skip 가능
    - `03-composition/*.tsx` 있음 → 단계 2b skip 가능
    - `04-out.mp4` 있음 → 단계 3 skip 가능
 
@@ -263,12 +262,12 @@ videos/
 
 ## 8. 톤·기본값 (Skill이 강제)
 
-- 모든 카피·대본·자막: **한국어**, 입문자 친화, 정직 톤. "쉬워요!", "꿀팁!", "충격!" 금지. 이모지 거의 안 씀.
+- 모든 카피·대본: **한국어**, 입문자 친화, 정직 톤. "쉬워요!", "꿀팁!", "충격!" 금지. 이모지 거의 안 씀.
 - 영상 형식 톤: **입문자 수준 + 정석적인 강의 느낌** (학원/인강 스타일, 차분·구조화). 트렌디한 쇼츠 톤·과장된 hook·게이미피케이션 과다 연출 금지. 도입 → 개념 설명 → 예시 → 정리의 전형적 강의 흐름 유지. 자세한 톤 가이드는 memory `video_tone_direction.md` 단일 진실원천 참조.
 - 영상 기본 길이: **180초 (3분)**.
 - 액센트 컬러: violet-500 ~ purple-600.
 - 폰트: Pretendard 또는 Noto Sans KR (한국어 fallback 포함). 최종 결정은 remotion-composer.
-- 자막 burn-in 은 **default off**. `captions.srt` 는 외부 자막 자산 (YouTube upload 등) 으로만 보존하고, 영상 자체에는 마운트하지 않는다. 사용자가 명시적으로 burn-in 을 요청한 경우만 화면 자막 렌더.
+- **자막 (SRT/VTT) 정책**: **만들지 않는다**. 영상에 burn-in 도, 외부 자산으로 보존도 하지 않는다. video-voiceover-audio 단계에서 SRT/VTT 생성 자체를 건너뛰고, remotion-composer 도 자막 렌더 코드를 추가하지 않는다. (lower-third 같은 *씬별 디자인 텍스트 카드* 는 자막이 아니라 시각 디자인 요소이므로 정책 영향 없음.) 사용자가 향후 명시적으로 자막을 요청해도 **이 Skill 의 default 는 OFF** 이며, 그 경우만 별도 라운드로 처리.
 - **TTS 기본값**: voice `ko-KR-HyunsuMultilingualNeural`, rate `+10%`. 사용자 인자로 override 가능 (예: `ko-KR-InJoonNeural`, `--rate=+5%`).
 
 ## 9. 완료 후 사용자에게 보여줄 형태
@@ -279,7 +278,7 @@ videos/
 완료. 산출물:
 - videos/<courseId>/<lessonId>/00-objectives.md
 - videos/<courseId>/<lessonId>/01-script.md
-- videos/<courseId>/<lessonId>/02-audio/{voiceover.mp3, timestamps.json, captions.srt}
+- videos/<courseId>/<lessonId>/02-audio/{voiceover.mp3, timestamps.json}
 - videos/<courseId>/<lessonId>/03-composition/*.tsx
 - videos/<courseId>/<lessonId>/04-out.mp4
 
