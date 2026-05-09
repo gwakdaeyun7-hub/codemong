@@ -220,7 +220,7 @@ export const AccentUnderline: React.FC<{
 };
 
 /* ------------------------------------------------------------------ */
-/* LowerThird — bottom-center caption strip                            */
+/* LowerThird — bottom-center info strip (design element, not captions)*/
 /* ------------------------------------------------------------------ */
 
 export const LowerThird: React.FC<{
@@ -256,40 +256,6 @@ export const LowerThird: React.FC<{
           {text}
         </div>
       </FadeIn>
-    </div>
-  );
-};
-
-/* ------------------------------------------------------------------ */
-/* CaptionPlaceholder — bottom band reserved for SRT in step 3         */
-/* ------------------------------------------------------------------ */
-
-export const CaptionPlaceholder: React.FC = () => {
-  // Visible only as a faint guide so layouts don't clash with caption area.
-  return (
-    <div
-      style={{
-        position: "absolute",
-        bottom: 80,
-        left: 0,
-        right: 0,
-        height: 80,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        pointerEvents: "none",
-      }}
-    >
-      <div
-        style={{
-          color: colors.inkSubtle,
-          fontFamily: fonts.sans,
-          fontSize: 24,
-          opacity: 0.0, // hidden — reserves vertical space; SRT wires here in step 3
-        }}
-      >
-        [captions]
-      </div>
     </div>
   );
 };

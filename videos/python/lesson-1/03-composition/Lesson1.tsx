@@ -7,9 +7,6 @@
  * Wiring (step 3):
  *   • <Audio> mounted ONCE at the composition root (never inside Sequences,
  *     otherwise it would restart per-scene).
- *   • Captions are NOT burned in. captions.srt is preserved as an external
- *     subtitle asset (e.g., for YouTube upload) but never mounted in the
- *     composition. Re-enable only on explicit user request.
  *
  * No CSS transitions / Tailwind animate-* — all animation lives inside scenes
  * via useCurrentFrame() + interpolate() (per remotion-best-practices).
