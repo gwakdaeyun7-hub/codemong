@@ -43,7 +43,7 @@
 | `lib/course-detail.ts` | `CourseDetail` 타입 + `pythonCourseDetail` + `getCourseDetail(id)` |
 | `lib/lesson-plan.ts` | `Lesson` / `LessonStatus` 타입 + `pythonLessonPlan` (12강) + `getLessonPlan(id)` |
 | `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` + `pythonLesson2Content` + `getLessonContent(courseId, lessonId)` |
-| `lib/quiz-content.ts` | `QuizQuestion` / `Misconception` / `QuizOption` / `DisallowedAnswer` 타입 + `pythonLesson1Quiz` / `pythonLesson2Quiz` + `pythonLesson1Misconceptions` / `pythonLesson2Misconceptions` + `getQuiz(courseId, lessonId)` / `getMisconceptions(courseId, lessonId)`. 보기마다 `misconceptionId` 라벨 (추천 알고리즘 진단 신호용) |
+| `lib/quiz-content.ts` | `QuizPool` (`"evaluation" \| "practice"`) / `QuizQuestion` / `Misconception` / `QuizOption` / `DisallowedAnswer` 타입 + `pythonLesson1Quiz` / `pythonLesson2Quiz` + `pythonLesson1Misconceptions` / `pythonLesson2Misconceptions` + `getQuiz(courseId, lessonId)` / `getMisconceptions(courseId, lessonId)`. 강의당 30문항 (Pool A 10 + Pool B 20). 모든 문항이 `pool` (필수) + `isomorphGroup` (선택, 같은 학습목표·오개념을 다른 surface 로 묻는 isomorph 묶음 ID) 필드 보유. 보기마다 `misconceptionId` 라벨. 추천 알고리즘 진단 신호 = `misconceptionId` + `isomorphGroup` + `pool`. |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
 
@@ -99,6 +99,33 @@ pip install edge-tts        # 처음 한 번 (Python 3.10+)
 - **dev mode 첫 클릭 ~2s 지연**: Next.js JIT 정상 동작. 사용자 노트북 탓 아님.
 - **`pnpm install` 시 `cd remotion && pnpm install` 하지 말 것**: pnpm이 root `pnpm-workspace.yaml`을 보고 root install을 돌려서 의도한 remotion install이 안 됨. root에서 `pnpm install`로 둘 다 install 되거나, 특정 프로젝트만이면 `pnpm --filter remotion install`.
 - **Vercel build 가 `Cannot find module 'remotion'` 으로 실패**: `videos/<courseId>/<lessonId>/03-composition/*.tsx` 가 `import ... from "remotion"` 하는데, 메인 앱 `tsconfig.json` 의 `include` 가 모든 .tsx 를 잡아 그 파일들도 type check 대상이 됨. `remotion` 은 `remotion/` 워크스페이스에만 있어 메인 앱은 모듈을 못 찾음. 해결: `tsconfig.json` 의 `exclude` 에 `"videos"`, `"remotion"` 명시 (적용됨). Remotion 워크스페이스 자체 `tsconfig` 가 `../videos/**/*.tsx` 를 include 해 그쪽에서 type check 됨.
+
+---
+
+## Quiz Pools
+
+**디렉토리 규약**:
+
+```
+quiz/
+  <courseId>/<lessonId>/
+    pool-b-spec.md     # Pool B 제작 명세서 (분포 목표 / 오개념 매트릭스 / 슬롯 20개 표 / 검수 체크리스트)
+```
+
+현재 시드: `quiz/python/lesson-1/pool-b-spec.md`, `quiz/python/lesson-2/pool-b-spec.md`.
+
+**Pool A (evaluation) vs Pool B (practice)**:
+- **Pool A** — 강의 직후 모든 학습자에게 동일 노출. base mastery 측정. `pool: "evaluation"`. 강의당 10문항.
+- **Pool B** — 학습자에게 직접 노출 X. 추천 시스템이 약점 벡터(M-vector) 에 따라 동적 매칭하여 "복습/약점 보강" 으로 제공. `pool: "practice"`. 강의당 20문항.
+
+**`isomorphGroup` 네이밍 규약**: `<lessonId>-<짧은 의미 키>` (예: `lesson-1-path`, `lesson-2-pseudocode-form`). Pool A/B 가 같은 그룹 ID 를 공유하면 isomorph 매칭 가능.
+
+**작성 워크플로**:
+1. 사람이 `quiz/<courseId>/<lessonId>/pool-b-spec.md` 작성 (분포·매트릭스·슬롯·체크리스트).
+2. `programming-language-education-expert` 에이전트 호출 — 명세서 받아 `lib/quiz-content.ts` 의 해당 강의 Quiz 배열에 q11~q30 append.
+3. 샘플 검증 후 검수.
+
+**매칭 로직**: 별도 결정 사항. 현재 미구현 (backend-developer 영역). 후보 = 룰 베이스 / LLM 기반 추천 / ML 모델.
 
 ---
 
@@ -160,7 +187,7 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 ## Out of scope (현재 미구현 — 카드/스텁만 존재)
 
 - 백엔드 Route Handler / Server Action — Prisma schema 비어있음
-- 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. (1강·2강 평가 문제 데이터는 `lib/quiz-content.ts` 에 정형화돼 있음. 화면·채점 로직은 미구현)
+- 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
 - Python 3~12강 영상 (1강·2강은 본 시리즈 첫 두 강 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료)
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - Supabase Auth UI (middleware/helper 만 wired)
