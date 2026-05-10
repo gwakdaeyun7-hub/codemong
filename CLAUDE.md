@@ -27,7 +27,7 @@
 | `/` | 홈 = 코드학습 페이지 | 프론트 6 + 백엔드 1(Python) 카드 |
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
 | `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
-| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1` (파이썬 개요 & 개발환경) 만 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시 |
+| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1`, `lesson-2` (파이썬 개요·개발환경 / 코딩의 표현 방법) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시 |
 
 **Next 16 dynamic route 규칙**: `params: Promise<{...}>` + `await params` 정확히 사용. (위 페이지들 모두 그렇게 짜여있음.)
 
@@ -42,7 +42,8 @@
 | `lib/courses.ts` | `Course` 타입 + `courses` 7개 + `frontendCourses` / `backendCourses` |
 | `lib/course-detail.ts` | `CourseDetail` 타입 + `pythonCourseDetail` + `getCourseDetail(id)` |
 | `lib/lesson-plan.ts` | `Lesson` / `LessonStatus` 타입 + `pythonLessonPlan` (12강) + `getLessonPlan(id)` |
-| `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` + `getLessonContent(courseId, lessonId)` |
+| `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` + `pythonLesson2Content` + `getLessonContent(courseId, lessonId)` |
+| `lib/quiz-content.ts` | `QuizQuestion` / `Misconception` / `QuizOption` / `DisallowedAnswer` 타입 + `pythonLesson1Quiz` / `pythonLesson2Quiz` + `pythonLesson1Misconceptions` / `pythonLesson2Misconceptions` + `getQuiz(courseId, lessonId)` / `getMisconceptions(courseId, lessonId)`. 보기마다 `misconceptionId` 라벨 (추천 알고리즘 진단 신호용) |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
 
@@ -159,8 +160,8 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 ## Out of scope (현재 미구현 — 카드/스텁만 존재)
 
 - 백엔드 Route Handler / Server Action — Prisma schema 비어있음
-- 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub
-- Python 2~12강 영상 (1강은 본 시리즈 첫 완성작 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료)
+- 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. (1강·2강 평가 문제 데이터는 `lib/quiz-content.ts` 에 정형화돼 있음. 화면·채점 로직은 미구현)
+- Python 3~12강 영상 (1강·2강은 본 시리즈 첫 두 강 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료)
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - Supabase Auth UI (middleware/helper 만 wired)
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능
