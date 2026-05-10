@@ -1,7 +1,7 @@
 // 강의 상세(개념 탭) 화면 데이터 모듈 — 영상-only 모드.
 // 화면은 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시. 본문 카드(개념/구조/문법/예시/핵심정리/활용)는 제거됨.
 // 추후 본문을 다시 채우거나 새 콘텐츠 모델로 확장할 때 타입을 다시 늘릴 것.
-// MVP: lesson-1 만 정적 객체 보유. 추후 backend-developer가 만들 API로 교체 예정.
+// MVP: lesson-1, lesson-2 정적 객체 보유. 추후 backend-developer가 만들 API로 교체 예정.
 // (이 파일은 클라이언트/서버 어디서든 import 가능한 순수 데이터 모듈)
 
 export type LessonVideo = {
@@ -53,13 +53,38 @@ export const pythonLesson1Content: LessonContent = {
   },
 }
 
+export const pythonLesson2Content: LessonContent = {
+  lessonId: "lesson-2",
+  lessonNumber: 2,
+  title: "코딩의 표현 방법",
+  durationMinutes: 12,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "자연어 → 의사코드 → 순서도, 문제와 코드 사이의 다리",
+    transcriptSummary:
+      "이 영상에서는 코드를 쓰기 전에 절차를 머리 밖으로 꺼내 정리하는 세 가지 방법 — 자연어, 의사코드, 순서도 — 를 배웁니다. 셋이 어떻게 다른지, 언제 어떤 걸 쓰는지 편의점 결제 시나리오 하나로 따라가 볼게요.",
+    videoSrc: "/videos/python-lesson-2.mp4",
+  },
+  navigation: {
+    previous: { number: 1, title: "파이썬 개요 & 개발환경" },
+    next: { number: 3, title: "변수와 자료형" },
+  },
+}
+
 /**
  * (courseId, lessonId) → LessonContent 룩업.
- * MVP: (python | be-python) + lesson-1 만 매칭. 그 외는 호출부에서 notFound() 처리.
+ * MVP: (python | be-python) + (lesson-1 | lesson-2) 매칭. 그 외는 호출부에서 notFound() 처리.
  */
 const LESSON_CONTENT_INDEX: Record<string, Record<string, LessonContent>> = {
-  python: { "lesson-1": pythonLesson1Content },
-  "be-python": { "lesson-1": pythonLesson1Content },
+  python: {
+    "lesson-1": pythonLesson1Content,
+    "lesson-2": pythonLesson2Content,
+  },
+  "be-python": {
+    "lesson-1": pythonLesson1Content,
+    "lesson-2": pythonLesson2Content,
+  },
 }
 
 export function getLessonContent(
