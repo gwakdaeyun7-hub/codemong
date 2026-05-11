@@ -84,19 +84,19 @@ export const Scene08: React.FC = () => {
           <FadeIn delaySec={1.6} translateY={10}>
             <div
               style={{
-                marginTop: 60,
+                marginTop: 40,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: 8,
+                gap: 10,
               }}
             >
-              <PersonGlyph size={64} />
+              <PersonGlyph size={112} />
               <div
                 style={{
                   fontFamily: fonts.sans,
-                  fontSize: 18,
-                  fontWeight: 600,
+                  fontSize: 24,
+                  fontWeight: 700,
                   color: colors.inkMuted,
                   letterSpacing: "-0.01em",
                 }}

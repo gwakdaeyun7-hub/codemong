@@ -16,14 +16,13 @@
  */
 
 import React from "react";
-import { interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import { useCurrentFrame, useVideoConfig } from "remotion";
 import {
   FadeIn,
   NoteBox,
   PageBackground,
   PseudocodeBox,
   StaticArrow,
-  easeInOut,
 } from "../primitives";
 import { colors, fonts } from "../theme";
 
@@ -46,47 +45,6 @@ const pseudoLines = [
   "5) 아니면: 현금으로 결제한다",
 ];
 
-const ARROW_FLOW_AT = 2.0;
-const ARROW_FLOW_DURATION = 1.2;
-
-const ArrowDot: React.FC<{ x0: number; x1: number; y: number }> = ({
-  x0,
-  x1,
-  y,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const start = ARROW_FLOW_AT * fps;
-  const end = start + ARROW_FLOW_DURATION * fps;
-  const t = interpolate(frame, [start, end], [0, 1], {
-    easing: easeInOut,
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const opacity = interpolate(
-    frame,
-    [start, start + 4, end - 6, end],
-    [0, 1, 1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
-  return (
-    <div
-      style={{
-        position: "absolute",
-        top: y - 8,
-        left: x0 + (x1 - x0) * t - 8,
-        width: 16,
-        height: 16,
-        borderRadius: "50%",
-        background: colors.accent,
-        boxShadow: `0 0 12px ${colors.accent}`,
-        opacity,
-        pointerEvents: "none",
-      }}
-    />
-  );
-};
-
 /** 의사코드 박스 좌상단 "주의" 라벨에 펄스 효과. */
 const WarningPulse: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const frame = useCurrentFrame();
@@ -104,104 +62,100 @@ export const Scene10: React.FC = () => {
           inset: 0,
           display: "flex",
           alignItems: "center",
+          justifyContent: "center",
           padding: "100px 80px",
-          gap: 24,
+          gap: 50,
         }}
       >
-        {/* 좌측 절반 — 자연어 박스 (톤 다운) */}
-        <div style={{ flex: 1 }}>
-          <FadeIn delaySec={0.2} translateY={10}>
-            <NoteBox title="자연어" width={720} dimmed>
-              <ul
-                style={{
-                  listStyle: "none",
-                  margin: 0,
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 18,
-                }}
-              >
-                {naturalLines.map((line, i) => (
-                  <li
-                    key={i}
-                    style={{
-                      fontFamily: fonts.sans,
-                      fontSize: 26,
-                      fontWeight: 500,
-                      color: colors.ink,
-                      letterSpacing: "-0.01em",
-                      lineHeight: 1.5,
-                      paddingLeft: line.startsWith("└") ? 24 : 0,
-                    }}
-                  >
-                    {line}
-                  </li>
-                ))}
-              </ul>
-            </NoteBox>
-          </FadeIn>
-        </div>
+        {/* 좌측 — 자연어 박스 (톤 다운) */}
+        <FadeIn delaySec={0.2} translateY={10}>
+          <NoteBox title="자연어" width={720} dimmed>
+            <ul
+              style={{
+                listStyle: "none",
+                margin: 0,
+                padding: 0,
+                display: "flex",
+                flexDirection: "column",
+                gap: 18,
+              }}
+            >
+              {naturalLines.map((line, i) => (
+                <li
+                  key={i}
+                  style={{
+                    fontFamily: fonts.sans,
+                    fontSize: 26,
+                    fontWeight: 500,
+                    color: colors.ink,
+                    letterSpacing: "-0.01em",
+                    lineHeight: 1.5,
+                    paddingLeft: line.startsWith("└") ? 24 : 0,
+                  }}
+                >
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </NoteBox>
+        </FadeIn>
 
-        {/* 화살표 영역 (자연어 → 의사코드) */}
+        {/* 화살표 영역 (자연어 → 의사코드) — 양옆 gap 50 균등 */}
         <div
           style={{
-            flex: 0,
             position: "relative",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: 100,
+            width: 170,
             height: 80,
+            flexShrink: 0,
           }}
         >
           <FadeIn delaySec={1.4}>
-            <StaticArrow width={70} color={colors.accent} thickness={4} />
+            <StaticArrow width={140} color={colors.accent} thickness={8} />
           </FadeIn>
-          <ArrowDot x0={4} x1={88} y={40} />
         </div>
 
-        {/* 우측 절반 — 의사코드 박스 */}
-        <div style={{ flex: 1 }}>
-          <FadeIn delaySec={1.0} translateY={20}>
-            <PseudocodeBox
-              title="의사코드"
-              warning={<WarningPulse>주의: 파이썬이 읽는 코드가 아님</WarningPulse>}
-              width={720}
+        {/* 우측 — 의사코드 박스 */}
+        <FadeIn delaySec={1.0} translateY={20}>
+          <PseudocodeBox
+            title="의사코드"
+            warning={<WarningPulse>주의: 파이썬이 읽는 코드가 아님</WarningPulse>}
+            width={720}
+          >
+            <ul
+              style={{
+                listStyle: "none",
+                margin: 0,
+                padding: 0,
+                display: "flex",
+                flexDirection: "column",
+                gap: 14,
+              }}
             >
-              <ul
-                style={{
-                  listStyle: "none",
-                  margin: 0,
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 14,
-                }}
-              >
-                {pseudoLines.map((line, i) => (
-                  <li key={i}>
-                    <FadeIn delaySec={3.0 + i * 0.55} translateY={6}>
-                      <div
-                        style={{
-                          fontFamily: fonts.mono,
-                          fontSize: 26,
-                          fontWeight: 500,
-                          color: colors.ink,
-                          letterSpacing: "0",
-                          lineHeight: 1.6,
-                          whiteSpace: "pre",
-                        }}
-                      >
-                        {line}
-                      </div>
-                    </FadeIn>
-                  </li>
-                ))}
-              </ul>
-            </PseudocodeBox>
-          </FadeIn>
-        </div>
+              {pseudoLines.map((line, i) => (
+                <li key={i}>
+                  <FadeIn delaySec={3.0 + i * 0.55} translateY={6}>
+                    <div
+                      style={{
+                        fontFamily: fonts.mono,
+                        fontSize: 26,
+                        fontWeight: 500,
+                        color: colors.ink,
+                        letterSpacing: "0",
+                        lineHeight: 1.6,
+                        whiteSpace: "pre",
+                      }}
+                    >
+                      {line}
+                    </div>
+                  </FadeIn>
+                </li>
+              ))}
+            </ul>
+          </PseudocodeBox>
+        </FadeIn>
       </div>
     </PageBackground>
   );

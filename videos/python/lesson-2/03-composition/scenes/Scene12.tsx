@@ -35,8 +35,10 @@ const PROC_H = 60;
 /** 잘못된 예시 패널. */
 const WrongPanel: React.FC<{ delaySec: number }> = ({ delaySec }) => {
   // 도형 좌표 (panel 내부 기준)
-  const decision = { x: PANEL_W / 2, y: 200 };
-  const cardProc = { x: PANEL_W / 2 + 130, y: 200 };
+  // 마름모 right vertex (decision.x + 110) 와 사각형 left edge (cardProc.x - 90)
+  // 사이에 70px gap — 라벨("예") 60px width 가 들어가도 양 도형과 5px 씩 여유.
+  const decision = { x: PANEL_W / 2 - 125, y: 200 };
+  const cardProc = { x: PANEL_W / 2 + 145, y: 200 };
   return (
     <FadeIn delaySec={delaySec} translateY={20}>
       <div
@@ -126,7 +128,7 @@ const WrongPanel: React.FC<{ delaySec: number }> = ({ delaySec }) => {
             label="예"
             labelPos={{
               x: (decision.x + DECISION_W / 2 + cardProc.x - PROC_W / 2) / 2,
-              y: cardProc.y - 18,
+              y: cardProc.y - 28,
             }}
             color={colors.danger}
           />
@@ -195,9 +197,12 @@ const WrongPanel: React.FC<{ delaySec: number }> = ({ delaySec }) => {
 
 /** 올바른 예시 패널. */
 const CorrectPanel: React.FC<{ delaySec: number }> = ({ delaySec }) => {
-  const decision = { x: PANEL_W / 2 - 60, y: 180 };
-  const cardProc = { x: PANEL_W / 2 + 130, y: 180 };
-  const cashProc = { x: PANEL_W / 2 - 60, y: 320 };
+  // 마름모(decision) right vertex 와 사각형(cardProc) left edge 사이에 70px gap.
+  // cashProc 는 마름모 아래 같은 x 축에 정렬, y 는 도형 영역(PANEL_H - 200 = 340)
+  // 안에 bottom 이 들어오도록 310 으로 조정.
+  const decision = { x: PANEL_W / 2 - 125, y: 180 };
+  const cardProc = { x: PANEL_W / 2 + 145, y: 180 };
+  const cashProc = { x: PANEL_W / 2 - 125, y: 310 };
   return (
     <FadeIn delaySec={delaySec} translateY={20}>
       <div
@@ -300,7 +305,7 @@ const CorrectPanel: React.FC<{ delaySec: number }> = ({ delaySec }) => {
             label="예"
             labelPos={{
               x: (decision.x + DECISION_W / 2 + cardProc.x - PROC_W / 2) / 2,
-              y: cardProc.y - 18,
+              y: cardProc.y - 28,
             }}
             color={colors.accent}
           />
@@ -309,7 +314,7 @@ const CorrectPanel: React.FC<{ delaySec: number }> = ({ delaySec }) => {
             to={{ x: cashProc.x, y: cashProc.y - PROC_H / 2 - 2 }}
             label="아니오"
             labelPos={{
-              x: decision.x + 50,
+              x: decision.x + 60,
               y: (decision.y + DECISION_H / 2 + cashProc.y - PROC_H / 2) / 2,
             }}
             color={colors.accent}
