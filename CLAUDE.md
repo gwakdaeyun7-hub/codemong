@@ -27,7 +27,7 @@
 | `/` | 홈 = 코드학습 페이지 | 프론트 6 + 백엔드 1(Python) 카드 |
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
 | `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
-| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1`, `lesson-2` (파이썬 개요·개발환경 / 코딩의 표현 방법) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시 |
+| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1`, `lesson-2`, `lesson-3` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시 |
 
 **Next 16 dynamic route 규칙**: `params: Promise<{...}>` + `await params` 정확히 사용. (위 페이지들 모두 그렇게 짜여있음.)
 
@@ -42,7 +42,7 @@
 | `lib/courses.ts` | `Course` 타입 + `courses` 7개 + `frontendCourses` / `backendCourses` |
 | `lib/course-detail.ts` | `CourseDetail` 타입 + `pythonCourseDetail` + `getCourseDetail(id)` |
 | `lib/lesson-plan.ts` | `Lesson` / `LessonStatus` 타입 + `pythonLessonPlan` (12강) + `getLessonPlan(id)` |
-| `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` + `pythonLesson2Content` + `getLessonContent(courseId, lessonId)` |
+| `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` + `pythonLesson2Content` + `pythonLesson3Content` + `getLessonContent(courseId, lessonId)` |
 | `lib/quiz-content.ts` | `QuizPool` (`"evaluation" \| "practice"`) / `QuizQuestion` / `Misconception` / `QuizOption` / `DisallowedAnswer` 타입 + `pythonLesson1Quiz` / `pythonLesson2Quiz` + `pythonLesson1Misconceptions` / `pythonLesson2Misconceptions` + `getQuiz(courseId, lessonId)` / `getMisconceptions(courseId, lessonId)`. 강의당 30문항 (Pool A 10 + Pool B 20). 모든 문항이 `pool` (필수) + `isomorphGroup` (선택, 같은 학습목표·오개념을 다른 surface 로 묻는 isomorph 묶음 ID) 필드 보유. 보기마다 `misconceptionId` 라벨. 추천 알고리즘 진단 신호 = `misconceptionId` + `isomorphGroup` + `pool`. |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
@@ -148,7 +148,7 @@ videos/
 
 **TTS 기본값**: Edge TTS 1순위 (`ko-KR-HyunsuMultilingualNeural`, rate `+10%`, 무료 — 키 불필요). ElevenLabs / OpenAI 는 `.env.local` 키가 있을 때만 fallback. voice는 잠정 — 향후 변경 가능.
 
-**발음 사전**: `videos/_assets/pronunciation.json` (현재 시드 31개). 영상 대본 작성 시 자동 적용.
+**발음 사전**: `videos/_assets/pronunciation.json` (현재 시드 38개). 영상 대본 작성 시 자동 적용.
 
 **영상 정책**:
 - 영상 1편 = 강의 1개 (lesson 1대1 매핑). **Python 기초 = 12강 = 영상 12편 예정** (확정 커리큘럼은 메모리 `python_curriculum_12.md` 참조).
@@ -159,7 +159,7 @@ videos/
 
 **Git 권장사항** (강제 아님):
 - 렌더 산출물 `04-out.mp4` 와 `02-audio/voiceover.mp3` 는 git ignore 권장.
-- `_assets/pronunciation.json` 은 commit 권장 (시드 31개 공유 자원).
+- `_assets/pronunciation.json` 은 commit 권장 (시드 38개 공유 자원).
 - `_assets/voice-sample-*.mp3` 는 사용자 결정.
 
 ---
@@ -188,7 +188,7 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 
 - 백엔드 Route Handler / Server Action — Prisma schema 비어있음
 - 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
-- Python 3~12강 영상 (1강·2강은 본 시리즈 첫 두 강 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료)
+- Python 4~12강 영상 (1강·2강·3강은 본 시리즈 첫 세 강 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료)
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - Supabase Auth UI (middleware/helper 만 wired)
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능
