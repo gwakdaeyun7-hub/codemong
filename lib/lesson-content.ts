@@ -1,7 +1,7 @@
 // 강의 상세(개념 탭) 화면 데이터 모듈 — 영상-only 모드.
 // 화면은 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시. 본문 카드(개념/구조/문법/예시/핵심정리/활용)는 제거됨.
 // 추후 본문을 다시 채우거나 새 콘텐츠 모델로 확장할 때 타입을 다시 늘릴 것.
-// MVP: lesson-1, lesson-2 정적 객체 보유. 추후 backend-developer가 만들 API로 교체 예정.
+// MVP: lesson-1, lesson-2, lesson-3 정적 객체 보유. 추후 backend-developer가 만들 API로 교체 예정.
 // (이 파일은 클라이언트/서버 어디서든 import 가능한 순수 데이터 모듈)
 
 export type LessonVideo = {
@@ -72,18 +72,39 @@ export const pythonLesson2Content: LessonContent = {
   },
 }
 
+export const pythonLesson3Content: LessonContent = {
+  lessonId: "lesson-3",
+  lessonNumber: 3,
+  title: "변수와 자료형",
+  durationMinutes: 18,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "이름표를 붙여 값을 보관하기 — 변수와 세 가지 자료형",
+    transcriptSummary:
+      "이 영상에서는 자기소개 카드를 만들며 변수의 개념과 사용법을 익히고, 문자열·정수·실수 세 가지 자료형이 각각 어떤 값에 어울리는지 살펴봅니다. 마지막엔 print 로 변수에 담긴 값을 한 줄씩 출력해 결과를 확인해 볼게요.",
+    videoSrc: "/videos/python-lesson-3.mp4",
+  },
+  navigation: {
+    previous: { number: 2, title: "코딩의 표현 방법" },
+    next: { number: 4, title: "입력과 연산자" },
+  },
+}
+
 /**
  * (courseId, lessonId) → LessonContent 룩업.
- * MVP: (python | be-python) + (lesson-1 | lesson-2) 매칭. 그 외는 호출부에서 notFound() 처리.
+ * MVP: (python | be-python) + (lesson-1 | lesson-2 | lesson-3) 매칭. 그 외는 호출부에서 notFound() 처리.
  */
 const LESSON_CONTENT_INDEX: Record<string, Record<string, LessonContent>> = {
   python: {
     "lesson-1": pythonLesson1Content,
     "lesson-2": pythonLesson2Content,
+    "lesson-3": pythonLesson3Content,
   },
   "be-python": {
     "lesson-1": pythonLesson1Content,
     "lesson-2": pythonLesson2Content,
+    "lesson-3": pythonLesson3Content,
   },
 }
 

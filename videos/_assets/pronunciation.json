@@ -6,6 +6,7 @@
   "Cmd": "커맨드",
   "Ctrl": "컨트롤",
   "DOM": "돔",
+  "False": "폴스",
   "Git": "깃",
   "GitHub": "깃허브",
   "HTML": "에이치티엠엘",
@@ -22,12 +23,18 @@
   "React": "리액트",
   "SDK": "에스디케이",
   "SQL": "에스큐엘",
+  "True": "트루",
   "TypeScript": "타입스크립트",
   "URL": "유알엘",
   "VS Code": "비에스 코드",
+  "bool": "불",
+  "float": "플롯",
+  "int": "인트",
   "macOS": "맥오에스",
   "print": "프린트",
+  "print()": "프린트 괄호",
   "python --version": "파이썬 더블 대시 버전",
   "python.org": "파이썬 닷 오알지",
-  "python3 --version": "파이썬 쓰리 더블 대시 버전"
+  "python3 --version": "파이썬 쓰리 더블 대시 버전",
+  "str": "스트링"
 }

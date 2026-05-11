@@ -2,7 +2,7 @@
 // Server Component — 데이터 룩업 + 화면 조립. 클라이언트 인터랙션은 leaf(예시 코드 카드 복사 버튼)로 한정.
 //
 // 라우팅: /courses/[courseId]/lessons/[lessonId]
-//   - MVP: courseId ∈ {python, be-python}, lessonId ∈ {"lesson-1", "lesson-2"} 매칭
+//   - MVP: courseId ∈ {python, be-python}, lessonId ∈ {"lesson-1", "lesson-2", "lesson-3"} 매칭
 //   - 그 외엔 notFound()
 //
 // 레이아웃 (lg+): [좌 사이드바] [가운데 본문] [우 사이드바 320px]
