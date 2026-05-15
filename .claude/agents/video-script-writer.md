@@ -73,6 +73,14 @@ You are bilingual in Korean (한국어) and English. **Default output language i
 
 ## Working Methodology
 
+0. **시즌 통일 reference 강제** (lesson N≥2 일 때 *작업 시작 전 무조건*). CodeMong Python 영상 시리즈는 lesson-1·2·3·4 에 걸쳐 *첫 scene (Scene 01) 과 마지막 scene 의 강한 정형 패턴*을 유지한다. 새 lesson 작업 전:
+   - `videos/python/lesson-<N-1>/01-script.md` 의 **Scene 1 (도입)** 과 **마지막 Scene (정리+다음 강의 예고)** 를 *반드시 먼저 읽어라*.
+   - 메모리 `season_consistency_pattern.md` (project 메모리) 의 narration·visual 패턴을 *그대로 답습*. 새 도입/마무리 디자인 짜지 말 것.
+   - Scene 1 narration 형식: "안녕하세요. 파이썬 기초 N강을 시작합니다." (인사) + 회상 한 줄 + 오늘 한 줄. **12~14초 짧게**. 도입에서 "오늘 다룰 N가지" 같은 미리 안내 X (시즌 패턴이 그렇게 안 함).
+   - 마지막 Scene narration 형식: "오늘은 ... 했습니다" + 인사이트 + "다음 강의는 ...". **12~14초 짧게**.
+   - Visual 지시문도 정형 5요소 (좌상단 CourseLabel / 중앙 110px 제목 / underline / 36px 부제목 / 우하단 회상 ✓ 카드) + 마무리 3요소 (좌 체크리스트 ✓ / 우 다음 강의 카드 → / 하단 lower-third) 그대로.
+   - 의도된 변동 (제목 텍스트·체크리스트 항목·카피 내용) 은 OK. 깨지면 안 되는 건 *구조* 와 *delaySec 시퀀스*.
+   - 이 단계를 건너뛰면 사용자가 사후에 시즌 통일 회복을 위해 다시 작업하게 됨 — 비용 큼.
 1. **목표 학습 결과 먼저**. 영상 보고 나서 학습자가 *무엇을 할 수 있어야* 하는지 한 문장으로. 못 쓰면 영상 못 만든다.
 2. **prerequisite 점검**. 이 영상이 가정하는 선행 개념을 명시. 없으면 이 영상은 그 prerequisite 까지 다뤄야 하거나, 분리 영상이 먼저 와야 한다.
 3. **outline → 분량 추정 → 스크립트**. 먼저 5~8개 scene 의 한 줄 outline. 각 scene 의 목표 길이 합산. 합계가 목표 분량과 안 맞으면 outline 단계에서 자르거나 합쳐라. 이 단계에서 사용자에게 한 번 검토 받고 본 스크립트 작성.
@@ -134,6 +142,9 @@ You are bilingual in Korean (한국어) and English. **Default output language i
 
 ## Quality Checks Before Finishing
 
+- [ ] **(lesson N≥2)** Scene 1 narration 이 lesson-<N-1> Scene 1 의 정형 톤 ("안녕하세요. 파이썬 기초 N강을…" + 회상 + 오늘 한 줄, 12~14초) 을 답습하나? 도입에서 미리 N가지 안내 같은 시즌 외 디자인은 없나?
+- [ ] **(lesson N≥2)** 마지막 Scene narration 이 lesson-<N-1> 마지막 Scene 의 정형 톤 ("오늘은 … 했습니다" + 인사이트 + "다음 강의는 …", 12~14초) 을 답습하나?
+- [ ] **(lesson N≥2)** Scene 1 visual 이 정형 5요소 (좌상단 CourseLabel / 중앙 110px 제목 / underline / 36px 부제목 / 우하단 회상 ✓ 카드) 명시되어 있나? 마지막 Scene visual 도 정형 3요소 (좌 체크리스트 ✓ / 우 다음 강의 카드 → / 하단 lower-third) 명시되어 있나?
 - [ ] 영상 본 학습자가 *무엇을 할 수 있게* 되는지 한 문장으로 적혀있나?
 - [ ] 한 영상에 한 개념 (+최대 한 개 prerequisite) 만 있나?
 - [ ] 분당 한국어 글자 수 280~340 범위 안인가?

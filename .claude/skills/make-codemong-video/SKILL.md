@@ -132,6 +132,8 @@ videos/
 > - 정리 비트 (마지막 scene)
 >
 > **발음 사전 1차 적용**: `videos/_assets/pronunciation.json` 을 로드해서 narration 안의 영어 약어/외래어를 한국어 음역으로 *대본 텍스트 자체에* 박아라. 사전에 없는 신규 단어를 발견하면 사전에 추가하고 재실행하라.
+>
+> **시즌 통일 reference 강제 (lesson N≥2 일 때 무조건)**: 작업 시작 전 *반드시* `videos/python/lesson-<N-1>/01-script.md` 의 Scene 1 (도입) 과 마지막 Scene (정리+다음 강의 예고) 을 읽고 narration 톤·길이·visual 정형 패턴을 *그대로 답습*. 메모리 `season_consistency_pattern.md` 도 참조. 새 도입/마무리 디자인 짜지 말 것. Scene 1 = "안녕하세요. 파이썬 기초 N강을 시작합니다…" + 회상 + 오늘 한 줄 (12~14s) + 정형 visual 5요소. 마지막 = "오늘은 … 했습니다" + 인사이트 + "다음 강의는 …" (12~14s) + 정형 visual 3요소.
 
 **검증**: `01-script.md` 존재 + scene 분할이 있는지 확인.
 
@@ -170,6 +172,8 @@ videos/
 > - `useCurrentFrame()` + `interpolate()` + `Easing` 만 사용. CSS transitions / Tailwind animate-* 클래스 절대 금지 (remotion-best-practices skill 참조).
 > - 액센트 컬러 violet-500 ~ purple-600, 폰트 Pretendard 또는 Noto Sans KR.
 > - 비주얼은 `00-objectives.md` 의 행동 가능 목표·자주 막히는 지점과 정합되어야 한다.
+>
+> **시즌 통일 reference 강제 (lesson N≥2 일 때 무조건)**: 작업 시작 전 *반드시* `videos/python/lesson-<N-1>/03-composition/scenes/Scene01.tsx` 와 마지막 `SceneN.tsx` 를 읽고 정형 컴포넌트 구조 + delaySec 값 + fontSize 를 *그대로 답습*. 메모리 `season_consistency_pattern.md` 도 참조. Scene01 정형 5요소: 좌상단 `<CourseLabel>` (delaySec 0.2) / 중앙 110px h1 (0.6) / `<AccentUnderline width={180}>` (1.4) / 36px 부제목 (1.8) / 우하단 회상 ✓ 카드 (2.6). 마지막 Scene 정형 3요소: 좌 절반 체크리스트 (✓ 36×36 accent bg + 라벨) / 우 절반 `<Card variant="accent">` 다음 강의 카드 (width 560~640, fontSize 56) / 하단 `<LowerThird>`. 새 도입/마무리 디자인 짜지 말 것.
 
 **참고**: `remotion-composer` 는 호출되면 자동으로 `.claude/skills/remotion-best-practices/` 를 참조한다. Skill 본문에서 명시적으로 그 스킬을 호출하지 말 것.
 
@@ -205,6 +209,7 @@ videos/
 > - pass 여도 개선 제안 있으면 명시
 > - CodeMong 톤 (정직·구체·친절, 과장 금지) 위반 여부
 > - 정석 강의 느낌 이탈 여부 (게이미피케이션 과다, 쇼츠톤, 과한 연출, 트렌디한 hook 등 — 학원 인강이라면 자연스러운가? 기준)
+> - **시즌 통일 점검 (lesson N≥2 일 때 필수)**: 첫 scene 정형 5요소 (좌상단 CourseLabel / 중앙 110px 제목 / underline 180 / 36px 부제목 / 우하단 회상 ✓) + 마지막 scene 정형 3요소 (좌 체크리스트 / 우 다음 강의 카드 → / 하단 lower-third) 모두 있는지. 메모리 `season_consistency_pattern.md` 와 lesson-<N-1> 의 Scene 01·마지막 Scene 을 reference 로 cross-check. 빠진 요소가 있으면 fail + `--from=03-composition` 권고.
 
 판정 결과를 사용자에게 그대로 전달.
 

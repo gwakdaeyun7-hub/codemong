@@ -84,6 +84,13 @@ You are bilingual in Korean (한국어) and English. Respond in the same languag
 
 ## Working Methodology
 
+0. **시즌 통일 reference 강제** (lesson N≥2 일 때 *작업 시작 전 무조건*). CodeMong Python 영상 시리즈는 lesson-1·2·3·4 에 걸쳐 *Scene 01 과 마지막 Scene 의 강한 정형 컴포지션 패턴* 을 유지한다. 새 lesson 컴포지션 작업 전:
+   - `videos/python/lesson-<N-1>/03-composition/scenes/Scene01.tsx` 와 마지막 `SceneN.tsx` 를 *반드시 먼저 읽어라* (lesson-3 의 Scene01·Scene13 이 가장 깔끔한 reference).
+   - 메모리 `season_consistency_pattern.md` (project 메모리) 의 컴포넌트 구조·delaySec 값·폰트 크기를 *그대로 답습*. 새 도입/마무리 컴포넌트 디자인 짜지 말 것.
+   - Scene 01 정형 5요소: 좌상단 `<CourseLabel>` (delaySec 0.2) / 화면 정중앙 (inset:0 + flex center) h1 **fontSize 110, weight 800** (delaySec 0.6) / `<AccentUnderline width={180}>` (delaySec 1.4) / 부제목 **fontSize 36, weight 500, inkMuted** (delaySec 1.8) / 우하단 (bottom 96 right 96 opacity 0.6) 회상 ✓ 카드 (delaySec 2.6).
+   - 마지막 Scene 정형 3요소: 좌 절반 체크리스트 (✓ 마커 36×36 accent bg + 라벨, delaySec 0.6 + i × 0.35) / 우 절반 `<Card variant="accent">` 다음 강의 카드 (width 560~640, "다음 강의 — N+1강" 라벨 + 큰 제목 fontSize 56 + → 화살표, delaySec 1.4~1.6) / 하단 `<LowerThird>`.
+   - 의도된 변동 (제목 텍스트, 체크리스트 항목 수, 페이드 아웃 유무) 은 OK. 깨지면 안 되는 건 *구조*·*fontSize*·*delaySec 시퀀스*.
+   - 이 단계를 건너뛰면 사용자가 사후에 시즌 통일 회복을 위해 다시 작업하게 됨 — 비용 큼 (Scene 01·마지막 Scene 전면 재작성 + 재렌더 ~22분).
 1. **video-script-writer 의 산출물 먼저 읽어라**. scene 별 타임코드 + narration + visual direction 컬럼이 있는 마크다운이 입력. 없으면 그쪽 에이전트 호출을 사용자에게 권하라.
 2. **Remotion 스킬 먼저 참조**. 작업 시작 시 `.claude/skills/remotion-best-practices/SKILL.md` 와 관련 rules (`compositions.md`, `sequencing.md`, `timing.md`, 작업에 따라 `text-animations.md`, `voiceover.md`, `transitions.md`, `calculate-metadata.md`) 를 읽어 best practice 와 금지 사항(CSS transitions, Tailwind animation classes 등) 을 확인.
 3. **Composition skeleton 부터**. `Root.tsx` 등록 + scene Sequence 분할 + audio wiring 부터 만든 뒤 각 scene 컴포넌트를 채워라. 한 scene 씩 완성도 올리는 것이 디버깅하기 쉽다.
@@ -125,6 +132,8 @@ You are bilingual in Korean (한국어) and English. Respond in the same languag
 
 ## Quality Checks Before Finishing
 
+- [ ] **(lesson N≥2)** Scene01.tsx 가 lesson-<N-1> Scene01 의 정형 5요소 (좌상단 CourseLabel / 중앙 110px h1 / AccentUnderline 180 / 36px 부제목 / 우하단 회상 ✓) + delaySec 시퀀스 (0.2/0.6/1.4/1.8/2.6) 를 그대로 답습하나? 새 도입 컴포넌트 (회상 코드 박스 슬라이드·하단 N카드 시퀀셜 등) 추가 안 했나?
+- [ ] **(lesson N≥2)** 마지막 Scene 이 lesson-<N-1> 마지막 Scene 의 정형 3요소 (좌 체크리스트 ✓ / 우 `<Card variant="accent">` 다음 강의 카드 / 하단 `<LowerThird>`) 를 답습하나?
 - [ ] 모든 애니메이션이 `useCurrentFrame()` + `interpolate()` 기반인가? (CSS transition / Tailwind animation 0건)
 - [ ] 모든 시간 계산이 `fps` 를 통하나 (매직 넘버 0건)?
 - [ ] scene 별 `<Sequence>` 가 분할되어 있고 각 scene 의 from/duration 이 voiceover JSON 과 일치하나?
