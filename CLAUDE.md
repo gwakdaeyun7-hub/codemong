@@ -27,7 +27,7 @@
 | `/` | 홈 = 코드학습 페이지 | 프론트 6 + 백엔드 1(Python) 카드 |
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
 | `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
-| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1`, `lesson-2`, `lesson-3`, `lesson-5` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 조건문) 매칭. lesson-4 는 12강 시퀀스상 자리는 있지만 영상 미제작이라 의도적으로 미매칭 → `notFound()`. **영상-only 모드** — 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시 |
+| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1`, `lesson-2`, `lesson-3`, `lesson-4`, `lesson-5` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시 |
 
 **Next 16 dynamic route 규칙**: `params: Promise<{...}>` + `await params` 정확히 사용. (위 페이지들 모두 그렇게 짜여있음.)
 
@@ -42,7 +42,7 @@
 | `lib/courses.ts` | `Course` 타입 + `courses` 7개 + `frontendCourses` / `backendCourses` |
 | `lib/course-detail.ts` | `CourseDetail` 타입 + `pythonCourseDetail` + `getCourseDetail(id)` |
 | `lib/lesson-plan.ts` | `Lesson` / `LessonStatus` 타입 + `pythonLessonPlan` (12강) + `getLessonPlan(id)` |
-| `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` + `pythonLesson2Content` + `pythonLesson3Content` + `pythonLesson5Content` + `getLessonContent(courseId, lessonId)` |
+| `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` + `pythonLesson2Content` + `pythonLesson3Content` + `pythonLesson4Content` + `pythonLesson5Content` + `getLessonContent(courseId, lessonId)` |
 | `lib/quiz-content.ts` | `QuizPool` (`"evaluation" \| "practice"`) / `QuizQuestion` / `Misconception` / `QuizOption` / `DisallowedAnswer` 타입 + `pythonLesson1Quiz` / `pythonLesson2Quiz` + `pythonLesson1Misconceptions` / `pythonLesson2Misconceptions` + `getQuiz(courseId, lessonId)` / `getMisconceptions(courseId, lessonId)`. 강의당 30문항 (Pool A 10 + Pool B 20). 모든 문항이 `pool` (필수) + `isomorphGroup` (선택, 같은 학습목표·오개념을 다른 surface 로 묻는 isomorph 묶음 ID) 필드 보유. 보기마다 `misconceptionId` 라벨. 추천 알고리즘 진단 신호 = `misconceptionId` + `isomorphGroup` + `pool`. |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
@@ -188,7 +188,7 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 
 - 백엔드 Route Handler / Server Action — Prisma schema 비어있음
 - 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
-- Python 4·7~12강 영상 (1·2·3·5강은 본 시리즈 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 6강 영상은 완성됐으나 `lib/lesson-content.ts` 임베드 미진행 — 별도 라운드 예정.
+- Python 7~12강 영상 (1·2·3·4·5강은 본 시리즈 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 6강 영상은 완성됐으나 `lib/lesson-content.ts` 임베드 미진행 — 별도 라운드 예정.
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - Supabase Auth UI (middleware/helper 만 wired)
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능
