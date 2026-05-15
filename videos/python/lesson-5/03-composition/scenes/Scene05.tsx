@@ -24,7 +24,6 @@ import { colors, fonts, radii, shadows } from "../theme";
 const ComparePanel: React.FC<{
   bigSymbol: string;
   bigSymbolColor: string;
-  bigSymbolScale?: number;
   code: React.ReactNode;
   labelText: string;
   labelColor: string;
@@ -34,7 +33,6 @@ const ComparePanel: React.FC<{
 }> = ({
   bigSymbol,
   bigSymbolColor,
-  bigSymbolScale = 1,
   code,
   labelText,
   labelColor,
@@ -47,6 +45,7 @@ const ComparePanel: React.FC<{
       <div
         style={{
           width: 600,
+          height: 500,
           background: bgTint,
           borderRadius: radii.card,
           border: `2.5px solid ${borderColor}`,
@@ -55,14 +54,16 @@ const ComparePanel: React.FC<{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
           gap: 28,
+          boxSizing: "border-box",
         }}
       >
-        {/* 큰 기호 */}
+        {/* 큰 기호 — 두 카드의 height 정렬을 위해 동일 fontSize. 차별화는 색상으로. */}
         <div
           style={{
             fontFamily: fonts.mono,
-            fontSize: 160 * bigSymbolScale,
+            fontSize: 160,
             fontWeight: 800,
             color: bigSymbolColor,
             lineHeight: 1,
@@ -145,7 +146,6 @@ export const Scene05: React.FC = () => {
           <ComparePanel
             bigSymbol="="
             bigSymbolColor={colors.inkMuted}
-            bigSymbolScale={1.0}
             code={
               <>
                 <PyToken text="score" kind="name" />
@@ -166,7 +166,7 @@ export const Scene05: React.FC = () => {
             <div
               style={{
                 width: 2,
-                height: 360,
+                height: 420,
                 background: colors.border,
                 borderRadius: 1,
                 opacity: 0.7,
@@ -178,7 +178,6 @@ export const Scene05: React.FC = () => {
           <ComparePanel
             bigSymbol="=="
             bigSymbolColor={colors.accentDeep}
-            bigSymbolScale={1.15}
             code={
               <>
                 <PyToken text="if" kind="keyword" />

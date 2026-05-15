@@ -65,11 +65,12 @@ export const Scene08: React.FC = () => {
               fontWeight: 600,
               color: colors.accentDeep,
               letterSpacing: "0.04em",
-              textTransform: "uppercase",
               marginBottom: 36,
             }}
           >
-            `if` · `elif` · `else`
+            <span style={{ fontFamily: fonts.mono }}>if</span> ·{" "}
+            <span style={{ fontFamily: fonts.mono }}>elif</span> ·{" "}
+            <span style={{ fontFamily: fonts.mono }}>else</span>
           </div>
         </FadeIn>
 
@@ -155,19 +156,32 @@ export const Scene08: React.FC = () => {
             />
           </FadeIn>
 
-          {/* elif 콜아웃 — 3줄 위쪽 */}
+          {/*
+            elif 콜아웃 — 3줄 (elif) 오른쪽 빈공간에 배치.
+            코드 패널 width 820, 코드 본문 "elif score >= 40:" 가 약 350px 까지 차지.
+            오른쪽 빈공간 (420~810) 에 callout 폭 360 으로 배치, 화살표는 왼쪽으로 → elif 가리킴.
+          */}
           <div
             style={{
               position: "absolute",
-              top: -56,
-              left: 60,
+              top: 134,
+              left: 420,
             }}
           >
             <InlineCallout
-              title="Python에선 한 단어 `elif`"
-              subtitle="`else if` 아님"
+              title={
+                <>
+                  Python에선 한 단어 <span style={{ fontFamily: fonts.mono }}>elif</span>
+                </>
+              }
+              subtitle={
+                <>
+                  <span style={{ fontFamily: fonts.mono }}>else if</span> 아님
+                </>
+              }
               delaySec={REVEAL.callout}
-              width={340}
+              width={360}
+              arrowSide="left"
             />
           </div>
         </div>

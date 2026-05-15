@@ -1386,11 +1386,13 @@ export const ContainmentBoxes: React.FC<{
 /* ------------------------------------------------------------------ */
 
 export const InlineCallout: React.FC<{
-  title: string;
-  subtitle?: string;
+  title: React.ReactNode;
+  subtitle?: React.ReactNode;
   delaySec?: number;
   width?: number;
-}> = ({ title, subtitle, delaySec = 0, width = 320 }) => {
+  /** 화살표 방향. "bottom" (default, 아래쪽 가리킴), "left" (왼쪽 가리킴), "none" (화살표 없음). */
+  arrowSide?: "bottom" | "left" | "none";
+}> = ({ title, subtitle, delaySec = 0, width = 320, arrowSide = "bottom" }) => {
   return (
     <FadeIn delaySec={delaySec} translateY={-8}>
       <div
@@ -1428,19 +1430,34 @@ export const InlineCallout: React.FC<{
             {subtitle}
           </div>
         ) : null}
-        {/* 화살표 (아래쪽으로) */}
-        <div
-          style={{
-            position: "absolute",
-            left: 32,
-            bottom: -10,
-            width: 0,
-            height: 0,
-            borderTop: `12px solid ${colors.accent}`,
-            borderLeft: "10px solid transparent",
-            borderRight: "10px solid transparent",
-          }}
-        />
+        {arrowSide === "bottom" ? (
+          <div
+            style={{
+              position: "absolute",
+              left: 32,
+              bottom: -10,
+              width: 0,
+              height: 0,
+              borderTop: `12px solid ${colors.accent}`,
+              borderLeft: "10px solid transparent",
+              borderRight: "10px solid transparent",
+            }}
+          />
+        ) : null}
+        {arrowSide === "left" ? (
+          <div
+            style={{
+              position: "absolute",
+              top: 22,
+              left: -10,
+              width: 0,
+              height: 0,
+              borderRight: `12px solid ${colors.accent}`,
+              borderTop: "10px solid transparent",
+              borderBottom: "10px solid transparent",
+            }}
+          />
+        ) : null}
       </div>
     </FadeIn>
   );
