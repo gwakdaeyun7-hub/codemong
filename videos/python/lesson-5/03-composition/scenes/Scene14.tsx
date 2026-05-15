@@ -38,15 +38,15 @@ export const Scene14: React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: 48,
+          gap: 56,
           paddingLeft: 96,
           paddingRight: 96,
-          paddingBottom: 180,
+          paddingBottom: 200,
         }}
       >
         {/* Left: checklist */}
         <FadeIn delaySec={0.2} translateY={16}>
-          <Card style={{ width: 700, padding: "48px 48px" }}>
+          <Card style={{ width: 640, padding: "48px 48px" }}>
             <div
               style={{
                 fontFamily: fonts.sans,
@@ -72,7 +72,7 @@ export const Scene14: React.FC = () => {
             >
               {checklist.map((item, i) => (
                 <li key={i}>
-                  <FadeIn delaySec={0.6 + i * 0.45} translateY={8}>
+                  <FadeIn delaySec={0.6 + i * 0.35} translateY={8}>
                     <div
                       style={{
                         display: "flex",
@@ -101,7 +101,7 @@ export const Scene14: React.FC = () => {
                       <div>
                         <span
                           style={{
-                            fontSize: 30,
+                            fontSize: 32,
                             fontWeight: 800,
                             color: colors.ink,
                             letterSpacing: "-0.02em",
@@ -111,7 +111,7 @@ export const Scene14: React.FC = () => {
                         </span>
                         <span
                           style={{
-                            fontSize: 24,
+                            fontSize: 26,
                             fontWeight: 500,
                             color: colors.inkMuted,
                             letterSpacing: "-0.01em",
@@ -130,11 +130,11 @@ export const Scene14: React.FC = () => {
         </FadeIn>
 
         {/* Right: next lesson */}
-        <FadeIn delaySec={2.2} translateY={20}>
+        <FadeIn delaySec={1.6} translateY={20}>
           <Card
             variant="accent"
             style={{
-              width: 540,
+              width: 560,
               padding: "48px 48px",
               borderRadius: radii.card,
             }}
@@ -183,7 +183,7 @@ export const Scene14: React.FC = () => {
             </div>
             <div
               style={{
-                marginTop: 28,
+                marginTop: 32,
                 display: "flex",
                 justifyContent: "flex-end",
               }}
@@ -203,7 +203,7 @@ export const Scene14: React.FC = () => {
           </Card>
         </FadeIn>
       </div>
-      <LowerThird text="오늘은 흐름을 갈래 짓는 첫걸음" delaySec={4.0} />
+      <LowerThird text="오늘은 흐름을 갈래 짓는 첫걸음" delaySec={3.0} />
     </PageBackground>
   );
 };

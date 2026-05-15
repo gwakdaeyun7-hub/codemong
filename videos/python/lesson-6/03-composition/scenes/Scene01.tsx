@@ -1,18 +1,12 @@
 /**
  * Scene 1 — 도입: 오늘 다룰 것 + 2강 고리 회상 (12s)
  *
- * - 좌상단 코스 라벨: "파이썬 기초 · 6강"
- * - 중앙 큰 제목: "반복문" (zinc-50 배경)
- * - violet-500 underline
- * - 부제: "`for` · `while` · `break` · `continue`"
- * - 우측 하단 회상 카드 (2강 mock, opacity 0.65):
- *     사각형 두 개 + 위로 되돌아오는 굽은 화살표 (LoopIcon)
- *     라벨 "2강 — 순서도의 고리 ✓"
- * - 9~12s 구간: 회상 카드의 굽은 화살표가 violet-500 으로 한 번 펄스
- *     화살표 옆 "= 반복문" 라벨 fade-in
+ * 시즌 정형 통일 (lesson-3 Scene01 baseline) — inset:0 center,
+ * h1 110/800/ink, underline width 180, 36px gap, 부제 36/500/inkMuted.
+ * 회상카드: ✓ 마커 + 작은 LoopIcon (narration "2강 고리" 직결 유지, pulse 없음).
+ * v1 의 LoopIcon 펄스 + "= 반복문" 라벨 hook 제거 — 시즌 정형 위반.
  *
- * 5강의 마름모 회상 + morph hook 패턴을 6강의 *고리* 회상으로 변주.
- * 차분한 학원 인강 톤 — 트렌디한 모션 X.
+ * 1·2·3·4·5강과 동일한 도입 패턴.
  */
 
 import React from "react";
@@ -35,17 +29,16 @@ export const Scene01: React.FC = () => {
         </FadeIn>
       </div>
 
-      {/* 중앙 큰 제목 */}
+      {/* 중앙 큰 제목 + underline + 부제목 */}
       <div
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          paddingTop: 240,
+          inset: 0,
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center",
           alignItems: "center",
+          paddingBottom: 80,
         }}
       >
         <FadeIn delaySec={0.6} translateY={16}>
@@ -53,7 +46,7 @@ export const Scene01: React.FC = () => {
             style={{
               margin: 0,
               fontFamily: fonts.sans,
-              fontSize: 130,
+              fontSize: 110,
               fontWeight: 800,
               color: colors.ink,
               letterSpacing: "-0.03em",
@@ -64,8 +57,8 @@ export const Scene01: React.FC = () => {
           </h1>
         </FadeIn>
         <div style={{ height: 28 }} />
-        <AccentUnderline width={200} delaySec={1.4} durationSec={0.7} />
-        <div style={{ height: 32 }} />
+        <AccentUnderline width={180} delaySec={1.4} durationSec={0.7} />
+        <div style={{ height: 36 }} />
         <FadeIn delaySec={1.8} translateY={10}>
           <p
             style={{
@@ -77,47 +70,57 @@ export const Scene01: React.FC = () => {
               letterSpacing: "-0.01em",
             }}
           >
-            <span style={{ fontFamily: fonts.mono, color: colors.accentDeep }}>for</span> ·{" "}
-            <span style={{ fontFamily: fonts.mono, color: colors.accentDeep }}>while</span> ·{" "}
-            <span style={{ fontFamily: fonts.mono, color: colors.accentDeep }}>break</span> ·{" "}
-            <span style={{ fontFamily: fonts.mono, color: colors.accentDeep }}>continue</span>
+            <span style={{ fontFamily: fonts.mono, color: colors.accentDeep }}>
+              for
+            </span>{" "}
+            ·{" "}
+            <span style={{ fontFamily: fonts.mono, color: colors.accentDeep }}>
+              while
+            </span>{" "}
+            ·{" "}
+            <span style={{ fontFamily: fonts.mono, color: colors.accentDeep }}>
+              break
+            </span>{" "}
+            ·{" "}
+            <span style={{ fontFamily: fonts.mono, color: colors.accentDeep }}>
+              continue
+            </span>
           </p>
         </FadeIn>
       </div>
 
-      {/* 우측 하단 회상 카드 (2강 고리) */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 96,
-          right: 96,
-          opacity: 0.7,
-        }}
-      >
-        <FadeIn delaySec={3.0} translateY={10}>
+      {/* 우측 하단 회상 카드 (2강 고리 회상 — narration 직결) */}
+      <div style={{ position: "absolute", bottom: 96, right: 96, opacity: 0.6 }}>
+        <FadeIn delaySec={2.6} translateY={10}>
           <div
             style={{
-              padding: "18px 26px",
+              padding: "16px 22px",
               borderRadius: radii.card,
               background: colors.bgWhite,
               border: `1px solid ${colors.border}`,
               boxShadow: shadows.cardSoft,
               display: "flex",
               alignItems: "center",
-              gap: 18,
+              gap: 14,
               fontFamily: fonts.sans,
             }}
           >
-            {/* 작은 LoopIcon — 9s 부터 펄스 */}
-            <div style={{ flexShrink: 0 }}>
-              <LoopIcon
-                width={88}
-                height={84}
-                color={colors.accent}
-                pulse
-                pulseDelaySec={6.0}
-              />
-            </div>
+            <span
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: 8,
+                background: colors.success,
+                color: "#ffffff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 18,
+                fontWeight: 800,
+              }}
+            >
+              ✓
+            </span>
             <div>
               <div
                 style={{
@@ -128,7 +131,7 @@ export const Scene01: React.FC = () => {
                   textTransform: "uppercase",
                 }}
               >
-                2강 완료
+                2강 회상
               </div>
               <div
                 style={{
@@ -137,43 +140,17 @@ export const Scene01: React.FC = () => {
                   color: colors.ink,
                   letterSpacing: "-0.01em",
                   marginTop: 2,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
                 }}
               >
-                순서도의 고리 ✓
+                <LoopIcon width={36} height={36} color={colors.accent} />
+                순서도의 고리
               </div>
             </div>
           </div>
         </FadeIn>
-
-        {/* "= 반복문" 라벨 — 9s 부터 fade-in (펄스와 동시 진입) */}
-        <div
-          style={{
-            position: "absolute",
-            top: -8,
-            right: -180,
-            display: "flex",
-            justifyContent: "flex-start",
-          }}
-        >
-          <FadeIn delaySec={6.5} translateY={-6}>
-            <div
-              style={{
-                padding: "8px 18px",
-                borderRadius: radii.pill,
-                background: colors.accentSoft,
-                color: colors.accentInk,
-                fontFamily: fonts.sans,
-                fontSize: 22,
-                fontWeight: 700,
-                letterSpacing: "-0.01em",
-                border: `1.5px solid ${colors.accent}`,
-                whiteSpace: "nowrap",
-              }}
-            >
-              = 반복문
-            </div>
-          </FadeIn>
-        </div>
       </div>
     </PageBackground>
   );

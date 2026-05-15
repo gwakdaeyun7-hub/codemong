@@ -1,7 +1,8 @@
 /**
  * Scene 11 — 정리 + 5강 예고 (s11, ~23.52s)
  *
- * v3 — lesson-3 Scene13 패턴 모사로 갈아엎음 (시즌 통일).
+ * v4 — 시즌 정형 timing 통일 (체크리스트 0.6 + i × 0.35,
+ *      다음 강의 1.8 [4항목 보정], LowerThird 3.0).
  *
  * - 화면 좌측 절반: 오늘 한 일 체크리스트 4줄, 각 줄 좌측에 ✓
  *     "받기 — input()"
@@ -13,16 +14,6 @@
  *     "조건문"
  *     카드 우측에 작은 화살표 →
  * - 화면 하단 lower-third: "오늘은 사용자 입력으로 한 흐름을 완성했습니다"
- *
- * v2 대비 변경:
- *   - 4단 StepsCard (slide-out) / 3중 중첩 EmphasisPulse / EndLabel 전부 제거
- *   - lesson-3 Scene13 의 정적 마무리 패턴 차용 (시즌 통일)
- *
- * 타이밍 (scene local, 총 ~23.52s):
- *   0.5s ~ 2.5s : 좌측 체크리스트 4줄 sequential fade-in (0.5s 간격)
- *   3.0s ~ 4.0s : 우측 다음 강의 카드 fade-in
- *   5.0s ~ 6.0s : 하단 lower-third fade-in
- *   18s ~ 23.5s: 영상 끝까지 머무름 (페이드 아웃 없음)
  */
 
 import React from "react";
@@ -58,7 +49,7 @@ export const Scene11: React.FC = () => {
         }}
       >
         {/* Left: checklist */}
-        <FadeIn delaySec={0.5} translateY={16}>
+        <FadeIn delaySec={0.2} translateY={16}>
           <Card style={{ width: 640, padding: "48px 48px" }}>
             <div
               style={{
@@ -85,7 +76,7 @@ export const Scene11: React.FC = () => {
             >
               {checklist.map((item, i) => (
                 <li key={item.label}>
-                  <FadeIn delaySec={0.8 + i * 0.5} translateY={8}>
+                  <FadeIn delaySec={0.6 + i * 0.35} translateY={8}>
                     <div
                       style={{
                         display: "flex",
@@ -144,7 +135,7 @@ export const Scene11: React.FC = () => {
         </FadeIn>
 
         {/* Right: next lesson */}
-        <FadeIn delaySec={3.0} translateY={20}>
+        <FadeIn delaySec={1.8} translateY={20}>
           <Card
             variant="accent"
             style={{
@@ -219,7 +210,7 @@ export const Scene11: React.FC = () => {
       </div>
       <LowerThird
         text="오늘은 사용자 입력으로 한 흐름을 완성했습니다"
-        delaySec={5.0}
+        delaySec={3.0}
       />
     </PageBackground>
   );

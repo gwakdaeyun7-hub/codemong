@@ -1,13 +1,9 @@
 /**
  * Scene 12 — 정리 + 다음 강의 예고 (12s)
  *
- * - 좌측 절반: 오늘 한 일 체크리스트 3줄, 각 줄 좌측에 ✓
- *     "파이썬 설치" / "버전 확인" / "파일 실행"
- * - 우측 절반: 다음 강의 예고 카드
- *     "다음 강의 — 2강"
- *     "코딩의 표현 방법: 자연어 / 의사코드 / 순서도"
- *     카드 우측에 작은 화살표 →
- * - lower-third: "Python 3 사용 권장"
+ * 시즌 정형 통일 (lesson-3 Scene13 baseline) — label + desc 구조,
+ * 좌 640 / 우 560 width, 다음 강의 제목 56, 부제 22, delaySec 1.6,
+ * 체크리스트 0.6 + i × 0.35.
  */
 
 import React from "react";
@@ -19,7 +15,17 @@ import {
 } from "../primitives";
 import { colors, fonts, radii } from "../theme";
 
-const checklist = ["파이썬 설치", "버전 확인", "파일 실행"];
+const checklist: { label: string; desc: React.ReactNode }[] = [
+  { label: "설치", desc: "공식 사이트에서 받기" },
+  {
+    label: "버전 확인",
+    desc: <span style={{ fontFamily: fonts.mono }}>python --version</span>,
+  },
+  {
+    label: "실행",
+    desc: <span style={{ fontFamily: fonts.mono }}>python file.py</span>,
+  },
+];
 
 export const Scene12: React.FC = () => {
   return (
@@ -39,7 +45,7 @@ export const Scene12: React.FC = () => {
       >
         {/* Left: checklist */}
         <FadeIn delaySec={0.2} translateY={16}>
-          <Card style={{ width: 600, padding: "48px 48px" }}>
+          <Card style={{ width: 640, padding: "48px 48px" }}>
             <div
               style={{
                 fontFamily: fonts.sans,
@@ -63,8 +69,8 @@ export const Scene12: React.FC = () => {
                 gap: 22,
               }}
             >
-              {checklist.map((text, i) => (
-                <li key={i}>
+              {checklist.map((item, i) => (
+                <li key={item.label}>
                   <FadeIn delaySec={0.6 + i * 0.35} translateY={8}>
                     <div
                       style={{
@@ -72,10 +78,6 @@ export const Scene12: React.FC = () => {
                         alignItems: "center",
                         gap: 20,
                         fontFamily: fonts.sans,
-                        fontSize: 38,
-                        fontWeight: 600,
-                        color: colors.ink,
-                        letterSpacing: "-0.01em",
                       }}
                     >
                       <span
@@ -95,7 +97,29 @@ export const Scene12: React.FC = () => {
                       >
                         ✓
                       </span>
-                      {text}
+                      <div>
+                        <span
+                          style={{
+                            fontSize: 32,
+                            fontWeight: 800,
+                            color: colors.ink,
+                            letterSpacing: "-0.02em",
+                          }}
+                        >
+                          {item.label}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: 26,
+                            fontWeight: 500,
+                            color: colors.inkMuted,
+                            letterSpacing: "-0.01em",
+                            marginLeft: 14,
+                          }}
+                        >
+                          — {item.desc}
+                        </span>
+                      </div>
                     </div>
                   </FadeIn>
                 </li>
@@ -104,11 +128,11 @@ export const Scene12: React.FC = () => {
           </Card>
         </FadeIn>
         {/* Right: next lesson */}
-        <FadeIn delaySec={1.4} translateY={20}>
+        <FadeIn delaySec={1.6} translateY={20}>
           <Card
             variant="accent"
             style={{
-              width: 600,
+              width: 560,
               padding: "48px 48px",
               borderRadius: radii.card,
             }}
@@ -130,12 +154,12 @@ export const Scene12: React.FC = () => {
             <div
               style={{
                 fontFamily: fonts.sans,
-                fontSize: 40,
+                fontSize: 56,
                 fontWeight: 800,
                 color: colors.accentInk,
                 letterSpacing: "-0.02em",
-                lineHeight: 1.3,
-                marginBottom: 24,
+                lineHeight: 1.2,
+                marginBottom: 18,
               }}
             >
               코딩의 표현 방법
@@ -143,11 +167,12 @@ export const Scene12: React.FC = () => {
             <div
               style={{
                 fontFamily: fonts.sans,
-                fontSize: 26,
+                fontSize: 22,
                 fontWeight: 500,
                 color: colors.accentInk,
                 letterSpacing: "-0.01em",
                 opacity: 0.85,
+                lineHeight: 1.5,
               }}
             >
               자연어 / 의사코드 / 순서도
