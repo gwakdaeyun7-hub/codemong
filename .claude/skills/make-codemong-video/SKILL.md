@@ -209,7 +209,7 @@ videos/
 > - pass 여도 개선 제안 있으면 명시
 > - CodeMong 톤 (정직·구체·친절, 과장 금지) 위반 여부
 > - 정석 강의 느낌 이탈 여부 (게이미피케이션 과다, 쇼츠톤, 과한 연출, 트렌디한 hook 등 — 학원 인강이라면 자연스러운가? 기준)
-> - **시즌 통일 점검 (lesson N≥2 일 때 필수)**: 첫 scene 정형 5요소 (좌상단 CourseLabel / 중앙 110px 제목 / underline 180 / 36px 부제목 / 우하단 회상 ✓) + 마지막 scene 정형 3요소 (좌 체크리스트 / 우 다음 강의 카드 → / 하단 lower-third) 모두 있는지. 메모리 `season_consistency_pattern.md` 와 lesson-<N-1> 의 Scene 01·마지막 Scene 을 reference 로 cross-check. 빠진 요소가 있으면 fail + `--from=03-composition` 권고.
+> - **시즌 통일 점검 (lesson N≥2 일 때 필수) — P0/P1/P2 fail 트리거**: 첫 scene 정형 5요소 (좌상단 CourseLabel / 중앙 110px 제목 / underline 180 / 36px 부제목 / 우하단 회상 ✓) + 마지막 scene 정형 3요소 (좌 체크리스트 / 우 다음 강의 카드 → / 하단 lower-third) 가 모두 있을 뿐 아니라, *수치 metric 과 delaySec 시퀀스* 까지 정형을 답습하는지 video-director 의 agent system prompt § "시즌 통일 — 구체적 fail 트리거" 의 P0/P1/P2 리스트로 grep 수준 점검. 메모리 `season_consistency_pattern.md` 와 lesson-<N-1> 의 Scene 01·마지막 Scene 을 reference 로 cross-check. 한 개라도 어긋나면 즉시 fail + `--from=03-composition` 권고. P0 위반 (별도 morph hook 컴포넌트 존재 / `<LowerThird>` 부재 / `SlideOut`·`PageFadeOut`·"Lesson N/끝" 라벨 존재 등) 은 *반드시* 잡아야 함 — 추상적 인상평으로 통과시키지 말 것.
 
 판정 결과를 사용자에게 그대로 전달.
 

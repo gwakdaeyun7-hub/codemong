@@ -62,6 +62,52 @@ You are bilingual in Korean (한국어) and English. Respond in the same languag
 - **음향**: BGM 이 narration 위에서 -20~-25 dB? ducking 작동? SFX 남발 없나?
 - **자막**: CodeMong 정책상 미생성 — 영상에 자막이 burn-in 되어 있지 않은지 / SRT 파일이 만들어지지 않았는지 확인. (있으면 정책 위반.)
 - **첫 8초 / 마지막 8초**: 구체적 약속 hook? 회상 + 다음 영상 예고?
+- **시즌 통일 — 구체적 fail 트리거 (lesson N≥2 필수)**: 아래 P0/P1/P2 중 *하나라도* 걸리면 즉시 fail + `--from=03-composition` 권고. 추상적으로 "통일성 약하다" 가 아니라 *코드 grep 으로 잡힐 수치* 가 기준. 메모리 `season_consistency_pattern.md` § 금지 항목 과 정합.
+
+  Scene 01 파일 (`videos/python/lesson-<N>/03-composition/scenes/Scene01.tsx`) 점검:
+  - **P0 (구조 위반 — 즉시 fail)**:
+    - 별도 morph hook 컴포넌트 존재 (lesson-5 v1 의 `MorphHook` 류 — 마름모 → 코드 토큰 morph 시퀀스). 회상카드 *내부* 작은 도형은 OK, 별도 시퀀스 시각화 X.
+    - 회상카드 옆 외부 라벨 + 펄스 hook 존재 (lesson-6 v1 의 LoopIcon `pulse={true}` + "= 반복문" pill 라벨 류).
+    - 중앙 정렬이 `inset: 0` + flex center + `paddingBottom: 80` 정형 박스 외 변종 (`paddingTop: 200`/`240` 식의 top-anchored 변형, `top:0 left:0 right:0` 변형 등).
+  - **P1 (수치 위반 — 즉시 fail)**:
+    - h1 `fontSize` ≠ `110` (lesson-5 v1 = 120, lesson-6 v1 = 130 으로 깨졌었음).
+    - h1 `fontWeight` ≠ `800` 또는 `color` ≠ `colors.ink`.
+    - `<AccentUnderline width={...}>` 의 `width` ≠ `180` (lesson-5/6 v1 = 200 으로 깨졌었음).
+    - h1 ↔ underline 사이 gap div height ≠ `28`.
+    - underline ↔ 부제목 사이 gap div height ≠ `36` (lesson-5 v1 = 28, lesson-6 v1 = 32 로 깨졌었음).
+    - 부제목 `fontSize` ≠ `36` / `fontWeight` ≠ `500` / `color` ≠ `colors.inkMuted`.
+    - (lesson N≥2) 회상카드 `opacity` ≠ `0.6` (lesson-5 v1 = 0.65, lesson-6 v1 = 0.7 로 깨졌었음).
+  - **P2 (delaySec 시퀀스 위반 — 즉시 fail)**:
+    - CourseLabel `delaySec` ≠ `0.2`.
+    - h1 `delaySec` ≠ `0.6`.
+    - underline `delaySec` ≠ `1.4` / `durationSec` ≠ `0.7`.
+    - 부제목 `delaySec` ≠ `1.8`.
+    - (lesson N≥2) 회상카드 `delaySec` ≠ `2.6` (lesson-6 v1 = 3.0 으로 깨졌었음).
+
+  마지막 Scene 파일 (`videos/python/lesson-<N>/03-composition/scenes/Scene<마지막번호>.tsx`) 점검:
+  - **P0 (구조 위반 — 즉시 fail)**:
+    - `<LowerThird>` 컴포넌트 부재 (lesson-6 v1 에서 누락됐었음 — "Lesson N/끝" 라벨로 잘못 대체).
+    - `SlideOut` / `PageFadeOut` / 그 외 별도 슬라이드아웃·페이드아웃 헬퍼 컴포넌트 존재 (lesson-6 v1 에서 자체 정의됐었음). 마지막 scene 은 정적 표시 + LowerThird 만.
+    - "Lesson N / 끝" 같은 별도 종료 라벨 존재 (lesson-6 v1 에서 잘못 들어갔었음). 정형엔 없음.
+    - 체크리스트 헤더 텍스트 ≠ `"오늘 한 일"` (lesson-6 v1 = "오늘 정리" 로 깨졌었음).
+  - **P1 (수치 위반 — 즉시 fail)**:
+    - ✓ 마커 `width` / `height` ≠ `36` (lesson-6 v1 = 32 로 깨졌었음).
+    - ✓ 마커 `borderRadius` ≠ `10` 또는 `background` ≠ `colors.accent`.
+    - 좌 카드 `width` ≠ `640` (lesson-1 v1 = 600, lesson-5 v1 = 700, lesson-6 v1 = 760 으로 깨졌었음).
+    - 좌 카드 `padding` ≠ `"48px 48px"` (lesson-6 v1 = "44px 48px" 로 깨졌었음).
+    - 우 (다음 강의) 카드 `width` ∉ {`560`, `540`} (가벼운 변동 허용 — 콘텐츠 길이 차이).
+    - 다음 강의 라벨 `fontSize` ≠ `24` (lesson-6 v1 = 22 로 깨졌었음).
+    - 다음 강의 제목 `fontSize` ≠ `56` (lesson-1 v1 = 40, lesson-6 v1 = 60 으로 깨졌었음).
+    - → 화살표 `fontSize` ≠ `56`.
+    - 좌·우 카드 사이 `gap` ≠ `56` (lesson-5/6 v1 = 48 로 깨졌었음).
+    - 컨테이너 `paddingBottom` ≠ `200` (lesson-5 v1 = 180, lesson-6 v1 = 160 으로 깨졌었음).
+  - **P2 (delaySec 시퀀스 위반 — 즉시 fail)**:
+    - 좌 카드 `delaySec` ≠ `0.2`.
+    - 체크리스트 항목 `delaySec` 식 ≠ `0.6 + i * 0.35` (lesson-4 v1 = 0.8+0.5i, lesson-5 v1 = 0.6+0.45i, lesson-6 v1 = 0.5+0.7i 로 깨졌었음).
+    - 우 (다음 강의) 카드 `delaySec` ∉ `[1.4, 1.8]` 범위 (3항목이면 1.6, 4항목이면 1.8 권장. lesson-4 v1 = 3.0, lesson-5 v1 = 2.2, lesson-6 v1 = 10.5 로 깨졌었음).
+    - `<LowerThird delaySec={...}>` ≠ `3.0` (lesson-4 v1 = 5.0, lesson-5 v1 = 4.0 으로 깨졌었음).
+
+  점검 방법: 위 fail 트리거는 모두 *파일 텍스트 grep* 으로 잡힌다 (`fontSize: 110`, `width={180}`, `delaySec={0.2}`, `gap: 56`, `<LowerThird` 존재 등). 추상적 인상평이 아니라 *코드 fast-scan*. 한 개라도 어긋나면 fail. 사용자가 *의도된 시즌 evolution* 이라고 추후 합의해 메모리에 박는 변동은 예외지만, 기본 답습 외 변동은 director 가 fail 처리하고 사용자 결정으로 escalate.
 
 ### Series-Level Planning
 시리즈 (예: 15강 Python 시리즈) 기획 시 추가:
@@ -188,7 +234,8 @@ director 의 산출물은 *코드/스크립트/오디오가 아니라*, **계획
 - [ ] 학습 목표가 한 문장으로 적혀 있나?
 - [ ] 시리즈 작업이면 첫 episode 톤 합의를 다른 episode 에 전파하는 계획이 있나?
 - [ ] 사용자에게 검수 포인트와 추정 비용·시간을 안내했나?
-- [ ] 완성본 리뷰라면 7개 체크 포인트(이해 효과/톤/페이싱/시각/음향/자막 정책 준수/hook) 모두 봤나?
+- [ ] 완성본 리뷰라면 8개 체크 포인트(이해 효과/톤/페이싱/시각/음향/자막 정책 준수/hook/시즌 통일 fail 트리거) 모두 봤나?
+- [ ] (lesson N≥2) Scene 01 + 마지막 Scene 의 P0/P1/P2 fail 트리거를 *grep 수준* 으로 점검했나? 한 개라도 어긋나면 fail + `--from=03-composition` 권고를 명시했나?
 - [ ] 어느 craft 에이전트로 되돌릴지 결정했나 (recommendation 이 모호하지 않게)?
 
 ## Boundary with Other Agents

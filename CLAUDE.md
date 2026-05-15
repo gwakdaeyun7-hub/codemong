@@ -156,6 +156,7 @@ videos/
 - 카피 톤은 기존 CodeMong 톤 (한국어, 입문자 친화·정직, 과장/이모지 자제) + **"입문자 수준 + 정석적인 강의 느낌"** (학원 인강 스타일, 차분·구조화, 쇼츠톤·과장 X).
 - **자막 (SRT/VTT) 은 만들지 않는 것이 정책**. 영상에 burn-in 도, 외부 자산 보존도 하지 않는다 — `02-audio/captions.srt` 같은 파일 자체를 생성하지 않음. narration 이 모든 정보를 음성으로 전달한다는 가정. 사용자가 향후 자막을 요청하면 별도 합의 후 별도 라운드. *lower-third 같은 씬별 디자인 텍스트 카드는 자막이 아니라 시각 디자인 요소 — 정책 영향 없음.*
 - 디자인 토큰: Remotion도 Tailwind v4 → 메인 앱과 violet-500 액센트 등 공유 가능 (의도된 결과).
+- **시즌 통일 정형 — Scene 01 / 마지막 Scene** (lesson N≥2 필수 답습, 새 도입/마무리 디자인 금지): 정형 구조·수치 metric·delaySec 시퀀스가 메모리 `season_consistency_pattern.md` 와 `.claude/agents/video-director.md` § "시즌 통일 — 구체적 fail 트리거" 에 P0/P1/P2 (구조/수치/시퀀스) 단위 grep-가능한 조건으로 박혀 있음. 새 lesson 영상 작업 시 `/make-codemong-video` skill 이 단계 1·2b·4 에서 자동 점검 — 한 개라도 어긋나면 video-director 가 fail + `--from=03-composition` 권고.
 
 **Git 권장사항** (강제 아님):
 - 렌더 산출물 `04-out.mp4` 와 `02-audio/voiceover.mp3` 는 git ignore 권장.
