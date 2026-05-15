@@ -122,15 +122,16 @@ export const Scene05: React.FC = () => {
               gap: 18,
             }}
           >
-            {/* v3 reveal 타이밍 정렬: narration "정답은 14입니다" 등장 ~9s */}
-            <QuestionBox revealAtSec={9.0} answer="14" width={260} height={180} fontSize={88} />
+            {/* v4 reveal 타이밍: a2 audio 시작 ≈ 10.965s, "14" 발화 ≈ 11.5s.
+                narration "정답은 14입니다" 의 "14" 단어와 동기. */}
+            <QuestionBox revealAtSec={11.5} answer="14" width={260} height={180} fontSize={88} />
             <div style={{ height: 6 }} />
             <CountdownDots startSec={3.6} count={3} stepSec={0.8} size={18} />
           </div>
         </FadeIn>
 
-        {/* 풀이 라벨 — v3 reveal 정렬 후 9.6s 부터 등장 */}
-        <FadeIn delaySec={9.6} translateY={10}>
+        {/* 풀이 라벨 — v4 정답 reveal 후 자연스럽게 따라옴, narration 분해와 동기 */}
+        <FadeIn delaySec={13.0} translateY={10}>
           <div
             style={{
               fontFamily: fonts.sans,
@@ -141,15 +142,15 @@ export const Scene05: React.FC = () => {
               textAlign: "center",
             }}
           >
-            {/* v3 dead-air pulse #1: 11.5s — narration "3 곱하기 4는 12" */}
-            <EmphasisPulse atSec={11.5} scaleAmp={0.18} durationSec={0.6}>
+            {/* v4 pulse #1: 14.5s — narration "3 곱하기 4는 12" */}
+            <EmphasisPulse atSec={14.5} scaleAmp={0.18} durationSec={0.6}>
               <span style={{ fontFamily: fonts.mono, color: colors.accentDeep, fontWeight: 800 }}>
                 3 * 4 = 12
               </span>
             </EmphasisPulse>
             {", "}
-            {/* v3 dead-air pulse #2: 14.5s — narration "거기에 2를 더해 14" */}
-            <EmphasisPulse atSec={14.5} scaleAmp={0.18} durationSec={0.6}>
+            {/* v4 pulse #2: 17.0s — narration "거기에 2를 더해 14" */}
+            <EmphasisPulse atSec={17.0} scaleAmp={0.18} durationSec={0.6}>
               <span style={{ fontFamily: fonts.mono, color: colors.accentDeep, fontWeight: 800 }}>
                 12 + 2 = 14
               </span>

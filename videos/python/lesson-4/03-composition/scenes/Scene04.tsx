@@ -128,14 +128,16 @@ export const Scene04: React.FC = () => {
         </FadeIn>
       </div>
 
+      {/* v4 fix: 우측 padding 80 → 200 — 예시 카드가 화면 끝에 너무 붙던 문제 해결,
+          좌측 표와의 시각적 균형을 위해 안쪽으로 당김. */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           display: "flex",
           alignItems: "center",
-          padding: "120px 80px 60px",
-          gap: 56,
+          padding: "120px 200px 60px 80px",
+          gap: 64,
         }}
       >
         {/* 좌 — 표 + 우선순위 카드 */}

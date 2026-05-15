@@ -18,7 +18,6 @@ import {
   CodePanel,
   ConsoleLine,
   ConsolePanel,
-  EmphasisPulse,
   FadeIn,
   OperatorTable,
   OpRow,
@@ -146,10 +145,8 @@ export const Scene06: React.FC = () => {
               비교의 결과는{" "}
               <span style={{ fontFamily: fonts.mono, color: colors.accent }}>True</span> /{" "}
               <span style={{ fontFamily: fonts.mono, color: colors.accent }}>False</span> 라는{" "}
-              {/* dead-air pulse: 17s — narration "값으로 나옵니다" 의 "값" 강조 */}
-              <EmphasisPulse atSec={17.0} scaleAmp={0.25} durationSec={0.6}>
-                <span style={{ color: colors.accent, fontWeight: 800, fontSize: 26 }}>값</span>
-              </EmphasisPulse>
+              {/* v4 fix: scale pulse 모션 제거 — 의미 없는 커졌다 작아짐 움직임 빼고 정적으로 강조만 유지 */}
+              <span style={{ color: colors.accent, fontWeight: 800, fontSize: 26 }}>값</span>
             </div>
           </FadeIn>
         </div>

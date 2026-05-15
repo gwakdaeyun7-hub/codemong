@@ -16,72 +16,88 @@ import React from "react";
 import { CodePanel, CodeLine, FadeIn, PageBackground, PyToken, VarBox } from "../primitives";
 import { colors, fonts, radii, shadows } from "../theme";
 
+// v4 fix: FadeIn outer 에 style 전달하여 flex:1 적용 — SplitColumn 이 부모 flex 컨테이너에서
+// 양쪽 등간격으로 펼쳐지도록. 기존엔 FadeIn outer div 가 flex:1 을 못 받아 두 컬럼이
+// 페이지 왼쪽에 차곡차곡 쌓여 "좌박스는 왼쪽 / 우박스는 중앙" 처럼 보이던 문제 해결.
 const SplitColumn: React.FC<{
   title: React.ReactNode;
   delaySec: number;
   children: React.ReactNode;
 }> = ({ title, delaySec, children }) => {
   return (
-    <FadeIn delaySec={delaySec} translateY={20}>
+    <FadeIn
+      delaySec={delaySec}
+      translateY={20}
+      style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 28,
+      }}
+    >
       <div
         style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
+          display: "inline-flex",
           alignItems: "center",
-          justifyContent: "center",
-          gap: 28,
+          gap: 14,
+          padding: "12px 28px",
+          borderRadius: radii.pill,
+          background: colors.bgWhite,
+          border: `1px solid ${colors.border}`,
+          boxShadow: shadows.cardSoft,
+          fontFamily: fonts.sans,
+          fontSize: 28,
+          fontWeight: 700,
+          color: colors.ink,
+          letterSpacing: "-0.01em",
         }}
       >
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 14,
-            padding: "12px 28px",
-            borderRadius: radii.pill,
-            background: colors.bgWhite,
-            border: `1px solid ${colors.border}`,
-            boxShadow: shadows.cardSoft,
-            fontFamily: fonts.sans,
-            fontSize: 28,
-            fontWeight: 700,
-            color: colors.ink,
-            letterSpacing: "-0.01em",
-          }}
-        >
-          {title}
-        </div>
-        {children}
+        {title}
       </div>
+      {children}
     </FadeIn>
   );
 };
 
-// v3 fix: width/height 260x120 명시 — 좌측 VarBox 와 시각적 대칭 확보.
+// v4 fix: ResultBox 위에 VarBox label 만큼 spacer 추가 — 두 SplitColumn 안의
+// 박스 본체 vertical center 좌표가 일치하도록. (VarBox 외부 = label ~43 + gap 10 + box 120 = 173;
+// ResultBox 도 동일 외부 높이로 맞춰 SplitColumn justifyContent: center 가 양쪽에 동일하게 작용.)
 const ResultBox: React.FC<{ text: string; delaySec: number }> = ({ text, delaySec }) => {
   return (
     <FadeIn delaySec={delaySec} translateY={12}>
       <div
         style={{
-          width: 260,
-          height: 120,
-          padding: "20px 36px",
-          borderRadius: 16,
-          background: colors.accentSoft,
-          border: `2px solid ${colors.accent}`,
-          fontFamily: fonts.mono,
-          fontSize: 42,
-          fontWeight: 800,
-          color: colors.accentDeep,
-          letterSpacing: "-0.01em",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          boxSizing: "border-box",
+          gap: 10,
         }}
       >
-        → {text}
+        {/* VarBox label 자리 — 시각적 정렬 spacer (보이지 않음) */}
+        <div style={{ height: 43, width: 260 }} aria-hidden />
+        <div
+          style={{
+            width: 260,
+            height: 120,
+            padding: "20px 36px",
+            borderRadius: 16,
+            background: colors.accentSoft,
+            border: `2px solid ${colors.accent}`,
+            fontFamily: fonts.mono,
+            fontSize: 42,
+            fontWeight: 800,
+            color: colors.accentDeep,
+            letterSpacing: "-0.01em",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxSizing: "border-box",
+          }}
+        >
+          → {text}
+        </div>
       </div>
     </FadeIn>
   );

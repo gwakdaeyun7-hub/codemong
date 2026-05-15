@@ -180,33 +180,41 @@ const PhaseA: React.FC = () => {
 const ConsoleResultSwap: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const opacity35 = interpolate(frame, [10 * fps, 10.4 * fps, 24 * fps, 25 * fps], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const opacity8 = interpolate(frame, [25 * fps, 25.5 * fps], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const labelOpacity35 = interpolate(
+  // v4 fix: 35 fade-out 0.5s, 그 후 0.2s gap, 8 fade-in 0.4s — 두 div 가 동시에 보이지 않도록.
+  const opacity35 = interpolate(
     frame,
-    [10.6 * fps, 11.4 * fps, 24 * fps, 25 * fps],
+    [10 * fps, 10.4 * fps, 24 * fps, 24.5 * fps],
     [0, 1, 1, 0],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     },
   );
-  const labelOpacity8 = interpolate(frame, [26 * fps, 27 * fps], [0, 1], {
+  const opacity8 = interpolate(frame, [24.7 * fps, 25.1 * fps], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  // 결과 35 / 결과 8 을 같은 자리(absolute)에 겹쳐 swap.
-  // v3 fix: 35 fontSize 56 → 44 (라벨 24 와 비례 자연스럽게), 결과 8 도 같은 크기.
-  // 35 fade-out 과 동시에 8 이 같은 자리에 등장 → vertical 위치가 올라간 듯한 효과.
+  const labelOpacity35 = interpolate(
+    frame,
+    [10.6 * fps, 11.4 * fps, 24 * fps, 24.5 * fps],
+    [0, 1, 1, 0],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
+  );
+  const labelOpacity8 = interpolate(frame, [25.5 * fps, 26.2 * fps], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  // v4 fix: fontSize 44 → 32 — 입력값(콘솔 fontSize 30)과 비례 자연스럽게.
+  // 라벨 top 52 → 60 — 결과 글자와 라벨 사이 여백 확보.
+  // whiteSpace nowrap — "출력: 8" 한 줄 보장.
+  const resultFontSize = 32;
+  const labelTop = 60;
   return (
     <>
-      <div style={{ position: "relative", minHeight: 86 }}>
+      <div style={{ position: "relative", minHeight: 100 }}>
         {/* 결과 35 (잘못된 결과) */}
         <div
           style={{
@@ -216,7 +224,8 @@ const ConsoleResultSwap: React.FC = () => {
             opacity: opacity35,
             display: "flex",
             alignItems: "center",
-            gap: 18,
+            gap: 14,
+            whiteSpace: "nowrap",
           }}
         >
           <span style={{ color: colors.darkMuted, fontSize: 24, fontFamily: fonts.sans }}>
@@ -225,7 +234,7 @@ const ConsoleResultSwap: React.FC = () => {
           <span
             style={{
               color: colors.danger,
-              fontSize: 44,
+              fontSize: resultFontSize,
               fontWeight: 800,
               fontFamily: fonts.mono,
             }}
@@ -236,19 +245,20 @@ const ConsoleResultSwap: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 52,
+            top: labelTop,
             left: 0,
             opacity: labelOpacity35,
             fontFamily: fonts.sans,
             fontSize: 20,
             fontWeight: 600,
             color: colors.darkMuted,
+            whiteSpace: "nowrap",
           }}
         >
           기대: 8, 실제: 35
         </div>
 
-        {/* 결과 8 (올바른 결과) — 25s swap, 35 의 같은 자리에 등장 */}
+        {/* 결과 8 (올바른 결과) — 35 fade-out 완료 후 0.2s gap 두고 등장 */}
         <EmphasisPulse atSec={27.0}>
           <div
             style={{
@@ -258,7 +268,8 @@ const ConsoleResultSwap: React.FC = () => {
               opacity: opacity8,
               display: "flex",
               alignItems: "center",
-              gap: 18,
+              gap: 14,
+              whiteSpace: "nowrap",
             }}
           >
             <span style={{ color: colors.darkMuted, fontSize: 24, fontFamily: fonts.sans }}>
@@ -267,7 +278,7 @@ const ConsoleResultSwap: React.FC = () => {
             <span
               style={{
                 color: colors.darkAccent,
-                fontSize: 44,
+                fontSize: resultFontSize,
                 fontWeight: 800,
                 fontFamily: fonts.mono,
               }}
@@ -279,13 +290,14 @@ const ConsoleResultSwap: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 52,
+            top: labelTop,
             left: 0,
             opacity: labelOpacity8,
             fontFamily: fonts.sans,
             fontSize: 20,
             fontWeight: 600,
             color: colors.success,
+            whiteSpace: "nowrap",
           }}
         >
           기대: 8, 실제: 8
