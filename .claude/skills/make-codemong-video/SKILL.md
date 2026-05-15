@@ -210,6 +210,12 @@ videos/
 > - CodeMong 톤 (정직·구체·친절, 과장 금지) 위반 여부
 > - 정석 강의 느낌 이탈 여부 (게이미피케이션 과다, 쇼츠톤, 과한 연출, 트렌디한 hook 등 — 학원 인강이라면 자연스러운가? 기준)
 > - **시즌 통일 점검 (lesson N≥2 일 때 필수) — P0/P1/P2 fail 트리거**: 첫 scene 정형 5요소 (좌상단 CourseLabel / 중앙 110px 제목 / underline 180 / 36px 부제목 / 우하단 회상 ✓) + 마지막 scene 정형 3요소 (좌 체크리스트 / 우 다음 강의 카드 → / 하단 lower-third) 가 모두 있을 뿐 아니라, *수치 metric 과 delaySec 시퀀스* 까지 정형을 답습하는지 video-director 의 agent system prompt § "시즌 통일 — 구체적 fail 트리거" 의 P0/P1/P2 리스트로 grep 수준 점검. 메모리 `season_consistency_pattern.md` 와 lesson-<N-1> 의 Scene 01·마지막 Scene 을 reference 로 cross-check. 한 개라도 어긋나면 즉시 fail + `--from=03-composition` 권고. P0 위반 (별도 morph hook 컴포넌트 존재 / `<LowerThird>` 부재 / `SlideOut`·`PageFadeOut`·"Lesson N/끝" 라벨 존재 등) 은 *반드시* 잡아야 함 — 추상적 인상평으로 통과시키지 말 것.
+> - **P3 — 누적 quality rules 점검 (필수)**: `videos/_assets/quality-rules.md` 를 `Read` 로 로드해 ACTIVE 상태 룰 전체를 훑는다.
+>   - Category G (Grep-able) 룰: 명시된 grep 패턴/조건으로 `03-composition/scenes/*.tsx` fast-scan. 일치(=위반)면 fail.
+>   - Category R (Review) 룰: 영상 final cut 을 비주얼로 점검.
+>   - Category N (Narration) 룰: 합성된 voiceover.mp3 를 청취해 잘못 발음된 단어 확인 (또는 사용자 보고 인용).
+>   - 한 개라도 위반 시 fail + 적절한 `--from=` 권고 (G/R → `--from=03-composition`, N → `--from=01-script`).
+>   - 리뷰 후 *재발 가능한 새 패턴* 발견 시 사용자 합의 후 `quality-rules.md` 에 다음 ID(R-NNN)로 append — 룰은 시간이 갈수록 누적되며, 새 영상부터 적용된다.
 
 판정 결과를 사용자에게 그대로 전달.
 

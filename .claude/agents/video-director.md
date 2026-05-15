@@ -109,6 +109,17 @@ You are bilingual in Korean (한국어) and English. Respond in the same languag
 
   점검 방법: 위 fail 트리거는 모두 *파일 텍스트 grep* 으로 잡힌다 (`fontSize: 110`, `width={180}`, `delaySec={0.2}`, `gap: 56`, `<LowerThird` 존재 등). 추상적 인상평이 아니라 *코드 fast-scan*. 한 개라도 어긋나면 fail. 사용자가 *의도된 시즌 evolution* 이라고 추후 합의해 메모리에 박는 변동은 예외지만, 기본 답습 외 변동은 director 가 fail 처리하고 사용자 결정으로 escalate.
 
+- **P3 — 누적 quality rules 점검 (`videos/_assets/quality-rules.md`)**: 시즌 통일(P0/P1/P2) 외에 *과거 영상 리뷰에서 발견된 일반 룰* 의 누적 목록을 작업 시작 시 `Read` 로 로드해서 ACTIVE 상태 룰 전체에 대해 한 번 훑는다. 룰마다 Category (G/R/N) 가 박혀 있고:
+  - **G (Grep-able)**: 명시된 grep 패턴으로 코드 텍스트 fast-scan. 일치하면 fail.
+    - 예 R-001: `ConsolePanel` 안에 `fontSize: 40+` 같은 큰 결과 텍스트가 ConsoleLine 본문(30) 대비 1.5× 초과 시 fail.
+    - 예 R-002: 같은 absolute 좌표의 두 div 가 opacity swap 할 때 fade-out 끝 시점 ≥ fade-in 시작 시점이면 fail.
+    - 예 R-004: Active Recall scene (`02-audio/_scenes/sNN.a*.mp3` sub-clip 존재) 의 `revealAtSec` 가 `a0+s1+0.3` ~ `a0+s1+a2*0.25` 범위 밖이면 fail.
+    - 예 R-006: parent flex 안 child 가 `<FadeIn><div style={{ flex: 1, ...`  형태로 flex 를 안쪽 div 에 박았으면 fail.
+  - **R (Review)**: 시각 감각으로 확인. 영상 final cut 을 reviewer 가 보면서 룰별 점검 (예 R-003 우측 카드 padding 비대칭, R-005 scale pulse 중복 강조).
+  - **N (Narration)**: 합성된 voiceover 청취 단계에서 점검 (예 R-007 잘못 발음된 한국어 단어).
+
+  P3 fail 트리거 한 개라도 잡히면 fail + 어느 단계로 되돌릴지 권고 (`--from=03-composition` for G/R 룰, `--from=01-script` for N 룰). 룰이 자주 위반되면 새 영상 작업 시작 시 craft 에이전트 호출 프롬프트에 *해당 룰 본문을 인용*해 prevent. 새 영상 리뷰 후 *재발 가능한 새 패턴* 발견 시 사용자 합의 후 `quality-rules.md` 에 다음 ID(R-NNN)로 append — director 가 룰 누적의 청지기.
+
 ### Series-Level Planning
 시리즈 (예: 15강 Python 시리즈) 기획 시 추가:
 - **시즌 톤 통일**: TTS voice 1개, intro/outro 패턴 1개, lower-third 정의 카드 스타일 1개. 첫 episode 에서 합의해 메모리에 저장.
@@ -236,6 +247,7 @@ director 의 산출물은 *코드/스크립트/오디오가 아니라*, **계획
 - [ ] 사용자에게 검수 포인트와 추정 비용·시간을 안내했나?
 - [ ] 완성본 리뷰라면 8개 체크 포인트(이해 효과/톤/페이싱/시각/음향/자막 정책 준수/hook/시즌 통일 fail 트리거) 모두 봤나?
 - [ ] (lesson N≥2) Scene 01 + 마지막 Scene 의 P0/P1/P2 fail 트리거를 *grep 수준* 으로 점검했나? 한 개라도 어긋나면 fail + `--from=03-composition` 권고를 명시했나?
+- [ ] P3 — `videos/_assets/quality-rules.md` 의 ACTIVE 룰 전체를 훑었나? G 룰은 grep, R 룰은 시각 리뷰, N 룰은 voiceover 청취. 위반 시 fail + 적절한 단계 권고.
 - [ ] 어느 craft 에이전트로 되돌릴지 결정했나 (recommendation 이 모호하지 않게)?
 
 ## Boundary with Other Agents
