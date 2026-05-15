@@ -1,38 +1,39 @@
 // 강의 상세(개념 탭) 화면 데이터 모듈 — 영상-only 모드.
 // 화면은 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시. 본문 카드(개념/구조/문법/예시/핵심정리/활용)는 제거됨.
 // 추후 본문을 다시 채우거나 새 콘텐츠 모델로 확장할 때 타입을 다시 늘릴 것.
-// MVP: lesson-1, lesson-2, lesson-3 정적 객체 보유. 추후 backend-developer가 만들 API로 교체 예정.
+// MVP: lesson-1, lesson-2, lesson-3, lesson-5 정적 객체 보유 (lesson-4 영상 미제작 — 의도적 미등록).
+// 추후 backend-developer가 만들 API로 교체 예정.
 // (이 파일은 클라이언트/서버 어디서든 import 가능한 순수 데이터 모듈)
 
 export type LessonVideo = {
-  posterDescription: string
-  transcriptSummary: string
+  posterDescription: string;
+  transcriptSummary: string;
   /** Next.js public/ 기준 절대 경로. 없으면 placeholder 카드만 노출. */
-  videoSrc?: string
-}
+  videoSrc?: string;
+};
 
 export type LessonNavTarget = {
-  number: number
-  title: string
-}
+  number: number;
+  title: string;
+};
 
 export type LessonNavigation = {
-  previous: LessonNavTarget | null
-  next: LessonNavTarget | null
-}
+  previous: LessonNavTarget | null;
+  next: LessonNavTarget | null;
+};
 
-export type LessonSubtab = "개념" | "응용" | "시각자료"
+export type LessonSubtab = "개념" | "응용" | "시각자료";
 
 export type LessonContent = {
-  lessonId: string
-  lessonNumber: number
-  title: string
-  durationMinutes: number
-  subtabs: LessonSubtab[]
-  activeSubtab: LessonSubtab
-  video: LessonVideo
-  navigation: LessonNavigation
-}
+  lessonId: string;
+  lessonNumber: number;
+  title: string;
+  durationMinutes: number;
+  subtabs: LessonSubtab[];
+  activeSubtab: LessonSubtab;
+  video: LessonVideo;
+  navigation: LessonNavigation;
+};
 
 export const pythonLesson1Content: LessonContent = {
   lessonId: "lesson-1",
@@ -51,7 +52,7 @@ export const pythonLesson1Content: LessonContent = {
     previous: null,
     next: { number: 2, title: "코딩의 표현 방법" },
   },
-}
+};
 
 export const pythonLesson2Content: LessonContent = {
   lessonId: "lesson-2",
@@ -70,7 +71,7 @@ export const pythonLesson2Content: LessonContent = {
     previous: { number: 1, title: "파이썬 개요 & 개발환경" },
     next: { number: 3, title: "변수와 자료형" },
   },
-}
+};
 
 export const pythonLesson3Content: LessonContent = {
   lessonId: "lesson-3",
@@ -89,28 +90,48 @@ export const pythonLesson3Content: LessonContent = {
     previous: { number: 2, title: "코딩의 표현 방법" },
     next: { number: 4, title: "입력과 연산자" },
   },
-}
+};
+
+export const pythonLesson5Content: LessonContent = {
+  lessonId: "lesson-5",
+  lessonNumber: 5,
+  title: "조건문",
+  durationMinutes: 20,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "조건에 따라 갈래로 흐르는 코드 — if / elif / else",
+    transcriptSummary:
+      "이 영상에서는 시험 점수에 따라 합격·재시험·불합격으로 갈라지는 예제로 if / elif / else 의 흐름을 따라가 봅니다. 마지막엔 로그인 상태와 관리자 권한을 함께 따지는 2단 중첩 코드를 읽으며, 입력값이 어느 분기로 흘러 들어가는지 한 줄씩 짚어 볼게요.",
+    videoSrc: "/videos/python-lesson-5.mp4",
+  },
+  navigation: {
+    previous: { number: 4, title: "입력과 연산자" },
+    next: { number: 6, title: "반복문" },
+  },
+};
 
 /**
  * (courseId, lessonId) → LessonContent 룩업.
- * MVP: (python | be-python) + (lesson-1 | lesson-2 | lesson-3) 매칭. 그 외는 호출부에서 notFound() 처리.
+ * MVP: (python | be-python) + (lesson-1 | lesson-2 | lesson-3 | lesson-5) 매칭.
+ * lesson-4 는 12강 시퀀스상 자리는 있지만 영상 미제작이라 의도적으로 미등록 — 호출부에서 notFound() 로 떨어짐.
+ * 그 외 id 도 마찬가지로 호출부에서 notFound() 처리.
  */
 const LESSON_CONTENT_INDEX: Record<string, Record<string, LessonContent>> = {
   python: {
     "lesson-1": pythonLesson1Content,
     "lesson-2": pythonLesson2Content,
     "lesson-3": pythonLesson3Content,
+    "lesson-5": pythonLesson5Content,
   },
   "be-python": {
     "lesson-1": pythonLesson1Content,
     "lesson-2": pythonLesson2Content,
     "lesson-3": pythonLesson3Content,
+    "lesson-5": pythonLesson5Content,
   },
-}
+};
 
-export function getLessonContent(
-  courseId: string,
-  lessonId: string,
-): LessonContent | undefined {
-  return LESSON_CONTENT_INDEX[courseId]?.[lessonId]
+export function getLessonContent(courseId: string, lessonId: string): LessonContent | undefined {
+  return LESSON_CONTENT_INDEX[courseId]?.[lessonId];
 }

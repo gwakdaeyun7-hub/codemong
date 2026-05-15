@@ -2,60 +2,59 @@
 // Server Component — 데이터 룩업 + 화면 조립. 클라이언트 인터랙션은 leaf(예시 코드 카드 복사 버튼)로 한정.
 //
 // 라우팅: /courses/[courseId]/lessons/[lessonId]
-//   - MVP: courseId ∈ {python, be-python}, lessonId ∈ {"lesson-1", "lesson-2", "lesson-3"} 매칭
+//   - MVP: courseId ∈ {python, be-python}, lessonId ∈ {"lesson-1", "lesson-2", "lesson-3", "lesson-5"} 매칭
+//   - lesson-4 는 12강 시퀀스상 자리는 있지만 영상 미제작이라 의도적으로 매칭 X → notFound()
 //   - 그 외엔 notFound()
 //
 // 레이아웃 (lg+): [좌 사이드바] [가운데 본문] [우 사이드바 320px]
 // 모바일: 좌 사이드바 → 상단 가로 스크롤 탭, 우 사이드바 → 본문 아래
 
-import { notFound } from "next/navigation"
+import { notFound } from "next/navigation";
 
-import { CourseDetailSidebar } from "@/components/course-detail/course-detail-sidebar"
-import { LessonContentHeader } from "@/components/lesson-content/lesson-content-header"
-import { LessonNavigation } from "@/components/lesson-content/lesson-navigation"
-import { LessonVideoCard } from "@/components/lesson-content/lesson-video-card"
-import { BadgesCard } from "@/components/lessons/badges-card"
-import { CourseProgressHeader } from "@/components/lessons/course-progress-header"
-import { ProgressStatCard } from "@/components/lessons/progress-stat-card"
-import { StatsCard } from "@/components/lessons/stats-card"
-import { TipsCard } from "@/components/lessons/tips-card"
-import { TopNav } from "@/components/top-nav"
-import { getCourseDetail } from "@/lib/course-detail"
-import { courses } from "@/lib/courses"
-import { getLessonContent } from "@/lib/lesson-content"
-import { getLessonPlan } from "@/lib/lesson-plan"
+import { CourseDetailSidebar } from "@/components/course-detail/course-detail-sidebar";
+import { LessonContentHeader } from "@/components/lesson-content/lesson-content-header";
+import { LessonNavigation } from "@/components/lesson-content/lesson-navigation";
+import { LessonVideoCard } from "@/components/lesson-content/lesson-video-card";
+import { BadgesCard } from "@/components/lessons/badges-card";
+import { CourseProgressHeader } from "@/components/lessons/course-progress-header";
+import { ProgressStatCard } from "@/components/lessons/progress-stat-card";
+import { StatsCard } from "@/components/lessons/stats-card";
+import { TipsCard } from "@/components/lessons/tips-card";
+import { TopNav } from "@/components/top-nav";
+import { getCourseDetail } from "@/lib/course-detail";
+import { courses } from "@/lib/courses";
+import { getLessonContent } from "@/lib/lesson-content";
+import { getLessonPlan } from "@/lib/lesson-plan";
 
 export default async function LessonContentPage({
   params,
 }: {
-  params: Promise<{ courseId: string; lessonId: string }>
+  params: Promise<{ courseId: string; lessonId: string }>;
 }) {
-  const { courseId, lessonId } = await params
+  const { courseId, lessonId } = await params;
 
   // 1) 강의 콘텐츠 룩업 — 핵심
-  const content = getLessonContent(courseId, lessonId)
+  const content = getLessonContent(courseId, lessonId);
   // 2) 우측 사이드바용 메타 (강의 목록 + 코스 상세 + 코스 카드 메타)
-  const plan = getLessonPlan(courseId)
-  const detail = getCourseDetail(courseId)
+  const plan = getLessonPlan(courseId);
+  const detail = getCourseDetail(courseId);
   const courseMeta =
-    courses.find((c) => c.id === courseId) ??
-    courses.find((c) => c.id === "be-python")
+    courses.find((c) => c.id === courseId) ?? courses.find((c) => c.id === "be-python");
 
   if (!content || !plan || !detail || !courseMeta) {
-    notFound()
+    notFound();
   }
 
   // 강좌 상단 헤더용 카운트 (강의 목록 화면과 동일 산식)
-  const completedCount = plan.lessons.filter((l) => l.status === "completed").length
-  const inProgressCount = plan.lessons.filter((l) => l.status === "in-progress").length
-  const notStartedCount = plan.lessons.filter((l) => l.status === "not-started").length
-  const totalCount = plan.lessons.length
-  const remainingCount = totalCount - completedCount
-  const progressPercent =
-    totalCount > 0 ? Math.floor((completedCount / totalCount) * 100) : 0
+  const completedCount = plan.lessons.filter((l) => l.status === "completed").length;
+  const inProgressCount = plan.lessons.filter((l) => l.status === "in-progress").length;
+  const notStartedCount = plan.lessons.filter((l) => l.status === "not-started").length;
+  const totalCount = plan.lessons.length;
+  const remainingCount = totalCount - completedCount;
+  const progressPercent = totalCount > 0 ? Math.floor((completedCount / totalCount) * 100) : 0;
   const remainingMinutes = plan.lessons
     .filter((l) => l.status !== "completed")
-    .reduce((acc, l) => acc + l.durationMinutes, 0)
+    .reduce((acc, l) => acc + l.durationMinutes, 0);
 
   return (
     <>
@@ -91,10 +90,7 @@ export default async function LessonContentPage({
               />
 
               {/* 2. 강의 영상 */}
-              <LessonVideoCard
-                video={content.video}
-                durationMinutes={content.durationMinutes}
-              />
+              <LessonVideoCard video={content.video} durationMinutes={content.durationMinutes} />
 
               {/* 3. 이전/다음 강의 */}
               <LessonNavigation navigation={content.navigation} />
@@ -120,5 +116,5 @@ export default async function LessonContentPage({
         </div>
       </main>
     </>
-  )
+  );
 }
