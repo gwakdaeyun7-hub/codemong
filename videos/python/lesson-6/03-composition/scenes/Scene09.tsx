@@ -19,8 +19,9 @@ import { colors, fonts, radii, shadows } from "../theme";
 const REVEAL = {
   forCard: 0.4,
   whileCard: 1.0,
-  forPulse: 6.0,
-  whilePulse: 7.0,
+  // narration: "...포(@~9s), ...와일(@~12.5s)" 와 동기
+  forPulse: 9.0,
+  whilePulse: 12.3,
   lowerThird: 7.5,
 } as const;
 

@@ -33,8 +33,8 @@ const REVEAL = {
   line3: 2.0,
   line4: 2.7,
   questionMark: 4.0,
-  answerSwap: 6.0,
-  workout: 8.0,
+  answerSwap: 10.5, // narration "정답은 6입니다" 와 동기 (1:44~1:45 real)
+  workout: 13.5, // narration "1 더하기 2 더하기 3은 6입니다" 부근
 } as const;
 
 /** 정답 박스: 물음표 → `6` 으로 swap. */
@@ -201,7 +201,7 @@ export const Scene06: React.FC = () => {
               >
                 <QuestionMark
                   delaySec={REVEAL.questionMark}
-                  lifespanSec={1.7}
+                  lifespanSec={6.5}
                   size={140}
                   color={colors.accent}
                 />

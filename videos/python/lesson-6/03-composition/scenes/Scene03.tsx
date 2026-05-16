@@ -62,7 +62,6 @@ export const Scene03: React.FC = () => {
               fontWeight: 600,
               color: colors.accentDeep,
               letterSpacing: "0.04em",
-              textTransform: "uppercase",
             }}
           >
             `for` + `range()`

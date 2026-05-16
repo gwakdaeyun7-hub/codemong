@@ -171,10 +171,10 @@ export const Scene11: React.FC = () => {
             </div>
           </FadeIn>
 
-          {/* 콘솔 (좌측) — 6줄 */}
+          {/* 콘솔 (좌측) — 6줄. 6 lines × 51 (line-box) + 5 gaps = 336 → height 420 로 */}
           <div style={{ position: "relative" }}>
             <FadeIn delaySec={REVEAL.consoleFade} translateY={14}>
-              <ConsolePanel title="출력 결과" width={400} height={310}>
+              <ConsolePanel title="출력 결과" width={400} height={420}>
                 <ConsoleLine revealAtSec={REVEAL_LEFT_CONSOLE[0]}>
                   <span style={{ fontSize: 26, fontWeight: 700, color: colors.darkInk }}>0</span>
                 </ConsoleLine>
@@ -297,10 +297,10 @@ export const Scene11: React.FC = () => {
             </div>
           </FadeIn>
 
-          {/* 콘솔 (우측) — 4줄 */}
+          {/* 콘솔 (우측) — 4줄. 좌측 콘솔과 같은 height 로 정렬 */}
           <div style={{ position: "relative" }}>
             <FadeIn delaySec={REVEAL.consoleFade} translateY={14}>
-              <ConsolePanel title="출력 결과" width={400} height={310}>
+              <ConsolePanel title="출력 결과" width={400} height={420}>
                 <ConsoleLine revealAtSec={REVEAL_RIGHT_CONSOLE[0]}>
                   <span style={{ fontSize: 26, fontWeight: 700, color: colors.darkInk }}>0</span>
                 </ConsoleLine>

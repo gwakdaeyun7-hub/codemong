@@ -344,27 +344,27 @@ export const Scene04: React.FC = () => {
           </FadeIn>
         </div>
 
-        {/* 우측 — 콘솔 (누적) */}
+        {/* 우측 — 콘솔 (누적). paddingTop 으로 코드 패널 y 와 정렬. */}
         <div
           style={{
             flex: 1,
             display: "flex",
             justifyContent: "flex-start",
             alignItems: "center",
-            paddingTop: 60,
+            paddingTop: 272,
           }}
         >
           <div style={{ position: "relative" }}>
             <FadeIn delaySec={REVEAL.panel} translateY={20}>
-              <ConsolePanel title="출력 결과" width={420} height={320}>
+              <ConsolePanel title="출력 결과" width={300} height={200}>
                 <ConsoleLine revealAtSec={REVEAL.iter1Console}>
-                  <span style={{ fontSize: 44, fontWeight: 700, color: colors.darkInk }}>0</span>
+                  <span style={{ fontSize: 22, fontWeight: 700, color: colors.darkInk }}>0</span>
                 </ConsoleLine>
                 <ConsoleLine revealAtSec={REVEAL.iter2Console}>
-                  <span style={{ fontSize: 44, fontWeight: 700, color: colors.darkInk }}>1</span>
+                  <span style={{ fontSize: 22, fontWeight: 700, color: colors.darkInk }}>1</span>
                 </ConsoleLine>
                 <ConsoleLine revealAtSec={REVEAL.iter3Console}>
-                  <span style={{ fontSize: 44, fontWeight: 700, color: colors.darkInk }}>2</span>
+                  <span style={{ fontSize: 22, fontWeight: 700, color: colors.darkInk }}>2</span>
                 </ConsoleLine>
               </ConsolePanel>
             </FadeIn>

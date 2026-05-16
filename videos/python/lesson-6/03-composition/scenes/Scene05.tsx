@@ -243,7 +243,7 @@ export const Scene05: React.FC = () => {
                 durationSec={0.5}
               />
 
-              {/* 11 위 빨간 줄 + 콜아웃 — 2줄 위치, range(1, 11) 의 11 부분 */}
+              {/* 11 위 빨간 줄 — 2줄 위치, range(1, 11) 의 11 부분 */}
               <div
                 style={{
                   position: "absolute",
@@ -255,35 +255,36 @@ export const Scene05: React.FC = () => {
                 <FadeIn delaySec={REVEAL.strike} translateY={-6}>
                   <div
                     style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      gap: 4,
+                      fontFamily: fonts.mono,
+                      fontSize: 28,
+                      color: colors.syntaxNumber,
+                      fontWeight: 600,
                     }}
                   >
-                    <div
-                      style={{
-                        fontFamily: fonts.mono,
-                        fontSize: 28,
-                        color: colors.syntaxNumber,
-                        fontWeight: 600,
-                      }}
+                    <RedStrike
+                      delaySec={REVEAL.strike + 0.2}
+                      durationSec={0.5}
+                      lifespanSec={REVEAL.strikeFadeOut - REVEAL.strike}
+                      fadeOutSec={0.5}
                     >
-                      <RedStrike
-                        delaySec={REVEAL.strike + 0.2}
-                        durationSec={0.5}
-                        lifespanSec={REVEAL.strikeFadeOut - REVEAL.strike}
-                        fadeOutSec={0.5}
-                      >
-                        11
-                      </RedStrike>
-                    </div>
+                      11
+                    </RedStrike>
                   </div>
                 </FadeIn>
+              </div>
+
+              {/* "11은 포함 안 됨" 콜아웃 — 코드 패널 오른쪽, 2줄 높이 */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: 780, // 코드 패널 width 760 + gap 20
+                  top: 96, // 2줄 세로 중심에 맞춤
+                  pointerEvents: "none",
+                }}
+              >
                 <FadeIn delaySec={REVEAL.strike + 0.4} translateY={-4}>
                   <div
                     style={{
-                      marginTop: 6,
                       padding: "4px 10px",
                       borderRadius: 6,
                       background: "rgba(239, 68, 68, 0.12)",

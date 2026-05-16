@@ -65,9 +65,9 @@ const LastLinePulse: React.FC = () => {
         position: "absolute",
         left: 16,
         right: 16,
-        // 콘솔 마지막 줄 위치 — padding 20 (top) + 헤더 40 + line-height 약 50 * 2 = 160
-        top: 196,
-        height: 56,
+        // 코드 패널의 HighlightBox 와 같은 screen-y 에 맞춤
+        top: 162,
+        height: 50,
         border: `2.5px solid ${colors.accent}`,
         borderRadius: 8,
         opacity,
@@ -98,7 +98,6 @@ export const Scene08: React.FC = () => {
               fontWeight: 600,
               color: colors.accentDeep,
               letterSpacing: "0.04em",
-              textTransform: "uppercase",
             }}
           >
             `while` — 조건이 참인 동안
@@ -174,67 +173,67 @@ export const Scene08: React.FC = () => {
 
               {/*
                 형광 박스 — 3줄을 둘러쌈. 18s 부터 정적 등장.
-                위치: line 3 ≈ top 156. 박스가 코드 줄 통째로 감싸도록 약간 여유.
+                LastLinePulse 와 같은 screen-y (top 162, height 50) 로 정렬.
               */}
               <HighlightBox
                 left={26}
-                top={148}
+                top={162}
                 width={690}
-                height={64}
+                height={50}
                 delaySec={REVEAL.highlight}
                 durationSec={0.6}
               />
-            </div>
-          </FadeIn>
 
-          {/* 2줄 우측 — "조건이 참인 동안 반복" 라벨 */}
-          <div
-            style={{
-              position: "absolute",
-              left: "calc(50% - 30px)",
-              top: 400, // approx 2줄 우측 — 패널 헤더 60 + line-height 48 + offset
-              maxWidth: 280,
-            }}
-          >
-            <FadeIn delaySec={REVEAL.whileLabel} translateY={-6}>
+              {/* 2줄 오른쪽 — "조건이 참인 동안 반복" 라벨 (코드박스 안에 배치) */}
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
+                  position: "absolute",
+                  left: 460, // 라인 2 텍스트 끝(`while password != "1234":`) + gap
+                  top: 110, // 라인 2 세로 위치
+                  pointerEvents: "none",
                 }}
               >
-                <span
-                  style={{
-                    fontSize: 22,
-                    color: colors.accent,
-                    fontWeight: 800,
-                  }}
-                >
-                  ←
-                </span>
-                <div
-                  style={{
-                    padding: "6px 14px",
-                    borderRadius: radii.pill,
-                    background: colors.accentSoft,
-                    color: colors.accentInk,
-                    fontFamily: fonts.sans,
-                    fontSize: 18,
-                    fontWeight: 700,
-                    letterSpacing: "-0.01em",
-                    border: `1.5px solid ${colors.accent}`,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  조건이 참인 동안 반복
-                </div>
+                <FadeIn delaySec={REVEAL.whileLabel} translateY={-6}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: 22,
+                        color: colors.accent,
+                        fontWeight: 800,
+                      }}
+                    >
+                      ←
+                    </span>
+                    <div
+                      style={{
+                        padding: "6px 14px",
+                        borderRadius: radii.pill,
+                        background: colors.accentSoft,
+                        color: colors.accentInk,
+                        fontFamily: fonts.sans,
+                        fontSize: 18,
+                        fontWeight: 700,
+                        letterSpacing: "-0.01em",
+                        border: `1.5px solid ${colors.accent}`,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      조건이 참인 동안 반복
+                    </div>
+                  </div>
+                </FadeIn>
               </div>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
         </div>
 
-        {/* 우측 — 콘솔 (입력 시뮬레이션) */}
+        {/* 우측 — 콘솔 (입력 시뮬레이션). 좌측 코드와의 gap 축소 위해 좌측으로 시프트. */}
         <div
           style={{
             flex: "0 0 460",
@@ -243,7 +242,7 @@ export const Scene08: React.FC = () => {
             alignItems: "center",
           }}
         >
-          <div style={{ position: "relative" }}>
+          <div style={{ position: "relative", transform: "translateX(-140px)" }}>
             <FadeIn delaySec={REVEAL.panel} translateY={20}>
               <ConsolePanel title="콘솔" width={440} height={300}>
                 <ConsoleLine revealAtSec={REVEAL.console0}>
