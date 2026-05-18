@@ -190,7 +190,7 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 
 - 백엔드 Route Handler / Server Action — Prisma schema 비어있음
 - 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
-- Python 8~12강 영상 (1·2·3·4·5강은 본 시리즈 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 6강·7강 영상은 완성됐으나 `lib/lesson-content.ts` 임베드 미진행 — 별도 라운드 예정.
+- Python 9~12강 영상 (1·2·3·4·5강은 본 시리즈 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 6강·7강·8강 영상은 완성됐으나 `lib/lesson-content.ts` 임베드 미진행 — 별도 라운드 예정.
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - Supabase Auth UI (middleware/helper 만 wired)
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능
