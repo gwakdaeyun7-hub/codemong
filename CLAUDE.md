@@ -148,7 +148,7 @@ videos/
 
 **TTS 기본값**: Edge TTS 1순위 (`ko-KR-HyunsuMultilingualNeural`, rate `+10%`, 무료 — 키 불필요). ElevenLabs / OpenAI 는 `.env.local` 키가 있을 때만 fallback. voice는 잠정 — 향후 변경 가능.
 
-**발음 사전**: `videos/_assets/pronunciation.json` (현재 시드 60개). 영상 대본 작성 시 참조용 — `_synth.py` 가 자동 치환하지는 않으므로 대본 작성자가 narration 표기를 발음 친화적으로 미리 적용해야 한다. 발음 강제가 필요한 한국어 단어(예: "묶입니다" 가 TTS 에서 [무깁니다] 로 잘못 발음되는 경우)는 narration 표기 자체를 발음형(예: "무낍니다") 으로 적어 우회.
+**발음 사전**: `videos/_assets/pronunciation.json` (현재 시드 66개). 영상 대본 작성 시 참조용 — `_synth.py` 가 자동 치환하지는 않으므로 대본 작성자가 narration 표기를 발음 친화적으로 미리 적용해야 한다. 발음 강제가 필요한 한국어 단어(예: "묶입니다" 가 TTS 에서 [무깁니다] 로 잘못 발음되는 경우)는 narration 표기 자체를 발음형(예: "무낍니다") 으로 적어 우회.
 
 **영상 정책**:
 - 영상 1편 = 강의 1개 (lesson 1대1 매핑). **Python 기초 = 12강 = 영상 12편 예정** (확정 커리큘럼은 메모리 `python_curriculum_12.md` 참조).
@@ -161,7 +161,7 @@ videos/
 
 **Git 권장사항** (강제 아님):
 - 렌더 산출물 `04-out.mp4` 와 `02-audio/voiceover.mp3` 는 git ignore 권장.
-- `_assets/pronunciation.json` 은 commit 권장 (시드 60개 공유 자원).
+- `_assets/pronunciation.json` 은 commit 권장 (시드 66개 공유 자원).
 - `_assets/voice-sample-*.mp3` 는 사용자 결정.
 
 ---
@@ -190,7 +190,7 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 
 - 백엔드 Route Handler / Server Action — Prisma schema 비어있음
 - 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
-- Python 7·9~12강 영상 (1·2·3·4·5강은 본 시리즈 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 6강·8강 영상은 완성됐으나 `lib/lesson-content.ts` 임베드 미진행 — 별도 라운드 예정.
+- Python 8~12강 영상 (1·2·3·4·5강은 본 시리즈 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 6강·7강 영상은 완성됐으나 `lib/lesson-content.ts` 임베드 미진행 — 별도 라운드 예정.
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - Supabase Auth UI (middleware/helper 만 wired)
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능
