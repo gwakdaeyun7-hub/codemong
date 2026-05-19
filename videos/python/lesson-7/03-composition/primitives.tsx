@@ -1118,64 +1118,43 @@ export const EmptySlot: React.FC<{
   size?: number;
   delaySec?: number;
   xDelaySec?: number;
-  indexLabel?: string;
-  labelDelaySec?: number;
 }> = ({
   size = 120,
   delaySec = 0,
   xDelaySec,
-  indexLabel,
-  labelDelaySec,
 }) => {
+  // R-026 — indexLabel 은 IndexStrip 의 trailingEmptyLabel 로 통합. EmptySlot 은
+  // 박스 본체만 그려서 다른 ListBox 와 height 동일 (= size). 박스 행 alignItems:
+  // center 일 때 모든 박스가 같은 y 에 위치.
   const xStart = typeof xDelaySec === "number" ? xDelaySec : delaySec + 0.4;
-  const lblStart = typeof labelDelaySec === "number" ? labelDelaySec : delaySec;
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 10,
-      }}
-    >
-      {indexLabel ? (
-        <FadeIn delaySec={lblStart} translateY={-6} durationSec={0.4}>
-          <div
-            style={{
-              fontFamily: fonts.mono,
-              fontSize: 26,
-              fontWeight: 700,
-              color: colors.danger,
-              letterSpacing: "-0.01em",
-              opacity: 0.8,
-            }}
-          >
-            {indexLabel}
-          </div>
-        </FadeIn>
-      ) : (
-        <div style={{ height: 36 }} />
-      )}
-      <FadeIn delaySec={delaySec} translateY={10} durationSec={0.5}>
+    <FadeIn delaySec={delaySec} translateY={10} durationSec={0.5}>
+      <div
+        style={{
+          width: size,
+          height: size,
+          borderRadius: 20,
+          background: colors.bgWhite,
+          border: `3px dashed ${colors.emptySlotBorder}`,
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <div
           style={{
-            width: size,
-            height: size,
-            borderRadius: 20,
-            background: colors.bgWhite,
-            border: `3px dashed ${colors.emptySlotBorder}`,
-            position: "relative",
+            position: "absolute",
+            inset: 0,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <RedX size={size * 0.5} delaySec={xStart} durationSec={0.5} />
-          </div>
+          <RedX size={size * 0.5} delaySec={xStart} durationSec={0.5} />
         </div>
-      </FadeIn>
-    </div>
+      </div>
+    </FadeIn>
   );
 };
 
@@ -1198,6 +1177,15 @@ export const IndexStrip: React.FC<{
   highlightDelaySec?: number;
   highlightDurationSec?: number;
   fontSize?: number;
+  /**
+   * 마지막 박스 옆에 빈 자리 인덱스 라벨 (예: "[3]") 추가. R-026 — ListVisual 의
+   * trailingEmptySlot 이 있을 때 IndexStrip 도 같은 폭 layout 으로 그려야 박스 위
+   * 정렬이 맞음. 색상은 danger (빨강) 로 빈 자리 의미 강조.
+   */
+  trailingEmptyLabel?: string;
+  trailingEmptyDelaySec?: number;
+  /** trailingEmpty 와 박스 간 marginLeft (ListVisual 의 EmptySlot marginLeft 와 동일해야 함). */
+  trailingEmptyMarginLeft?: number;
 }> = ({
   count,
   boxSize = 120,
@@ -1209,12 +1197,15 @@ export const IndexStrip: React.FC<{
   highlightDelaySec = 0,
   highlightDurationSec = 0.8,
   fontSize = 26,
+  trailingEmptyLabel,
+  trailingEmptyDelaySec = 0,
+  trailingEmptyMarginLeft = 6,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   return (
-    <div style={{ display: "flex", gap }}>
+    <div style={{ display: "flex", gap, alignItems: "center" }}>
       {Array.from({ length: count }).map((_, i) => {
         const idx = startIndex + i;
         let pulseOpacity = 0;
@@ -1259,6 +1250,33 @@ export const IndexStrip: React.FC<{
           </div>
         );
       })}
+      {trailingEmptyLabel ? (
+        <div
+          style={{
+            marginLeft: trailingEmptyMarginLeft,
+            width: boxSize,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <FadeIn delaySec={trailingEmptyDelaySec} translateY={-6} durationSec={0.4}>
+            <div
+              style={{
+                fontFamily: fonts.mono,
+                fontSize,
+                fontWeight: 700,
+                color: colors.danger,
+                letterSpacing: "-0.01em",
+                opacity: 0.85,
+                padding: "2px 10px",
+                borderRadius: radii.sm,
+              }}
+            >
+              {trailingEmptyLabel}
+            </div>
+          </FadeIn>
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -1475,6 +1493,11 @@ export const ListVisual: React.FC<{
           highlightIndex={indexStripHighlight}
           highlightDelaySec={indexStripHighlightDelaySec}
           highlightDurationSec={indexStripHighlightDurationSec}
+          trailingEmptyLabel={trailingEmptySlot?.indexLabel}
+          trailingEmptyDelaySec={
+            trailingEmptySlot?.labelDelaySec ?? trailingEmptySlot?.delaySec ?? 0
+          }
+          trailingEmptyMarginLeft={6}
         />
       ) : null}
 
@@ -1493,10 +1516,8 @@ export const ListVisual: React.FC<{
           <div style={{ marginLeft: 6 }}>
             <EmptySlot
               size={boxSize}
-              indexLabel={trailingEmptySlot.indexLabel}
               delaySec={trailingEmptySlot.delaySec ?? 0}
               xDelaySec={trailingEmptySlot.xDelaySec}
-              labelDelaySec={trailingEmptySlot.labelDelaySec}
             />
           </div>
         ) : null}
@@ -1566,10 +1587,22 @@ export const SwapLabel: React.FC<{
     extrapolateRight: "clamp",
   });
 
+  // R-027 — initial 과 newLabel 의 폰트 굵기·길이 차이로 newLabel 의 inline 폭이
+  // parent (initial 폭에 fit-content) 를 초과하면 wrap 됨. whiteSpace: nowrap 으로
+  // 두 라벨 모두 1줄 보장.
   return (
-    <div style={{ position: "relative", ...style }}>
-      <div style={{ opacity: oldOpacity }}>{initial}</div>
-      <div style={{ position: "absolute", inset: 0, opacity: newOpacity }}>{newLabel}</div>
+    <div style={{ position: "relative", whiteSpace: "nowrap", ...style }}>
+      <div style={{ opacity: oldOpacity, whiteSpace: "nowrap" }}>{initial}</div>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: newOpacity,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {newLabel}
+      </div>
     </div>
   );
 };

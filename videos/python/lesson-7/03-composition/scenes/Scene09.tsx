@@ -177,10 +177,15 @@ const ConsolePulseRing: React.FC = () => {
 };
 
 export const Scene09: React.FC = () => {
-  // R-014 — 좌측 stack height 계산:
+  // R-014 + R-028 — 좌측 stack height 계산:
   //   VarBox label 36 + gap 10 + VarBox body 160 + gap 30 + RoundLabel 36 + gap 30 + CodePanel 200 = 502
   //   CodePanel top offset (from column top) = 36+10+160+30+36+30 = 302
   // 우측 paddingTop = 302, ConsolePanel height = 200 → 우측 total = 502 (좌측과 동일).
+  // R-028 추가 강제 — label 의 inline-flex line-box 가 폰트 line-height 와 padding 합으로
+  //   ~45px 까지 늘어나 좌측 sum 이 502 보다 커지면 alignItems: center 가 y 어긋남.
+  //   label 에 `height: 36 + lineHeight: 1 + padding "0 18px"` 강제 + 좌·우 wrapper
+  //   둘 다 명시 height 로 한 번 더 보강.
+  const COL_HEIGHT = 502;
   return (
     <PageBackground>
       <div style={{ position: "absolute", top: 50, left: 0, right: 0, textAlign: "center" }}>
@@ -209,7 +214,7 @@ export const Scene09: React.FC = () => {
           gap: 60,
         }}
       >
-        {/* 좌측 — VarBox + RoundLabel + CodePanel */}
+        {/* 좌측 — VarBox + RoundLabel + CodePanel (R-028 height 명시) */}
         <div
           style={{
             flex: 1,
@@ -217,6 +222,7 @@ export const Scene09: React.FC = () => {
             flexDirection: "column",
             alignItems: "center",
             gap: 30,
+            height: COL_HEIGHT,
           }}
         >
           {/* VarBox 수동 구성 */}
@@ -226,7 +232,9 @@ export const Scene09: React.FC = () => {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  padding: "6px 18px",
+                  padding: "0 18px",
+                  height: 36,
+                  lineHeight: 1,
                   borderRadius: radii.pill,
                   background: colors.accentSoft,
                   color: colors.accentInk,
@@ -320,14 +328,15 @@ export const Scene09: React.FC = () => {
           </FadeIn>
         </div>
 
-        {/* 우측 — 콘솔 (paddingTop 으로 코드 패널 y 와 정렬). R-014 적용. */}
+        {/* 우측 — 콘솔 (paddingTop 으로 코드 패널 y 와 정렬). R-014 + R-028 적용. */}
         <div
           style={{
             flex: 1,
             display: "flex",
             justifyContent: "flex-start",
-            alignItems: "center",
+            alignItems: "flex-start",
             paddingTop: 302,
+            height: COL_HEIGHT,
           }}
         >
           <div style={{ position: "relative" }}>

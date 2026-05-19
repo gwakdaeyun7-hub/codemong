@@ -589,6 +589,361 @@ const REVEAL = {
 
 ---
 
+## R-022 — 토큰 위 마커(배지·말풍선·물음표)는 절대 px 대신 인라인 자동 정렬 (wrap-relative)
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-8 Scene02 (영상 27초 시점)
+
+**Why**: lesson-8 Scene02 의 `?` 배지 3개가 `scores = [80, 95, 70]` 의 각 숫자 위에 위치해야 하는데, 배지가 CodePanel sibling 으로 `position: absolute; left: 240/358/472` 하드코딩됨. char width 를 ~29.5px 로 가정한 값이었지만 실제 mono 28px 의 advance width 는 ~17.4px → badge 1 은 그나마 비슷, badge 2/3 는 우측으로 53/95px 어긋남. 사용자 지적: "[?] 원이 각 숫자 위에 위치하도록 수정해줘". 모노스페이스라도 실제 char width 는 (a) 어떤 fallback font 가 실제 로딩되는지 (b) Korean glyph 가 섞이면 inline-flow 가 어떻게 짜이는지에 따라 달라져, 개발자의 px 추측은 거의 항상 빗나간다. **토큰 위 마커는 토큰 자체를 relative-anchor 로 삼아 브라우저 layout 에 맡겨야 한다.**
+
+**How to apply** (grep):
+- 코드/콘솔 panel 안 특정 토큰(숫자·식별자·연산자)을 가리키는 마커 element 가:
+  ```tsx
+  <div style={{ position: "absolute", left: <hardcoded-px>, top: <hardcoded-px>, ... }}>
+    <Marker />
+  </div>
+  ```
+  형태로 panel 외부 sibling 으로 박혀 있으면 fail.
+- 대신 토큰을 inline-block relative wrapper 로 감싸 마커를 absolute 자식으로:
+  ```tsx
+  const TokenWithMarker: React.FC<...> = ({ ... }) => (
+    <span style={{ position: "relative", display: "inline-block" }}>
+      <PyToken text={...} kind={...} />
+      <span style={{
+        position: "absolute",
+        left: "50%",
+        top: <negative offset to escape upward>,
+        transform: "translateX(-50%)",
+        pointerEvents: "none",
+      }}>
+        <Marker />
+      </span>
+    </span>
+  );
+  ```
+- **CodePanel 의 `overflow: hidden` 을 `style={{ overflow: "visible" }}` 로 override** 필요 — 마커가 panel 위로 escape 해야 하기 때문.
+- 패널 내부 line index, 헤더 height, content padding-top 을 계산해 `top` 값 도출:
+  - default CodePanel: header 40 + content padding-top 20 = 60 → wrapper-relative 에서 panel.top 위로 N px 띄우려면 `top: -(N + 60)` (line index 0 기준)
+- 다중 마커 stagger 등장 / 동시 pulse 도 wrapper-anchor 로 동작 — 각 wrapper 는 독립.
+
+**Good** (lesson-8 Scene02 v2):
+```tsx
+<CodePanel fileName="scores.py" width={720} height={140} style={{ overflow: "visible" }}>
+  <CodeLine lineNumber={1} revealAtSec={...}>
+    <PyToken text="scores" kind="name" /> <PyToken text=" = [" kind="op" />
+    <NumberWithBadge number="80" ... />
+    <PyToken text=", " kind="op" />
+    <NumberWithBadge number="95" ... />
+    ...
+  </CodeLine>
+</CodePanel>
+```
+
+**Bad** (lesson-8 Scene02 v1):
+```tsx
+<div style={{ position: "relative" }}>
+  <CodePanel>...</CodePanel>
+  <div style={{ position: "absolute", left: 240, top: -28 }}><QuestionBadge /></div>
+  <div style={{ position: "absolute", left: 358, top: -28 }}><QuestionBadge /></div>  {/* 실제 "95" 보다 ~53px 오른쪽 */}
+  <div style={{ position: "absolute", left: 472, top: -28 }}><QuestionBadge /></div>  {/* 실제 "70" 보다 ~95px 오른쪽 */}
+</div>
+```
+
+---
+
+## R-023 — RedStrike 회전 기본 0deg (가로 직선) — 디자인 비틀기는 명시 opt-in
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-8 Scene08 (영상 2:31 시점)
+
+**Why**: lesson-8 Scene08 의 코드 4번째 줄 `좌표[0] = 38.0` 에 걸린 RedStrike 가 `transform: translateY(-50%) rotate(-6deg)` 로 살짝 비스듬한 작대기로 렌더. 사용자 지적: "빨간색 작대기가 각도가 부자연스러운데 자연스럽게 수정해줘". -6deg 는 손글씨 사선 strike 의 디자인 의도였으나, 코드 문맥(가로 직선 = 표준 strike-through, IDE/diff tool 컨벤션)에서 비스듬한 사선은 학습자에게 "왜 기울어졌지?" 라는 시각 노이즈가 된다. **코드 strike 는 기본 0deg 가로 직선이 가독성·자연스러움 양쪽 다 우선.**
+
+**How to apply** (grep):
+- `RedStrike` primitive 의 `transform: rotate(...)` 기본값이 0deg 가 아니면 fail.
+- `angleDeg?: number` prop 추가, 기본 `0`. ±6deg 이내 디자인 비틀기는 명시 opt-in (`<RedStrike angleDeg={-6}>...</RedStrike>`) 으로만.
+- StrikeoutSetItem (lesson-8 set 중복 제거 시각) 같은 별도 inline strike 도 같은 룰 적용 권장 — 의미 부여 없는 사선 회전은 코드 문맥에선 노이즈.
+- 단, **set 항목·UI 라벨 strike** 같이 _코드가 아닌 단어/항목_ strike 는 -6deg 살짝 사선이 캐주얼 톤에 어울려 OK — 코드 문맥에서만 0deg 강제.
+
+**Good** (lesson-8 RedStrike v2):
+```tsx
+export const RedStrike: React.FC<{ ..., angleDeg?: number }> = ({ ..., angleDeg = 0 }) => (
+  <span style={{ position: "relative", display: "inline-block", ... }}>
+    {children}
+    <span style={{ ..., transform: `translateY(-50%) rotate(${angleDeg}deg)` }} />
+  </span>
+);
+```
+
+**Bad** (lesson-8 RedStrike v1):
+```tsx
+<span style={{ ..., transform: "translateY(-50%) rotate(-6deg)" }} />  // 모든 호출 사선 hardcoded
+```
+
+---
+
+## R-024 — 패널 외부로 튀어나오는 마커 금지 (안쪽 inset)
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-8 Scene08 (영상 2:31 시점)
+
+**Why**: lesson-8 Scene08 의 빨간 ✕ 원이 `position: absolute; right: -20` 으로 박혀 코드 패널 우측 테두리에 반쯤 걸쳐 panel 외부로 튀어나옴. 사용자 지적: "빨간색 X 원이 코드박스 테두리에 겹치는데 코드박스 테두리 안으로 자연스럽게 들어오도록 수정". panel border 를 마커가 가로지르면 (a) panel 의 시각 컨테이너 의미(코드 영역)가 부서지고 (b) border-radius rounding 으로 마커 일부가 잘려 보일 수 있고 (c) box-shadow 와 마커 그림자가 겹쳐 지저분해진다. **panel 안 의미를 가진 마커는 panel 안에 — 외부 영역(예: 좌·우 다른 컬럼)으로 갈 거면 panel 과 명확히 분리.**
+
+**How to apply** (grep):
+- panel(CodePanel / ConsolePanel / Card / RedConsole) wrapper 안에 sibling 으로 `position: absolute` 마커가 있고 `left` / `right` / `top` / `bottom` 값이 음수면 fail.
+  - 예: `right: -20`, `top: -28` (단, top 음수는 R-022 의 "토큰 위 배지" 케이스라면 OK — wrapper-anchor 인지 확인)
+- 의도가 panel 안 의미 부여 (예: "이 코드는 에러") 면 `right`/`top`/`bottom`/`left` ≥ 0 으로 patch — 보통 panel padding (22) 안쪽 inset 정도가 자연스러움 (`right: 24` 등).
+- panel 외부 시각 분리가 의도면 (예: 다른 컬럼으로 화살표) panel wrapper 밖으로 element 를 이동하고 wrapper 좌표계로 다시 anchor.
+- 음수 inset 이 *디자인 의도* 인 케이스도 있음 (예: lower-third 가 화면 아래로 약간 escape) — 그 경우는 주석으로 의도 명시 + reviewer 가 명시적 OK.
+
+**Good** (lesson-8 Scene08 v2):
+```tsx
+<div style={{ position: "relative" }}>
+  <CodePanel width={680} ...>...</CodePanel>
+  <FadeIn style={{
+    position: "absolute",
+    top: 230,
+    right: 24,  // panel 안쪽 inset — padding(22) 보다 살짝 더 (border 와 안 겹침)
+    width: 44, height: 44, ...
+  }}>✕</FadeIn>
+</div>
+```
+
+**Bad** (lesson-8 Scene08 v1):
+```tsx
+<FadeIn style={{
+  position: "absolute",
+  top: 230,
+  right: -20,   // panel 우측 테두리 가로지름 — 반쯤 외부
+  ...
+}}>✕</FadeIn>
+```
+
+---
+
+## R-025 — 순차 시리즈 라벨(첫 번째 / 두 번째 / ...) 완결성 검사
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-8 Scene03 (영상 전반)
+
+**Why**: lesson-8 영상에서 자료구조 3개를 차례로 소개. Scene 07 = "두 번째 — 튜플", Scene 09 = "세 번째 — 셋" 상단 pill 라벨이 있으나 Scene 03 (딕셔너리 도입) 에는 동일 정형의 "첫 번째 — 딕셔너리" pill 이 빠져 있고 다른 디자인(uppercase 단일 타이틀)으로 박혀 있었음. 사용자 지적: "[두 번째 - 튜플], [세 번째 - 셋] 이렇게 두 개가 있는데 [첫번째] 에 해당하는 것이 있는지 확인해주고 없다면 추가해줘". **시각 디자인이 순차 시리즈를 약속하면 (둘째·셋째 라벨이 있으면) 첫째도 같은 정형으로 있어야 학습자가 "아 이게 시리즈구나" 라는 멘탈 모델을 잡는다.** 한 칸 빠지면 시리즈 자체가 깨짐 — 디자인 톤 통일과 별개로 "이 영상은 N가지를 가르친다" 라는 학습 구조 자체에 균열.
+
+**How to apply** (grep):
+- 한 lesson 영상 안 scene 파일 grep:
+  ```
+  rg "두 번째|세 번째|네 번째|다섯 번째|첫 번째" videos/<course>/<lesson>/03-composition/scenes/
+  ```
+- 결과에서 "N 번째" 가 N ≥ 2 인 라벨이 ≥ 1 개 있으면 → "첫 번째" ~ "(N-1) 번째" 모든 단계 라벨도 같은 정형(pill / 부제 / 색상 / 위치)으로 있어야 fail 아님.
+- 정형 일치 검사:
+  - pill 의 `padding`, `borderRadius`, `background`, `border`, `fontSize`, `fontWeight` 모두 동일
+  - 부제(subtitle) 의 `fontSize`, `fontWeight`, `color`, 강조 토큰 색 동일
+  - 절대 위치 `top` 동일
+  - 정형이 다르면 (예: 한쪽은 pill, 한쪽은 uppercase title) fail — 통일.
+- "첫 번째" 가 *있는데 N≥2 가 없는* 경우는 fail 아님 (그냥 한 개 강조일 수 있음). 양방향 의무 아니고, **N≥2 가 있으면 첫째 의무**.
+
+**Good** (lesson-8 Scene03 v2 — Scene 07/09 와 동일 pill+subtitle 정형):
+```tsx
+<div style={{ position: "absolute", top: 60, left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+  <FadeIn delaySec={REVEAL.headerLabel} translateY={6}>
+    <div style={{ padding: "8px 24px", borderRadius: radii.pill, background: colors.accentSoft, ... }}>
+      첫 번째 — 딕셔너리
+    </div>
+  </FadeIn>
+  <FadeIn delaySec={REVEAL.headerLabel + 0.4} translateY={6}>
+    <div style={{ fontFamily: fonts.sans, fontSize: 22, ... }}>
+      <span style={{ color: colors.accentInk, fontWeight: 700 }}>이름표(키)</span>로 짝지은 묶음
+    </div>
+  </FadeIn>
+</div>
+```
+
+**Bad** (lesson-8 Scene03 v1):
+```tsx
+{/* uppercase 타이틀 — Scene 07/09 의 pill 정형과 불일치 */}
+<div style={{ position: "absolute", top: 60, ... }}>
+  <FadeIn delaySec={0.1} translateY={6}>
+    <div style={{ fontFamily: fonts.sans, fontSize: 28, fontWeight: 600, color: colors.accentDeep, textTransform: "uppercase" }}>
+      딕셔너리 — 이름표로 꺼내기
+    </div>
+  </FadeIn>
+</div>
+{/* "두 번째" / "세 번째" 와 짝이 안 맞음 → 시리즈 깨짐 */}
+```
+
+---
+
+## R-026 — IndexStrip + 박스 행 + trailing EmptySlot 은 동일 가로 layout 으로 통합 (라벨이 박스 사이에 끼지 않게)
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-7 Scene04 (영상 1:05) / Scene12 (영상 3:57)
+
+**Why**: lesson-7 Scene04 / Scene12 에서 `ListVisual` 의 인덱스 띠 `[0] [1] [2]` 가 박스 `88` `92` `76` 위에 정렬되지 않고 박스 *사이* 에 표시됐음. 사용자 지적: "상단에 인덱스 위치가 숫자 위에 있는게 아니라 숫자들 사이에 있다". 원인: `IndexStrip` 은 `count = items.length` 만큼만 라벨을 그리는데 (`count × boxSize + (count-1) × gap` 폭), 박스 행은 그 위에 `EmptySlot` 까지 추가로 그려 폭이 다름 (`count × boxSize + (count-1) × gap + marginLeft + EmptySlot.size`). 둘 다 `alignItems: center` 인 컬럼 안에 있어 가로 center 정렬되면 IndexStrip 이 박스 행보다 좁아 라벨 위치가 박스 *사이* 로 밀려남. 또한 `EmptySlot` 이 자체적으로 `indexLabel + 박스` 의 두 줄 구조(`column` flex, gap 10)라 height = `36 + 10 + size` = `size + 46` → 다른 ListBox(`height = size`) 보다 크고, 박스 행 `alignItems: center` 에서 가운데 정렬되어 EmptySlot 의 박스 부분이 다른 박스 대비 ~23px 아래로 떨어졌음 → 사용자 지적 "인덱스 3에 해당하는 박스의 높이위치가 나머지와 다르다".
+
+**How to apply** (grep):
+- `ListVisual` 컴포넌트가 `trailingEmptySlot` prop 을 받고 `IndexStrip` 을 같이 그리면:
+  - **IndexStrip 폭 ≡ 박스 행 폭** 강제: `IndexStrip` 에 `trailingEmptyLabel` 옵션을 더해 빈 자리 라벨도 같은 가로 stride(`marginLeft + boxSize`) 로 추가
+  - **EmptySlot 의 자체 indexLabel 제거**: 인덱스 라벨은 `IndexStrip` 일원으로 그려야 박스 위 정렬 보장. `EmptySlot` 은 박스 본체만(`height = size`) 그려 다른 `ListBox` 와 정렬
+- `EmptySlot` 컴포넌트에 `indexLabel` prop 이 존재하면 fail (deprecated — `IndexStrip.trailingEmptyLabel` 로 이동).
+- 직접 `<EmptySlot indexLabel="[N]" />` 호출하면 fail.
+
+**Good** (primitives.tsx 의 ListVisual 안):
+```tsx
+{showIndexStrip ? (
+  <IndexStrip
+    count={items.length}
+    boxSize={boxSize}
+    gap={gap}
+    trailingEmptyLabel={trailingEmptySlot?.indexLabel}
+    trailingEmptyDelaySec={trailingEmptySlot?.labelDelaySec ?? trailingEmptySlot?.delaySec ?? 0}
+    trailingEmptyMarginLeft={6}
+  />
+) : null}
+<div style={{ display: "flex", gap, alignItems: "center" }}>
+  {items.map(...)}
+  {trailingEmptySlot ? (
+    <div style={{ marginLeft: 6 }}>
+      <EmptySlot size={boxSize} delaySec={...} xDelaySec={...} />  {/* indexLabel 전달 X */}
+    </div>
+  ) : null}
+</div>
+```
+
+**Bad** (lesson-7 v1 — fail):
+```tsx
+<IndexStrip count={3} boxSize={130} gap={24} />  {/* 폭: 3*130 + 2*24 = 438 */}
+<div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+  ...3 boxes...                                    {/* 박스 행 폭: 438 + 6 + 130 = 574 → 어긋남 */}
+  <EmptySlot size={130} indexLabel="[3]" />         {/* EmptySlot 자체에 라벨 → 박스 height 130 + 46 → 정렬 깨짐 */}
+</div>
+```
+
+---
+
+## R-027 — 두 layer 가 겹치는 inline label (SwapLabel 류) 은 whiteSpace: nowrap 강제
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-7 Scene05 (영상 1:27)
+
+**Why**: lesson-7 Scene05 의 `SwapLabel` 이 `"길이 = 3"` → `"길이 = 4"` swap 할 때, 새 라벨 `"길이 = 4"` 가 2줄로 보였음 (`길이 =` 첫 줄, `4` 둘째 줄). 사용자 지적: "[길이=4] 이거 2줄로 이상하게 보이는데 수정해줘". 원인: `SwapLabel` 의 구조가 `<div pos:relative>{initial}<div pos:absolute inset:0>{newLabel}</div></div>` — parent div 의 폭은 `initial` 의 inline span 폭에 fit-content. `newLabel` 의 span 은 absolute 영역(parent 폭) 안에서 inline 그려짐. 두 span 의 `fontWeight` 차이(700 vs 800) 로 굵은 쪽 폭이 살짝 더 커서 parent fit-content 폭을 넘어 wrap. 같은 위치에 layer 가 겹치는 swap pattern 은 두 layer 의 폭 차이가 1~2px 만 있어도 wrap 위험.
+
+**How to apply** (grep):
+- `position: "absolute", inset: 0` 으로 layer 두 개가 겹치는 swap pattern 검출 (`SwapLabel` / 유사 컴포넌트):
+  - parent div, 두 layer div 모두 `whiteSpace: "nowrap"` 명시
+- 또는 두 label 의 폭을 미리 명시(`width: <max>`) 로 강제
+- font weight / font size / 텍스트 길이 가 다른 두 label 을 같은 좌표에 swap 할 때 nowrap 안 박으면 fail
+
+**Good** (primitives.tsx 의 SwapLabel):
+```tsx
+<div style={{ position: "relative", whiteSpace: "nowrap", ...style }}>
+  <div style={{ opacity: oldOpacity, whiteSpace: "nowrap" }}>{initial}</div>
+  <div style={{ position: "absolute", inset: 0, opacity: newOpacity, whiteSpace: "nowrap" }}>
+    {newLabel}
+  </div>
+</div>
+```
+
+**Bad** (lesson-7 v1):
+```tsx
+<div style={{ position: "relative" }}>
+  <div>{initial}</div>                                              {/* fontWeight 700 */}
+  <div style={{ position: "absolute", inset: 0 }}>{newLabel}</div>  {/* fontWeight 800 — 폭 약간 큼 → wrap */}
+</div>
+```
+
+---
+
+## R-028 — 좌·우 컬럼 패널 정렬: wrapper height 명시 + inline-flex label 의 height 강제 (R-014 보강)
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-7 Scene09 (영상 2:40)
+
+**Why**: lesson-7 Scene09 (좌측: VarBox + RoundLabel + CodePanel / 우측: ConsolePanel) 에서 좌·우 패널의 세로 y 가 어긋났음. 사용자 지적: "코드박스와 출력결과박스의 높이위치가 다른거 같다". R-014 적용으로 좌측 sum 과 우측 sum 을 같게 설계(`label 36 + gap 10 + box 160 + gap 30 + roundLabel 36 + gap 30 + code 200 = 502` vs `paddingTop 302 + console 200 = 502`) 했음에도 어긋남. 원인: VarBox 의 inline-flex label 이 명시 height 없이 `padding "6px 18px" + fontSize 26` 만 잡혀 실제 line-box 가 `padding 12 + font 26×default-lineHeight(~1.2) = ~45px` 까지 늘어남 → 좌측 sum 이 ~511 로 보임 → `alignItems: center` 일 때 좌측 column center 가 우측보다 ~4.5px 위로 → CodePanel/ConsolePanel y 어긋남.
+
+**How to apply** (grep + calc):
+- R-014 의 좌측·우측 sum 매칭 + 추가로 다음 강제:
+  1. **인라인 label (VarBox label, RoundLabel 등) 의 명시 height**: `display: "inline-flex", alignItems: "center", height: <N>, lineHeight: 1, padding: "0 18px"` — height 를 sum 계산값으로 직접 강제. padding top/bottom 은 0 으로 두고 height 와 lineHeight 1 로 통제 (브라우저 default line-height ~1.2 가 영향 못 미치게).
+  2. **좌·우 wrapper 의 명시 height**: `height: COL_HEIGHT` (예: 502) 를 좌·우 wrapper 양쪽에 동시 강제. 한쪽만 강제하면 다른 쪽이 자식 sum 에 의존해 다시 어긋남.
+  3. **상수 추출**: `const COL_HEIGHT = 502` 같은 명시 상수를 scene 안에 두고 좌·우 wrapper 가 같은 상수 참조.
+- 위 3개 중 하나라도 누락이면 fail. 단, R-011 처럼 VarBox 를 main row 위쪽 absolute 좌표로 분리 → main row 가 단순 [code | console] 두 박스만 남으면 sum 정렬 자체가 단순해져 본 룰 면제 (단, label 류 inline-flex height 는 여전히 명시 권장).
+
+**Good** (lesson-7 Scene09 v2):
+```tsx
+const COL_HEIGHT = 502;  // 좌측 sum = 36+10+160+30+36+30+200, 우측 = 302+200
+
+{/* 좌측 column */}
+<div style={{ flex: 1, ..., gap: 30, height: COL_HEIGHT }}>
+  {/* label height 36 강제 */}
+  <div style={{ display: "inline-flex", alignItems: "center", height: 36, lineHeight: 1, padding: "0 18px", fontSize: 26, ... }}>s</div>
+  <VarBoxBody height={160} />
+  <RoundLabel height={36} />
+  <CodePanel height={200} />
+</div>
+
+{/* 우측 column */}
+<div style={{ flex: 1, ..., paddingTop: 302, height: COL_HEIGHT, alignItems: "flex-start" }}>
+  <ConsolePanel height={200} />
+</div>
+```
+
+**Bad** (lesson-7 Scene09 v1):
+```tsx
+{/* 좌측 — wrapper height 미명시, label height 미강제 */}
+<div style={{ flex: 1, ..., gap: 30 }}>
+  <div style={{ display: "inline-flex", padding: "6px 18px", fontSize: 26, ... }}>s</div>  {/* 실제 ~45px */}
+  ...
+</div>
+
+{/* 우측 — paddingTop 만, wrapper height 미명시 */}
+<div style={{ flex: 1, ..., paddingTop: 302 }}>
+  <ConsolePanel height={200} />
+</div>
+{/* → 좌측 sum 511 vs 우측 sum 502 → alignItems:center 에서 ~4.5px 어긋남 */}
+```
+
+---
+
+## R-029 — CodePanel/Panel wrapper 안 absolute element (IndentGuide·HighlightBox) 는 panel.height 안에 fit
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-7 Scene10 (영상 3:11)
+
+**Why**: lesson-7 Scene10 의 6강·7강 비교 카드에서 `IndentGuide` (둘째 줄 들여쓰기 시각화 막대) 가 `CodePanel` 어두운 박스 *아래로* 튀어나왔음. 사용자 지적: "박스에 2번째줄의 바(막대기)가 코드박스 아래부분을 통과한다". 원인: `IndentGuide` 는 CodePanel wrapper(`<div style={position:relative}>`) 안에 `position: absolute, top: 108, height: 50` 으로 박혀 있는데, CodePanel 자체 height 는 150 → IndentGuide 의 bottom (`top 108 + height 50 = 158`) 이 CodePanel bottom(150) 을 8px 초과. CodePanel wrapper 의 `overflow: visible` (default) 이라 IndentGuide 가 CodePanel 박스 *밖*(그 wrapper 의 아래 영역) 에 그려져 어두운 박스 외부에 떠 있는 막대처럼 보임. lesson-7 Scene09 의 CodePanel(height 200) 안 같은 IndentGuide(top 108 + height 50 = 158 < 200) 는 fit 했기 때문에 lesson-9 작성자가 lesson-10 의 좁은 height 150 케이스를 누락.
+
+**How to apply** (grep + calc):
+- `CodePanel` (또는 임의 `position: relative` wrapper) 안 `position: absolute` 자식 (`IndentGuide` / `HighlightBox` / 임의 overlay) 에 대해:
+  - `(child.top ?? 0) + (child.height ?? 0) ≤ panel.height` 검증
+  - 위반 시 fail. 해결:
+    1. **panel.height 증가** (가장 단순) — 카드 안 다른 element 와의 sum 도 함께 조정
+    2. **absolute child 의 height/top 축소** (시각 강조가 약해지지만 영향 작음)
+    3. **wrapper 에 `overflow: hidden`** (강제 잘림 — 디자인상 어색, 권장 X)
+- 빠른 sanity: `IndentGuide top + height` 가 70 이상이면 CodePanel height ≥ 180 권장 (대부분 lesson-3~9 의 IndentGuide 사용 패턴 기준).
+- Panel 외부에 절대값 element 가 의도된 경우(예: panel 옆 callout, panel 위 사이드 라벨) 는 본 룰 면제. 단, panel "안" 의 시각 강조 element 는 panel 안에 머물러야 학습자가 panel-content 의 일원으로 인식.
+
+**Good** (lesson-7 Scene10 v2):
+```tsx
+<div style={{ position: "relative" }}>
+  <CodePanel width={620} height={180}>...</CodePanel>  {/* 180 ≥ IndentGuide top 108 + height 50 = 158 */}
+  <IndentGuide left={64} top={108} height={50} ... />
+</div>
+```
+
+**Bad** (lesson-7 Scene10 v1):
+```tsx
+<div style={{ position: "relative" }}>
+  <CodePanel width={620} height={150}>...</CodePanel>  {/* 150 < 158 — IndentGuide 8px overflow */}
+  <IndentGuide left={64} top={108} height={50} ... />  {/* 코드 박스 아래로 튀어나옴 */}
+</div>
+```
+
+---
+
 ## 룰 추가 가이드 (앞으로 영상 수정 시)
 
 1. 한 영상을 수정한 후 *재발할 수 있는 패턴* 이면 룰로 박는다. 일회성 미스 (예: 오타) 는 룰 아님.

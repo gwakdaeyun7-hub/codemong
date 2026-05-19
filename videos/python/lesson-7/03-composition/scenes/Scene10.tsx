@@ -116,12 +116,12 @@ export const Scene10: React.FC = () => {
           gap: 50,
         }}
       >
-        {/* 좌측 카드 — 6강 range */}
+        {/* 좌측 카드 — 6강 range (R-029 — CodePanel height ≥ IndentGuide top + height) */}
         <FadeIn delaySec={REVEAL.panelLeft} translateY={18} style={{ flex: "0 0 720px" }}>
           <div
             style={{
               width: 720,
-              height: 540,
+              height: 570,
               background: colors.bgWhite,
               borderRadius: radii.card,
               border: `2.5px solid ${colors.border}`,
@@ -149,9 +149,9 @@ export const Scene10: React.FC = () => {
             >
               6강
             </div>
-            {/* 코드 */}
+            {/* 코드 (R-029 — height 180 으로 IndentGuide top108+50=158 < 180 fit) */}
             <div style={{ position: "relative" }}>
-              <CodePanel fileName="range.py" width={620} height={150}>
+              <CodePanel fileName="range.py" width={620} height={180}>
                 <CodeLine lineNumber={1} revealAtSec={REVEAL.lineLft1}>
                   <PyToken text="for" kind="keyword" />
                   <PyToken text=" " />
@@ -202,12 +202,12 @@ export const Scene10: React.FC = () => {
           </div>
         </FadeIn>
 
-        {/* 구분선 */}
+        {/* 구분선 (카드 height 570 에 맞춰 약간 늘림) */}
         <FadeIn delaySec={REVEAL.panelLeft + 0.2} translateY={0}>
           <div
             style={{
               width: 2,
-              height: 460,
+              height: 490,
               background: colors.border,
               borderRadius: 1,
               opacity: 0.7,
@@ -215,12 +215,12 @@ export const Scene10: React.FC = () => {
           />
         </FadeIn>
 
-        {/* 우측 카드 — 7강 리스트 (R-008 동일 크기 강제) */}
+        {/* 우측 카드 — 7강 리스트 (R-008 동일 크기 강제 + R-029 IndentGuide fit) */}
         <FadeIn delaySec={REVEAL.panelRight} translateY={18} style={{ flex: "0 0 720px" }}>
           <div
             style={{
               width: 720,
-              height: 540,
+              height: 570,
               background: colors.bgWhite,
               borderRadius: radii.card,
               border: `2.5px solid ${colors.accent}`,
@@ -248,7 +248,7 @@ export const Scene10: React.FC = () => {
               7강
             </div>
             <div style={{ position: "relative" }}>
-              <CodePanel fileName="list-iter.py" width={620} height={150}>
+              <CodePanel fileName="list-iter.py" width={620} height={180}>
                 <CodeLine lineNumber={1} revealAtSec={REVEAL.lineRgt1}>
                   <PyToken text="for" kind="keyword" />
                   <PyToken text=" " />
