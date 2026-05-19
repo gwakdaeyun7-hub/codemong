@@ -24,9 +24,10 @@ import {
   PairDiagram,
   PyToken,
 } from "../primitives";
-import { colors, fonts } from "../theme";
+import { colors, fonts, radii } from "../theme";
 
 const REVEAL = {
+  headerLabel: 0.2,
   codePanel: 0.3,
   line1: 0.7,
   diagram: 5.0,
@@ -41,27 +42,48 @@ const REVEAL = {
 export const Scene03: React.FC = () => {
   return (
     <PageBackground>
+      {/* 상단 라벨 — Scene 07 "두 번째 — 튜플" / Scene 09 "세 번째 — 셋" 과 동일 정형 */}
       <div
         style={{
           position: "absolute",
           top: 60,
           left: 0,
           right: 0,
-          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 8,
         }}
       >
-        <FadeIn delaySec={0.1} translateY={6}>
+        <FadeIn delaySec={REVEAL.headerLabel} translateY={6}>
+          <div
+            style={{
+              padding: "8px 24px",
+              borderRadius: radii.pill,
+              background: colors.accentSoft,
+              color: colors.accentInk,
+              border: `1.5px solid ${colors.accent}`,
+              fontFamily: fonts.sans,
+              fontSize: 26,
+              fontWeight: 700,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            첫 번째 — 딕셔너리
+          </div>
+        </FadeIn>
+        <FadeIn delaySec={REVEAL.headerLabel + 0.4} translateY={6}>
           <div
             style={{
               fontFamily: fonts.sans,
-              fontSize: 28,
-              fontWeight: 600,
-              color: colors.accentDeep,
-              letterSpacing: "0.04em",
-              textTransform: "uppercase",
+              fontSize: 22,
+              fontWeight: 500,
+              color: colors.inkMuted,
+              letterSpacing: "-0.01em",
             }}
           >
-            딕셔너리 — 이름표로 꺼내기
+            <span style={{ color: colors.accentInk, fontWeight: 700 }}>이름표(키)</span>로 짝지은
+            묶음
           </div>
         </FadeIn>
       </div>
@@ -72,7 +94,7 @@ export const Scene03: React.FC = () => {
           inset: 0,
           display: "flex",
           alignItems: "center",
-          padding: "120px 80px 140px",
+          padding: "160px 80px 140px",
           gap: 60,
         }}
       >

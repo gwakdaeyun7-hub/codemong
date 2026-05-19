@@ -589,6 +589,175 @@ const REVEAL = {
 
 ---
 
+## R-018 — IndexStrip + 박스 행 + trailing EmptySlot 은 동일 가로 layout 으로 통합 (라벨이 박스 사이에 끼지 않게)
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-7 Scene04 (영상 1:05) / Scene12 (영상 3:57)
+
+**Why**: lesson-7 Scene04 / Scene12 에서 `ListVisual` 의 인덱스 띠 `[0] [1] [2]` 가 박스 `88` `92` `76` 위에 정렬되지 않고 박스 *사이* 에 표시됐음. 사용자 지적: "상단에 인덱스 위치가 숫자 위에 있는게 아니라 숫자들 사이에 있다". 원인: `IndexStrip` 은 `count = items.length` 만큼만 라벨을 그리는데 (`count × boxSize + (count-1) × gap` 폭), 박스 행은 그 위에 `EmptySlot` 까지 추가로 그려 폭이 다름 (`count × boxSize + (count-1) × gap + marginLeft + EmptySlot.size`). 둘 다 `alignItems: center` 인 컬럼 안에 있어 가로 center 정렬되면 IndexStrip 이 박스 행보다 좁아 라벨 위치가 박스 *사이* 로 밀려남. 또한 `EmptySlot` 이 자체적으로 `indexLabel + 박스` 의 두 줄 구조(`column` flex, gap 10)라 height = `36 + 10 + size` = `size + 46` → 다른 ListBox(`height = size`) 보다 크고, 박스 행 `alignItems: center` 에서 가운데 정렬되어 EmptySlot 의 박스 부분이 다른 박스 대비 ~23px 아래로 떨어졌음 → 사용자 지적 "인덱스 3에 해당하는 박스의 높이위치가 나머지와 다르다".
+
+**How to apply** (grep):
+- `ListVisual` 컴포넌트가 `trailingEmptySlot` prop 을 받고 `IndexStrip` 을 같이 그리면:
+  - **IndexStrip 폭 ≡ 박스 행 폭** 강제: `IndexStrip` 에 `trailingEmptyLabel` 옵션을 더해 빈 자리 라벨도 같은 가로 stride(`marginLeft + boxSize`) 로 추가
+  - **EmptySlot 의 자체 indexLabel 제거**: 인덱스 라벨은 `IndexStrip` 일원으로 그려야 박스 위 정렬 보장. `EmptySlot` 은 박스 본체만(`height = size`) 그려 다른 `ListBox` 와 정렬
+- `EmptySlot` 컴포넌트에 `indexLabel` prop 이 존재하면 fail (deprecated — `IndexStrip.trailingEmptyLabel` 로 이동).
+- 직접 `<EmptySlot indexLabel="[N]" />` 호출하면 fail.
+
+**Good** (primitives.tsx 의 ListVisual 안):
+```tsx
+{showIndexStrip ? (
+  <IndexStrip
+    count={items.length}
+    boxSize={boxSize}
+    gap={gap}
+    trailingEmptyLabel={trailingEmptySlot?.indexLabel}
+    trailingEmptyDelaySec={trailingEmptySlot?.labelDelaySec ?? trailingEmptySlot?.delaySec ?? 0}
+    trailingEmptyMarginLeft={6}
+  />
+) : null}
+<div style={{ display: "flex", gap, alignItems: "center" }}>
+  {items.map(...)}
+  {trailingEmptySlot ? (
+    <div style={{ marginLeft: 6 }}>
+      <EmptySlot size={boxSize} delaySec={...} xDelaySec={...} />  {/* indexLabel 전달 X */}
+    </div>
+  ) : null}
+</div>
+```
+
+**Bad** (lesson-7 v1 — fail):
+```tsx
+<IndexStrip count={3} boxSize={130} gap={24} />  {/* 폭: 3*130 + 2*24 = 438 */}
+<div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+  ...3 boxes...                                    {/* 박스 행 폭: 438 + 6 + 130 = 574 → 어긋남 */}
+  <EmptySlot size={130} indexLabel="[3]" />         {/* EmptySlot 자체에 라벨 → 박스 height 130 + 46 → 정렬 깨짐 */}
+</div>
+```
+
+---
+
+## R-019 — 두 layer 가 겹치는 inline label (SwapLabel 류) 은 whiteSpace: nowrap 강제
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-7 Scene05 (영상 1:27)
+
+**Why**: lesson-7 Scene05 의 `SwapLabel` 이 `"길이 = 3"` → `"길이 = 4"` swap 할 때, 새 라벨 `"길이 = 4"` 가 2줄로 보였음 (`길이 =` 첫 줄, `4` 둘째 줄). 사용자 지적: "[길이=4] 이거 2줄로 이상하게 보이는데 수정해줘". 원인: `SwapLabel` 의 구조가 `<div pos:relative>{initial}<div pos:absolute inset:0>{newLabel}</div></div>` — parent div 의 폭은 `initial` 의 inline span 폭에 fit-content. `newLabel` 의 span 은 absolute 영역(parent 폭) 안에서 inline 그려짐. 두 span 의 `fontWeight` 차이(700 vs 800) 로 굵은 쪽 폭이 살짝 더 커서 parent fit-content 폭을 넘어 wrap. 같은 위치에 layer 가 겹치는 swap pattern 은 두 layer 의 폭 차이가 1~2px 만 있어도 wrap 위험.
+
+**How to apply** (grep):
+- `position: "absolute", inset: 0` 으로 layer 두 개가 겹치는 swap pattern 검출 (`SwapLabel` / 유사 컴포넌트):
+  - parent div, 두 layer div 모두 `whiteSpace: "nowrap"` 명시
+- 또는 두 label 의 폭을 미리 명시(`width: <max>`) 로 강제
+- font weight / font size / 텍스트 길이 가 다른 두 label 을 같은 좌표에 swap 할 때 nowrap 안 박으면 fail
+
+**Good** (primitives.tsx 의 SwapLabel):
+```tsx
+<div style={{ position: "relative", whiteSpace: "nowrap", ...style }}>
+  <div style={{ opacity: oldOpacity, whiteSpace: "nowrap" }}>{initial}</div>
+  <div style={{ position: "absolute", inset: 0, opacity: newOpacity, whiteSpace: "nowrap" }}>
+    {newLabel}
+  </div>
+</div>
+```
+
+**Bad** (lesson-7 v1):
+```tsx
+<div style={{ position: "relative" }}>
+  <div>{initial}</div>                                              {/* fontWeight 700 */}
+  <div style={{ position: "absolute", inset: 0 }}>{newLabel}</div>  {/* fontWeight 800 — 폭 약간 큼 → wrap */}
+</div>
+```
+
+---
+
+## R-020 — 좌·우 컬럼 패널 정렬: wrapper height 명시 + inline-flex label 의 height 강제 (R-014 보강)
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-7 Scene09 (영상 2:40)
+
+**Why**: lesson-7 Scene09 (좌측: VarBox + RoundLabel + CodePanel / 우측: ConsolePanel) 에서 좌·우 패널의 세로 y 가 어긋났음. 사용자 지적: "코드박스와 출력결과박스의 높이위치가 다른거 같다". R-014 적용으로 좌측 sum 과 우측 sum 을 같게 설계(`label 36 + gap 10 + box 160 + gap 30 + roundLabel 36 + gap 30 + code 200 = 502` vs `paddingTop 302 + console 200 = 502`) 했음에도 어긋남. 원인: VarBox 의 inline-flex label 이 명시 height 없이 `padding "6px 18px" + fontSize 26` 만 잡혀 실제 line-box 가 `padding 12 + font 26×default-lineHeight(~1.2) = ~45px` 까지 늘어남 → 좌측 sum 이 ~511 로 보임 → `alignItems: center` 일 때 좌측 column center 가 우측보다 ~4.5px 위로 → CodePanel/ConsolePanel y 어긋남.
+
+**How to apply** (grep + calc):
+- R-014 의 좌측·우측 sum 매칭 + 추가로 다음 강제:
+  1. **인라인 label (VarBox label, RoundLabel 등) 의 명시 height**: `display: "inline-flex", alignItems: "center", height: <N>, lineHeight: 1, padding: "0 18px"` — height 를 sum 계산값으로 직접 강제. padding top/bottom 은 0 으로 두고 height 와 lineHeight 1 로 통제 (브라우저 default line-height ~1.2 가 영향 못 미치게).
+  2. **좌·우 wrapper 의 명시 height**: `height: COL_HEIGHT` (예: 502) 를 좌·우 wrapper 양쪽에 동시 강제. 한쪽만 강제하면 다른 쪽이 자식 sum 에 의존해 다시 어긋남.
+  3. **상수 추출**: `const COL_HEIGHT = 502` 같은 명시 상수를 scene 안에 두고 좌·우 wrapper 가 같은 상수 참조.
+- 위 3개 중 하나라도 누락이면 fail. 단, R-011 처럼 VarBox 를 main row 위쪽 absolute 좌표로 분리 → main row 가 단순 [code | console] 두 박스만 남으면 sum 정렬 자체가 단순해져 본 룰 면제 (단, label 류 inline-flex height 는 여전히 명시 권장).
+
+**Good** (lesson-7 Scene09 v2):
+```tsx
+const COL_HEIGHT = 502;  // 좌측 sum = 36+10+160+30+36+30+200, 우측 = 302+200
+
+{/* 좌측 column */}
+<div style={{ flex: 1, ..., gap: 30, height: COL_HEIGHT }}>
+  {/* label height 36 강제 */}
+  <div style={{ display: "inline-flex", alignItems: "center", height: 36, lineHeight: 1, padding: "0 18px", fontSize: 26, ... }}>s</div>
+  <VarBoxBody height={160} />
+  <RoundLabel height={36} />
+  <CodePanel height={200} />
+</div>
+
+{/* 우측 column */}
+<div style={{ flex: 1, ..., paddingTop: 302, height: COL_HEIGHT, alignItems: "flex-start" }}>
+  <ConsolePanel height={200} />
+</div>
+```
+
+**Bad** (lesson-7 Scene09 v1):
+```tsx
+{/* 좌측 — wrapper height 미명시, label height 미강제 */}
+<div style={{ flex: 1, ..., gap: 30 }}>
+  <div style={{ display: "inline-flex", padding: "6px 18px", fontSize: 26, ... }}>s</div>  {/* 실제 ~45px */}
+  ...
+</div>
+
+{/* 우측 — paddingTop 만, wrapper height 미명시 */}
+<div style={{ flex: 1, ..., paddingTop: 302 }}>
+  <ConsolePanel height={200} />
+</div>
+{/* → 좌측 sum 511 vs 우측 sum 502 → alignItems:center 에서 ~4.5px 어긋남 */}
+```
+
+---
+
+## R-021 — CodePanel/Panel wrapper 안 absolute element (IndentGuide·HighlightBox) 는 panel.height 안에 fit
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-19, lesson-7 Scene10 (영상 3:11)
+
+**Why**: lesson-7 Scene10 의 6강·7강 비교 카드에서 `IndentGuide` (둘째 줄 들여쓰기 시각화 막대) 가 `CodePanel` 어두운 박스 *아래로* 튀어나왔음. 사용자 지적: "박스에 2번째줄의 바(막대기)가 코드박스 아래부분을 통과한다". 원인: `IndentGuide` 는 CodePanel wrapper(`<div style={position:relative}>`) 안에 `position: absolute, top: 108, height: 50` 으로 박혀 있는데, CodePanel 자체 height 는 150 → IndentGuide 의 bottom (`top 108 + height 50 = 158`) 이 CodePanel bottom(150) 을 8px 초과. CodePanel wrapper 의 `overflow: visible` (default) 이라 IndentGuide 가 CodePanel 박스 *밖*(그 wrapper 의 아래 영역) 에 그려져 어두운 박스 외부에 떠 있는 막대처럼 보임. lesson-7 Scene09 의 CodePanel(height 200) 안 같은 IndentGuide(top 108 + height 50 = 158 < 200) 는 fit 했기 때문에 lesson-9 작성자가 lesson-10 의 좁은 height 150 케이스를 누락.
+
+**How to apply** (grep + calc):
+- `CodePanel` (또는 임의 `position: relative` wrapper) 안 `position: absolute` 자식 (`IndentGuide` / `HighlightBox` / 임의 overlay) 에 대해:
+  - `(child.top ?? 0) + (child.height ?? 0) ≤ panel.height` 검증
+  - 위반 시 fail. 해결:
+    1. **panel.height 증가** (가장 단순) — 카드 안 다른 element 와의 sum 도 함께 조정
+    2. **absolute child 의 height/top 축소** (시각 강조가 약해지지만 영향 작음)
+    3. **wrapper 에 `overflow: hidden`** (강제 잘림 — 디자인상 어색, 권장 X)
+- 빠른 sanity: `IndentGuide top + height` 가 70 이상이면 CodePanel height ≥ 180 권장 (대부분 lesson-3~9 의 IndentGuide 사용 패턴 기준).
+- Panel 외부에 절대값 element 가 의도된 경우(예: panel 옆 callout, panel 위 사이드 라벨) 는 본 룰 면제. 단, panel "안" 의 시각 강조 element 는 panel 안에 머물러야 학습자가 panel-content 의 일원으로 인식.
+
+**Good** (lesson-7 Scene10 v2):
+```tsx
+<div style={{ position: "relative" }}>
+  <CodePanel width={620} height={180}>...</CodePanel>  {/* 180 ≥ IndentGuide top 108 + height 50 = 158 */}
+  <IndentGuide left={64} top={108} height={50} ... />
+</div>
+```
+
+**Bad** (lesson-7 Scene10 v1):
+```tsx
+<div style={{ position: "relative" }}>
+  <CodePanel width={620} height={150}>...</CodePanel>  {/* 150 < 158 — IndentGuide 8px overflow */}
+  <IndentGuide left={64} top={108} height={50} ... />  {/* 코드 박스 아래로 튀어나옴 */}
+</div>
+```
+
+---
+
 ## R-022 — 토큰 위 마커(배지·말풍선·물음표)는 절대 px 대신 인라인 자동 정렬 (wrap-relative)
 
 - **Category**: G
@@ -771,175 +940,6 @@ export const RedStrike: React.FC<{ ..., angleDeg?: number }> = ({ ..., angleDeg 
   </FadeIn>
 </div>
 {/* "두 번째" / "세 번째" 와 짝이 안 맞음 → 시리즈 깨짐 */}
-```
-
----
-
-## R-026 — IndexStrip + 박스 행 + trailing EmptySlot 은 동일 가로 layout 으로 통합 (라벨이 박스 사이에 끼지 않게)
-
-- **Category**: G
-- **Status**: ACTIVE
-- **Origin**: 2026-05-19, lesson-7 Scene04 (영상 1:05) / Scene12 (영상 3:57)
-
-**Why**: lesson-7 Scene04 / Scene12 에서 `ListVisual` 의 인덱스 띠 `[0] [1] [2]` 가 박스 `88` `92` `76` 위에 정렬되지 않고 박스 *사이* 에 표시됐음. 사용자 지적: "상단에 인덱스 위치가 숫자 위에 있는게 아니라 숫자들 사이에 있다". 원인: `IndexStrip` 은 `count = items.length` 만큼만 라벨을 그리는데 (`count × boxSize + (count-1) × gap` 폭), 박스 행은 그 위에 `EmptySlot` 까지 추가로 그려 폭이 다름 (`count × boxSize + (count-1) × gap + marginLeft + EmptySlot.size`). 둘 다 `alignItems: center` 인 컬럼 안에 있어 가로 center 정렬되면 IndexStrip 이 박스 행보다 좁아 라벨 위치가 박스 *사이* 로 밀려남. 또한 `EmptySlot` 이 자체적으로 `indexLabel + 박스` 의 두 줄 구조(`column` flex, gap 10)라 height = `36 + 10 + size` = `size + 46` → 다른 ListBox(`height = size`) 보다 크고, 박스 행 `alignItems: center` 에서 가운데 정렬되어 EmptySlot 의 박스 부분이 다른 박스 대비 ~23px 아래로 떨어졌음 → 사용자 지적 "인덱스 3에 해당하는 박스의 높이위치가 나머지와 다르다".
-
-**How to apply** (grep):
-- `ListVisual` 컴포넌트가 `trailingEmptySlot` prop 을 받고 `IndexStrip` 을 같이 그리면:
-  - **IndexStrip 폭 ≡ 박스 행 폭** 강제: `IndexStrip` 에 `trailingEmptyLabel` 옵션을 더해 빈 자리 라벨도 같은 가로 stride(`marginLeft + boxSize`) 로 추가
-  - **EmptySlot 의 자체 indexLabel 제거**: 인덱스 라벨은 `IndexStrip` 일원으로 그려야 박스 위 정렬 보장. `EmptySlot` 은 박스 본체만(`height = size`) 그려 다른 `ListBox` 와 정렬
-- `EmptySlot` 컴포넌트에 `indexLabel` prop 이 존재하면 fail (deprecated — `IndexStrip.trailingEmptyLabel` 로 이동).
-- 직접 `<EmptySlot indexLabel="[N]" />` 호출하면 fail.
-
-**Good** (primitives.tsx 의 ListVisual 안):
-```tsx
-{showIndexStrip ? (
-  <IndexStrip
-    count={items.length}
-    boxSize={boxSize}
-    gap={gap}
-    trailingEmptyLabel={trailingEmptySlot?.indexLabel}
-    trailingEmptyDelaySec={trailingEmptySlot?.labelDelaySec ?? trailingEmptySlot?.delaySec ?? 0}
-    trailingEmptyMarginLeft={6}
-  />
-) : null}
-<div style={{ display: "flex", gap, alignItems: "center" }}>
-  {items.map(...)}
-  {trailingEmptySlot ? (
-    <div style={{ marginLeft: 6 }}>
-      <EmptySlot size={boxSize} delaySec={...} xDelaySec={...} />  {/* indexLabel 전달 X */}
-    </div>
-  ) : null}
-</div>
-```
-
-**Bad** (lesson-7 v1 — fail):
-```tsx
-<IndexStrip count={3} boxSize={130} gap={24} />  {/* 폭: 3*130 + 2*24 = 438 */}
-<div style={{ display: "flex", gap: 24, alignItems: "center" }}>
-  ...3 boxes...                                    {/* 박스 행 폭: 438 + 6 + 130 = 574 → 어긋남 */}
-  <EmptySlot size={130} indexLabel="[3]" />         {/* EmptySlot 자체에 라벨 → 박스 height 130 + 46 → 정렬 깨짐 */}
-</div>
-```
-
----
-
-## R-027 — 두 layer 가 겹치는 inline label (SwapLabel 류) 은 whiteSpace: nowrap 강제
-
-- **Category**: G
-- **Status**: ACTIVE
-- **Origin**: 2026-05-19, lesson-7 Scene05 (영상 1:27)
-
-**Why**: lesson-7 Scene05 의 `SwapLabel` 이 `"길이 = 3"` → `"길이 = 4"` swap 할 때, 새 라벨 `"길이 = 4"` 가 2줄로 보였음 (`길이 =` 첫 줄, `4` 둘째 줄). 사용자 지적: "[길이=4] 이거 2줄로 이상하게 보이는데 수정해줘". 원인: `SwapLabel` 의 구조가 `<div pos:relative>{initial}<div pos:absolute inset:0>{newLabel}</div></div>` — parent div 의 폭은 `initial` 의 inline span 폭에 fit-content. `newLabel` 의 span 은 absolute 영역(parent 폭) 안에서 inline 그려짐. 두 span 의 `fontWeight` 차이(700 vs 800) 로 굵은 쪽 폭이 살짝 더 커서 parent fit-content 폭을 넘어 wrap. 같은 위치에 layer 가 겹치는 swap pattern 은 두 layer 의 폭 차이가 1~2px 만 있어도 wrap 위험.
-
-**How to apply** (grep):
-- `position: "absolute", inset: 0` 으로 layer 두 개가 겹치는 swap pattern 검출 (`SwapLabel` / 유사 컴포넌트):
-  - parent div, 두 layer div 모두 `whiteSpace: "nowrap"` 명시
-- 또는 두 label 의 폭을 미리 명시(`width: <max>`) 로 강제
-- font weight / font size / 텍스트 길이 가 다른 두 label 을 같은 좌표에 swap 할 때 nowrap 안 박으면 fail
-
-**Good** (primitives.tsx 의 SwapLabel):
-```tsx
-<div style={{ position: "relative", whiteSpace: "nowrap", ...style }}>
-  <div style={{ opacity: oldOpacity, whiteSpace: "nowrap" }}>{initial}</div>
-  <div style={{ position: "absolute", inset: 0, opacity: newOpacity, whiteSpace: "nowrap" }}>
-    {newLabel}
-  </div>
-</div>
-```
-
-**Bad** (lesson-7 v1):
-```tsx
-<div style={{ position: "relative" }}>
-  <div>{initial}</div>                                              {/* fontWeight 700 */}
-  <div style={{ position: "absolute", inset: 0 }}>{newLabel}</div>  {/* fontWeight 800 — 폭 약간 큼 → wrap */}
-</div>
-```
-
----
-
-## R-028 — 좌·우 컬럼 패널 정렬: wrapper height 명시 + inline-flex label 의 height 강제 (R-014 보강)
-
-- **Category**: G
-- **Status**: ACTIVE
-- **Origin**: 2026-05-19, lesson-7 Scene09 (영상 2:40)
-
-**Why**: lesson-7 Scene09 (좌측: VarBox + RoundLabel + CodePanel / 우측: ConsolePanel) 에서 좌·우 패널의 세로 y 가 어긋났음. 사용자 지적: "코드박스와 출력결과박스의 높이위치가 다른거 같다". R-014 적용으로 좌측 sum 과 우측 sum 을 같게 설계(`label 36 + gap 10 + box 160 + gap 30 + roundLabel 36 + gap 30 + code 200 = 502` vs `paddingTop 302 + console 200 = 502`) 했음에도 어긋남. 원인: VarBox 의 inline-flex label 이 명시 height 없이 `padding "6px 18px" + fontSize 26` 만 잡혀 실제 line-box 가 `padding 12 + font 26×default-lineHeight(~1.2) = ~45px` 까지 늘어남 → 좌측 sum 이 ~511 로 보임 → `alignItems: center` 일 때 좌측 column center 가 우측보다 ~4.5px 위로 → CodePanel/ConsolePanel y 어긋남.
-
-**How to apply** (grep + calc):
-- R-014 의 좌측·우측 sum 매칭 + 추가로 다음 강제:
-  1. **인라인 label (VarBox label, RoundLabel 등) 의 명시 height**: `display: "inline-flex", alignItems: "center", height: <N>, lineHeight: 1, padding: "0 18px"` — height 를 sum 계산값으로 직접 강제. padding top/bottom 은 0 으로 두고 height 와 lineHeight 1 로 통제 (브라우저 default line-height ~1.2 가 영향 못 미치게).
-  2. **좌·우 wrapper 의 명시 height**: `height: COL_HEIGHT` (예: 502) 를 좌·우 wrapper 양쪽에 동시 강제. 한쪽만 강제하면 다른 쪽이 자식 sum 에 의존해 다시 어긋남.
-  3. **상수 추출**: `const COL_HEIGHT = 502` 같은 명시 상수를 scene 안에 두고 좌·우 wrapper 가 같은 상수 참조.
-- 위 3개 중 하나라도 누락이면 fail. 단, R-011 처럼 VarBox 를 main row 위쪽 absolute 좌표로 분리 → main row 가 단순 [code | console] 두 박스만 남으면 sum 정렬 자체가 단순해져 본 룰 면제 (단, label 류 inline-flex height 는 여전히 명시 권장).
-
-**Good** (lesson-7 Scene09 v2):
-```tsx
-const COL_HEIGHT = 502;  // 좌측 sum = 36+10+160+30+36+30+200, 우측 = 302+200
-
-{/* 좌측 column */}
-<div style={{ flex: 1, ..., gap: 30, height: COL_HEIGHT }}>
-  {/* label height 36 강제 */}
-  <div style={{ display: "inline-flex", alignItems: "center", height: 36, lineHeight: 1, padding: "0 18px", fontSize: 26, ... }}>s</div>
-  <VarBoxBody height={160} />
-  <RoundLabel height={36} />
-  <CodePanel height={200} />
-</div>
-
-{/* 우측 column */}
-<div style={{ flex: 1, ..., paddingTop: 302, height: COL_HEIGHT, alignItems: "flex-start" }}>
-  <ConsolePanel height={200} />
-</div>
-```
-
-**Bad** (lesson-7 Scene09 v1):
-```tsx
-{/* 좌측 — wrapper height 미명시, label height 미강제 */}
-<div style={{ flex: 1, ..., gap: 30 }}>
-  <div style={{ display: "inline-flex", padding: "6px 18px", fontSize: 26, ... }}>s</div>  {/* 실제 ~45px */}
-  ...
-</div>
-
-{/* 우측 — paddingTop 만, wrapper height 미명시 */}
-<div style={{ flex: 1, ..., paddingTop: 302 }}>
-  <ConsolePanel height={200} />
-</div>
-{/* → 좌측 sum 511 vs 우측 sum 502 → alignItems:center 에서 ~4.5px 어긋남 */}
-```
-
----
-
-## R-029 — CodePanel/Panel wrapper 안 absolute element (IndentGuide·HighlightBox) 는 panel.height 안에 fit
-
-- **Category**: G
-- **Status**: ACTIVE
-- **Origin**: 2026-05-19, lesson-7 Scene10 (영상 3:11)
-
-**Why**: lesson-7 Scene10 의 6강·7강 비교 카드에서 `IndentGuide` (둘째 줄 들여쓰기 시각화 막대) 가 `CodePanel` 어두운 박스 *아래로* 튀어나왔음. 사용자 지적: "박스에 2번째줄의 바(막대기)가 코드박스 아래부분을 통과한다". 원인: `IndentGuide` 는 CodePanel wrapper(`<div style={position:relative}>`) 안에 `position: absolute, top: 108, height: 50` 으로 박혀 있는데, CodePanel 자체 height 는 150 → IndentGuide 의 bottom (`top 108 + height 50 = 158`) 이 CodePanel bottom(150) 을 8px 초과. CodePanel wrapper 의 `overflow: visible` (default) 이라 IndentGuide 가 CodePanel 박스 *밖*(그 wrapper 의 아래 영역) 에 그려져 어두운 박스 외부에 떠 있는 막대처럼 보임. lesson-7 Scene09 의 CodePanel(height 200) 안 같은 IndentGuide(top 108 + height 50 = 158 < 200) 는 fit 했기 때문에 lesson-9 작성자가 lesson-10 의 좁은 height 150 케이스를 누락.
-
-**How to apply** (grep + calc):
-- `CodePanel` (또는 임의 `position: relative` wrapper) 안 `position: absolute` 자식 (`IndentGuide` / `HighlightBox` / 임의 overlay) 에 대해:
-  - `(child.top ?? 0) + (child.height ?? 0) ≤ panel.height` 검증
-  - 위반 시 fail. 해결:
-    1. **panel.height 증가** (가장 단순) — 카드 안 다른 element 와의 sum 도 함께 조정
-    2. **absolute child 의 height/top 축소** (시각 강조가 약해지지만 영향 작음)
-    3. **wrapper 에 `overflow: hidden`** (강제 잘림 — 디자인상 어색, 권장 X)
-- 빠른 sanity: `IndentGuide top + height` 가 70 이상이면 CodePanel height ≥ 180 권장 (대부분 lesson-3~9 의 IndentGuide 사용 패턴 기준).
-- Panel 외부에 절대값 element 가 의도된 경우(예: panel 옆 callout, panel 위 사이드 라벨) 는 본 룰 면제. 단, panel "안" 의 시각 강조 element 는 panel 안에 머물러야 학습자가 panel-content 의 일원으로 인식.
-
-**Good** (lesson-7 Scene10 v2):
-```tsx
-<div style={{ position: "relative" }}>
-  <CodePanel width={620} height={180}>...</CodePanel>  {/* 180 ≥ IndentGuide top 108 + height 50 = 158 */}
-  <IndentGuide left={64} top={108} height={50} ... />
-</div>
-```
-
-**Bad** (lesson-7 Scene10 v1):
-```tsx
-<div style={{ position: "relative" }}>
-  <CodePanel width={620} height={150}>...</CodePanel>  {/* 150 < 158 — IndentGuide 8px overflow */}
-  <IndentGuide left={64} top={108} height={50} ... />  {/* 코드 박스 아래로 튀어나옴 */}
-</div>
 ```
 
 ---

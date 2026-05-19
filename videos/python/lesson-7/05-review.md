@@ -328,9 +328,9 @@
 
 ---
 
-## 새 quality rule 후보 (R-018부터 — 사용자 합의 전 _제안_ 만, 자동 append 금지)
+## 새 quality rule 후보 (다음 사용 가능 ID R-026 — 사용자 합의 전 _제안_ 만, 자동 append 금지)
 
-### R-018 후보: SwappingValue 같은 *박스 내부* swap 의 buffer 는 0.1s 이상 허용
+### 후보 #1: SwappingValue 같은 *박스 내부* swap 의 buffer 는 0.1s 이상 허용
 
 - **Category**: G
 - **Origin candidate**: lesson-6 Scene04 + lesson-7 Scene09 (SwappingValue 패턴)
@@ -339,7 +339,8 @@
   - R-002 의 0.2s buffer 임계는 "scene 컨테이너 / page 좌표 absolute" 두 div 의 swap 에만 적용.
   - 부모 박스 (예: VarBox / ResultBox) 안의 *inner text only swap* 은 buffer 0.1s 도 허용.
   - 단, 부모 박스의 _높이가 작거나_ 텍스트가 _컬러 강조_ 면 잔상이 보일 수 있으므로 review 등급 (R) 으로 추가.
-- **상태**: 사용자 합의 필요. 합의 시 R-002 의 본문에 "단, *box-internal* swap 은 0.1s buffer 허용 (R-018)" 한 줄 추가하고 R-018 신설.
+- **상태**: 사용자 합의 필요. 합의 시 R-002 의 본문에 "단, *box-internal* swap 은 0.1s buffer 허용 (R-026)" 한 줄 추가하고 R-026 신설 (또는 이후 시점의 다음 사용 가능 ID).
+- **Note (2026-05-19)**: 이 후보는 원래 R-018 슬롯을 노렸으나, lesson-7 fix 와 lesson-8 fix 가 먼저 들어가면서 R-018~R-025 가 모두 채워짐. 다음 사용 가능 ID 는 R-026.
 
 ---
 

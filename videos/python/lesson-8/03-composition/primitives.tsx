@@ -824,6 +824,11 @@ export const RedStrike: React.FC<{
   fadeOutSec?: number;
   thickness?: number;
   color?: string;
+  /**
+   * Strike 회전 각도 (deg). 기본 0 = 가로 직선 — 코드 strike 의 가독성·자연스러움 우선.
+   * 디자인 의도로 살짝 비틀고 싶을 때만 명시 (~±6deg 범위 권장).
+   */
+  angleDeg?: number;
 }> = ({
   children,
   delaySec = 0,
@@ -832,6 +837,7 @@ export const RedStrike: React.FC<{
   fadeOutSec = 0.4,
   thickness = 4,
   color = colors.danger,
+  angleDeg = 0,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -871,7 +877,7 @@ export const RedStrike: React.FC<{
           height: thickness,
           background: color,
           borderRadius: thickness / 2,
-          transform: "translateY(-50%) rotate(-6deg)",
+          transform: `translateY(-50%) rotate(${angleDeg}deg)`,
           pointerEvents: "none",
         }}
       />

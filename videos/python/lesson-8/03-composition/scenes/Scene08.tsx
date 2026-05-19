@@ -184,14 +184,14 @@ export const Scene08: React.FC = () => {
                   </RedStrike>
                 </CodeLine>
               </CodePanel>
-              {/* 빨간 X 마커 (라인 4 우측) */}
+              {/* 빨간 X 마커 (라인 4 우측, 패널 안쪽) — right:24 로 panel 우측 padding(22) 안쪽 inset */}
               <FadeIn
                 delaySec={REVEAL.redX + 0.4}
                 translateY={-4}
                 style={{
                   position: "absolute",
                   top: 230,
-                  right: -20,
+                  right: 24,
                   width: 44,
                   height: 44,
                   borderRadius: "50%",

@@ -77,6 +77,35 @@ const QuestionBadge: React.FC<{
   );
 };
 
+/**
+ * 숫자 PyToken 위에 자동으로 배지를 올려주는 래퍼.
+ * inline-block + position:relative 로 배지를 토큰 위에 절대 위치 — px 좌표 추측 X.
+ * 배지가 CodePanel 위로 escape 하려면 CodePanel 의 overflow: visible 필요.
+ */
+const NumberWithBadge: React.FC<{
+  number: string;
+  badgeEnterAtSec: number;
+  badgePulseAtSec: number;
+}> = ({ number, badgeEnterAtSec, badgePulseAtSec }) => {
+  return (
+    <span style={{ position: "relative", display: "inline-block" }}>
+      <PyToken text={number} kind="number" />
+      <span
+        style={{
+          position: "absolute",
+          left: "50%",
+          // -88 = line top(20 padding) - 28 (target: 28px above panel top) - 40 (header)
+          top: -88,
+          transform: "translateX(-50%)",
+          pointerEvents: "none",
+        }}
+      >
+        <QuestionBadge enterAtSec={badgeEnterAtSec} pulseAtSec={badgePulseAtSec} />
+      </span>
+    </span>
+  );
+};
+
 export const Scene02: React.FC = () => {
   return (
     <PageBackground>
@@ -95,59 +124,48 @@ export const Scene02: React.FC = () => {
         {/* 코드 패널 + 물음표 배지 */}
         <div style={{ position: "relative" }}>
           <FadeIn delaySec={REVEAL.codePanel} translateY={20}>
-            <CodePanel fileName="scores.py" width={720} height={140}>
+            {/* overflow: visible — NumberWithBadge 의 배지가 panel 위로 escape 해야 함 */}
+            <CodePanel
+              fileName="scores.py"
+              width={720}
+              height={140}
+              style={{ overflow: "visible" }}
+            >
               <CodeLine lineNumber={1} revealAtSec={REVEAL.line1}>
                 <PyToken text="scores" kind="name" />
                 <PyToken text=" " />
                 <PyToken text="=" kind="op" />
                 <PyToken text=" " />
                 <PyToken text="[" kind="op" />
-                <PyToken text="80" kind="number" />
+                <NumberWithBadge
+                  number="80"
+                  badgeEnterAtSec={REVEAL.badge1}
+                  badgePulseAtSec={REVEAL.pulse}
+                />
                 <PyToken text=", " kind="op" />
-                <PyToken text="95" kind="number" />
+                <NumberWithBadge
+                  number="95"
+                  badgeEnterAtSec={REVEAL.badge2}
+                  badgePulseAtSec={REVEAL.pulse}
+                />
                 <PyToken text=", " kind="op" />
-                <PyToken text="70" kind="number" />
+                <NumberWithBadge
+                  number="70"
+                  badgeEnterAtSec={REVEAL.badge3}
+                  badgePulseAtSec={REVEAL.pulse}
+                />
                 <PyToken text="]" kind="op" />
               </CodeLine>
             </CodePanel>
           </FadeIn>
 
-          {/* 80 위에 배지 (x ≈ 230) */}
+          {/* "누구 점수?" 라벨 — 3개 배지 그룹 위쪽 중앙 (가운데 "95" 토큰 기준)
+              "95" panel-relative 중심 ≈ 62(코드 시작 offset) + 14.5(char) × 17.4(mono char width) ≈ 314
+              라벨 width 340 → left = 314 - 170 = 144 */}
           <div
             style={{
               position: "absolute",
-              left: 240,
-              top: -28,
-            }}
-          >
-            <QuestionBadge enterAtSec={REVEAL.badge1} pulseAtSec={REVEAL.pulse} />
-          </div>
-          {/* 95 위에 배지 (x ≈ 350) */}
-          <div
-            style={{
-              position: "absolute",
-              left: 358,
-              top: -28,
-            }}
-          >
-            <QuestionBadge enterAtSec={REVEAL.badge2} pulseAtSec={REVEAL.pulse} />
-          </div>
-          {/* 70 위에 배지 (x ≈ 470) */}
-          <div
-            style={{
-              position: "absolute",
-              left: 472,
-              top: -28,
-            }}
-          >
-            <QuestionBadge enterAtSec={REVEAL.badge3} pulseAtSec={REVEAL.pulse} />
-          </div>
-
-          {/* "누구 점수?" 라벨 — 배지 위쪽 */}
-          <div
-            style={{
-              position: "absolute",
-              left: 200,
+              left: 144,
               top: -90,
               width: 340,
               display: "flex",

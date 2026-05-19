@@ -116,7 +116,7 @@ export const Scene10: React.FC = () => {
           gap: 50,
         }}
       >
-        {/* 좌측 카드 — 6강 range (R-029 — CodePanel height ≥ IndentGuide top + height) */}
+        {/* 좌측 카드 — 6강 range (R-021 — CodePanel height ≥ IndentGuide top + height) */}
         <FadeIn delaySec={REVEAL.panelLeft} translateY={18} style={{ flex: "0 0 720px" }}>
           <div
             style={{
@@ -149,7 +149,7 @@ export const Scene10: React.FC = () => {
             >
               6강
             </div>
-            {/* 코드 (R-029 — height 180 으로 IndentGuide top108+50=158 < 180 fit) */}
+            {/* 코드 (R-021 — height 180 으로 IndentGuide top108+50=158 < 180 fit) */}
             <div style={{ position: "relative" }}>
               <CodePanel fileName="range.py" width={620} height={180}>
                 <CodeLine lineNumber={1} revealAtSec={REVEAL.lineLft1}>
@@ -215,7 +215,7 @@ export const Scene10: React.FC = () => {
           />
         </FadeIn>
 
-        {/* 우측 카드 — 7강 리스트 (R-008 동일 크기 강제 + R-029 IndentGuide fit) */}
+        {/* 우측 카드 — 7강 리스트 (R-008 동일 크기 강제 + R-021 IndentGuide fit) */}
         <FadeIn delaySec={REVEAL.panelRight} translateY={18} style={{ flex: "0 0 720px" }}>
           <div
             style={{

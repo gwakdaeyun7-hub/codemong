@@ -1123,7 +1123,7 @@ export const EmptySlot: React.FC<{
   delaySec = 0,
   xDelaySec,
 }) => {
-  // R-026 — indexLabel 은 IndexStrip 의 trailingEmptyLabel 로 통합. EmptySlot 은
+  // R-018 — indexLabel 은 IndexStrip 의 trailingEmptyLabel 로 통합. EmptySlot 은
   // 박스 본체만 그려서 다른 ListBox 와 height 동일 (= size). 박스 행 alignItems:
   // center 일 때 모든 박스가 같은 y 에 위치.
   const xStart = typeof xDelaySec === "number" ? xDelaySec : delaySec + 0.4;
@@ -1178,7 +1178,7 @@ export const IndexStrip: React.FC<{
   highlightDurationSec?: number;
   fontSize?: number;
   /**
-   * 마지막 박스 옆에 빈 자리 인덱스 라벨 (예: "[3]") 추가. R-026 — ListVisual 의
+   * 마지막 박스 옆에 빈 자리 인덱스 라벨 (예: "[3]") 추가. R-018 — ListVisual 의
    * trailingEmptySlot 이 있을 때 IndexStrip 도 같은 폭 layout 으로 그려야 박스 위
    * 정렬이 맞음. 색상은 danger (빨강) 로 빈 자리 의미 강조.
    */
@@ -1587,7 +1587,7 @@ export const SwapLabel: React.FC<{
     extrapolateRight: "clamp",
   });
 
-  // R-027 — initial 과 newLabel 의 폰트 굵기·길이 차이로 newLabel 의 inline 폭이
+  // R-019 — initial 과 newLabel 의 폰트 굵기·길이 차이로 newLabel 의 inline 폭이
   // parent (initial 폭에 fit-content) 를 초과하면 wrap 됨. whiteSpace: nowrap 으로
   // 두 라벨 모두 1줄 보장.
   return (
