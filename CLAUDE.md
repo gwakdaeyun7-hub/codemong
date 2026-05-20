@@ -13,8 +13,8 @@
 - **Tailwind CSS v4** (`@tailwindcss/postcss`) + `tailwind-merge` + `class-variance-authority`
 - **shadcn/ui** v4 — 사실상 미사용 (디자인 톤 충돌). `components/ui/` 에 button/card/dialog/input/label/dropdown-menu 가 있지만 페이지는 native `<button>`/`<div>` + Tailwind 직접 구성으로 만들어짐
 - **lucide-react v1.14.0** ← v0.x 아님. 컴포넌트 폴더별 `icon-map.ts` 화이트리스트로만 import (트리쉐이킹 보호)
-- **Supabase** (`@supabase/ssr` + `@supabase/supabase-js`) — middleware, server/client helpers (`lib/supabase/`)
-- **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`)
+- **Supabase** (`@supabase/ssr` + `@supabase/supabase-js`) — middleware/proxy, server/client helpers (`lib/supabase/`), 인증 UI 전체 구현 (`lib/auth/`, `app/(auth)/`, `app/auth/callback/`). OAuth Google + Kakao 지원
+- **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`). 모델 7개: Post / Comment / PostLike / CommentLike / LessonLike / PostReport / CommentReport
 - **pnpm** (workspace + onlyBuiltDependencies)
 - **Remotion 4.0.456** (`remotion/` workspace 멤버, 영상 제작용 — 메인 앱 의존성 아님, sibling project)
 
@@ -27,7 +27,23 @@
 | `/` | 홈 = 코드학습 페이지 | 프론트 6 + 백엔드 1(Python) 카드 |
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
 | `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
-| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1`, `lesson-2`, `lesson-3`, `lesson-4`, `lesson-5` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시 |
+| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1`, `lesson-2`, `lesson-3`, `lesson-4`, `lesson-5` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + LessonLikeBar(좋아요+댓글 카운트) + CommentSection(댓글 임베드) + 이전/다음 네비 |
+| `/login` | 로그인 | 이메일 + Google/Kakao OAuth |
+| `/signup` | 회원가입 | 이메일/비밀번호/닉네임 |
+| `/forgot-password` | 비밀번호 재설정 요청 | 메일 링크 전송 |
+| `/reset-password` | 새 비밀번호 설정 | recovery 임시 세션 사용 (proxy 가드 예외) |
+| `/verify-email` | 이메일 인증 안내 | |
+| `/auth/callback` | OAuth/이메일확인/비번복구 공용 콜백 | Route Handler. PKCE `exchangeCodeForSession` |
+| `/mypage` | 마이페이지 홈 | 프로필 카드 + 학습 통계(mock) + 최근 학습 |
+| `/mypage/settings` | 설정 | 닉네임/비밀번호 변경 + 계정 삭제 안내 |
+| `/mypage/comments` | 내가 쓴 댓글 | |
+| `/mypage/posts` | 내가 쓴 글 | |
+| `/mypage/likes` | 좋아요한 강의/글 | 두 섹션 |
+| `/mypage/calendar` | 학습 캘린더 | mock (학습 진도 모델 부재로 자리만) |
+| `/community` | 게시글 목록 | Q&A/자유 카테고리 탭 |
+| `/community/new` | 글 작성 | 로그인 강제 |
+| `/community/[postId]` | 게시글 상세 | 좋아요 + 댓글 섹션 임베드 |
+| `/community/[postId]/edit` | 글 수정 | 작성자만 |
 
 **Next 16 dynamic route 규칙**: `params: Promise<{...}>` + `await params` 정확히 사용. (위 페이지들 모두 그렇게 짜여있음.)
 
@@ -44,6 +60,18 @@
 | `lib/lesson-plan.ts` | `Lesson` / `LessonStatus` 타입 + `pythonLessonPlan` (12강) + `getLessonPlan(id)` |
 | `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` + `pythonLesson2Content` + `pythonLesson3Content` + `pythonLesson4Content` + `pythonLesson5Content` + `getLessonContent(courseId, lessonId)` |
 | `lib/quiz-content.ts` | `QuizPool` (`"evaluation" \| "practice"`) / `QuizQuestion` / `Misconception` / `QuizOption` / `DisallowedAnswer` 타입 + `pythonLesson1Quiz` / `pythonLesson2Quiz` + `pythonLesson1Misconceptions` / `pythonLesson2Misconceptions` + `getQuiz(courseId, lessonId)` / `getMisconceptions(courseId, lessonId)`. 강의당 30문항 (Pool A 10 + Pool B 20). 모든 문항이 `pool` (필수) + `isomorphGroup` (선택, 같은 학습목표·오개념을 다른 surface 로 묻는 isomorph 묶음 ID) 필드 보유. 보기마다 `misconceptionId` 라벨. 추천 알고리즘 진단 신호 = `misconceptionId` + `isomorphGroup` + `pool`. |
+| `lib/auth/actions.ts` | Server Actions 8개 (이메일 가입/로그인, OAuth Google·Kakao, 로그아웃, 비번 재설정/변경, 닉네임 변경) + Supabase 에러 한국어 매핑 |
+| `lib/auth/get-user.ts` | `getCurrentUser()` — Server Component용. nickname fallback: `user_metadata.nickname` → `full_name` / `name` → email @앞부분 |
+| `lib/auth/validation.ts` | email/password/nickname 검증 + `translateAuthError()` Supabase 에러 한국어 매핑 |
+| `lib/community/types.ts` | `PostCategory`, `CommentNode`, `PostListItem`, `PostDetail`, `LikedLessonItem`, `LikedPostItem`, `REPORT_REASONS`, `ReportReason` |
+| `lib/community/validation.ts` | post title/body, comment body, report reason/detail, lessonRef 검증 |
+| `lib/community/comments-actions.ts` | Server Actions: `createLessonCommentAction`, `createPostCommentAction`, `updateCommentAction`, `deleteCommentAction` (soft), `reportCommentAction` |
+| `lib/community/comments-queries.ts` | `listLessonComments` / `listPostComments` (1-depth 트리 구성), `listMyComments` |
+| `lib/community/posts-actions.ts` | `createPostAction`, `updatePostAction`, `deletePostAction` (soft), `toggleResolvedAction` (Q&A 해결, 작성자만), `reportPostAction` |
+| `lib/community/posts-queries.ts` | `listPosts` (category 필터), `getPost`, `listMyPosts` |
+| `lib/community/likes-actions.ts` | `togglePostLikeAction` / `toggleCommentLikeAction` / `toggleLessonLikeAction`, `getLessonLikeStatus` |
+| `lib/community/likes-queries.ts` | `listMyLikedLessons` (lesson-plan join), `listMyLikedPosts` |
+| `lib/format.ts` | `timeAgoKo`, `fmtCount` 헬퍼 |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
 
@@ -53,13 +81,76 @@
 
 | Path | 역할 |
 |------|------|
-| `components/` (root) | 글로벌: `top-nav`, `course-card`, `status-badge`, `level-badge`, `course-icon`, `learning-mode-toggle` |
+| `components/` (root) | 글로벌: `top-nav`, `user-menu`, `course-card`, `status-badge`, `level-badge`, `course-icon`, `learning-mode-toggle` |
 | `components/course-detail/` | 소개 탭 섹션 (header, sidebar, learning-outcomes, roadmap, checklist, reviews, cta, section-card) |
 | `components/lessons/` | 강의 목록 페이지 (course-progress-header, lesson-list, lesson-card, progress-stat-card, stats-card, tips-card, badges-card) |
 | `components/lesson-content/` | 강의 상세 영상 영역 (lesson-content-header, lesson-video-card, lesson-navigation — 영상-only 모드) |
+| `components/auth/` | 인증 폼 (이메일 로그인/회원가입, OAuth 버튼 — Kakao+Google 인라인 SVG, 비번 재설정/재발급, AuthLayout 좌측 브랜드+우측 폼, or-divider, form-feedback) |
+| `components/mypage/` | 마이페이지 (사이드바, 프로필 카드, 학습 통계 카드(mock), 닉네임/비번 변경 폼, settings-section wrapper) |
+| `components/comments/` | 영상/게시글 공용 댓글 (CommentSection — lesson\|post 통합 Server, CommentForm create+edit 통합, CommentItem, LikeButton — comment/lesson/post 통합, ReportForm — comment/post 통합, LessonLikeBar) |
+| `components/community/` | 커뮤니티 (CategoryTabs, PostCard, PostForm create+edit 통합, PostActions — 수정/삭제/해결토글/신고) |
 | `components/ui/` | shadcn 원본 (현재는 거의 안 씀 — 향후 디자인 시스템화하면 cva variant로 흡수) |
 
 **각 도메인 폴더에 `icon-map.ts`** — lucide 아이콘 화이트리스트. 어떤 컴포넌트도 lucide에서 직접 동적 import 하지 않음. 단, 사용 아이콘이 적어 직접 import 만으로 충분한 폴더는 예외 — 현재 `components/lesson-content/` 가 그 케이스.
+
+---
+
+## Data Models
+
+`prisma/schema.prisma`. Supabase Postgres + Prisma 7. connection URL은 `prisma.config.ts`에서 관리 (Prisma 7에서 schema datasource의 `url`/`directUrl` 제거됨).
+
+### 모델 7개 + enum 1개
+
+| 모델 | 테이블 | 역할 |
+|------|-------|------|
+| `Post` | posts | 커뮤니티 게시글 (Q&A / 자유). authorNickname/AvatarUrl 스냅샷, resolved(Q&A 해결), likeCount/commentCount 캐시, soft delete |
+| `Comment` | comments | 댓글. postId 또는 lessonRef 중 하나에 달림 (lesson은 Prisma 외부라 string ref). parentId로 1-depth 답글 |
+| `PostLike` | post_likes | postId+userId 복합 PK |
+| `CommentLike` | comment_likes | commentId+userId 복합 PK |
+| `LessonLike` | lesson_likes | lessonRef+userId 복합 PK (lesson은 string ref) |
+| `PostReport` | post_reports | postId+reporterId @@unique (사용자당 1회). reason(spam/abuse/off-topic/other) + detail |
+| `CommentReport` | comment_reports | commentId+reporterId @@unique |
+| `enum PostCategory` | — | question / free |
+
+### 설계 결정
+
+1. **작성자 표시 정보 스냅샷**: 댓글/게시글 작성 시 `user_metadata.nickname`과 `avatar_url`을 그대로 컬럼에 저장. 이유 = Supabase `auth.users`는 Prisma 외부 스키마라 join 불가, admin API 조회는 매번 외부 호출이라 느림. 트레이드오프: 닉네임 변경 후 과거 댓글 표시명 안 바뀜 (신규 댓글에만 반영).
+2. **soft delete**: Post/Comment에 `deletedAt` 컬럼. 삭제된 댓글은 답글이 있으면 "삭제된 댓글입니다"로 자리 유지, 답글도 없으면 노출 X.
+3. **카운트 캐시**: `Post.likeCount` / `Post.commentCount` / `Comment.likeCount` — 매번 `count()` 안 하도록 increment/decrement를 트랜잭션으로.
+4. **lesson 참조**: lesson은 정적 `lib/lesson-plan.ts` mock이라 외래키 대신 `lessonRef` 문자열 (포맷: `<courseId>/<lessonId>`). 메타 매핑은 application code에서.
+5. **답글 1-depth**: parentId가 있는 댓글에는 추가 답글 불가. application code에서 강제 (`parent.parentId !== null`이면 reject).
+
+### Auth
+
+- Supabase Auth (email/password + OAuth Google + Kakao) 위임
+- 닉네임은 `user_metadata.nickname`에 저장 (별도 user_profiles 테이블 X)
+- 회원가입 시 `signUp({ options: { data: { nickname } } })`로 metadata 주입
+- 이메일 인증 ON 가정 (Supabase 기본). 메일 링크 → `/auth/callback?code=...` → `exchangeCodeForSession`
+- 비밀번호 재설정: `resetPasswordForEmail({ redirectTo: ${origin}/auth/callback?next=/reset-password })` → recovery 임시 세션으로 `/reset-password` 진입 → `updateUser({ password })`
+
+### 권한 정책
+
+- 읽기: 비로그인 OK (목록/상세/댓글 조회)
+- 쓰기/좋아요/신고: 로그인 필수
+- 수정/삭제: 본인만 (application code 체크)
+- Q&A 해결 토글: Q&A 작성자만
+- 본인 글/댓글 신고 불가
+- 사용자당 같은 글/댓글 신고 1회 (DB unique 제약)
+
+### proxy.ts (Next.js 16 — middleware → proxy)
+
+- `/mypage/*` 미로그인 → `/login?next=...` 리다이렉트
+- 로그인 상태에서 `/login`·`/signup`·`/forgot-password` → `/` 리다이렉트
+- `/reset-password` 는 recovery 임시 세션 사용을 위해 예외
+- matcher: 정적 자원(_next/static, _next/image, 이미지/미디어/json/ico/css/js) 제외
+
+### 커뮤니티 / 댓글 / 좋아요 흐름
+
+- 영상 페이지 = lesson 좋아요 + 댓글 (lessonRef 기반)
+- 커뮤니티 페이지 = post + post 좋아요 + 댓글 (postId 기반)
+- 마이페이지 = 내 댓글 / 내 글 / 좋아요한 강의/글 / 학습 캘린더(mock)
+- 댓글 좋아요는 source path 미상 → caller가 `router.refresh()` 호출 패턴
+- lesson/post 좋아요는 server action 내에서 `revalidatePath` 처리
 
 ---
 
@@ -188,9 +279,10 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 
 ## Out of scope (현재 미구현 — 카드/스텁만 존재)
 
-- 백엔드 Route Handler / Server Action — Prisma schema 비어있음
 - 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
 - Python 9~12강 영상 (1·2·3·4·5강은 본 시리즈 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 6강·7강·8강 영상은 완성됐으나 `lib/lesson-content.ts` 임베드 미진행 — 별도 라운드 예정.
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
-- Supabase Auth UI (middleware/helper 만 wired)
-- 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능
+- 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능. 단, 영상 아래에 LessonLikeBar(좋아요 + 댓글 카운트) + CommentSection(댓글) 은 추가됨.
+- 학습 진도/이해도/streak/배지 추적 모델 — `/mypage/calendar`, `/mypage/page.tsx`의 학습 통계 카드는 현재 mock 자리만. backend 라운드에서 LearningEvent 등 추가 시 자동 활성.
+- 계정 삭제 자동화 — service_role admin API 필요. 현재 settings 페이지는 운영팀 메일 문의 안내만.
+- Realtime / 알림 센터 / 검색 — TopNav 알림·검색 아이콘은 시각적 자리만.
