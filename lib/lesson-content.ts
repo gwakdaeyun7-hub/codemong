@@ -1,7 +1,7 @@
 // 강의 상세(개념 탭) 화면 데이터 모듈 — 영상-only 모드.
 // 화면은 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시. 본문 카드(개념/구조/문법/예시/핵심정리/활용)는 제거됨.
 // 추후 본문을 다시 채우거나 새 콘텐츠 모델로 확장할 때 타입을 다시 늘릴 것.
-// MVP: lesson-1, lesson-2, lesson-3, lesson-5 정적 객체 보유 (lesson-4 영상 미제작 — 의도적 미등록).
+// MVP: lesson-1 ~ lesson-6 정적 객체 보유. lesson-7+ 는 영상 임베드 미진행 — 별도 라운드.
 // 추후 backend-developer가 만들 API로 교체 예정.
 // (이 파일은 클라이언트/서버 어디서든 import 가능한 순수 데이터 모듈)
 
@@ -92,6 +92,25 @@ export const pythonLesson3Content: LessonContent = {
   },
 };
 
+export const pythonLesson4Content: LessonContent = {
+  lessonId: "lesson-4",
+  lessonNumber: 4,
+  title: "입력과 연산자",
+  durationMinutes: 16,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "사용자에게 받고, 계산하고, 보여주기 — input() 과 연산자",
+    transcriptSummary:
+      "이 영상에서는 input() 한 줄로 사용자 값을 받아 변수에 담는 방법부터, int() 형변환의 필요성, 산술·비교·논리 연산자가 어떤 결과를 만드는지 차례로 살펴봅니다. 두 숫자를 받아 합·차·곱·몫을 출력하는 짧은 코드를 함께 읽으며 '받고 → 계산하고 → 보여주는' 흐름을 손으로 따라가 볼게요.",
+    videoSrc: "/videos/python-lesson-4.mp4",
+  },
+  navigation: {
+    previous: { number: 3, title: "변수와 자료형" },
+    next: { number: 5, title: "조건문" },
+  },
+};
+
 export const pythonLesson5Content: LessonContent = {
   lessonId: "lesson-5",
   lessonNumber: 5,
@@ -111,24 +130,46 @@ export const pythonLesson5Content: LessonContent = {
   },
 };
 
+export const pythonLesson6Content: LessonContent = {
+  lessonId: "lesson-6",
+  lessonNumber: 6,
+  title: "반복문",
+  durationMinutes: 22,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "같은 일을 여러 번 — for / while / break / continue",
+    transcriptSummary:
+      "이 영상에서는 2강의 순서도에서 보았던 '위로 되돌아오는 고리'가 코드에서 어떻게 반복문이 되는지 따라가 봅니다. for 와 range 로 정해진 횟수만큼 반복하는 흐름, while 로 조건이 거짓이 될 때까지 반복하는 흐름, 그리고 break · continue 로 루프의 진행을 끊거나 건너뛰는 모습을 한 줄씩 짚어 볼게요.",
+    videoSrc: "/videos/python-lesson-6.mp4",
+  },
+  navigation: {
+    previous: { number: 5, title: "조건문" },
+    next: { number: 7, title: "리스트" },
+  },
+};
+
 /**
  * (courseId, lessonId) → LessonContent 룩업.
- * MVP: (python | be-python) + (lesson-1 | lesson-2 | lesson-3 | lesson-5) 매칭.
- * lesson-4 는 12강 시퀀스상 자리는 있지만 영상 미제작이라 의도적으로 미등록 — 호출부에서 notFound() 로 떨어짐.
- * 그 외 id 도 마찬가지로 호출부에서 notFound() 처리.
+ * MVP: (python | be-python) + (lesson-1 ~ lesson-6) 매칭.
+ * lesson-7+ 는 영상 임베드 미진행 — 호출부에서 notFound() 로 떨어짐.
  */
 const LESSON_CONTENT_INDEX: Record<string, Record<string, LessonContent>> = {
   python: {
     "lesson-1": pythonLesson1Content,
     "lesson-2": pythonLesson2Content,
     "lesson-3": pythonLesson3Content,
+    "lesson-4": pythonLesson4Content,
     "lesson-5": pythonLesson5Content,
+    "lesson-6": pythonLesson6Content,
   },
   "be-python": {
     "lesson-1": pythonLesson1Content,
     "lesson-2": pythonLesson2Content,
     "lesson-3": pythonLesson3Content,
+    "lesson-4": pythonLesson4Content,
     "lesson-5": pythonLesson5Content,
+    "lesson-6": pythonLesson6Content,
   },
 };
 

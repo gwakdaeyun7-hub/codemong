@@ -2,8 +2,8 @@
 // Server Component — 데이터 룩업 + 화면 조립. 클라이언트 인터랙션은 leaf(예시 코드 카드 복사 버튼)로 한정.
 //
 // 라우팅: /courses/[courseId]/lessons/[lessonId]
-//   - MVP: courseId ∈ {python, be-python}, lessonId ∈ {"lesson-1", "lesson-2", "lesson-3", "lesson-5"} 매칭
-//   - lesson-4 는 12강 시퀀스상 자리는 있지만 영상 미제작이라 의도적으로 매칭 X → notFound()
+//   - MVP: courseId ∈ {python, be-python}, lessonId ∈ {"lesson-1" ~ "lesson-6"} 매칭
+//   - lesson-7+ 는 영상 임베드 미진행 → notFound()
 //   - 그 외엔 notFound()
 //
 // 레이아웃 (lg+): [좌 사이드바] [가운데 본문] [우 사이드바 320px]
@@ -46,6 +46,18 @@ export default async function LessonContentPage({
   if (!content || !plan || !detail || !courseMeta) {
     notFound();
   }
+
+  // 이전/다음 강의 라우트 계산 — 콘텐츠 등록된 강의로만 활성 링크.
+  const previousHref =
+    content.navigation.previous &&
+    getLessonContent(courseId, `lesson-${content.navigation.previous.number}`)
+      ? `/courses/${courseId}/lessons/lesson-${content.navigation.previous.number}`
+      : null;
+  const nextHref =
+    content.navigation.next &&
+    getLessonContent(courseId, `lesson-${content.navigation.next.number}`)
+      ? `/courses/${courseId}/lessons/lesson-${content.navigation.next.number}`
+      : null;
 
   // 강좌 상단 헤더용 카운트 (강의 목록 화면과 동일 산식)
   const completedCount = plan.lessons.filter((l) => l.status === "completed").length;
@@ -98,7 +110,11 @@ export default async function LessonContentPage({
               <LessonLikeBar lessonRef={`${courseId}/${lessonId}`} />
 
               {/* 3. 이전/다음 강의 */}
-              <LessonNavigation navigation={content.navigation} />
+              <LessonNavigation
+                navigation={content.navigation}
+                previousHref={previousHref}
+                nextHref={nextHref}
+              />
 
               {/* 4. 댓글 섹션 */}
               <CommentSection target={{ kind: "lesson", lessonRef: `${courseId}/${lessonId}` }} />
