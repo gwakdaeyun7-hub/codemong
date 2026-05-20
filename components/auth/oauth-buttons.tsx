@@ -3,25 +3,34 @@ import {
   signInWithKakaoAction,
 } from "@/lib/auth/actions";
 
+// Kakao OAuth provider 가 Supabase Dashboard 에 아직 등록되지 않은 상태.
+// 등록 완료(Kakao Developers + Supabase Auth Providers 양쪽 셋업)되면 true 로 변경.
+const KAKAO_ENABLED = false;
+
 /**
  * OAuth provider 버튼 그룹 (Google / Kakao).
  * 각 버튼은 Server Action을 form action으로 사용해 안전하게 호출 (CSRF 보호 자동).
  *
  * 로고는 외부 이미지 의존성을 피하기 위해 인라인 SVG 사용.
- * 한국 학습자 비중을 고려해 Kakao를 위에 배치.
+ * 한국 학습자 비중을 고려해 Kakao를 위에 배치 (활성화 시).
  */
 export function OAuthButtons() {
+  // 사용 안 하는 action 이라도 import 는 유지 — KAKAO_ENABLED 토글 시 즉시 재사용.
+  void signInWithKakaoAction;
+
   return (
     <div className="space-y-2">
-      <form action={signInWithKakaoAction}>
-        <button
-          type="submit"
-          className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#FEE500] px-4 text-sm font-medium text-[#191600] transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FEE500]"
-        >
-          <KakaoIcon className="size-4" />
-          카카오로 계속하기
-        </button>
-      </form>
+      {KAKAO_ENABLED && (
+        <form action={signInWithKakaoAction}>
+          <button
+            type="submit"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#FEE500] px-4 text-sm font-medium text-[#191600] transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FEE500]"
+          >
+            <KakaoIcon className="size-4" />
+            카카오로 계속하기
+          </button>
+        </form>
+      )}
 
       <form action={signInWithGoogleAction}>
         <button
