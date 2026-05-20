@@ -1,26 +1,29 @@
-import Link from "next/link"
-import { Bell, Search } from "lucide-react"
+import Link from "next/link";
+import { Bell, Search } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { getCurrentUser } from "@/lib/auth/get-user";
+import { cn } from "@/lib/utils";
+import { UserMenu } from "./user-menu";
 
-type NavKey = "study" | "skill" | "community" | "mypage"
+type NavKey = "study" | "skill" | "community" | "mypage";
 
 const NAV_ITEMS: { key: NavKey; label: string; href: string }[] = [
   { key: "study", label: "코드학습", href: "/" },
   { key: "skill", label: "실력향상", href: "/skill" },
   { key: "community", label: "커뮤니티", href: "/community" },
   { key: "mypage", label: "마이페이지", href: "/mypage" },
-]
+];
 
 /**
  * 글로벌 상단 네비.
- * Server Component — 활성 항목은 prop으로 받음 (App Router에서 segment를 직접 읽어도 되지만
- * MVP에선 prop 주입이 가장 단순하고 테스트하기 쉬움).
- *
- * 모바일에서는 메뉴를 숨기고 좌측 로고 + 우측 액션만 노출.
- * 추후 모바일 햄버거/하단탭 도입 시 이 컴포넌트의 모바일 영역을 교체.
+ * Server Component — getCurrentUser() 로 로그인 상태를 직접 읽어
+ *   - 미로그인: [검색] + [로그인 버튼]
+ *   - 로그인: [검색] + [알림] + [UserMenu 드롭다운]
+ * 으로 우측 액션을 분기. 활성 메뉴는 active prop 으로 받음.
  */
-export function TopNav({ active = "study" }: { active?: NavKey }) {
+export async function TopNav({ active = "study" }: { active?: NavKey }) {
+  const user = await getCurrentUser();
+
   return (
     <header className="sticky top-0 z-30 border-b border-zinc-200 bg-white/95 backdrop-blur">
       {/* 상단 진행 표시 — 보라색 얇은 strip */}
@@ -43,7 +46,7 @@ export function TopNav({ active = "study" }: { active?: NavKey }) {
             className="hidden items-center gap-1 md:flex"
           >
             {NAV_ITEMS.map((item) => {
-              const isActive = item.key === active
+              const isActive = item.key === active;
               return (
                 <Link
                   key={item.key}
@@ -64,12 +67,12 @@ export function TopNav({ active = "study" }: { active?: NavKey }) {
                     />
                   )}
                 </Link>
-              )
+              );
             })}
           </nav>
         </div>
 
-        {/* 우측: 검색/알림/프로필 */}
+        {/* 우측: 검색 / (알림) / 프로필 또는 로그인 */}
         <div className="flex shrink-0 items-center gap-1">
           <button
             type="button"
@@ -79,28 +82,37 @@ export function TopNav({ active = "study" }: { active?: NavKey }) {
             <Search className="size-4" />
           </button>
 
-          <button
-            type="button"
-            aria-label="알림"
-            className="relative inline-flex size-9 items-center justify-center rounded-full text-zinc-600 transition hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
-          >
-            <Bell className="size-4" />
-            <span
-              aria-hidden
-              className="absolute right-2 top-2 size-1.5 rounded-full bg-rose-500 ring-2 ring-white"
-            />
-            <span className="sr-only">읽지 않은 알림 있음</span>
-          </button>
+          {user ? (
+            <>
+              <button
+                type="button"
+                aria-label="알림"
+                className="relative inline-flex size-9 items-center justify-center rounded-full text-zinc-600 transition hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
+              >
+                <Bell className="size-4" />
+                <span
+                  aria-hidden
+                  className="absolute right-2 top-2 size-1.5 rounded-full bg-rose-500 ring-2 ring-white"
+                />
+                <span className="sr-only">읽지 않은 알림 있음</span>
+              </button>
 
-          <button
-            type="button"
-            aria-label="프로필"
-            className="ml-1 inline-flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-xs font-bold text-white shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
-          >
-            킹
-          </button>
+              <UserMenu
+                nickname={user.nickname}
+                email={user.email}
+                avatarUrl={user.avatarUrl}
+              />
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="ml-1 inline-flex h-9 items-center rounded-full bg-zinc-900 px-4 text-sm font-semibold text-white transition hover:bg-zinc-800"
+            >
+              로그인
+            </Link>
+          )}
         </div>
       </div>
     </header>
-  )
+  );
 }

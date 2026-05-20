@@ -11,6 +11,8 @@
 
 import { notFound } from "next/navigation";
 
+import { CommentSection } from "@/components/comments/comment-section";
+import { LessonLikeBar } from "@/components/comments/lesson-like-bar";
 import { CourseDetailSidebar } from "@/components/course-detail/course-detail-sidebar";
 import { LessonContentHeader } from "@/components/lesson-content/lesson-content-header";
 import { LessonNavigation } from "@/components/lesson-content/lesson-navigation";
@@ -92,8 +94,14 @@ export default async function LessonContentPage({
               {/* 2. 강의 영상 */}
               <LessonVideoCard video={content.video} durationMinutes={content.durationMinutes} />
 
+              {/* 2-1. 강의 좋아요 + 댓글 카운트 바 */}
+              <LessonLikeBar lessonRef={`${courseId}/${lessonId}`} />
+
               {/* 3. 이전/다음 강의 */}
               <LessonNavigation navigation={content.navigation} />
+
+              {/* 4. 댓글 섹션 */}
+              <CommentSection target={{ kind: "lesson", lessonRef: `${courseId}/${lessonId}` }} />
             </div>
 
             {/* 우측 사이드바 — lg+ sticky, 모바일 본문 아래 */}

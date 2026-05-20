@@ -11,3 +11,153 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// 인증/프로필은 Supabase Auth (auth.users + user_metadata)에 위임.
+// 닉네임 등 표시 정보는 user_metadata.nickname 으로 저장한다.
+// 학습 진도/이해도 등 도메인 데이터 모델은 backend 라운드에 추가 예정.
+//
+// Prisma 7에서 connection URL은 schema가 아니라 prisma.config.ts 에서 관리한다.
+
+// ─── 커뮤니티 / 댓글 / 좋아요 / 신고 ─────────────────────────────
+//
+// Post: 커뮤니티 게시글 (Q&A | 자유)
+// Comment: 댓글 — 영상(lessonRef) 또는 게시글(postId) 에 달림. 정확히 하나만.
+//          parentId 가 있으면 답글 (1-depth 까지만 허용 — application code 에서 강제)
+// PostLike / CommentLike: 좋아요 (복합 PK)
+// PostReport / CommentReport: 신고 (사용자당 1회)
+//
+// 작성자 표시 정보(닉네임/아바타)는 작성 시점에 스냅샷으로 저장한다.
+// 이유: Supabase auth.users 는 Prisma 외부 스키마라 join이 안 되고,
+// service_role admin API 조회는 매번 외부 호출이라 느림. 닉네임을 바꾸면 신규 글에만 반영되는 트레이드오프를 허용.
+
+enum PostCategory {
+  question
+  free
+}
+
+model Post {
+  id              String       @id @default(cuid())
+  authorId        String       @db.Uuid
+  authorNickname  String
+  authorAvatarUrl String?
+
+  category        PostCategory
+  title           String
+  body            String
+
+  resolved        Boolean      @default(false) // Q&A 해결 표시 (작성자만 토글)
+  likeCount       Int          @default(0)     // PostLike 집계 캐시 — 정렬 성능용
+  commentCount    Int          @default(0)     // Comment 집계 캐시
+
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  deletedAt       DateTime?    // soft delete
+
+  comments        Comment[]
+  likes           PostLike[]
+  reports         PostReport[]
+
+  @@index([category, deletedAt, createdAt])
+  @@index([authorId])
+  @@map("posts")
+}
+
+model Comment {
+  id              String          @id @default(cuid())
+  authorId        String          @db.Uuid
+  authorNickname  String
+  authorAvatarUrl String?
+
+  // 댓글이 게시글(postId) 또는 강의(lessonRef) 둘 중 하나에 달린다.
+  // lessonRef 포맷: "<courseId>/<lessonId>" (예: "python/lesson-1")
+  postId          String?
+  lessonRef       String?
+
+  // 답글이면 부모 댓글 id (1-depth 만 허용 — 답글의 답글은 application code 에서 차단)
+  parentId        String?
+
+  body            String
+  likeCount       Int             @default(0)
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  deletedAt       DateTime?       // soft delete — "삭제된 댓글입니다" 로 표시
+
+  parent          Comment?        @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies         Comment[]       @relation("CommentReplies")
+  post            Post?           @relation(fields: [postId], references: [id], onDelete: Cascade)
+  likes           CommentLike[]
+  reports         CommentReport[]
+
+  @@index([postId, createdAt])
+  @@index([lessonRef, createdAt])
+  @@index([parentId])
+  @@index([authorId])
+  @@map("comments")
+}
+
+model PostLike {
+  postId    String
+  userId    String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id([postId, userId])
+  @@index([userId])
+  @@map("post_likes")
+}
+
+// 강의 좋아요. lesson은 Prisma 외부 (lib/lesson-plan.ts 정적 데이터) 라 외래키 대신 ref 문자열만.
+// lessonRef 포맷: "<courseId>/<lessonId>"
+model LessonLike {
+  lessonRef String
+  userId    String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  @@id([lessonRef, userId])
+  @@index([userId])
+  @@map("lesson_likes")
+}
+
+model CommentLike {
+  commentId String
+  userId    String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@id([commentId, userId])
+  @@index([userId])
+  @@map("comment_likes")
+}
+
+model PostReport {
+  id         String   @id @default(cuid())
+  postId     String
+  reporterId String   @db.Uuid
+  reason     String   // "spam" | "abuse" | "off-topic" | "other"
+  detail     String?  // 자유 입력 (other 일 때)
+  createdAt  DateTime @default(now())
+
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, reporterId]) // 사용자당 1회
+  @@index([createdAt])
+  @@map("post_reports")
+}
+
+model CommentReport {
+  id         String   @id @default(cuid())
+  commentId  String
+  reporterId String   @db.Uuid
+  reason     String
+  detail     String?
+  createdAt  DateTime @default(now())
+
+  comment    Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, reporterId])
+  @@index([createdAt])
+  @@map("comment_reports")
+}
