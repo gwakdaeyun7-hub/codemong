@@ -1639,6 +1639,8 @@ export const GridVisual: React.FC<{
   rowHighlight?: GridHighlight;
   /** 2단계: 한 칸 highlight (violet-500 배경 + 흰 글씨). */
   cellHighlight?: GridHighlight;
+  /** 행/열 축 라벨 (예: row "행", col "열"). lesson-7 Scene11 — 행·열 순서 명시용. */
+  axisLabels?: { row?: string; col?: string; delaySec?: number };
 }> = ({
   rows,
   cellSize = 90,
@@ -1651,6 +1653,7 @@ export const GridVisual: React.FC<{
   cellStaggerSec = 0.1,
   rowHighlight,
   cellHighlight,
+  axisLabels,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -1756,7 +1759,7 @@ export const GridVisual: React.FC<{
     );
   };
 
-  return (
+  const gridBody = (
     <div
       style={{
         display: "grid",
@@ -1833,6 +1836,63 @@ export const GridVisual: React.FC<{
           </React.Fragment>
         );
       })}
+    </div>
+  );
+
+  if (!axisLabels) return gridBody;
+
+  // 행/열 축 라벨 (Scene11 — grid[행][열] 순서 명시). col 은 grid 위, row 는 grid 왼쪽.
+  const axisChip = (text: string, arrow: string) => (
+    <div
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 5,
+        fontFamily: fonts.sans,
+        fontSize: 22,
+        fontWeight: 700,
+        color: colors.accentInk,
+        letterSpacing: "-0.01em",
+        padding: "4px 14px",
+        borderRadius: radii.pill,
+        background: colors.accentSoft,
+        border: `1.5px solid ${colors.accent}`,
+        whiteSpace: "nowrap",
+      }}
+    >
+      {text}
+      <span style={{ fontSize: 18, opacity: 0.9 }}>{arrow}</span>
+    </div>
+  );
+
+  const axisDelay = axisLabels.delaySec ?? 0;
+  return (
+    <div
+      style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-start", gap: 10 }}
+    >
+      {axisLabels.col ? (
+        <FadeIn
+          delaySec={axisDelay}
+          translateY={-6}
+          durationSec={0.4}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignSelf: "stretch",
+            paddingLeft: 64,
+          }}
+        >
+          {axisChip(axisLabels.col, "→")}
+        </FadeIn>
+      ) : null}
+      <div style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+        {axisLabels.row ? (
+          <FadeIn delaySec={axisDelay} translateY={0} durationSec={0.4}>
+            {axisChip(axisLabels.row, "↓")}
+          </FadeIn>
+        ) : null}
+        {gridBody}
+      </div>
     </div>
   );
 };

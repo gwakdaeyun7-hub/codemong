@@ -165,9 +165,42 @@ export const Scene04: React.FC = () => {
               <PyToken text="3" kind="number" highlight />
               <PyToken text="]" kind="op" />
               <PyToken text="   " />
-              <PyToken text="# ?" kind="comment" />
+              <PyToken text="# IndexError" kind="comment" style={{ color: colors.danger }} />
             </CodeLine>
           </CodePanel>
+        </FadeIn>
+      </div>
+
+      {/* 실제 실행 결과 — scores[3] 은 자리가 없어 IndexError (영상 1:04, 사용자 요청:
+          [?] 대신 실제로 어떻게 뜨는지). red X 등장(emptyX)과 동기. */}
+      <div
+        style={{
+          position: "absolute",
+          top: 845,
+          left: 0,
+          right: 0,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <FadeIn delaySec={REVEAL.emptyX} translateY={8} durationSec={0.5}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: "12px 26px",
+              borderRadius: 12,
+              background: "rgba(239, 68, 68, 0.10)",
+              border: `1.5px solid ${colors.danger}`,
+              fontFamily: fonts.mono,
+              fontSize: 26,
+              fontWeight: 700,
+              color: colors.danger,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            IndexError: list index out of range
+          </div>
         </FadeIn>
       </div>
 

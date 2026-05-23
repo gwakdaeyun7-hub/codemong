@@ -69,7 +69,7 @@ export const Scene03: React.FC = () => {
               letterSpacing: "-0.01em",
             }}
           >
-            첫 번째 — 딕셔너리
+            첫 번째 — dictionary
           </div>
         </FadeIn>
         <FadeIn delaySec={REVEAL.headerLabel + 0.4} translateY={6}>
@@ -185,7 +185,7 @@ export const Scene03: React.FC = () => {
       <LowerThird
         text={
           <>
-            딕셔너리 —{" "}
+            dictionary —{" "}
             <span style={{ color: colors.accentLight, fontWeight: 700 }}>이름표(키)</span>로 값을
             꺼낸다
           </>

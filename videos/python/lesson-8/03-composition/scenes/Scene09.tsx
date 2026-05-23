@@ -72,7 +72,7 @@ export const Scene09: React.FC = () => {
               letterSpacing: "-0.01em",
             }}
           >
-            세 번째 — 셋
+            세 번째 — set
           </div>
         </FadeIn>
         <FadeIn delaySec={REVEAL.headerLabel + 0.4} translateY={6}>
@@ -185,7 +185,7 @@ export const Scene09: React.FC = () => {
       <LowerThird
         text={
           <>
-            셋 — <span style={{ color: colors.accentLight, fontWeight: 700 }}>중복 자동 제거</span>
+            set — <span style={{ color: colors.accentLight, fontWeight: 700 }}>중복 자동 제거</span>
           </>
         }
         delaySec={REVEAL.lowerThird}

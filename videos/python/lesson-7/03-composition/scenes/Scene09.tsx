@@ -28,6 +28,7 @@ import {
   ConsolePanel,
   FadeIn,
   IndentGuide,
+  ListVisual,
   LowerThird,
   PageBackground,
   PyToken,
@@ -200,6 +201,50 @@ export const Scene09: React.FC = () => {
             }}
           >
             값 자체 — <span style={{ fontFamily: fonts.mono }}>for s in scores</span>
+          </div>
+        </FadeIn>
+      </div>
+
+      {/* 전체 리스트 — for 가 순회하는 scores 원본 (영상 2:30, 사용자 요청: 전체 리스트도
+          보이게). 매 바퀴 현재 s 에 들어가는 원소를 ring 으로 강조 — varBox swap
+          (iter1/2/3 = 16/18/20s) 과 동기. R-020 정렬 불변 위해 absolute 분리 배치. */}
+      <div
+        style={{
+          position: "absolute",
+          top: 118,
+          left: 0,
+          right: 0,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <FadeIn delaySec={1.0} translateY={10}>
+          <div
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}
+          >
+            <div
+              style={{
+                fontFamily: fonts.mono,
+                fontSize: 24,
+                fontWeight: 700,
+                color: colors.accentInk,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              scores
+            </div>
+            <ListVisual
+              items={[
+                { value: "88", state: "highlighted", atSec: REVEAL.iter1Value },
+                { value: "92", state: "highlighted", atSec: REVEAL.iter2Swap },
+                { value: "76", state: "highlighted", atSec: REVEAL.iter3Swap },
+              ]}
+              boxSize={72}
+              gap={16}
+              showIndexStrip
+              indexStripDelaySec={0}
+              indexStripStaggerSec={0.15}
+            />
           </div>
         </FadeIn>
       </div>

@@ -51,6 +51,7 @@ const REVEAL = {
   colLabel: 13.5,
   pickCodePanel: 18.5, // narration "그리드 대괄호 1 대괄호 0" 직전
   pickCodeLine: 19.0,
+  bracketLegend: 21.0, // narration "바깥 = 줄, 안쪽 = 그 줄의 자리" 발화 시점 — 행/열 순서 범례
   rowHighlight: 24.0, // narration "1번 줄"
   cellHighlight: 25.0, // narration "0번 자리"
   resultArrow: 26.5, // narration "답은 4입니다"
@@ -139,6 +140,7 @@ export const Scene11: React.FC = () => {
             colLabelStaggerSec={0.4}
             rowHighlight={{ row: 1, delaySec: REVEAL.rowHighlight, durationSec: 5.0 }}
             cellHighlight={{ row: 1, col: 0, delaySec: REVEAL.cellHighlight, durationSec: 4.0 }}
+            axisLabels={{ row: "행", col: "열", delaySec: REVEAL.rowLabel }}
           />
         </FadeIn>
       </div>
@@ -175,6 +177,71 @@ export const Scene11: React.FC = () => {
               <PyToken text="]" kind="op" />
             </CodeLine>
           </CodePanel>
+        </FadeIn>
+
+        {/* 행/열 순서 범례 — 앞 [1] = 행, 뒤 [0] = 열 (영상 3:40, 사용자 요청:
+            처음 보는 사람이 grid[1][0] 을 4 대신 2 로 읽지 않도록 순서 명시). */}
+        <FadeIn delaySec={REVEAL.bracketLegend} translateY={10} durationSec={0.5}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 12,
+              padding: "16px 22px",
+              borderRadius: radii.card,
+              background: colors.bgWhite,
+              border: `1.5px solid ${colors.border}`,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                fontFamily: fonts.sans,
+                fontSize: 22,
+              }}
+            >
+              <span style={{ color: colors.inkMuted, fontWeight: 600, width: 66 }}>첫 번째</span>
+              <span
+                style={{
+                  fontFamily: fonts.mono,
+                  fontWeight: 800,
+                  color: colors.accentDeep,
+                  fontSize: 26,
+                }}
+              >
+                [1]
+              </span>
+              <span style={{ color: colors.inkSubtle }}>→</span>
+              <span style={{ fontWeight: 800, color: colors.accentDeep, fontSize: 24 }}>행</span>
+              <span style={{ color: colors.inkMuted, fontWeight: 500 }}>몇 번째 줄</span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                fontFamily: fonts.sans,
+                fontSize: 22,
+              }}
+            >
+              <span style={{ color: colors.inkMuted, fontWeight: 600, width: 66 }}>두 번째</span>
+              <span
+                style={{
+                  fontFamily: fonts.mono,
+                  fontWeight: 800,
+                  color: colors.accentDeep,
+                  fontSize: 26,
+                }}
+              >
+                [0]
+              </span>
+              <span style={{ color: colors.inkSubtle }}>→</span>
+              <span style={{ fontWeight: 800, color: colors.accentDeep, fontSize: 24 }}>열</span>
+              <span style={{ color: colors.inkMuted, fontWeight: 500 }}>그 줄의 자리</span>
+            </div>
+          </div>
         </FadeIn>
 
         <FadeIn delaySec={REVEAL.resultArrow} translateY={6} durationSec={0.5}>

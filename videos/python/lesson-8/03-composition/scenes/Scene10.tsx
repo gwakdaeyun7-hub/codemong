@@ -134,10 +134,9 @@ export const Scene10: React.FC = () => {
               fontWeight: 600,
               color: colors.accentDeep,
               letterSpacing: "0.04em",
-              textTransform: "uppercase",
             }}
           >
-            셋의 진짜 가치
+            set의 진짜 가치
           </div>
         </FadeIn>
       </div>
@@ -249,7 +248,7 @@ export const Scene10: React.FC = () => {
       <LowerThird
         text={
           <>
-            셋은 <span style={{ color: colors.accentLight, fontWeight: 700 }}>순서가 없음</span> —
+            set은 <span style={{ color: colors.accentLight, fontWeight: 700 }}>순서가 없음</span> —
             번호로 못 꺼냄
           </>
         }

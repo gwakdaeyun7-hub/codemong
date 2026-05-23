@@ -66,7 +66,7 @@ export const Scene07: React.FC = () => {
               letterSpacing: "-0.01em",
             }}
           >
-            두 번째 — 튜플
+            두 번째 — tuple
           </div>
         </FadeIn>
         <FadeIn delaySec={REVEAL.headerLabel + 0.4} translateY={6}>
@@ -171,7 +171,7 @@ export const Scene07: React.FC = () => {
       <LowerThird
         text={
           <>
-            튜플 —{" "}
+            tuple —{" "}
             <span style={{ color: colors.accentLight, fontWeight: 700 }}>변경할 수 없는</span> 묶음.{" "}
             <span style={{ fontFamily: fonts.mono, fontWeight: 700 }}>소괄호</span> 사용
           </>

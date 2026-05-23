@@ -246,7 +246,7 @@ export const Scene04: React.FC = () => {
               letterSpacing: "-0.01em",
             }}
           >
-            딕셔너리로 짜면
+            dictionary로 짜면
           </div>
           <div style={{ position: "relative" }}>
             <CodePanel fileName="students.py" width={680} height={200}>
@@ -300,7 +300,7 @@ export const Scene04: React.FC = () => {
         text={
           <>
             번호로 꺼낼 땐 <span style={{ fontWeight: 800 }}>리스트</span> · 이름표로 꺼낼 땐{" "}
-            <span style={{ color: colors.accentLight, fontWeight: 800 }}>딕셔너리</span>
+            <span style={{ color: colors.accentLight, fontWeight: 800 }}>dictionary</span>
           </>
         }
         delaySec={REVEAL.lowerThird}

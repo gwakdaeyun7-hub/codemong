@@ -121,10 +121,9 @@ export const Scene08: React.FC = () => {
               fontWeight: 600,
               color: colors.accentDeep,
               letterSpacing: "0.04em",
-              textTransform: "uppercase",
             }}
           >
-            튜플은 만든 뒤엔 못 바꿈
+            tuple은 만든 뒤엔 못 바꿈
           </div>
         </FadeIn>
       </div>
@@ -289,7 +288,7 @@ export const Scene08: React.FC = () => {
           variant="accent"
           header={
             <>
-              튜플 ={" "}
+              tuple ={" "}
               <span style={{ fontWeight: 800 }}>바꿀 수 없다</span>
             </>
           }
@@ -324,7 +323,7 @@ export const Scene08: React.FC = () => {
           <>
             좌표·해상도 —{" "}
             <span style={{ color: colors.accentLight, fontWeight: 700 }}>바뀌면 안 되는</span> 묶음
-            = 튜플
+            = tuple
           </>
         }
         delaySec={REVEAL.lowerThird}
