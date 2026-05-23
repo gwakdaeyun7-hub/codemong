@@ -1,7 +1,7 @@
 // 강의 상세(개념 탭) 화면 데이터 모듈 — 영상-only 모드.
 // 화면은 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시. 본문 카드(개념/구조/문법/예시/핵심정리/활용)는 제거됨.
 // 추후 본문을 다시 채우거나 새 콘텐츠 모델로 확장할 때 타입을 다시 늘릴 것.
-// MVP: lesson-1 ~ lesson-6 정적 객체 보유. lesson-7+ 는 영상 임베드 미진행 — 별도 라운드.
+// MVP: lesson-1 ~ lesson-11 정적 객체 보유. lesson-12 는 영상 미제작 — 별도 라운드.
 // 추후 backend-developer가 만들 API로 교체 예정.
 // (이 파일은 클라이언트/서버 어디서든 import 가능한 순수 데이터 모듈)
 
@@ -149,10 +149,105 @@ export const pythonLesson6Content: LessonContent = {
   },
 };
 
+export const pythonLesson7Content: LessonContent = {
+  lessonId: "lesson-7",
+  lessonNumber: 7,
+  title: "리스트",
+  durationMinutes: 22,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "여러 값을 하나의 묶음으로 — 리스트와 인덱스, append / del, for 순회",
+    transcriptSummary:
+      "이 영상에서는 여러 값을 하나의 묶음으로 다루는 리스트를 배웁니다. 자리 번호(인덱스)가 0부터 시작한다는 점, append 로 끝에 더하고 del 로 자리를 빼고 자리 값을 바꾸는 세 동작이 리스트의 모양과 길이를 어떻게 바꾸는지, for 로 값을 하나씩 따라가는 흐름을 학생 점수 묶음 하나로 따라가 볼게요. 마지막엔 2차원 리스트에서 행과 열로 한 칸을 짚는 방법도 살펴봅니다.",
+    videoSrc: "/videos/python-lesson-7.mp4",
+  },
+  navigation: {
+    previous: { number: 6, title: "반복문" },
+    next: { number: 8, title: "딕셔너리 & 자료구조" },
+  },
+};
+
+export const pythonLesson8Content: LessonContent = {
+  lessonId: "lesson-8",
+  lessonNumber: 8,
+  title: "딕셔너리 & 자료구조",
+  durationMinutes: 20,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "번호 대신 이름표로 찾기 — 딕셔너리 / 튜플 / 셋",
+    transcriptSummary:
+      "이 영상에서는 리스트 너머의 세 가지 자료구조 — 이름표(키)로 값을 찾는 딕셔너리, 만든 뒤 바꿀 수 없는 튜플, 중복 없이 모으는 셋 — 을 배웁니다. 같은 데이터를 리스트와 딕셔너리로 나란히 두고 어느 쪽이 의미가 바로 보이는지 비교한 뒤, 좌표와 태그 예시로 각 자료구조가 언제 어울리는지 한 문장 기준으로 골라 보는 흐름을 따라가 볼게요.",
+    videoSrc: "/videos/python-lesson-8.mp4",
+  },
+  navigation: {
+    previous: { number: 7, title: "리스트" },
+    next: { number: 9, title: "함수" },
+  },
+};
+
+export const pythonLesson9Content: LessonContent = {
+  lessonId: "lesson-9",
+  lessonNumber: 9,
+  title: "함수",
+  durationMinutes: 24,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "코드 한 덩어리에 이름 붙이기 — def / 매개변수 / return",
+    transcriptSummary:
+      "이 영상에서는 반복되는 작업을 이름 붙은 박스로 묶는 함수를 배웁니다. def 로 정의한 함수가 부를 때만 실행된다는 점, 넣어 준 값이 매개변수로 흘러 들어가는 흐름, 그리고 화면에 보여 주는 print 와 값을 돌려주는 return 이 어떻게 다른지 같은 함수의 두 버전을 나란히 비교하며 따라가 볼게요. 마지막엔 함수 안에서 만든 변수가 왜 함수 밖에서는 보이지 않는지도 살펴봅니다.",
+    videoSrc: "/videos/python-lesson-9.mp4",
+  },
+  navigation: {
+    previous: { number: 8, title: "딕셔너리 & 자료구조" },
+    next: { number: 10, title: "모듈 & 랜덤" },
+  },
+};
+
+export const pythonLesson10Content: LessonContent = {
+  lessonId: "lesson-10",
+  lessonNumber: 10,
+  title: "모듈 & 랜덤",
+  durationMinutes: 18,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "이미 만들어진 도구 상자 꺼내 쓰기 — import 와 random",
+    transcriptSummary:
+      "이 영상에서는 남이 미리 만들어 둔 코드 묶음을 가져와 쓰는 import 와, 무작위 값을 만드는 random 모듈을 배웁니다. import 는 도구 상자를 데려오는 것일 뿐 도구를 실제로 부르는 것과 다른 일이라는 점, random.randint 로 범위 안 정수를 뽑고 random.choice 로 목록에서 하나를 고르는 두 도구의 쓰임 차이를 주사위와 가위바위보로 따라가 볼게요.",
+    videoSrc: "/videos/python-lesson-10.mp4",
+  },
+  navigation: {
+    previous: { number: 9, title: "함수" },
+    next: { number: 11, title: "파일 입출력" },
+  },
+};
+
+export const pythonLesson11Content: LessonContent = {
+  lessonId: "lesson-11",
+  lessonNumber: 11,
+  title: "파일 입출력",
+  durationMinutes: 20,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "프로그램이 끝나도 남는 데이터 — with open / write / read",
+    transcriptSummary:
+      "이 영상에서는 프로그램이 끝나도 결과가 사라지지 않도록 파일에 저장하고 다시 불러오는 방법을 배웁니다. with open 한 줄로 파일을 안전하게 열고, 쓰기 모드에서 write 로 저장하고 읽기 모드에서 read 로 불러오는 흐름을 메모 한 줄로 따라가 볼게요. 쓰기 모드가 기존 내용을 덮어쓴다는 점, with 블록이 끝나면 파일이 자동으로 닫힌다는 점도 짚어 봅니다.",
+    videoSrc: "/videos/python-lesson-11.mp4",
+  },
+  navigation: {
+    previous: { number: 10, title: "모듈 & 랜덤" },
+    next: { number: 12, title: "디버깅 & AI 활용" },
+  },
+};
+
 /**
  * (courseId, lessonId) → LessonContent 룩업.
- * MVP: (python | be-python) + (lesson-1 ~ lesson-6) 매칭.
- * lesson-7+ 는 영상 임베드 미진행 — 호출부에서 notFound() 로 떨어짐.
+ * MVP: (python | be-python) + (lesson-1 ~ lesson-11) 매칭.
+ * lesson-12 는 영상 미제작 — 호출부에서 notFound() 로 떨어짐.
  */
 const LESSON_CONTENT_INDEX: Record<string, Record<string, LessonContent>> = {
   python: {
@@ -162,6 +257,11 @@ const LESSON_CONTENT_INDEX: Record<string, Record<string, LessonContent>> = {
     "lesson-4": pythonLesson4Content,
     "lesson-5": pythonLesson5Content,
     "lesson-6": pythonLesson6Content,
+    "lesson-7": pythonLesson7Content,
+    "lesson-8": pythonLesson8Content,
+    "lesson-9": pythonLesson9Content,
+    "lesson-10": pythonLesson10Content,
+    "lesson-11": pythonLesson11Content,
   },
   "be-python": {
     "lesson-1": pythonLesson1Content,
@@ -170,6 +270,11 @@ const LESSON_CONTENT_INDEX: Record<string, Record<string, LessonContent>> = {
     "lesson-4": pythonLesson4Content,
     "lesson-5": pythonLesson5Content,
     "lesson-6": pythonLesson6Content,
+    "lesson-7": pythonLesson7Content,
+    "lesson-8": pythonLesson8Content,
+    "lesson-9": pythonLesson9Content,
+    "lesson-10": pythonLesson10Content,
+    "lesson-11": pythonLesson11Content,
   },
 };
 
