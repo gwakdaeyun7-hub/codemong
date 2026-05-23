@@ -34,12 +34,17 @@ const REVEAL = {
   line3: 2.5, // add(10, 20)
   questionA: 4.0, // a 자리 ? 박스
   questionB: 4.5, // b 자리 ? 박스 (stagger)
-  // Active recall 1.5초 정적 비트: 4.5 ~ 7.0
-  // R-004 / R-016: 정답 reveal 은 narration "정답은 a 가 10" 발화 시점 동기
-  swapA: 7.5, // ? → 10 (a 박스)
-  swapB: 8.5, // ? → 20 (b 박스, R-002 buffer 1초)
-  workoutLabel: 9.5,
-  lowerThird: 10.0,
+  // R-004 / R-016 — 정답 reveal 을 실측 audio 발화 시점에 동기 (re-sync):
+  //   _scenes/scene-06.a0.mp3 = 8.712s (질문 발화)
+  //   _scenes/scene-06.s1.mp3 = 1.567s (정적, 생각 비트)
+  //   _scenes/scene-06.a2.mp3 = 6.480s (정답+풀이 발화)
+  //   정답 발화 시작 = a0 + s1 = 10.28s, R-004 유효창 ≈ [10.58, 11.90]
+  // 질문→정적 구간 [8.71, 10.28] 동안엔 물음표만 보여야 하므로 swap 은 정적 종료(10.28s) 이후.
+  // swapA 10.7 → ? fade-out [10.7,11.0], answer fade-in [11.2,11.6]: 정적 구간 보존 + 유효창 안.
+  swapA: 10.7, // ? → 10 (a 박스), 실측 발화시점(10.28s) 직후
+  swapB: 11.5, // ? → 20 (b 박스, R-002 buffer — a 답 settle 후 stagger 0.8s)
+  workoutLabel: 12.8, // 두 답(swapB answer settle 12.4) 직후
+  lowerThird: 13.4,
 } as const;
 
 export const Scene06: React.FC = () => {

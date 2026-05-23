@@ -220,7 +220,7 @@ export const Scene11: React.FC = () => {
           </Card>
         </FadeIn>
       </div>
-      <LowerThird text="파이썬 기초 9강 · 끝" delaySec={3.0} />
+      <LowerThird text="반복되는 코드는 함수로 묶어 부르세요" delaySec={3.0} />
     </PageBackground>
   );
 };

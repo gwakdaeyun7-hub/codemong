@@ -197,7 +197,10 @@ export const Scene08: React.FC = () => {
           {/* 좌측 콘솔: 10, None */}
           <ConsolePanel title="출력 결과" width={PANEL_WIDTH} height={CONSOLE_PANEL_HEIGHT}>
             <ConsoleLine revealAtSec={REVEAL.leftConsole10}>
-              <span style={{ fontSize: 30, fontWeight: 800, color: colors.darkAccent }}>10</span>
+              {/* 좌·우 콘솔의 같은 값 `10` 폰트 통일: 우측(36)에 맞춤.
+                  R-001: 패널 base text(ConsolePanel content fontSize 30) 대비 36/30 = 1.2× ≤ 1.5× ✓.
+                  시그니처 비교 컷이라 좌·우 `10` 이 동일 크기여야 비교가 공정. */}
+              <span style={{ fontSize: 36, fontWeight: 800, color: colors.darkAccent }}>10</span>
             </ConsoleLine>
             <ConsoleLine revealAtSec={REVEAL.leftConsoleNone}>
               <NonePulseSpan pulseAt={REVEAL.leftNonePulse}>

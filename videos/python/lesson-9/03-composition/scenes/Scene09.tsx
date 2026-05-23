@@ -36,12 +36,18 @@ const REVEAL = {
   line2: 1.2, //     return x * 2 (dimmed 0.85)
   line3: 4.5, // double(7)
   questionBox: 5.5,
-  // Active recall 정적: 5.5 ~ 8.0
-  answerSwap: 8.5, // ? → 14 (R-004 narration "정답은 14" 동기, Stage 3 wire)
-  pulse: 9.0,
-  returnArrow: 12.5,
-  workoutLabel: 14.0,
-  lowerThird: 13.5,
+  // R-004 / R-016 — 정답 reveal 을 실측 audio 발화 시점에 동기 (re-sync):
+  //   _scenes/scene-09.a0.mp3 = 8.664s (질문 발화)
+  //   _scenes/scene-09.s1.mp3 = 1.567s (정적, 생각 비트)
+  //   _scenes/scene-09.a2.mp3 = 7.656s (정답+풀이 발화)
+  //   정답 발화 시작 = a0 + s1 = 10.23s, R-004 유효창 ≈ [10.53, 12.15]
+  // 질문→정적 구간 [8.66, 10.23] 동안엔 물음표만. swap 은 정적 종료(10.23s) 이후.
+  answerSwap: 10.7, // ? → 14, 실측 발화시점(10.23s) 직후. fade-in [11.2,11.6] 가 유효창 안.
+  pulse: 11.2, // 답 settle(11.6) 직전부터 외곽 ring — 발화 비트와 동기
+  // 정답 reveal 이 뒤로 밀렸으므로 "결과가 돌아온다" 비트(되돌아오는 화살표→풀이→lower-third)도 순차로 뒤로.
+  returnArrow: 13.2, // 답 + pulse 후 되돌아오는 화살표 그리기 (1.5s)
+  workoutLabel: 14.8, // 화살표 draw 완료(14.7) 직후
+  lowerThird: 14.4,
 } as const;
 
 export const Scene09: React.FC = () => {
