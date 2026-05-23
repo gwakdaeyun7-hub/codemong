@@ -129,7 +129,7 @@ export function CourseCard({ course }: { course: Course }) {
 
       {/* 푸터: 이수율 라벨 + 액션 버튼 */}
       <footer className="flex items-center justify-between pt-1">
-        <span className="text-[11px] text-zinc-500">이수율</span>
+        <span className="text-[11px] text-zinc-500">이수율 {Math.round(ratio)}%</span>
         <CardAction status={status} courseId={course.id} title={title} />
       </footer>
     </article>

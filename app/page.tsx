@@ -1,80 +1,53 @@
-import type { ReactNode } from "react"
-import { LayoutGrid, Settings } from "lucide-react"
-
 import { CourseCard } from "@/components/course-card"
-import { LearningModeToggle } from "@/components/learning-mode-toggle"
 import { TopNav } from "@/components/top-nav"
-import { backendCourses, frontendCourses } from "@/lib/courses"
+import { getCurrentUser } from "@/lib/auth/get-user"
+import { backendCourses, type CourseStatus } from "@/lib/courses"
+import { getCourseCompletion } from "@/lib/learning/progress-queries"
 
 // 홈 화면 = 코드학습 페이지 (Server Component).
-// LearningModeToggle 만 클라이언트 컴포넌트로 격리되어 있음 — 나머지는 모두 서버 렌더.
-export default function HomePage() {
+// MVP 범위: Python 백엔드 1개 코스만 노출. 카드 진행률/상태는 로그인 사용자의 실제 학습 완료(이수율)로 채운다.
+// (코스가 늘면 코스별로 getCourseCompletion 을 호출하도록 확장.)
+export default async function HomePage() {
+  const user = await getCurrentUser()
+
+  // 현재 단일 코스(be-python) 이수율.
+  const completion = await getCourseCompletion("be-python", user?.id ?? null)
+  const status: CourseStatus =
+    completion.completed === 0
+      ? "not-started"
+      : completion.completed >= completion.total
+        ? "done"
+        : "in-progress"
+
   return (
     <>
       <TopNav active="study" />
 
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        {/* 학습 모드 토글 */}
-        <div className="mb-6">
-          <LearningModeToggle defaultMode="concept" />
-        </div>
-
         {/* 페이지 헤더 */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-[26px]">
             코드 학습
           </h1>
           <p className="mt-1 text-sm text-zinc-500">
-            기초부터 단계별로 이루어진 문제들을 풀어보세요.
+            강의 영상으로 기초부터 차근차근 배워보세요.
           </p>
         </div>
 
-        {/* 프론트엔드 섹션 */}
-        <CourseSection
-          title="프론트엔드"
-          icon={<LayoutGrid className="size-4 text-violet-600" />}
-        >
-          {frontendCourses.map((c) => (
-            <CourseCard key={c.id} course={c} />
-          ))}
-        </CourseSection>
-
-        {/* 백엔드 섹션 — MVP 범위 결정에 따라 Python 1개만 노출 */}
-        <CourseSection
-          title="백엔드"
-          icon={<Settings className="size-4 text-violet-600" />}
-        >
+        {/* 코스 카드 그리드: 모바일 1열 → sm 2열 → lg 3열 */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {backendCourses.map((c) => (
-            <CourseCard key={c.id} course={c} />
+            <CourseCard
+              key={c.id}
+              course={{
+                ...c,
+                status,
+                progress: { current: completion.completed, total: completion.total },
+              }}
+            />
           ))}
-        </CourseSection>
+        </div>
       </main>
     </>
-  )
-}
-
-// 같은 파일 내부 보조 컴포넌트 — 다른 페이지에서 쓰일 가능성이 낮아 page.tsx 안에 둠.
-// 재사용이 필요해지면 components/section.tsx 로 이동.
-function CourseSection({
-  title,
-  icon,
-  children,
-}: {
-  title: string
-  icon: ReactNode
-  children: ReactNode
-}) {
-  return (
-    <section className="mb-10 last:mb-0">
-      <h2 className="mb-4 flex items-center gap-2 text-base font-bold text-zinc-900">
-        {icon}
-        {title}
-      </h2>
-      {/* 그리드: 모바일 1열 → sm 2열 → lg 3열.
-          백엔드처럼 카드가 1개여도 첫 칸에 자연스럽게 들어가도록 justify-start 기본값 유지 */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {children}
-      </div>
-    </section>
   )
 }

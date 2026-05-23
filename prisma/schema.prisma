@@ -120,6 +120,26 @@ model LessonLike {
   @@map("lesson_likes")
 }
 
+// 학습 진도 — 이수율/이해도 2층 구조. lesson은 Prisma 외부(정적 mock)라 lessonRef 문자열.
+// lessonRef 포맷: "<courseId>/<lessonId>"
+//  · 1층(이수율): 영상 90% 시청(videoWatchedAt) + 완료 버튼(learnCompletedAt) = "학습 완료"
+//  · 2층(이해도): 퀴즈(Pool A) 통과(quizPassedAt, quizBestScore) = "이해 완료" — 퀴즈 화면 구현 후 2단계
+// 이수율 = learnCompletedAt 있는 강의 / 전체. 이해도 = quizPassedAt 있는 강의 / 전체.
+model LessonProgress {
+  lessonRef        String
+  userId           String    @db.Uuid
+  videoWatchedAt   DateTime? // 영상 90% 도달 시점
+  learnCompletedAt DateTime? // 완료 버튼 클릭 (= 학습 완료, 이수율 집계)
+  quizPassedAt     DateTime? // 퀴즈 통과 (= 이해 완료, 이해도 집계)
+  quizBestScore    Int? // 퀴즈 최고점 (0-100)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@id([lessonRef, userId])
+  @@index([userId])
+  @@map("lesson_progress")
+}
+
 model CommentLike {
   commentId String
   userId    String   @db.Uuid

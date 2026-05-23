@@ -23,9 +23,11 @@ import { ProgressStatCard } from "@/components/lessons/progress-stat-card";
 import { StatsCard } from "@/components/lessons/stats-card";
 import { TipsCard } from "@/components/lessons/tips-card";
 import { TopNav } from "@/components/top-nav";
+import { getCurrentUser } from "@/lib/auth/get-user";
 import { getCourseDetail } from "@/lib/course-detail";
 import { courses } from "@/lib/courses";
 import { getLessonContent } from "@/lib/lesson-content";
+import { getLessonProgress } from "@/lib/learning/progress-queries";
 import { getLessonPlan } from "@/lib/lesson-plan";
 
 export default async function LessonContentPage({
@@ -46,6 +48,10 @@ export default async function LessonContentPage({
   if (!content || !plan || !detail || !courseMeta) {
     notFound();
   }
+
+  // 학습 진도(이수율 1층) — 현재 강의의 시청/완료 상태. 비로그인이면 전부 false.
+  const user = await getCurrentUser();
+  const progress = await getLessonProgress(`${courseId}/${lessonId}`, user?.id ?? null);
 
   // 이전/다음 강의 라우트 계산 — 콘텐츠 등록된 강의로만 활성 링크.
   const previousHref =
@@ -104,7 +110,13 @@ export default async function LessonContentPage({
               />
 
               {/* 2. 강의 영상 */}
-              <LessonVideoCard video={content.video} durationMinutes={content.durationMinutes} />
+              <LessonVideoCard
+                video={content.video}
+                durationMinutes={content.durationMinutes}
+                lessonRef={`${courseId}/${lessonId}`}
+                initialVideoWatched={progress.videoWatched}
+                initialLearnCompleted={progress.learnCompleted}
+              />
 
               {/* 2-1. 강의 좋아요 + 댓글 카운트 바 */}
               <LessonLikeBar lessonRef={`${courseId}/${lessonId}`} />
