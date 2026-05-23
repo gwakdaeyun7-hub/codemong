@@ -974,6 +974,37 @@ export const RedStrike: React.FC<{ ..., angleDeg?: number }> = ({ ..., angleDeg 
 
 ---
 
+## R-027 — scene 실측 audio 가 placeholder 보다 짧아지면 키워드 펄스가 발화와 어긋나지 않는지 wire 재검증 (R-004·R-016 보강)
+
+- **Category**: G + N
+- **Status**: ACTIVE
+- **Origin**: 2026-05-23, lesson-11 (video-director 단계4 리뷰 — scenes 3/4/5)
+
+**Why**: lesson-11 의 scene 3/4/5 가 Stage-2 placeholder(목표 180s 기준 작성) 보다 실측 audio 가 1.5~2.2s *짧아졌다* (예: scene-4 placeholder 20s → 실측 17.75s). 키워드 펄스(`"w"`/"쓰기 모드", `"r"`/"알" 등) 의 `delaySec` 는 scene 시작 기준 고정값으로 박히는데, 실측이 짧아지면 키워드가 placeholder 가정보다 *이른* 시점에 발화되어 고정 펄스가 발화와 어긋난다(발화 순간 강조 없음). R-004(Active Recall reveal)·R-016(키워드 동기) 은 audio 가 *길어진* 방향(placeholder-grow — reveal/펄스가 늦게 뜸)을 주로 다루지만, audio 가 *짧아진* 방향(placeholder-shrink) 은 명시 안 됨. lesson-11 은 펄스 plateau(~0.6s) 가 넓어 우연히 발화 구간과 겹쳐 통과했으나, 더 짧은 펄스를 쓰는 미래 scene 에선 깨진다.
+
+**How to apply** (grep + audio probe):
+- wire 단계(`--from=04-render` 직전)에서, 실측 scene 길이(`timestamps.json` 의 `endMs - startMs`) 가 Stage-2 placeholder(`timing.ts` 초기 추정) 보다 *짧아진* scene 을 먼저 검출.
+- 그 scene 안 일반 키워드 펄스(`delaySec` + `interpolate` pulse / `EmphasisPulse atSec` / 토큰 highlight `[X, X+.., .., 0]`) 의 발화 동기를 R-016 기준으로 재검증:
+  - `delaySec ≤ keyword_uttered_time + 0.5s`
+  - `delaySec + pulse_duration ≥ keyword_uttered_time + word_duration`
+- 키워드 발화 시점은 실측 audio(`02-audio/_scenes/sNN.mp3` ffprobe + 음절 비율 또는 청취) 로 재측정 — placeholder 기준 추정값 신뢰 금지.
+- Active Recall reveal 의 강제 re-sync 는 R-004 가 이미 담당. 본 룰은 *일반 키워드 펄스* 까지 placeholder-shrink 시 확장 점검 (Active Recall scene 이 없는 lesson 에도 적용).
+
+**Good** (wire 단계 re-sync):
+```tsx
+// scene-4 실측 17.75s (placeholder 20s 보다 2.25s 짧음) → "쓰기 모드" 발화 재측정 ≈ 13.0s
+const REVEAL = { modePulseAt: 12.8 };  // 펄스 [12.8, 13.8] 가 실측 발화 13.0 을 덮음
+```
+
+**Bad** (placeholder 잔존):
+```tsx
+// placeholder 20s 가정으로 "쓰기 모드" 발화를 14.5s 로 보고 펄스 고정
+// 실측 17.75s 로 짧아져 실제 발화는 ~13.0s → 펄스(14.5~) 가 발화보다 1.5s 늦음 → 발화 순간 강조 없음
+const REVEAL = { modePulseAt: 14.5 };
+```
+
+---
+
 ## 룰 추가 가이드 (앞으로 영상 수정 시)
 
 1. 한 영상을 수정한 후 *재발할 수 있는 패턴* 이면 룰로 박는다. 일회성 미스 (예: 오타) 는 룰 아님.
