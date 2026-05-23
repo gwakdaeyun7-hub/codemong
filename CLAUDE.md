@@ -14,7 +14,7 @@
 - **shadcn/ui** v4 — 사실상 미사용 (디자인 톤 충돌). `components/ui/` 에 button/card/dialog/input/label/dropdown-menu 가 있지만 페이지는 native `<button>`/`<div>` + Tailwind 직접 구성으로 만들어짐
 - **lucide-react v1.14.0** ← v0.x 아님. 컴포넌트 폴더별 `icon-map.ts` 화이트리스트로만 import (트리쉐이킹 보호)
 - **Supabase** (`@supabase/ssr` + `@supabase/supabase-js`) — middleware/proxy, server/client helpers (`lib/supabase/`), 인증 UI 전체 구현 (`lib/auth/`, `app/(auth)/`, `app/auth/callback/`). OAuth Google + Kakao 지원
-- **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`). 모델 7개: Post / Comment / PostLike / CommentLike / LessonLike / PostReport / CommentReport
+- **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`). 모델 8개: Post / Comment / PostLike / CommentLike / LessonLike / PostReport / CommentReport / LessonProgress
 - **pnpm** (workspace + onlyBuiltDependencies)
 - **Remotion 4.0.456** (`remotion/` workspace 멤버, 영상 제작용 — 메인 앱 의존성 아님, sibling project)
 
@@ -24,7 +24,7 @@
 
 | Path | Role | Notes |
 |------|------|-------|
-| `/` | 홈 = 코드학습 페이지 | 프론트 6 + 백엔드 1(Python) 카드 |
+| `/` | 홈 = 코드학습 페이지 | 백엔드 Python 1개 카드 (프론트엔드 카드 전부 제거됨) |
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
 | `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
 | `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1` ~ `lesson-11` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문 / 반복문 / 리스트 / 딕셔너리 & 자료구조 / 함수 / 모듈 & 랜덤 / 파일 입출력) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + LessonLikeBar(좋아요+댓글 카운트) + CommentSection(댓글 임베드) + 이전/다음 네비 |
@@ -55,7 +55,7 @@
 
 | File | Exports |
 |------|---------|
-| `lib/courses.ts` | `Course` 타입 + `courses` 7개 + `frontendCourses` / `backendCourses` |
+| `lib/courses.ts` | `Course` 타입 + `courses` 1개(Python) + `backendCourses` |
 | `lib/course-detail.ts` | `CourseDetail` 타입 + `pythonCourseDetail` + `getCourseDetail(id)` |
 | `lib/lesson-plan.ts` | `Lesson` / `LessonStatus` 타입 + `pythonLessonPlan` (12강) + `getLessonPlan(id)` |
 | `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` ~ `pythonLesson11Content` + `getLessonContent(courseId, lessonId)` |
@@ -71,6 +71,8 @@
 | `lib/community/posts-queries.ts` | `listPosts` (category 필터), `getPost`, `listMyPosts` |
 | `lib/community/likes-actions.ts` | `togglePostLikeAction` / `toggleCommentLikeAction` / `toggleLessonLikeAction`, `getLessonLikeStatus` |
 | `lib/community/likes-queries.ts` | `listMyLikedLessons` (lesson-plan join), `listMyLikedPosts` |
+| `lib/learning/progress-actions.ts` | Server Actions: `markVideoWatchedAction` (영상 90% 시청 멱등 기록), `toggleLessonCompleteAction` (완료 토글 = `learnCompletedAt` on/off) |
+| `lib/learning/progress-queries.ts` | `getLessonProgress` (강의 진도 상태), `getCourseCompletion` (코스 이수율 = `learnCompletedAt` 있는 강의 수 / 전체) |
 | `lib/format.ts` | `timeAgoKo`, `fmtCount` 헬퍼 |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
@@ -81,10 +83,10 @@
 
 | Path | 역할 |
 |------|------|
-| `components/` (root) | 글로벌: `top-nav`, `user-menu`, `course-card`, `status-badge`, `level-badge`, `course-icon`, `learning-mode-toggle` |
+| `components/` (root) | 글로벌: `top-nav`, `user-menu`, `course-card`, `status-badge`, `level-badge`, `course-icon`, `learning-mode-toggle` (현재 미사용 — 홈에서 제거됨, 향후 코드에디터 모드용 보존) |
 | `components/course-detail/` | 소개 탭 섹션 (header, sidebar, learning-outcomes, roadmap, checklist, reviews, cta, section-card) |
 | `components/lessons/` | 강의 목록 페이지 (course-progress-header, lesson-list, lesson-card, progress-stat-card, stats-card, tips-card, badges-card) |
-| `components/lesson-content/` | 강의 상세 영상 영역 (lesson-content-header, lesson-video-card, lesson-navigation — 영상-only 모드) |
+| `components/lesson-content/` | 강의 상세 영상 영역 (lesson-content-header, lesson-video-card — **Client Component**(영상 90% 시청 추적 + 학습 완료 버튼), lesson-navigation — 영상-only 모드) |
 | `components/auth/` | 인증 폼 (이메일 로그인/회원가입, OAuth 버튼 — Kakao+Google 인라인 SVG, 비번 재설정/재발급, AuthLayout 좌측 브랜드+우측 폼, or-divider, form-feedback) |
 | `components/mypage/` | 마이페이지 (사이드바, 프로필 카드, 학습 통계 카드(mock), 닉네임/비번 변경 폼, settings-section wrapper) |
 | `components/comments/` | 영상/게시글 공용 댓글 (CommentSection — lesson\|post 통합 Server, CommentForm create+edit 통합, CommentItem, LikeButton — comment/lesson/post 통합, ReportForm — comment/post 통합, LessonLikeBar) |
@@ -99,7 +101,7 @@
 
 `prisma/schema.prisma`. Supabase Postgres + Prisma 7. connection URL은 `prisma.config.ts`에서 관리 (Prisma 7에서 schema datasource의 `url`/`directUrl` 제거됨).
 
-### 모델 7개 + enum 1개
+### 모델 8개 + enum 1개
 
 | 모델 | 테이블 | 역할 |
 |------|-------|------|
@@ -110,6 +112,7 @@
 | `LessonLike` | lesson_likes | lessonRef+userId 복합 PK (lesson은 string ref) |
 | `PostReport` | post_reports | postId+reporterId @@unique (사용자당 1회). reason(spam/abuse/off-topic/other) + detail |
 | `CommentReport` | comment_reports | commentId+reporterId @@unique |
+| `LessonProgress` | lesson_progress | 학습 진도(이수율/이해도 2층). lessonRef+userId 복합 PK. `learnCompletedAt`=학습완료(이수율), `quizPassedAt`/`quizBestScore`=이해완료(이해도, 2단계 미구현) |
 | `enum PostCategory` | — | question / free |
 
 ### 설계 결정
@@ -119,6 +122,7 @@
 3. **카운트 캐시**: `Post.likeCount` / `Post.commentCount` / `Comment.likeCount` — 매번 `count()` 안 하도록 increment/decrement를 트랜잭션으로.
 4. **lesson 참조**: lesson은 정적 `lib/lesson-plan.ts` mock이라 외래키 대신 `lessonRef` 문자열 (포맷: `<courseId>/<lessonId>`). 메타 매핑은 application code에서.
 5. **답글 1-depth**: parentId가 있는 댓글에는 추가 답글 불가. application code에서 강제 (`parent.parentId !== null`이면 reject).
+6. **진도 2층 구조**: 영상 90% 시청 + 완료 버튼 = "학습 완료"(이수율, `learnCompletedAt`), 퀴즈 통과 = "이해 완료"(이해도, `quizPassedAt`/`quizBestScore`). lesson은 Prisma 외부라 외래키 대신 `lessonRef` 문자열 (`LessonLike`와 동일 패턴).
 
 ### Auth
 
@@ -283,6 +287,6 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 - Python 12강 영상 — 1~11강은 완성·임베드 완료 (Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). **12강 영상만 미제작** (유일하게 안 만든 강).
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능. 단, 영상 아래에 LessonLikeBar(좋아요 + 댓글 카운트) + CommentSection(댓글) 은 추가됨.
-- 학습 진도/이해도/streak/배지 추적 모델 — `/mypage/calendar`, `/mypage/page.tsx`의 학습 통계 카드는 현재 mock 자리만. backend 라운드에서 LearningEvent 등 추가 시 자동 활성.
+- 학습 진도 — **이수율(1층: 영상 90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`)은 구현 완료** (홈 카드 이수율이 실데이터). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현. `/mypage/calendar`·`/mypage/page.tsx`의 학습 통계 카드는 여전히 mock (`LessonProgress` 집계로 추후 연결 가능).
 - 계정 삭제 자동화 — service_role admin API 필요. 현재 settings 페이지는 운영팀 메일 문의 안내만.
 - Realtime / 알림 센터 / 검색 — TopNav 알림·검색 아이콘은 시각적 자리만.
