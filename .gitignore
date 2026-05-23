@@ -60,3 +60,9 @@ videos/_assets/voice-test/
 remotion/node_modules/
 remotion/.remotion/
 remotion/out/
+remotion/build/
+
+# render frame dumps & crash artifacts (still/render 디버그 잔재)
+.lesson*-frames/
+.review-frames/
+*.stackdump

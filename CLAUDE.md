@@ -239,7 +239,7 @@ videos/
 
 **TTS 기본값**: Edge TTS 1순위 (`ko-KR-HyunsuMultilingualNeural`, rate `+10%`, 무료 — 키 불필요). ElevenLabs / OpenAI 는 `.env.local` 키가 있을 때만 fallback. voice는 잠정 — 향후 변경 가능.
 
-**발음 사전**: `videos/_assets/pronunciation.json` (현재 시드 69개). 영상 대본 작성 시 참조용 — `_synth.py` 가 자동 치환하지는 않으므로 대본 작성자가 narration 표기를 발음 친화적으로 미리 적용해야 한다. 발음 강제가 필요한 한국어 단어(예: "묶입니다" 가 TTS 에서 [무깁니다] 로 잘못 발음되는 경우)는 narration 표기 자체를 발음형(예: "무낍니다") 으로 적어 우회.
+**발음 사전**: `videos/_assets/pronunciation.json` (현재 시드 85개). 영상 대본 작성 시 참조용 — `_synth.py` 가 자동 치환하지는 않으므로 대본 작성자가 narration 표기를 발음 친화적으로 미리 적용해야 한다. 발음 강제가 필요한 한국어 단어(예: "묶입니다" 가 TTS 에서 [무깁니다] 로 잘못 발음되는 경우)는 narration 표기 자체를 발음형(예: "무낍니다") 으로 적어 우회.
 
 **영상 정책**:
 - 영상 1편 = 강의 1개 (lesson 1대1 매핑). **Python 기초 = 12강 = 영상 12편 예정** (확정 커리큘럼은 메모리 `python_curriculum_12.md` 참조).
@@ -280,7 +280,7 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 ## Out of scope (현재 미구현 — 카드/스텁만 존재)
 
 - 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
-- Python 9~12강 영상 (1·2·3·4·5·6강은 본 시리즈 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 7강·8강 영상은 완성됐으나 `lib/lesson-content.ts` 임베드 미진행 — 별도 라운드 예정.
+- Python 12강 영상 (1·2·3·4·5·6강은 본 시리즈 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 7·8·9·10·11강 영상은 완성됐으나 `lib/lesson-content.ts` 임베드 미진행 — 별도 라운드 예정. 12강 영상은 아직 미제작 (유일하게 안 만든 강).
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능. 단, 영상 아래에 LessonLikeBar(좋아요 + 댓글 카운트) + CommentSection(댓글) 은 추가됨.
 - 학습 진도/이해도/streak/배지 추적 모델 — `/mypage/calendar`, `/mypage/page.tsx`의 학습 통계 카드는 현재 mock 자리만. backend 라운드에서 LearningEvent 등 추가 시 자동 활성.
