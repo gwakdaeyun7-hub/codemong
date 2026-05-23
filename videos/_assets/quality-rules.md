@@ -945,6 +945,35 @@ export const RedStrike: React.FC<{ ..., angleDeg?: number }> = ({ ..., angleDeg 
 
 ---
 
+## R-026 — 마지막 scene LowerThird 텍스트는 시즌 컨벤션 고정 (인사이트 한 줄, 종료 라벨 금지)
+
+- **Category**: G
+- **Status**: ACTIVE
+- **Origin**: 2026-05-23, lesson-9·10·11 (LowerThird 가 lesson-1~8 "한 줄 정리" 정형에서 "파이썬 기초 N강 · 끝" 종료 라벨로 집단 이탈한 것이 lesson-10 리뷰에서 발견)
+
+**Why**: 마지막 scene 의 `<LowerThird>` 는 시즌 시그니처다. lesson-1~8 은 전부 "오늘의 한 줄 정리/인사이트" (예: lesson-8 "데이터의 성질을 보고 자료구조를 고르세요") 였는데, lesson-9·10·11 이 "파이썬 기초 N강 · 끝" 종료 라벨로 갈렸다. 같은 시즌 안에서 일부는 인사이트 문장, 일부는 종료 라벨이면 시청자가 시리즈 마무리 톤을 일관되게 못 잡는다. **사용자 결정 (2026-05-23): 인사이트 한 줄로 통일, 종료 라벨 금지.** lesson-1~8 이 기준선.
+
+**How to apply** (grep):
+- 각 lesson 의 마지막 Scene 파일에서 `<LowerThird>` 의 text 검사:
+  ```
+  rg "LowerThird" videos/<course>/<lesson>/03-composition/scenes/Scene<마지막>.tsx
+  ```
+- text 가 `"N강 · 끝"` / `"N강 끝"` / `"· 끝"` / `"강 · 끝"` 같은 **코스·종료 라벨 패턴**이면 fail.
+- text 는 그 강의를 관통하는 **한 줄 정리/인사이트 문장**이어야 함 (오늘 배운 핵심을 한 문장으로, 명령형 또는 정리형). 코드 토큰 없는 순수 한국어 권장 (lesson-1~8 답습).
+- lesson-1~8 은 grandfather (이미 인사이트 정형 — 점검 통과).
+
+**Good** (lesson-10 Scene11 v2):
+```tsx
+<LowerThird text="도구 상자를 데려와 점으로 꺼내 쓰세요" delaySec={3.0} />
+```
+
+**Bad** (lesson-10 Scene11 v1):
+```tsx
+<LowerThird text="파이썬 기초 10강 · 끝" delaySec={3.0} />   // 종료 라벨 — 시즌 시그니처(인사이트 한 줄) 이탈
+```
+
+---
+
 ## 룰 추가 가이드 (앞으로 영상 수정 시)
 
 1. 한 영상을 수정한 후 *재발할 수 있는 패턴* 이면 룰로 박는다. 일회성 미스 (예: 오타) 는 룰 아님.
