@@ -40,6 +40,10 @@ import {
   Lesson9,
   TOTAL_DURATION_FRAMES as LESSON9_TOTAL_FRAMES,
 } from "../../videos/python/lesson-9/03-composition";
+import {
+  Lesson10,
+  TOTAL_DURATION_FRAMES as LESSON10_TOTAL_FRAMES,
+} from "../../videos/python/lesson-10/03-composition";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -113,6 +117,14 @@ export const RemotionRoot: React.FC = () => {
           id="python-lesson-9"
           component={Lesson9}
           durationInFrames={LESSON9_TOTAL_FRAMES}
+          fps={FPS}
+          width={WIDTH}
+          height={HEIGHT}
+        />
+        <Composition
+          id="python-lesson-10"
+          component={Lesson10}
+          durationInFrames={LESSON10_TOTAL_FRAMES}
           fps={FPS}
           width={WIDTH}
           height={HEIGHT}
