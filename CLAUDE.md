@@ -252,7 +252,7 @@ videos/
 
 **Git 권장사항** (강제 아님):
 - 렌더 산출물 `04-out.mp4` 와 `02-audio/voiceover.mp3` 는 git ignore 권장.
-- `_assets/pronunciation.json` 은 commit 권장 (시드 69개 공유 자원).
+- `_assets/pronunciation.json` 은 commit 권장 (시드 85개 공유 자원).
 - `_assets/voice-sample-*.mp3` 는 사용자 결정.
 
 ---
