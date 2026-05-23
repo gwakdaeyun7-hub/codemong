@@ -27,7 +27,7 @@
 | `/` | 홈 = 코드학습 페이지 | 프론트 6 + 백엔드 1(Python) 카드 |
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
 | `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
-| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1` ~ `lesson-6` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문 / 반복문) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + LessonLikeBar(좋아요+댓글 카운트) + CommentSection(댓글 임베드) + 이전/다음 네비 |
+| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1` ~ `lesson-11` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문 / 반복문 / 리스트 / 딕셔너리 & 자료구조 / 함수 / 모듈 & 랜덤 / 파일 입출력) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + LessonLikeBar(좋아요+댓글 카운트) + CommentSection(댓글 임베드) + 이전/다음 네비 |
 | `/login` | 로그인 | 이메일 + Google/Kakao OAuth |
 | `/signup` | 회원가입 | 이메일/비밀번호/닉네임 |
 | `/forgot-password` | 비밀번호 재설정 요청 | 메일 링크 전송 |
@@ -58,7 +58,7 @@
 | `lib/courses.ts` | `Course` 타입 + `courses` 7개 + `frontendCourses` / `backendCourses` |
 | `lib/course-detail.ts` | `CourseDetail` 타입 + `pythonCourseDetail` + `getCourseDetail(id)` |
 | `lib/lesson-plan.ts` | `Lesson` / `LessonStatus` 타입 + `pythonLessonPlan` (12강) + `getLessonPlan(id)` |
-| `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` ~ `pythonLesson6Content` + `getLessonContent(courseId, lessonId)` |
+| `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` ~ `pythonLesson11Content` + `getLessonContent(courseId, lessonId)` |
 | `lib/quiz-content.ts` | `QuizPool` (`"evaluation" \| "practice"`) / `QuizQuestion` / `Misconception` / `QuizOption` / `DisallowedAnswer` 타입 + `pythonLesson1Quiz` / `pythonLesson2Quiz` + `pythonLesson1Misconceptions` / `pythonLesson2Misconceptions` + `getQuiz(courseId, lessonId)` / `getMisconceptions(courseId, lessonId)`. 강의당 30문항 (Pool A 10 + Pool B 20). 모든 문항이 `pool` (필수) + `isomorphGroup` (선택, 같은 학습목표·오개념을 다른 surface 로 묻는 isomorph 묶음 ID) 필드 보유. 보기마다 `misconceptionId` 라벨. 추천 알고리즘 진단 신호 = `misconceptionId` + `isomorphGroup` + `pool`. |
 | `lib/auth/actions.ts` | Server Actions 8개 (이메일 가입/로그인, OAuth Google·Kakao, 로그아웃, 비번 재설정/변경, 닉네임 변경) + Supabase 에러 한국어 매핑 |
 | `lib/auth/get-user.ts` | `getCurrentUser()` — Server Component용. nickname fallback: `user_metadata.nickname` → `full_name` / `name` → email @앞부분 |
@@ -280,7 +280,7 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 ## Out of scope (현재 미구현 — 카드/스텁만 존재)
 
 - 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
-- Python 12강 영상 (1·2·3·4·5·6강은 본 시리즈 — Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 7·8·9·10·11강 영상은 완성됐으나 `lib/lesson-content.ts` 임베드 미진행 — 별도 라운드 예정. 12강 영상은 아직 미제작 (유일하게 안 만든 강).
+- Python 12강 영상 — 1~11강은 완성·임베드 완료 (Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). **12강 영상만 미제작** (유일하게 안 만든 강).
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능. 단, 영상 아래에 LessonLikeBar(좋아요 + 댓글 카운트) + CommentSection(댓글) 은 추가됨.
 - 학습 진도/이해도/streak/배지 추적 모델 — `/mypage/calendar`, `/mypage/page.tsx`의 학습 통계 카드는 현재 mock 자리만. backend 라운드에서 LearningEvent 등 추가 시 자동 활성.
