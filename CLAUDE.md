@@ -156,7 +156,7 @@
 
 ## 패턴 결정 (이미 합의된 것 — 다시 묻지 말 것)
 
-1. **Server Component default**, `'use client'` 는 leaf 인터랙션에만 (예: `lesson-list` 필터, `example-code-card` 복사 버튼, `course-detail-sidebar` 탭 활성). 레이아웃 통째로 client 로 마킹 금지.
+1. **Server Component default**, `'use client'` 는 leaf 인터랙션에만 (예: `lesson-list` 필터, `course-detail-sidebar` 탭 활성). 레이아웃 통째로 client 로 마킹 금지.
 2. **shadcn Card/Button 미사용** — 디자인 톤이 안 맞아서 native + Tailwind 직접 구성. 새 카드 만들 때 `components/ui/card` import 하지 말 것.
 3. **카드 디자인 톤**: 흰 배경, `rounded-2xl`, 부드러운 shadow. 페이지 배경 `bg-zinc-50`. 메인 액센트 `violet-500` ~ `purple-600`.
 4. **모바일-first 반응형**: 데스크톱 기준으로 디자인하되 모바일에서 자연스럽게 무너져야. 사이드바는 `lg+` 에서만, 모바일에선 가로 스크롤 탭으로 대체.
