@@ -6,21 +6,23 @@
  *   위에 hint "1부터 6 사이 정수 한 개" (delaySec 1.0).
  * - 4.0 ~ 12.0s: 중앙 큰 QuestionMark size 200 (R-012) — narration "어떻게 쓸까요"
  *   (a0 발화 10.20s) + s1 정적 1.83s 구간 동안 유지.
- * - 12.0 ~ 12.3s: QuestionMark fade-out (0.4s) — 끝 = 12.1s.
- * - 12.3s: 정답 QuestionBox reveal — `눈 = random.randint(1, 6)` (mono).
+ * - 11.5 ~ 12.2s: QuestionMark fade-out — 끝 = 12.2s (lifespan = 12.4-4.0-0.9 = 7.5s).
+ * - 12.4s: 정답 QuestionBox reveal — `눈 = random.randint(1, 6)` (mono).
  *   narration a2 "정답입니다" 발화 시점 동기 (R-004 / R-016).
- * - 13.4s: LowerThird — "1~6 사이 정수 — `random.randint(1, 6)`".
+ * - 13.5s: LowerThird — "1~6 사이 정수 — `random.randint(1, 6)`".
  *
- * R-004 / R-016: 정답 reveal (revealAt = 12.3s) narration "정답입니다" 발화 시점 동기.
- *   Sub-clip ffprobe: a0=10.200s, s1=1.829s, a2=5.760s. final voiceover (no rescale,
- *   ratio ≈ 1.000 — concat 합계 = voiceover 길이).
- *   - a2 시작 (scene 내부) = 10.200 + 1.829 = 12.029s
- *   - 하한 = 12.029s
- *   - 상한 = 12.029 + 5.760 × 0.25 = 13.469s
- *   - revealAt = 12.3 ∈ [12.029, 13.469] ✓
+ * R-004 / R-016: 정답 reveal (revealAt = 12.4s) narration "정답입니다" 발화 시점 동기.
+ *   Sub-clip probe (stdlib MPEG parser, ffprobe 없음): a0=10.200s, s1=1.855s, a2=5.760s.
+ *   final voiceover (no rescale — concat 합계 = voiceover 길이).
+ *   - a2 시작 (scene 내부) = 10.200 + 1.855 = 12.055s
+ *   - R-004 strict 하한 = 12.055 + 0.3 = 12.355s
+ *   - R-004 상한 = 12.055 + 5.760 × 0.25 = 13.495s
+ *   - revealAt = 12.4 ∈ [12.355, 13.495] ✓ (이전 12.3 은 하한보다 ~1.5프레임 빨라 경계 밖이었음)
  *
- * R-002 (swap timing buffer): QuestionMark fade-out 끝 = 4.0 + (12.3 - 4.0 - 0.9) + 0.4
- *   = 12.1s, revealAt = 12.3s → gap 0.2s ✓
+ * R-002 (swap timing buffer): QuestionMark fade-out 끝 = 4.0 + (12.4 - 4.0 - 0.9) + 0.4
+ *   = 12.2s, revealAt = 12.4s → gap 0.2s ✓. 질문 QuestionBox fade-out (revealAt-0.6 ~
+ *   revealAt-0.2 = 11.8 ~ 12.2s) vs 정답 fade-in (12.4s~) → gap 0.2s ✓ (QuestionBox 가
+ *   revealAt 상대 계산이라 자동 유지).
  *
  * R-012: QuestionMark size 200 (양옆 박스 사이 충분히 큼, scene 단독 중앙).
  */
@@ -41,11 +43,13 @@ const REVEAL = {
   questionEnter: 0.4,
   hintEnter: 1.0,
   questionMarkStart: 4.0,
-  // R-002: questionMark fade-out 끝 12.1s + buffer 0.2s → reveal 12.3s.
-  // R-004 / R-016: narration a2 "정답입니다" 발화 시점 (scene 내부 12.029s) + 0.27s 동기.
-  //   ffprobe: a0=10.200, s1=1.829, a2=5.760 (range [12.029, 13.469], reveal=12.3 ✓)
-  revealAt: 12.3,
-  lowerThird: 13.4,
+  // R-002: questionMark fade-out 끝 (revealAt - 0.2 = 12.2s) + buffer 0.2s → reveal 12.4s.
+  // R-004 / R-016: narration a2 "정답입니다" 발화 시점 (scene 내부 a0+s1 = 12.055s) + 0.345s 동기.
+  //   probe (stdlib parser): a0=10.200, s1=1.855, a2=5.760.
+  //   R-004 strict 범위 = [a0+s1+0.3, a0+s1 + a2×0.25] = [12.355, 13.495].
+  //   revealAt = 12.4 ∈ [12.355, 13.495] ✓ (이전 12.3 은 하한 12.355 보다 ~1.5프레임 빨라 경계 밖).
+  revealAt: 12.4,
+  lowerThird: 13.5, // revealAt + 1.1 (오프셋 유지)
 } as const;
 
 export const Scene08: React.FC = () => {

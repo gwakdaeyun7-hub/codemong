@@ -7,10 +7,11 @@
  * - 3~9s: 6칸 가로 배열 `1` ~ `6` sequential fade-in (per-cell 0.25초 stagger).
  *   마지막 `6` 칸 위에 "끝값 포함" 라벨.
  * - 9~13s: 주사위 (DieFace pips=4) 가 좌측 위에서 떠올라 6칸 위에 멈춤 — 4번
- *   칸 위. narration "주사위처럼 1, 2, 3, 4, 5, 6 중 하나" 마지막 발화 시점
- *   (~11s) 에 마지막 `6` 칸 펄스 (R-016).
+ *   칸 위. narration "주사위처럼 1~6 중 하나" 발화 시점 (~11.0s) 에 마지막 `6`
+ *   칸 1번째 펄스 (R-016).
  * - 13~16s: LowerThird swap (R-002, 0.2s buffer):
- *   "(빈 라벨)" → "`randint(a, b)` — _양쪽 끝값 포함_". 마지막 `6` 칸 한 번 더 펄스.
+ *   "(빈 라벨)" → "`randint(a, b)` — _양쪽 끝값 포함_". narration "6까지입니다"
+ *   발화 시점 (~14.0s) 에 마지막 `6` 칸 2번째 펄스 (R-016, 1번째와 동일 형태).
  *
  * R-001 / R-016 / R-002 준수.
  */
@@ -98,6 +99,7 @@ export const Scene06: React.FC = () => {
           enterStartSec={REVEAL.cellsStart}
           perCellStaggerSec={0.25}
           pulseLastAtSec={REVEAL.diePulseLast1}
+          pulseLastAtSec2={REVEAL.diePulseLast2}
           dieOnCell={4}
           dieEnterAtSec={REVEAL.dieEnter}
         />
@@ -116,10 +118,10 @@ export const Scene06: React.FC = () => {
         delaySec={REVEAL.lowerThird}
       />
 
-      {/* 마지막 `6` 칸 추가 펄스 (R-016 — narration "6까지입니다" 발화) */}
-      {/* 이미 DiceFace1to6Row 의 pulseLastAtSec 한 번. 두 번째 펄스는
-          DiceFace1to6Row 가 단일 prop 만 받으므로 별도 overlay 로 표현 — 생략.
-          첫 펄스(11s)가 narration 핵심 시점이라 충분. */}
+      {/* 마지막 `6` 칸 펄스 2회 (R-016): pulseLastAtSec=11.0s "1~6 중 하나",
+          pulseLastAtSec2=14.0s "6까지입니다" — 각각 narration 발화에 동기.
+          두 펄스 모두 scale 1.08 + accentSoft bg 동일 형태. R-005 위반 아님
+          (의미 없는 모션이 아니라 각각 narration 강조 비트). */}
     </PageBackground>
   );
 };

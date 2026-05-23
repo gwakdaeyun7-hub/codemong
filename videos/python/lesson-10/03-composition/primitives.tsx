@@ -1596,6 +1596,8 @@ export const DiceFace1to6Row: React.FC<{
   perCellStaggerSec?: number;
   /** 마지막 칸 (`6`) 의 펄스 시점 (sec). undefined 면 펄스 없음. */
   pulseLastAtSec?: number;
+  /** 마지막 칸 (`6`) 의 2번째 펄스 시점 (sec). undefined 면 2번째 펄스 없음. 첫 펄스와 동일 형태. */
+  pulseLastAtSec2?: number;
   /** 어떤 칸 위에 주사위가 멈춰 있는지 (1~6). undefined 면 표시 안 함. */
   dieOnCell?: 1 | 2 | 3 | 4 | 5 | 6;
   /** 주사위 등장 시점 (sec). dieOnCell 가 있을 때만 의미. */
@@ -1606,6 +1608,7 @@ export const DiceFace1to6Row: React.FC<{
   enterStartSec = 0,
   perCellStaggerSec = 0.25,
   pulseLastAtSec,
+  pulseLastAtSec2,
   dieOnCell,
   dieEnterAtSec = 0,
 }) => {
@@ -1613,16 +1616,23 @@ export const DiceFace1to6Row: React.FC<{
   const { fps } = useVideoConfig();
   const cells = [1, 2, 3, 4, 5, 6] as const;
 
-  // 마지막 칸 펄스
-  let lastPulse = 0;
-  if (typeof pulseLastAtSec === "number") {
-    const pStart = pulseLastAtSec * fps;
-    lastPulse = interpolate(
+  // 마지막 칸 펄스 (각 펄스 0→1→1→0, 1.0s). 두 시점을 받아 max 합성 — 각 펄스가
+  // narration 발화에 독립 동기 (R-016). 시점이 1.0s 이상 떨어져 있으면 겹침 0.
+  const pulseEnvelope = (atSec: number): number => {
+    const pStart = atSec * fps;
+    return interpolate(
       frame,
       [pStart, pStart + 0.25 * fps, pStart + 0.6 * fps, pStart + 1.0 * fps],
       [0, 1, 1, 0],
       { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
     );
+  };
+  let lastPulse = 0;
+  if (typeof pulseLastAtSec === "number") {
+    lastPulse = Math.max(lastPulse, pulseEnvelope(pulseLastAtSec));
+  }
+  if (typeof pulseLastAtSec2 === "number") {
+    lastPulse = Math.max(lastPulse, pulseEnvelope(pulseLastAtSec2));
   }
 
   // 주사위 이동 (좌 → 우, 즉 4번 칸 위로). dieOnCell 가 4 면 4번 칸 위.
