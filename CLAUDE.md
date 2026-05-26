@@ -27,13 +27,14 @@
 | `/` | 홈 = 코드학습 페이지 | 백엔드 Python 1개 카드 (프론트엔드 카드 전부 제거됨) |
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
 | `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
-| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | `lesson-1` ~ `lesson-11` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문 / 반복문 / 리스트 / 딕셔너리 & 자료구조 / 함수 / 모듈 & 랜덤 / 파일 입출력) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + LessonLikeBar(좋아요+댓글 카운트) + CommentSection(댓글 임베드) + 이전/다음 네비 |
+| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | **로그인 필수** (영상 게이팅 — 페이지 레벨 `redirect('/login?next=...')`, proxy 아님). `lesson-1` ~ `lesson-11` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문 / 반복문 / 리스트 / 딕셔너리 & 자료구조 / 함수 / 모듈 & 랜덤 / 파일 입출력) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + LessonLikeBar(좋아요+댓글 카운트) + CommentSection(댓글 임베드) + 이전/다음 네비. 우측 통계·진행률은 `LessonProgress` 실데이터(`getCourseLessonStatuses`) |
 | `/login` | 로그인 | 이메일 + Google/Kakao OAuth |
 | `/signup` | 회원가입 | 이메일/비밀번호/닉네임 |
 | `/forgot-password` | 비밀번호 재설정 요청 | 메일 링크 전송 |
 | `/reset-password` | 새 비밀번호 설정 | recovery 임시 세션 사용 (proxy 가드 예외) |
 | `/verify-email` | 이메일 인증 안내 | |
 | `/auth/callback` | OAuth/이메일확인/비번복구 공용 콜백 | Route Handler. PKCE `exchangeCodeForSession` |
+| `/skill` | 실력향상 | "준비 중" 안내 stub (TopNav "실력향상" 메뉴 404 해소) |
 | `/mypage` | 마이페이지 홈 | 프로필 카드 + 학습 통계(mock) + 최근 학습 |
 | `/mypage/settings` | 설정 | 닉네임/비밀번호 변경 + 계정 삭제 안내 |
 | `/mypage/comments` | 내가 쓴 댓글 | |
@@ -72,7 +73,7 @@
 | `lib/community/likes-actions.ts` | `togglePostLikeAction` / `toggleCommentLikeAction` / `toggleLessonLikeAction`, `getLessonLikeStatus` |
 | `lib/community/likes-queries.ts` | `listMyLikedLessons` (lesson-plan join), `listMyLikedPosts` |
 | `lib/learning/progress-actions.ts` | Server Actions: `markVideoWatchedAction` (영상 90% 시청 멱등 기록), `toggleLessonCompleteAction` (완료 토글 = `learnCompletedAt` on/off) |
-| `lib/learning/progress-queries.ts` | `getLessonProgress` (강의 진도 상태), `getCourseCompletion` (코스 이수율 = `learnCompletedAt` 있는 강의 수 / 전체) |
+| `lib/learning/progress-queries.ts` | `getLessonProgress` (강의 진도 상태), `getCourseCompletion` (코스 이수율 = `learnCompletedAt` 있는 강의 수 / 전체), `getCourseLessonStatuses` (코스 강의별 status 맵 `lessonId → LessonStatus` — 강의 목록/상세 진행률 실데이터. `learnCompletedAt`→completed, `videoWatchedAt`만→in-progress, 없음/비로그인→not-started) |
 | `lib/format.ts` | `timeAgoKo`, `fmtCount` 헬퍼 |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
@@ -83,8 +84,8 @@
 
 | Path | 역할 |
 |------|------|
-| `components/` (root) | 글로벌: `top-nav`, `user-menu`, `course-card`, `status-badge`, `level-badge`, `course-icon`, `learning-mode-toggle` (현재 미사용 — 홈에서 제거됨, 향후 코드에디터 모드용 보존) |
-| `components/course-detail/` | 소개 탭 섹션 (header, sidebar, learning-outcomes, roadmap, checklist, reviews, cta, section-card) |
+| `components/` (root) | 글로벌: `top-nav`, `user-menu`, `course-card`, `status-badge`, `level-badge`, `course-icon`, `toast` (ToastProvider/useToast — 버튼형 mutation 성공·실패 알림, `app/layout.tsx` body 에서 children 감쌈), `learning-mode-toggle` (현재 미사용 — 홈에서 제거됨, 향후 코드에디터 모드용 보존) |
+| `components/course-detail/` | 소개 탭 섹션 (header, sidebar — **Link 기반 Server Component**(탭별 라우팅, 미구현 탭은 "준비 중" 비활성), learning-outcomes, roadmap, checklist, reviews, cta, section-card) |
 | `components/lessons/` | 강의 목록 페이지 (course-progress-header, lesson-list, lesson-card, progress-stat-card, stats-card, tips-card, badges-card) |
 | `components/lesson-content/` | 강의 상세 영상 영역 (lesson-content-header, lesson-video-card — **Client Component**(영상 90% 시청 추적 + 학습 완료 버튼), lesson-navigation — 영상-only 모드) |
 | `components/auth/` | 인증 폼 (이메일 로그인/회원가입, OAuth 버튼 — Kakao+Google 인라인 SVG, 비번 재설정/재발급, AuthLayout 좌측 브랜드+우측 폼, or-divider, form-feedback) |
@@ -134,7 +135,7 @@
 
 ### 권한 정책
 
-- 읽기: 비로그인 OK (목록/상세/댓글 조회)
+- 읽기: 비로그인 OK (목록/상세/댓글 조회). 단, **강의 영상 상세(`/courses/[id]/lessons/[lessonId]`)는 로그인 필수** (영상 게이팅) — 강좌 소개·강의 목록은 비로그인 열람 가능
 - 쓰기/좋아요/신고: 로그인 필수
 - 수정/삭제: 본인만 (application code 체크)
 - Q&A 해결 토글: Q&A 작성자만
@@ -147,6 +148,7 @@
 - 로그인 상태에서 `/login`·`/signup`·`/forgot-password` → `/` 리다이렉트
 - `/reset-password` 는 recovery 임시 세션 사용을 위해 예외
 - matcher: 정적 자원(_next/static, _next/image, 이미지/미디어/json/ico/css/js) 제외
+- 강의 영상 상세의 로그인 게이팅은 proxy matcher 가 아니라 **강의 상세 페이지 레벨 `redirect`** 로 처리 (그 페이지에서만 막고, 소개·목록은 열람 허용하기 위함)
 
 ### 커뮤니티 / 댓글 / 좋아요 흐름
 
@@ -160,7 +162,7 @@
 
 ## 패턴 결정 (이미 합의된 것 — 다시 묻지 말 것)
 
-1. **Server Component default**, `'use client'` 는 leaf 인터랙션에만 (예: `lesson-list` 필터, `course-detail-sidebar` 탭 활성). 레이아웃 통째로 client 로 마킹 금지.
+1. **Server Component default**, `'use client'` 는 leaf 인터랙션에만 (예: `lesson-list` 필터). 레이아웃 통째로 client 로 마킹 금지.
 2. **shadcn Card/Button 미사용** — 디자인 톤이 안 맞아서 native + Tailwind 직접 구성. 새 카드 만들 때 `components/ui/card` import 하지 말 것.
 3. **카드 디자인 톤**: 흰 배경, `rounded-2xl`, 부드러운 shadow. 페이지 배경 `bg-zinc-50`. 메인 액센트 `violet-500` ~ `purple-600`.
 4. **모바일-first 반응형**: 데스크톱 기준으로 디자인하되 모바일에서 자연스럽게 무너져야. 사이드바는 `lg+` 에서만, 모바일에선 가로 스크롤 탭으로 대체.
@@ -168,6 +170,7 @@
 6. **lucide 아이콘은 항상 명시 import + 폴더별 `icon-map.ts` 화이트리스트** 통과. `<Icon name={dynamic} />` 같은 동적 매핑은 그 맵을 거치게.
 7. **TopNav 배치**: 좌측 [로고 + `코드학습` / `실력향상` / `커뮤니티` / `마이페이지`], 우측 [검색 / 알림 / 프로필]. (이미지 보고 결정한 최종 배치 — 변경하지 말 것.)
 8. **카피 톤**: 한국어, 입문자 친화, 정직. "쉬워요!" 같은 과장 금지. 이모지 거의 안 씀.
+9. **버튼형 mutation 알림 = `useToast`, `alert()` 금지**: 좋아요/삭제/완료 등 버튼형 액션의 성공·실패 알림은 `components/toast.tsx` 의 `useToast` 로 통일 (`alert()` 쓰지 말 것). 핸들러는 `startTransition` 내부 `try/catch` 로 server action 의 `!result.ok` 뿐 아니라 예상 못한 throw 도 잡아 "잠시 후 다시 시도해 주세요." toast 로 안내. 단 폼(댓글/게시글/신고)의 입력 검증은 inline(FormFeedback) 유지 — toast 로 옮기지 말 것.
 
 ---
 
@@ -194,6 +197,8 @@ pip install edge-tts        # 처음 한 번 (Python 3.10+)
 - **dev mode 첫 클릭 ~2s 지연**: Next.js JIT 정상 동작. 사용자 노트북 탓 아님.
 - **`pnpm install` 시 `cd remotion && pnpm install` 하지 말 것**: pnpm이 root `pnpm-workspace.yaml`을 보고 root install을 돌려서 의도한 remotion install이 안 됨. root에서 `pnpm install`로 둘 다 install 되거나, 특정 프로젝트만이면 `pnpm --filter remotion install`.
 - **Vercel build 가 `Cannot find module 'remotion'` 으로 실패**: `videos/<courseId>/<lessonId>/03-composition/*.tsx` 가 `import ... from "remotion"` 하는데, 메인 앱 `tsconfig.json` 의 `include` 가 모든 .tsx 를 잡아 그 파일들도 type check 대상이 됨. `remotion` 은 `remotion/` 워크스페이스에만 있어 메인 앱은 모듈을 못 찾음. 해결: `tsconfig.json` 의 `exclude` 에 `"videos"`, `"remotion"` 명시 (적용됨). Remotion 워크스페이스 자체 `tsconfig` 가 `../videos/**/*.tsx` 를 include 해 그쪽에서 type check 됨.
+
+**전역 에러 바운더리 / 404**: `app/error.tsx`(렌더 에러 — 다시 시도), `app/not-found.tsx`(404), `app/global-error.tsx`(루트 레이아웃 폴백 — 인라인 스타일) 가 전역 폴백. 새 라우트별 에러 처리를 만들 때 이들과 중복/충돌하지 않게.
 
 ---
 
@@ -283,10 +288,10 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 
 ## Out of scope (현재 미구현 — 카드/스텁만 존재)
 
-- 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭은 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
+- 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭(개념응용/문제해결/학습완료/성장피드백/다음단계추천)은 "준비 중" 비활성(클릭 불가 + 흐림 + title 툴팁)으로 명시 처리, 라우트·화면 없음. 실력향상(`/skill`) 도 "준비 중" 안내 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
 - Python 12강 영상 — 1~11강은 완성·임베드 완료 (Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). **12강 영상만 미제작** (유일하게 안 만든 강).
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능. 단, 영상 아래에 LessonLikeBar(좋아요 + 댓글 카운트) + CommentSection(댓글) 은 추가됨.
-- 학습 진도 — **이수율(1층: 영상 90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`)은 구현 완료** (홈 카드 이수율이 실데이터). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현. `/mypage/calendar`·`/mypage/page.tsx`의 학습 통계 카드는 여전히 mock (`LessonProgress` 집계로 추후 연결 가능).
+- 학습 진도 — **이수율(1층: 영상 90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`)은 구현 완료**. 홈 카드뿐 아니라 **강의 목록·강의 상세 우측 진행률/통계까지 `LessonProgress` 실데이터(`getCourseLessonStatuses`)로 연결** (비로그인이면 전부 not-started). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현 (`lib/lesson-plan.ts` 의 badges 는 전부 `acquired: false`, 뱃지 카드도 "준비 중"). `/mypage/calendar`·`/mypage/page.tsx`의 학습 통계 카드는 여전히 mock (`LessonProgress` 집계로 추후 연결 가능).
 - 계정 삭제 자동화 — service_role admin API 필요. 현재 settings 페이지는 운영팀 메일 문의 안내만.
-- Realtime / 알림 센터 / 검색 — TopNav 알림·검색 아이콘은 시각적 자리만.
+- Realtime / 알림 센터 / 검색 — TopNav 알림·검색 아이콘은 "준비 중" 비활성(`disabled` + title 툴팁, 가짜 "읽지 않은 알림" 점 제거). 실제 기능 미구현.
