@@ -13,6 +13,7 @@ import {
   markVideoWatchedAction,
   toggleLessonCompleteAction,
 } from "@/lib/learning/progress-actions"
+import { useToast } from "@/components/toast"
 import { cn } from "@/lib/utils"
 
 import type { LessonVideo } from "@/lib/lesson-content"
@@ -35,8 +36,8 @@ export function LessonVideoCard({
 
   const [watched, setWatched] = useState(initialVideoWatched)
   const [completed, setCompleted] = useState(initialLearnCompleted)
-  const [error, setError] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
+  const { error: toastError } = useToast()
   // 90% 시청 액션이 영상당 한 번만 나가도록 가드.
   const firedRef = useRef(initialVideoWatched)
 
@@ -52,14 +53,17 @@ export function LessonVideoCard({
   }
 
   function handleToggleComplete() {
-    setError(null)
     startTransition(async () => {
-      const res = await toggleLessonCompleteAction(lessonRef)
-      if (res.ok) {
-        setCompleted(res.learnCompleted)
-        setWatched(res.videoWatched)
-      } else {
-        setError(res.error)
+      try {
+        const res = await toggleLessonCompleteAction(lessonRef)
+        if (res.ok) {
+          setCompleted(res.learnCompleted)
+          setWatched(res.videoWatched)
+        } else {
+          toastError(res.error)
+        }
+      } catch {
+        toastError("잠시 후 다시 시도해 주세요.")
       }
     })
   }
@@ -135,7 +139,6 @@ export function LessonVideoCard({
               )}
             </button>
           </div>
-          {error && <p className="mt-2 text-xs text-rose-600">{error}</p>}
         </div>
       ) : (
         // placeholder 컨트롤 행 — 영상이 없을 때만 (장식)

@@ -9,6 +9,7 @@ import {
   toggleResolvedAction,
 } from "@/lib/community/posts-actions";
 import { ReportForm } from "@/components/comments/report-form";
+import { useToast } from "@/components/toast";
 import { communityIcons } from "./icon-map";
 
 type Props = {
@@ -28,6 +29,7 @@ export function PostActions({ postId, isMine, canReport, category, resolved }: P
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [reporting, setReporting] = useState(false);
+  const { error: toastError } = useToast();
 
   const Pencil = communityIcons.pencil;
   const Trash = communityIcons.trash;
@@ -37,23 +39,31 @@ export function PostActions({ postId, isMine, canReport, category, resolved }: P
   const onDelete = () => {
     if (!confirm("게시글을 삭제할까요? 삭제된 글은 복구되지 않습니다.")) return;
     startTransition(async () => {
-      const r = await deletePostAction(postId);
-      if (r && "ok" in r && !r.ok) {
-        alert(r.error);
-        return;
+      try {
+        const r = await deletePostAction(postId);
+        if (r && "ok" in r && !r.ok) {
+          toastError(r.error);
+          return;
+        }
+        router.push("/community");
+      } catch {
+        toastError("잠시 후 다시 시도해 주세요.");
       }
-      router.push("/community");
     });
   };
 
   const onToggleResolved = () => {
     startTransition(async () => {
-      const r = await toggleResolvedAction(postId);
-      if (r && "ok" in r && !r.ok) {
-        alert(r.error);
-        return;
+      try {
+        const r = await toggleResolvedAction(postId);
+        if (r && "ok" in r && !r.ok) {
+          toastError(r.error);
+          return;
+        }
+        router.refresh();
+      } catch {
+        toastError("잠시 후 다시 시도해 주세요.");
       }
-      router.refresh();
     });
   };
 

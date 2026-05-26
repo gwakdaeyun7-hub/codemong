@@ -50,8 +50,9 @@ export function LessonContentHeader({
                   type="button"
                   role="tab"
                   aria-selected={isActive}
-                  // MVP: 비활성 탭은 클릭 막아 학습 흐름 혼란 방지.
+                  // MVP: 비활성 탭은 클릭 막아 학습 흐름 혼란 방지. (응용/시각자료는 준비 중)
                   disabled={!isActive}
+                  title={isActive ? undefined : "준비 중이에요"}
                   className={cn(
                     "inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-semibold transition",
                     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500",

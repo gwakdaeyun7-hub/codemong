@@ -55,11 +55,12 @@ export const pythonLessonPlan: LessonPlan = {
     "배운 예제를 살짝 바꿔서 실험해 보세요",
     "이해 안 되면 다시보기로 복습하세요",
   ],
+  // 뱃지 시스템은 아직 미구현 — 전부 미획득(준비 중) 상태. 라벨/아이콘/톤은 향후 정의를 위해 보존.
   badges: [
-    { id: "badge-starter", label: "첫걸음", iconHint: "Rocket", acquired: true, tone: "rose" },
-    { id: "badge-streak", label: "연속 학습", iconHint: "Flame", acquired: true, tone: "amber" },
-    { id: "badge-speed", label: "스피드", iconHint: "Zap", acquired: true, tone: "sky" },
-    { id: "badge-grit", label: "끈기", iconHint: "Target", acquired: true, tone: "violet" },
+    { id: "badge-starter", label: "첫걸음", iconHint: "Rocket", acquired: false, tone: "rose" },
+    { id: "badge-streak", label: "연속 학습", iconHint: "Flame", acquired: false, tone: "amber" },
+    { id: "badge-speed", label: "스피드", iconHint: "Zap", acquired: false, tone: "sky" },
+    { id: "badge-grit", label: "끈기", iconHint: "Target", acquired: false, tone: "violet" },
     { id: "badge-finisher", label: "완주", iconHint: "Trophy", acquired: false, tone: "emerald" },
   ],
 }

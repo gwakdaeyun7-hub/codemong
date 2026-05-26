@@ -19,7 +19,10 @@ export function BadgesCard({ badges }: { badges: LessonBadge[] }) {
         >
           <Award className="size-3.5" strokeWidth={2.25} />
         </span>
-        등록한 뱃지
+        획득한 뱃지
+        <span className="ml-auto rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-500">
+          준비 중
+        </span>
       </header>
 
       <ul className="grid grid-cols-5 gap-2 sm:gap-3">

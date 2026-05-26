@@ -5,6 +5,7 @@ import { BookOpen, Clock, Star, Users } from "lucide-react"
 
 import { CourseIcon } from "@/components/course-icon"
 import { LevelBadge } from "@/components/level-badge"
+import { cn } from "@/lib/utils"
 
 import type { CourseDetailStat } from "@/lib/course-detail"
 import type { Course, CourseLevel } from "@/lib/courses"
@@ -24,6 +25,42 @@ export function CourseDetailHeader({
   stats,
   icon,
 }: Props) {
+  // 유효한 스탯만 노출 — 가짜 수강생/평점이 데이터에서 빠지면 자동으로 항목에서 제외된다.
+  const statItems = [
+    {
+      icon: <Clock className="size-4" strokeWidth={2.25} />,
+      tone: "bg-rose-50 text-rose-500",
+      value: stats.totalHours,
+      label: "총 학습 시간",
+    },
+    {
+      icon: <BookOpen className="size-4" strokeWidth={2.25} />,
+      tone: "bg-violet-50 text-violet-500",
+      value: stats.totalLessons,
+      label: "강의 수",
+    },
+    ...(stats.enrolledCount
+      ? [
+          {
+            icon: <Users className="size-4" strokeWidth={2.25} />,
+            tone: "bg-emerald-50 text-emerald-500",
+            value: stats.enrolledCount,
+            label: "수강생",
+          },
+        ]
+      : []),
+    ...(stats.rating
+      ? [
+          {
+            icon: <Star className="size-4" strokeWidth={2.25} />,
+            tone: "bg-amber-50 text-amber-500",
+            value: stats.rating,
+            label: "평점",
+          },
+        ]
+      : []),
+  ]
+
   return (
     <section className="rounded-2xl bg-white p-6 ring-1 ring-zinc-200/80 shadow-sm sm:p-8">
       {/* 큰 아이콘 박스 (중앙 정렬) */}
@@ -46,32 +83,16 @@ export function CourseDetailHeader({
       {/* 설명 */}
       <p className="mt-2 text-center text-sm text-zinc-500">{description}</p>
 
-      {/* 4개 스탯 그리드 */}
-      <dl className="mt-6 grid grid-cols-2 gap-3 border-t border-zinc-100 pt-6 sm:mt-8 sm:grid-cols-4 sm:gap-4 sm:pt-8">
-        <Stat
-          icon={<Clock className="size-4" strokeWidth={2.25} />}
-          tone="bg-rose-50 text-rose-500"
-          value={stats.totalHours}
-          label="총 학습 시간"
-        />
-        <Stat
-          icon={<BookOpen className="size-4" strokeWidth={2.25} />}
-          tone="bg-violet-50 text-violet-500"
-          value={stats.totalLessons}
-          label="강의 수"
-        />
-        <Stat
-          icon={<Users className="size-4" strokeWidth={2.25} />}
-          tone="bg-emerald-50 text-emerald-500"
-          value={stats.enrolledCount}
-          label="수강생"
-        />
-        <Stat
-          icon={<Star className="size-4" strokeWidth={2.25} />}
-          tone="bg-amber-50 text-amber-500"
-          value={stats.rating}
-          label="평점"
-        />
+      {/* 스탯 그리드 — 유효한 항목만 (가짜 수강생/평점 제거 시 2개) */}
+      <dl
+        className={cn(
+          "mt-6 grid gap-3 border-t border-zinc-100 pt-6 sm:mt-8 sm:gap-4 sm:pt-8",
+          statItems.length >= 4 ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-2",
+        )}
+      >
+        {statItems.map((s) => (
+          <Stat key={s.label} icon={s.icon} tone={s.tone} value={s.value} label={s.label} />
+        ))}
       </dl>
     </section>
   )

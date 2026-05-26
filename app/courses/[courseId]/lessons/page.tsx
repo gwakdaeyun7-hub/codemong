@@ -10,8 +10,10 @@ import { ProgressStatCard } from "@/components/lessons/progress-stat-card"
 import { StatsCard } from "@/components/lessons/stats-card"
 import { TipsCard } from "@/components/lessons/tips-card"
 import { TopNav } from "@/components/top-nav"
+import { getCurrentUser } from "@/lib/auth/get-user"
 import { getCourseDetail } from "@/lib/course-detail"
 import { courses } from "@/lib/courses"
+import { getCourseLessonStatuses } from "@/lib/learning/progress-queries"
 import { getLessonPlan } from "@/lib/lesson-plan"
 
 // Next.js 16 App Router: dynamic route params 는 Promise 로 들어옴.
@@ -34,11 +36,19 @@ export default async function CourseLessonsPage({
     notFound()
   }
 
+  // 강의별 실제 진도(이수율) — 로그인 사용자의 LessonProgress 기반. 비로그인이면 전부 미시작.
+  const user = await getCurrentUser()
+  const statusMap = await getCourseLessonStatuses(courseId, user?.id ?? null)
+  const lessons = plan.lessons.map((l) => ({
+    ...l,
+    status: statusMap[l.id] ?? l.status,
+  }))
+
   // status 별 카운트 — 헤더/사이드바 양쪽에서 재사용.
-  const completedCount = plan.lessons.filter((l) => l.status === "completed").length
-  const inProgressCount = plan.lessons.filter((l) => l.status === "in-progress").length
-  const notStartedCount = plan.lessons.filter((l) => l.status === "not-started").length
-  const totalCount = plan.lessons.length
+  const completedCount = lessons.filter((l) => l.status === "completed").length
+  const inProgressCount = lessons.filter((l) => l.status === "in-progress").length
+  const notStartedCount = lessons.filter((l) => l.status === "not-started").length
+  const totalCount = lessons.length
 
   // 사이드바 카운트 — completed 외 모두 "남음"으로 묶어 카드 안에서 다시 표기.
   const remainingCount = totalCount - completedCount
@@ -48,7 +58,7 @@ export default async function CourseLessonsPage({
     totalCount > 0 ? Math.floor((completedCount / totalCount) * 100) : 0
 
   // 남은 강의들의 분 합 — completed 가 아닌 것 모두 (in-progress + not-started)
-  const remainingMinutes = plan.lessons
+  const remainingMinutes = lessons
     .filter((l) => l.status !== "completed")
     .reduce((acc, l) => acc + l.durationMinutes, 0)
 
@@ -71,7 +81,7 @@ export default async function CourseLessonsPage({
               totalHours={detail.stats.totalHours}
             />
 
-            <LessonList lessons={plan.lessons} courseId={courseId} />
+            <LessonList lessons={lessons} courseId={courseId} />
           </div>
 
           {/* 우측 사이드바 — lg+ 에서 sticky 로 따라옴 */}

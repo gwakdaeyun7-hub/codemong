@@ -11,6 +11,7 @@ import {
   togglePostLikeAction,
   type LikeResult,
 } from "@/lib/community/likes-actions";
+import { useToast } from "@/components/toast";
 import { commentsIcons } from "./icon-map";
 
 type Target =
@@ -42,6 +43,7 @@ export function LikeButton({
 }: Props) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const { error: toastError } = useToast();
   const Heart = commentsIcons.heart;
 
   const onClick = () => {
@@ -51,19 +53,23 @@ export function LikeButton({
     }
     if (pending) return;
     startTransition(async () => {
-      let result: LikeResult;
-      if (target.kind === "comment") {
-        result = await toggleCommentLikeAction(target.commentId);
-      } else if (target.kind === "lesson") {
-        result = await toggleLessonLikeAction(target.lessonRef);
-      } else {
-        result = await togglePostLikeAction(target.postId);
+      try {
+        let result: LikeResult;
+        if (target.kind === "comment") {
+          result = await toggleCommentLikeAction(target.commentId);
+        } else if (target.kind === "lesson") {
+          result = await toggleLessonLikeAction(target.lessonRef);
+        } else {
+          result = await togglePostLikeAction(target.postId);
+        }
+        if (!result.ok) {
+          toastError(result.error);
+          return;
+        }
+        router.refresh();
+      } catch {
+        toastError("잠시 후 다시 시도해 주세요.");
       }
-      if (!result.ok) {
-        alert(result.error);
-        return;
-      }
-      router.refresh();
     });
   };
 

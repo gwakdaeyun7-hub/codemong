@@ -5,8 +5,9 @@
 export type CourseDetailStat = {
   totalHours: string
   totalLessons: string
-  enrolledCount: string
-  rating: string
+  // 수강생 수·평점은 실데이터가 쌓이기 전까지 미노출 (가짜 수치 금지). optional.
+  enrolledCount?: string
+  rating?: string
 }
 
 export type LearningOutcome = {
@@ -52,10 +53,10 @@ export const pythonCourseDetail: CourseDetail = {
   levelLabel: "초급",
   description: "변수와 함수부터 차근차근 배웁니다",
   stats: {
+    // 총 학습 시간 = 영상 시청(약 4시간) + 복습·실습 포함 기준. 영상 길이 합보다 큰 건 의도된 것.
     totalHours: "약 10시간",
-    totalLessons: "15강",
-    enrolledCount: "3,240명",
-    rating: "4.9 / 5",
+    totalLessons: "12강",
+    // enrolledCount·rating: 실제 수강생/평점 데이터가 없어 미노출 (정직 톤 — 가짜 수치 금지).
   },
   learningOutcomes: [
     { text: "변수와 자료형으로 데이터를 다루기", iconHint: "Variable" },
@@ -87,32 +88,11 @@ export const pythonCourseDetail: CourseDetail = {
   ],
   cta: {
     headline: "준비됐나요? Python 첫 줄을 함께 써봐요!",
-    subtext: "개념설명 탭으로 이동해 첫 번째 강의를 시작합니다.",
+    subtext: "강의 목록에서 첫 번째 강의부터 순서대로 시작합니다.",
     buttonLabel: "학습 시작",
   },
-  reviews: [
-    {
-      name: "이서연",
-      tag: "완전 입문자",
-      rating: 5,
-      comment:
-        "코딩이 정말 처음이라 변수가 뭔지도 몰랐는데, 예제 하나하나 따라가다 보니 어느새 조건문까지 직접 짜고 있어요. 오답이 나와도 왜 틀렸는지 알려줘서 무섭지 않았어요.",
-    },
-    {
-      name: "박준호",
-      tag: "JS 경험자",
-      rating: 5,
-      comment:
-        "JavaScript는 다뤄봤지만 Python은 처음이었어요. 리스트와 딕셔너리 부분에서 두 언어 차이를 자연스럽게 정리할 수 있어서 빠르게 익숙해졌습니다.",
-    },
-    {
-      name: "김지민",
-      tag: "마케터",
-      rating: 5,
-      comment:
-        "퇴근 후 시간을 짜내서 듣고 있는데, 한 강의가 짧아 부담이 적어요. 반복문으로 간단한 작업을 자동화하는 예제를 보고 업무에도 바로 써먹을 수 있겠다 싶었어요.",
-    },
-  ],
+  // 실제 수강생 후기가 쌓이기 전까지 미노출 (가짜 후기 금지). 빈 배열이면 소개 페이지에서 후기 섹션을 렌더하지 않는다.
+  reviews: [],
 }
 
 /**

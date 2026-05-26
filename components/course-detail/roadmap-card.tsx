@@ -20,7 +20,7 @@ const STEP_TONES = [
 export function RoadmapCard({ roadmap }: { roadmap: RoadmapStep[] }) {
   return (
     <SectionCard
-      title="학습 커리큘럼 로드맵"
+      title="학습은 이렇게 진행돼요"
       icon={Code2}
       tone="bg-violet-100 text-violet-600"
     >

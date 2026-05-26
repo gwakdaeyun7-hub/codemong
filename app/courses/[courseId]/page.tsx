@@ -39,7 +39,7 @@ export default async function CourseDetailPage({
 
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:gap-6">
-          <CourseDetailSidebar defaultTab="intro" />
+          <CourseDetailSidebar courseId={courseId} active="intro" />
 
           {/* 메인 컨텐츠 영역: min-w-0 으로 grid 자식이 부모 폭을 넘기지 않게 함 */}
           <div className="flex min-w-0 flex-1 flex-col gap-4 sm:gap-5">
@@ -66,7 +66,9 @@ export default async function CourseDetailPage({
 
             <CtaCard cta={detail.cta} courseId={courseId} />
 
-            <ReviewsCard reviews={detail.reviews} />
+            {detail.reviews.length > 0 && (
+              <ReviewsCard reviews={detail.reviews} />
+            )}
           </div>
         </div>
       </main>

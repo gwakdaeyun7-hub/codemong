@@ -76,8 +76,10 @@ export async function TopNav({ active = "study" }: { active?: NavKey }) {
         <div className="flex shrink-0 items-center gap-1">
           <button
             type="button"
-            aria-label="검색"
-            className="inline-flex size-9 items-center justify-center rounded-full text-zinc-600 transition hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
+            aria-label="검색 (준비 중)"
+            title="검색 기능은 준비 중이에요"
+            disabled
+            className="inline-flex size-9 cursor-not-allowed items-center justify-center rounded-full text-zinc-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
           >
             <Search className="size-4" />
           </button>
@@ -86,15 +88,12 @@ export async function TopNav({ active = "study" }: { active?: NavKey }) {
             <>
               <button
                 type="button"
-                aria-label="알림"
-                className="relative inline-flex size-9 items-center justify-center rounded-full text-zinc-600 transition hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
+                aria-label="알림 (준비 중)"
+                title="알림 기능은 준비 중이에요"
+                disabled
+                className="relative inline-flex size-9 cursor-not-allowed items-center justify-center rounded-full text-zinc-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
               >
                 <Bell className="size-4" />
-                <span
-                  aria-hidden
-                  className="absolute right-2 top-2 size-1.5 rounded-full bg-rose-500 ring-2 ring-white"
-                />
-                <span className="sr-only">읽지 않은 알림 있음</span>
               </button>
 
               <UserMenu
