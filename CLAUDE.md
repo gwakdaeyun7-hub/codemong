@@ -248,7 +248,7 @@ videos/
 
 **TTS 기본값**: Edge TTS 1순위 (`ko-KR-HyunsuMultilingualNeural`, rate `+10%`, 무료 — 키 불필요). ElevenLabs / OpenAI 는 `.env.local` 키가 있을 때만 fallback. voice는 잠정 — 향후 변경 가능.
 
-**발음 사전**: `videos/_assets/pronunciation.json` (현재 시드 85개). 영상 대본 작성 시 참조용 — `_synth.py` 가 자동 치환하지는 않으므로 대본 작성자가 narration 표기를 발음 친화적으로 미리 적용해야 한다. 발음 강제가 필요한 한국어 단어(예: "묶입니다" 가 TTS 에서 [무깁니다] 로 잘못 발음되는 경우)는 narration 표기 자체를 발음형(예: "무낍니다") 으로 적어 우회.
+**발음 사전**: `videos/_assets/pronunciation.json` (현재 시드 91개). 영상 대본 작성 시 참조용 — `_synth.py` 가 자동 치환하지는 않으므로 대본 작성자가 narration 표기를 발음 친화적으로 미리 적용해야 한다. 발음 강제가 필요한 한국어 단어(예: "묶입니다" 가 TTS 에서 [무깁니다] 로 잘못 발음되는 경우)는 narration 표기 자체를 발음형(예: "무낍니다") 으로 적어 우회.
 
 **영상 정책**:
 - 영상 1편 = 강의 1개 (lesson 1대1 매핑). **Python 기초 = 12강 = 영상 12편 예정** (확정 커리큘럼은 메모리 `python_curriculum_12.md` 참조).
@@ -261,7 +261,7 @@ videos/
 
 **Git 권장사항** (강제 아님):
 - 렌더 산출물 `04-out.mp4` 와 `02-audio/voiceover.mp3` 는 git ignore 권장.
-- `_assets/pronunciation.json` 은 commit 권장 (시드 85개 공유 자원).
+- `_assets/pronunciation.json` 은 commit 권장 (시드 91개 공유 자원).
 - `_assets/voice-sample-*.mp3` 는 사용자 결정.
 
 ---
@@ -289,7 +289,7 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 ## Out of scope (현재 미구현 — 카드/스텁만 존재)
 
 - 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭(개념응용/문제해결/학습완료/성장피드백/다음단계추천)은 "준비 중" 비활성(클릭 불가 + 흐림 + title 툴팁)으로 명시 처리, 라우트·화면 없음. 실력향상(`/skill`) 도 "준비 중" 안내 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
-- Python 12강 영상 — 1~11강은 완성·임베드 완료 (Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). **12강 영상만 미제작** (유일하게 안 만든 강).
+- Python 12강 영상 — 1~11강은 완성·임베드 완료 (Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 12강("디버깅 & AI 활용")은 학습목표~대본~컴포지션 + audio wire 까지 제작 완료 (`videos/python/lesson-12/`: `00-objectives.md` + `01-script.md`(9 scenes) + `02-audio/` + `03-composition/Scene01~09 + Lesson12.tsx`). 단 **풀렌더(`04-out.mp4`)는 이 환경에서 미실행 — 사용자 환경/Vercel 에서 렌더 예정** + **lesson detail 페이지 임베드 미완료** (1~11강과 달리 아직 앱에 노출 안 됨).
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능. 단, 영상 아래에 LessonLikeBar(좋아요 + 댓글 카운트) + CommentSection(댓글) 은 추가됨.
 - 학습 진도 — **이수율(1층: 영상 90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`)은 구현 완료**. 홈 카드뿐 아니라 **강의 목록·강의 상세 우측 진행률/통계까지 `LessonProgress` 실데이터(`getCourseLessonStatuses`)로 연결** (비로그인이면 전부 not-started). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현 (`lib/lesson-plan.ts` 의 badges 는 전부 `acquired: false`, 뱃지 카드도 "준비 중"). `/mypage/calendar`·`/mypage/page.tsx`의 학습 통계 카드는 여전히 mock (`LessonProgress` 집계로 추후 연결 가능).
