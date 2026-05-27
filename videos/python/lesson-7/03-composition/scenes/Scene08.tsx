@@ -4,6 +4,10 @@
  * 7강에서 가장 큰 인지 부하 구간 (`append`/`[i]=`/`del` 세 동작) 직후 적용 비트.
  * R-004 + R-016 (정답 reveal 동기) + R-012 (QuestionMark size ≥ 180) 준수.
  *
+ * 추가 (2026-05-27, 사용자 요청): 상단 중앙에 "출발 묶음 [88, 92, 76]" 참고 칩
+ * (delaySec 1.1 ≈ narration "출발 묶음이 88, 92, 76", 영상 2:03). 세 동작이 적용되는
+ * 시작 상태를 작게 고정 노출 — 좌측 코드/우측 결과와 미겹침 (top 150 band).
+ *
  * - 0~3s: 좌측 코드 3줄 fade-in (각 0.7s):
  *         scores.append(100)
  *         scores[0] = 95
@@ -28,7 +32,7 @@ import {
   PyToken,
   QuestionMark,
 } from "../primitives";
-import { colors, fonts } from "../theme";
+import { colors, fonts, radii, shadows } from "../theme";
 
 const easeOutCubic = Easing.bezier(0.16, 1, 0.3, 1);
 
@@ -150,6 +154,64 @@ export const Scene08: React.FC = () => {
             }}
           >
             잠깐 — 세 동작 후 모습은?
+          </div>
+        </FadeIn>
+      </div>
+
+      {/* 출발 묶음 참고 — 세 동작이 적용되는 시작 상태 [88, 92, 76] 를 작게 고정 노출.
+          narration "출발 묶음이 88, 92, 76 이라고 합시다" (scene-08 ≈ 1.3s, 영상 2:03) 동기.
+          좌측 코드(동작)·우측 결과와 겹치지 않는 상단 중앙 band (top 150). */}
+      <div
+        style={{
+          position: "absolute",
+          top: 150,
+          left: 0,
+          right: 0,
+          display: "flex",
+          justifyContent: "center",
+          pointerEvents: "none",
+        }}
+      >
+        <FadeIn delaySec={1.1} translateY={8}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 14,
+              padding: "10px 22px",
+              borderRadius: radii.pill,
+              background: colors.bgWhite,
+              border: `1.5px solid ${colors.border}`,
+              boxShadow: shadows.cardSoft,
+              fontFamily: fonts.sans,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 20,
+                fontWeight: 700,
+                color: colors.accentInk,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              출발 묶음
+            </span>
+            <span
+              style={{
+                fontFamily: fonts.mono,
+                fontSize: 26,
+                fontWeight: 800,
+                letterSpacing: "-0.01em",
+              }}
+            >
+              <span style={{ color: colors.accent }}>[</span>
+              <span style={{ color: colors.ink }}>88</span>
+              <span style={{ color: colors.inkMuted }}>{", "}</span>
+              <span style={{ color: colors.ink }}>92</span>
+              <span style={{ color: colors.inkMuted }}>{", "}</span>
+              <span style={{ color: colors.ink }}>76</span>
+              <span style={{ color: colors.accent }}>]</span>
+            </span>
           </div>
         </FadeIn>
       </div>

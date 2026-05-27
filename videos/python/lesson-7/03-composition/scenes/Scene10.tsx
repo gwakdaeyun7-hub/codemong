@@ -4,6 +4,10 @@
  * 학습 목표 4 + 오개념 3 정면 처치.
  * R-008 (좌우 카드 동일 크기), R-017 (콘솔 N줄 fit), R-009 (uppercase 금지).
  *
+ * 추가 (2026-05-27, 사용자 요청): 우측 7강 카드 위에 "scores = [88, 92, 76]" 참고 칩
+ * (delaySec REVEAL.lineRgt1+0.6 ≈ 13.6s, 영상 ≈3:05 → 3:13 까지 유지). 우측 카드의
+ * `for s in scores:` 가 가리키는 리스트 내용을 명시 — 좌측 6강 카드와 미겹침 (top 155 band).
+ *
  * - 0~3s: 좌상단 작은 라벨 "비교 — 6강 `range` vs 7강 리스트".
  * - 3~10s: 좌우 분할 — 좌측 6강 `range`, 우측 7강 리스트. 각 카드 width 720,
  *         height 460 (코드 + 콘솔 stack). 두 카드 사이 회색 구분선.
@@ -30,7 +34,7 @@ import {
   PageBackground,
   PyToken,
 } from "../primitives";
-import { colors, fonts, radii } from "../theme";
+import { colors, fonts, radii, shadows } from "../theme";
 
 // R-016 — narration (23.82s) 키워드 발화 시점 동기 (Stage 3 wire 조정).
 //   "6강에서 본 포가 헷갈리지 않게 한 컷만 더" (~0~4s) — 도입
@@ -101,6 +105,50 @@ export const Scene10: React.FC = () => {
             }}
           >
             비교 — 6강 · 7강
+          </div>
+        </FadeIn>
+      </div>
+
+      {/* scores 리스트 내용 참고 — 우측 7강 카드의 `for s in scores:` 가 가리키는 리스트를
+          작게 명시 (= [88, 92, 76] 라서 출력이 88 92 76). 우측 카드 위 중앙 band (top 155,
+          left 1011 = 우측 카드 좌단) 에 고정, 좌측 6강 카드와 미겹침. delaySec = lineRgt1+0.6
+          ≈ narration "오른쪽은 7강의 ... 스코어즈" (scene-10 ≈ 13.6s, 영상 3:05) → 3:13 까지 유지. */}
+      <div
+        style={{
+          position: "absolute",
+          top: 155,
+          left: 1011,
+          width: 720,
+          display: "flex",
+          justifyContent: "center",
+          pointerEvents: "none",
+        }}
+      >
+        <FadeIn delaySec={REVEAL.lineRgt1 + 0.6} translateY={8}>
+          <div
+            style={{
+              display: "inline-block",
+              padding: "9px 20px",
+              borderRadius: radii.pill,
+              background: colors.bgWhite,
+              border: `1.5px solid ${colors.accent}`,
+              boxShadow: shadows.cardSoft,
+              fontFamily: fonts.mono,
+              fontSize: 25,
+              fontWeight: 800,
+              letterSpacing: "-0.01em",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span style={{ color: colors.inkSoft }}>scores</span>
+            <span style={{ color: colors.inkMuted }}>{" = "}</span>
+            <span style={{ color: colors.accent }}>[</span>
+            <span style={{ color: colors.ink }}>88</span>
+            <span style={{ color: colors.inkMuted }}>{", "}</span>
+            <span style={{ color: colors.ink }}>92</span>
+            <span style={{ color: colors.inkMuted }}>{", "}</span>
+            <span style={{ color: colors.ink }}>76</span>
+            <span style={{ color: colors.accent }}>]</span>
           </div>
         </FadeIn>
       </div>
