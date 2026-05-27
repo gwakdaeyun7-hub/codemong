@@ -14,7 +14,8 @@
 - **shadcn/ui** v4 — 사실상 미사용 (디자인 톤 충돌). `components/ui/` 에 button/card/dialog/input/label/dropdown-menu 가 있지만 페이지는 native `<button>`/`<div>` + Tailwind 직접 구성으로 만들어짐
 - **lucide-react v1.14.0** ← v0.x 아님. 컴포넌트 폴더별 `icon-map.ts` 화이트리스트로만 import (트리쉐이킹 보호)
 - **Supabase** (`@supabase/ssr` + `@supabase/supabase-js`) — middleware/proxy, server/client helpers (`lib/supabase/`), 인증 UI 전체 구현 (`lib/auth/`, `app/(auth)/`, `app/auth/callback/`). OAuth Google + Kakao 지원
-- **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`). 모델 8개: Post / Comment / PostLike / CommentLike / LessonLike / PostReport / CommentReport / LessonProgress
+- **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`). 모델 9개: Post / Comment / PostLike / CommentLike / LessonLike / PostReport / CommentReport / LessonProgress / ProjectProgress
+- **CodeMirror 6** (`@uiw/react-codemirror` + `@codemirror/lang-python`) — 프로젝트형 강의(13강~) 코드 에디터. **Pyodide**(브라우저 Python 실행/채점 엔진)는 CDN 동적 로드(v0.27.2 jsdelivr) — 메인 앱 의존성 아님
 - **pnpm** (workspace + onlyBuiltDependencies)
 - **Remotion 4.0.456** (`remotion/` workspace 멤버, 영상 제작용 — 메인 앱 의존성 아님, sibling project)
 
@@ -27,7 +28,7 @@
 | `/` | 홈 = 코드학습 페이지 | 백엔드 Python 1개 카드 (프론트엔드 카드 전부 제거됨) |
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
 | `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
-| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | **로그인 필수** (영상 게이팅 — 페이지 레벨 `redirect('/login?next=...')`, proxy 아님). `lesson-1` ~ `lesson-11` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문 / 반복문 / 리스트 / 딕셔너리 & 자료구조 / 함수 / 모듈 & 랜덤 / 파일 입출력) 매칭. **영상-only 모드** — 강의 헤더 + 영상 카드 + LessonLikeBar(좋아요+댓글 카운트) + CommentSection(댓글 임베드) + 이전/다음 네비. 우측 통계·진행률은 `LessonProgress` 실데이터(`getCourseLessonStatuses`) |
+| `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | **로그인 필수** (영상 게이팅 — 페이지 레벨 `redirect('/login?next=...')`, proxy 아님). `lesson-1` ~ `lesson-11` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문 / 반복문 / 리스트 / 딕셔너리 & 자료구조 / 함수 / 모듈 & 랜덤 / 파일 입출력) 매칭. `lesson-1`~`lesson-11` 은 **영상-only 모드** — 강의 헤더 + 영상 카드 + LessonLikeBar(좋아요+댓글 카운트) + CommentSection(댓글 임베드) + 이전/다음 네비. 우측 통계·진행률은 `LessonProgress` 실데이터(`getCourseLessonStatuses`). **`lesson-13` 은 프로젝트형** — 영상 대신 `ProjectRunner`(텍스트 문제 → 코드 작성 → Pyodide 실행 → 테스트 채점). 로그인 게이팅·헤더 동일(`LessonContentHeader subtabs=[]` 재사용). 현재 마지막 강이라 다음 네비 없음 |
 | `/login` | 로그인 | 이메일 + Google/Kakao OAuth |
 | `/signup` | 회원가입 | 이메일/비밀번호/닉네임 |
 | `/forgot-password` | 비밀번호 재설정 요청 | 메일 링크 전송 |
@@ -58,7 +59,7 @@
 |------|---------|
 | `lib/courses.ts` | `Course` 타입 + `courses` 1개(Python) + `backendCourses` |
 | `lib/course-detail.ts` | `CourseDetail` 타입 + `pythonCourseDetail` + `getCourseDetail(id)` |
-| `lib/lesson-plan.ts` | `Lesson` / `LessonStatus` 타입 + `pythonLessonPlan` (12강) + `getLessonPlan(id)` |
+| `lib/lesson-plan.ts` | `Lesson` (`kind?: "video" \| "project"` — 미지정/video=영상강의, project=직접 코드 구현) / `LessonStatus` 타입 + `pythonLessonPlan` (13강, lesson-13=project) + `getLessonPlan(id)`. `totalLessons` 13 |
 | `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` ~ `pythonLesson11Content` + `getLessonContent(courseId, lessonId)` |
 | `lib/quiz-content.ts` | `QuizPool` (`"evaluation" \| "practice"`) / `QuizQuestion` / `Misconception` / `QuizOption` / `DisallowedAnswer` 타입 + `pythonLesson1Quiz` / `pythonLesson2Quiz` + `pythonLesson1Misconceptions` / `pythonLesson2Misconceptions` + `getQuiz(courseId, lessonId)` / `getMisconceptions(courseId, lessonId)`. 강의당 30문항 (Pool A 10 + Pool B 20). 모든 문항이 `pool` (필수) + `isomorphGroup` (선택, 같은 학습목표·오개념을 다른 surface 로 묻는 isomorph 묶음 ID) 필드 보유. 보기마다 `misconceptionId` 라벨. 추천 알고리즘 진단 신호 = `misconceptionId` + `isomorphGroup` + `pool`. |
 | `lib/auth/actions.ts` | Server Actions 8개 (이메일 가입/로그인, OAuth Google·Kakao, 로그아웃, 비번 재설정/변경, 닉네임 변경) + Supabase 에러 한국어 매핑 |
@@ -73,7 +74,11 @@
 | `lib/community/likes-actions.ts` | `togglePostLikeAction` / `toggleCommentLikeAction` / `toggleLessonLikeAction`, `getLessonLikeStatus` |
 | `lib/community/likes-queries.ts` | `listMyLikedLessons` (lesson-plan join), `listMyLikedPosts` |
 | `lib/learning/progress-actions.ts` | Server Actions: `markVideoWatchedAction` (영상 90% 시청 멱등 기록), `toggleLessonCompleteAction` (완료 토글 = `learnCompletedAt` on/off) |
-| `lib/learning/progress-queries.ts` | `getLessonProgress` (강의 진도 상태), `getCourseCompletion` (코스 이수율 = `learnCompletedAt` 있는 강의 수 / 전체), `getCourseLessonStatuses` (코스 강의별 status 맵 `lessonId → LessonStatus` — 강의 목록/상세 진행률 실데이터. `learnCompletedAt`→completed, `videoWatchedAt`만→in-progress, 없음/비로그인→not-started) |
+| `lib/learning/progress-queries.ts` | `getLessonProgress` (강의 진도 상태), `getCourseCompletion` (코스 이수율 = 완료 강의 수 / 전체), `getCourseLessonStatuses` (코스 강의별 status 맵 `lessonId → LessonStatus` — 강의 목록/상세 진행률 실데이터). 둘 다 `LessonProgress`(영상 강의 `learnCompletedAt`) + `ProjectProgress`(프로젝트 강의 `completedAt`) 를 **함께 집계**. 영상: `learnCompletedAt`→completed, `videoWatchedAt`만→in-progress / 프로젝트: `completedAt`→completed, 진도 행만→in-progress / 없음·비로그인→not-started |
+| `lib/project-content.ts` | 프로젝트형 강의 콘텐츠. `Project` / `ProjectStep` / `TestCase` / `ExpectedOutput` 타입 + `pythonLesson13Project` (7스텝: 설계 Step0 + 구현 Step1~6) + `getProject(courseId, lessonId)` (python/be-python 둘 다 매칭). `Project.concepts` = 필요 개념 태그. 함수 없는 코드라 채점은 전부 stdin→stdout 시나리오 |
+| `lib/project/grader.ts` | **클라이언트 전용** 코드 실행+채점 엔진. Pyodide(CDN 동적 로드) 로 `exec`, `input()` 모킹 + `print` stdout 캡처. `matchesExpected` 는 `ExpectedOutput` 순차 소비(숫자 허용오차 1e-9 / 텍스트 부분일치). export: `preloadPyodide` / `runPythonProgram` / `matchesExpected` / `gradeStep` + 타입 `CaseResult` / `RunResult` |
+| `lib/learning/project-actions.ts` | Server Actions: `passStepAction` (스텝 통과 기록+코드 저장, 채점 스텝 전부 통과 시 `completedAt`=학습완료) / `saveStepCodeAction` (코드만 저장, 이어하기). 채점은 클라(Pyodide), 통과 결과만 기록 |
+| `lib/learning/project-queries.ts` | `getProjectProgress(lessonRef, userId)` → `{ stepStatuses, submittedCode, completed }` |
 | `lib/format.ts` | `timeAgoKo`, `fmtCount` 헬퍼 |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
@@ -88,13 +93,14 @@
 | `components/course-detail/` | 소개 탭 섹션 (header, sidebar — **Link 기반 Server Component**(탭별 라우팅, 미구현 탭은 "준비 중" 비활성), learning-outcomes, roadmap, checklist, reviews, cta, section-card) |
 | `components/lessons/` | 강의 목록 페이지 (course-progress-header, lesson-list, lesson-card, progress-stat-card, stats-card, tips-card, badges-card) |
 | `components/lesson-content/` | 강의 상세 영상 영역 (lesson-content-header, lesson-video-card — **Client Component**(영상 90% 시청 추적 + 학습 완료 버튼), lesson-navigation — 영상-only 모드) |
+| `components/project/` | 프로젝트형 강의 실행 UI (project-runner — **Client Component**(스텝 칩/진행바·에디터·실행/제출·콘솔·케이스별 채점결과·힌트 사다리, 통과해야 다음 스텝 해금), code-editor — CodeMirror 6 래퍼, ProjectRunner 에서 `dynamic(ssr:false)` 로 로드(브라우저 전용)) |
 | `components/auth/` | 인증 폼 (이메일 로그인/회원가입, OAuth 버튼 — Kakao+Google 인라인 SVG, 비번 재설정/재발급, AuthLayout 좌측 브랜드+우측 폼, or-divider, form-feedback) |
 | `components/mypage/` | 마이페이지 (사이드바, 프로필 카드, 학습 통계 카드(mock), 닉네임/비번 변경 폼, settings-section wrapper) |
 | `components/comments/` | 영상/게시글 공용 댓글 (CommentSection — lesson\|post 통합 Server, CommentForm create+edit 통합, CommentItem, LikeButton — comment/lesson/post 통합, ReportForm — comment/post 통합, LessonLikeBar) |
 | `components/community/` | 커뮤니티 (CategoryTabs, PostCard, PostForm create+edit 통합, PostActions — 수정/삭제/해결토글/신고) |
 | `components/ui/` | shadcn 원본 (현재는 거의 안 씀 — 향후 디자인 시스템화하면 cva variant로 흡수) |
 
-**각 도메인 폴더에 `icon-map.ts`** — lucide 아이콘 화이트리스트. 어떤 컴포넌트도 lucide에서 직접 동적 import 하지 않음. 단, 사용 아이콘이 적어 직접 import 만으로 충분한 폴더는 예외 — 현재 `components/lesson-content/` 가 그 케이스.
+**각 도메인 폴더에 `icon-map.ts`** — lucide 아이콘 화이트리스트. 어떤 컴포넌트도 lucide에서 직접 동적 import 하지 않음. 단, 사용 아이콘이 적어 직접 import 만으로 충분한 폴더는 예외 — 현재 `components/lesson-content/` 와 `components/project/` 가 그 케이스.
 
 ---
 
@@ -102,7 +108,7 @@
 
 `prisma/schema.prisma`. Supabase Postgres + Prisma 7. connection URL은 `prisma.config.ts`에서 관리 (Prisma 7에서 schema datasource의 `url`/`directUrl` 제거됨).
 
-### 모델 8개 + enum 1개
+### 모델 9개 + enum 1개
 
 | 모델 | 테이블 | 역할 |
 |------|-------|------|
@@ -114,6 +120,7 @@
 | `PostReport` | post_reports | postId+reporterId @@unique (사용자당 1회). reason(spam/abuse/off-topic/other) + detail |
 | `CommentReport` | comment_reports | commentId+reporterId @@unique |
 | `LessonProgress` | lesson_progress | 학습 진도(이수율/이해도 2층). lessonRef+userId 복합 PK. `learnCompletedAt`=학습완료(이수율), `quizPassedAt`/`quizBestScore`=이해완료(이해도, 2단계 미구현) |
+| `ProjectProgress` | project_progress | 프로젝트형 강의(13강~) 진도. lessonRef+userId 복합 PK. `stepStatuses`(스텝별 통과 여부) / `submittedCode`(스텝별 작성 코드, 이어하기) 둘 다 `Json @default("{}")`, `completedAt`=채점 스텝 전부 통과 시점(=학습완료, 이수율 집계) |
 | `enum PostCategory` | — | question / free |
 
 ### 설계 결정
@@ -124,6 +131,7 @@
 4. **lesson 참조**: lesson은 정적 `lib/lesson-plan.ts` mock이라 외래키 대신 `lessonRef` 문자열 (포맷: `<courseId>/<lessonId>`). 메타 매핑은 application code에서.
 5. **답글 1-depth**: parentId가 있는 댓글에는 추가 답글 불가. application code에서 강제 (`parent.parentId !== null`이면 reject).
 6. **진도 2층 구조**: 영상 90% 시청 + 완료 버튼 = "학습 완료"(이수율, `learnCompletedAt`), 퀴즈 통과 = "이해 완료"(이해도, `quizPassedAt`/`quizBestScore`). lesson은 Prisma 외부라 외래키 대신 `lessonRef` 문자열 (`LessonLike`와 동일 패턴).
+7. **프로젝트 진도**: `ProjectProgress` 도 `lessonRef`+`userId` 복합 PK (`LessonProgress`와 동일 패턴). 스텝별 통과·작성 코드는 정규화하지 않고 `stepStatuses`/`submittedCode` Json 컬럼에 맵으로 저장. 채점은 클라이언트(Pyodide) 결과(`passed`)만 기록 — 학습용이라 정답 노출/우회 위험이 낮아 서버 재검증은 미구현 (신뢰가 필요해지면 얹는다).
 
 ### Auth
 
@@ -171,6 +179,7 @@
 7. **TopNav 배치**: 좌측 [로고 + `코드학습` / `실력향상` / `커뮤니티` / `마이페이지`], 우측 [검색 / 알림 / 프로필]. (이미지 보고 결정한 최종 배치 — 변경하지 말 것.)
 8. **카피 톤**: 한국어, 입문자 친화, 정직. "쉬워요!" 같은 과장 금지. 이모지 거의 안 씀.
 9. **버튼형 mutation 알림 = `useToast`, `alert()` 금지**: 좋아요/삭제/완료 등 버튼형 액션의 성공·실패 알림은 `components/toast.tsx` 의 `useToast` 로 통일 (`alert()` 쓰지 말 것). 핸들러는 `startTransition` 내부 `try/catch` 로 server action 의 `!result.ok` 뿐 아니라 예상 못한 throw 도 잡아 "잠시 후 다시 시도해 주세요." toast 로 안내. 단 폼(댓글/게시글/신고)의 입력 검증은 inline(FormFeedback) 유지 — toast 로 옮기지 말 것.
+10. **프로젝트형 강의(13~15강)**: 영상 없이 텍스트 문제 → 직접 코드 작성·실행·채점하는 인터랙티브 미션 (영상 강의 1~12강과 별개 트랙). 실행 엔진은 **Pyodide**(브라우저 Python, CDN 로드 — 서버 채점 X). 13강 「계산기 만들기」는 **1~6강 문법만** 사용 (함수·리스트·딕셔너리·try·split 미사용, 함수 리팩토링 보너스 제외) — 강의가 다룬 범위 안에서만 풀리도록. 14·15강도 이 패턴 답습.
 
 ---
 
@@ -197,6 +206,7 @@ pip install edge-tts        # 처음 한 번 (Python 3.10+)
 - **dev mode 첫 클릭 ~2s 지연**: Next.js JIT 정상 동작. 사용자 노트북 탓 아님.
 - **`pnpm install` 시 `cd remotion && pnpm install` 하지 말 것**: pnpm이 root `pnpm-workspace.yaml`을 보고 root install을 돌려서 의도한 remotion install이 안 됨. root에서 `pnpm install`로 둘 다 install 되거나, 특정 프로젝트만이면 `pnpm --filter remotion install`.
 - **Vercel build 가 `Cannot find module 'remotion'` 으로 실패**: `videos/<courseId>/<lessonId>/03-composition/*.tsx` 가 `import ... from "remotion"` 하는데, 메인 앱 `tsconfig.json` 의 `include` 가 모든 .tsx 를 잡아 그 파일들도 type check 대상이 됨. `remotion` 은 `remotion/` 워크스페이스에만 있어 메인 앱은 모듈을 못 찾음. 해결: `tsconfig.json` 의 `exclude` 에 `"videos"`, `"remotion"` 명시 (적용됨). Remotion 워크스페이스 자체 `tsconfig` 가 `../videos/**/*.tsx` 를 include 해 그쪽에서 type check 됨.
+- **프로젝트형 강의(13강) 실행 환경**: Pyodide 는 CDN 동적 로드라 첫 진입 시 수 초 로딩(이후 싱글톤 재사용). CodeMirror(`code-editor.tsx`)는 브라우저 전용이라 ProjectRunner 에서 `dynamic(ssr:false)` 로 로드 — 직접 import 하면 SSR 단계에서 깨짐. 새 프로젝트 강의 배포 전 `pnpm db:push` 로 `project_progress` 테이블 생성 필요.
 
 **전역 에러 바운더리 / 404**: `app/error.tsx`(렌더 에러 — 다시 시도), `app/not-found.tsx`(404), `app/global-error.tsx`(루트 레이아웃 폴백 — 인라인 스타일) 가 전역 폴백. 새 라우트별 에러 처리를 만들 때 이들과 중복/충돌하지 않게.
 
@@ -288,10 +298,10 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 
 ## Out of scope (현재 미구현 — 카드/스텁만 존재)
 
-- 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭(개념응용/문제해결/학습완료/성장피드백/다음단계추천)은 "준비 중" 비활성(클릭 불가 + 흐림 + title 툴팁)으로 명시 처리, 라우트·화면 없음. 실력향상(`/skill`) 도 "준비 중" 안내 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현.
+- 퀴즈 / 채점 / 오답 분석 화면 — `concept` 외 사이드바 탭(개념응용/문제해결/학습완료/성장피드백/다음단계추천)은 "준비 중" 비활성(클릭 불가 + 흐림 + title 툴팁)으로 명시 처리, 라우트·화면 없음. 실력향상(`/skill`) 도 "준비 중" 안내 stub. 1·2강 평가 문제 데이터 60문항 (Pool A 20 + Pool B 40, 모두 `misconceptionId` / `isomorphGroup` / `pool` 라벨링) 은 `lib/quiz-content.ts` 에 정형화돼 있으나, **추천 매칭 로직 자체는 미구현** (backend-developer 영역 — 후보로 룰 베이스 / LLM 기반 / ML 모델 거론). 화면·채점 로직도 미구현. (별개로 프로젝트형 강의(13강)의 코드 실행·채점은 `lib/project/grader.ts` 로 구현됨 — 퀴즈 채점과 무관.)
 - Python 12강 영상 — 1~11강은 완성·임베드 완료 (Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 12강("디버깅 & AI 활용")은 학습목표~대본~컴포지션 + audio wire 까지 제작 완료 (`videos/python/lesson-12/`: `00-objectives.md` + `01-script.md`(9 scenes) + `02-audio/` + `03-composition/Scene01~09 + Lesson12.tsx`). 단 **풀렌더(`04-out.mp4`)는 이 환경에서 미실행 — 사용자 환경/Vercel 에서 렌더 예정** + **lesson detail 페이지 임베드 미완료** (1~11강과 달리 아직 앱에 노출 안 됨).
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능. 단, 영상 아래에 LessonLikeBar(좋아요 + 댓글 카운트) + CommentSection(댓글) 은 추가됨.
-- 학습 진도 — **이수율(1층: 영상 90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`)은 구현 완료**. 홈 카드뿐 아니라 **강의 목록·강의 상세 우측 진행률/통계까지 `LessonProgress` 실데이터(`getCourseLessonStatuses`)로 연결** (비로그인이면 전부 not-started). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현 (`lib/lesson-plan.ts` 의 badges 는 전부 `acquired: false`, 뱃지 카드도 "준비 중"). `/mypage/calendar`·`/mypage/page.tsx`의 학습 통계 카드는 여전히 mock (`LessonProgress` 집계로 추후 연결 가능).
+- 학습 진도 — **이수율(1층)은 구현 완료**: 영상 강의(90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`) + 프로젝트 강의(채점 스텝 전부 통과 → `ProjectProgress.completedAt`) 가 **함께 집계**됨. 홈 카드뿐 아니라 **강의 목록·강의 상세 우측 진행률/통계까지 실데이터(`getCourseLessonStatuses`)로 연결** (비로그인이면 전부 not-started). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현 (`lib/lesson-plan.ts` 의 badges 는 전부 `acquired: false`, 뱃지 카드도 "준비 중"). `/mypage/calendar`·`/mypage/page.tsx`의 학습 통계 카드는 여전히 mock (`LessonProgress`/`ProjectProgress` 집계로 추후 연결 가능).
 - 계정 삭제 자동화 — service_role admin API 필요. 현재 settings 페이지는 운영팀 메일 문의 안내만.
 - Realtime / 알림 센터 / 검색 — TopNav 알림·검색 아이콘은 "준비 중" 비활성(`disabled` + title 툴팁, 가짜 "읽지 않은 알림" 점 제거). 실제 기능 미구현.
