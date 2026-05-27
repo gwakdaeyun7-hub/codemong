@@ -73,7 +73,9 @@ export type RunResult = {
 
 function buildWrapper(userCode: string, stdin: string[]): string {
   const stdinLiteral = JSON.stringify(JSON.stringify(stdin));
-  const codeLiteral = JSON.stringify(userCode);
+  // json.loads 로 디코드하므로 stdin 과 동일하게 "이중" 인코딩한다.
+  // (단일 인코딩이면 학습자 코드가 그대로 JSON 으로 파싱돼 JSONDecodeError 가 난다.)
+  const codeLiteral = JSON.stringify(JSON.stringify(userCode));
   // 학습자 코드는 exec 로 실행 → 래퍼와의 들여쓰기 충돌이 없다.
   return [
     "import sys, io, json, builtins",
