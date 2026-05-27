@@ -3,6 +3,12 @@
  *
  * Stage 3 — REAL timing wired from `02-audio/timestamps.json`.
  *
+ * SCENE ORDER NOTE (re-edit): 지역변수(scene-10)를 return 블록(scene-07~09) 앞으로
+ * 옮긴 재편집을 반영한다. 재생 순서는 [01,02,03,04,05,06,10,07,08,09,11].
+ * sceneId 는 논리 식별자로 유지 (scene-10 = 지역변수, scene-07 = return) — 배열의
+ * "순서"만 교육 순서(매개변수 → 지역변수 → return)에 맞게 재배치했다.
+ * voiceover.mp3 / timestamps.json 도 동일 순서로 재합성됨.
+ *
  * Per the project_timing_contract memory: voiceover.mp3 + timestamps.json are
  * co-produced by the audio agent, so we use a static SCENES literal with
  * frame-precise boundaries computed via the adjacent-boundary rule:
@@ -13,31 +19,29 @@
  * That yields Σ dur_i == TOTAL_DURATION_FRAMES with 0 frame drift even after
  * rounding (the last boundary acts as the rounding sink).
  *
- * Source data — timestamps.json (11 scenes, last endMs 203616):
+ * Source data — timestamps.json (11 scenes, last endMs 204936):
  *
- *   i  | sceneId  | startMs | endMs   | from = round(startMs*30/1000)
- *   01 | scene-01 |       0 |  14118 |    0
- *   02 | scene-02 |  14118 |  26179 |  424
- *   03 | scene-03 |  26179 |  47141 |  785
- *   04 | scene-04 |  47141 |  60278 | 1414
- *   05 | scene-05 |  60278 |  80283 | 1808
- *   06 | scene-06 |  80283 |  97321 | 2408
- *   07 | scene-07 |  97321 | 112301 | 2920
- *   08 | scene-08 | 112301 | 144247 | 3369
- *   09 | scene-09 | 144247 | 162409 | 4327
- *   10 | scene-10 | 162409 | 176863 | 4872
- *   11 | scene-11 | 176863 | 203616 | 5306
- *   TOTAL                              6108  (= round(203616*30/1000))
+ *   pos | sceneId  | startMs | endMs   | from = round(startMs*30/1000)
+ *   01  | scene-01 |       0 |  14119 |    0
+ *   02  | scene-02 |  14119 |  26179 |  424
+ *   03  | scene-03 |  26179 |  47142 |  785
+ *   04  | scene-04 |  47142 |  60280 | 1414
+ *   05  | scene-05 |  60280 |  80285 | 1808
+ *   06  | scene-06 |  80285 |  97323 | 2409
+ *   07  | scene-10 |  97323 | 113093 | 2920   ← 지역변수 (재배치)
+ *   08  | scene-07 | 113093 | 128073 | 3393   ← return
+ *   09  | scene-08 | 128073 | 160020 | 3842   ← return vs print
+ *   10  | scene-09 | 160020 | 178182 | 4801   ← active recall
+ *   11  | scene-11 | 178182 | 204936 | 5345   ← 정리
+ *   TOTAL                              6148  (= round(204936*30/1000))
  *
  * Durations (adjacent-boundary):
- *   424, 361, 629, 394, 600, 512, 449, 958, 545, 434, 802
- *   Σ = 6108 == TOTAL_DURATION_FRAMES ✓
+ *   424, 361, 629, 394, 601, 511, 473, 449, 959, 544, 803
+ *   Σ = 6148 == TOTAL_DURATION_FRAMES ✓
  *
- * Note: voiceover came in at 203.616s (vs Stage 2 placeholder 180s, +13%).
- * Each scene's frame budget grew/shrank vs the placeholder, but scene-internal
- * beat timing (REVEAL.line1 etc.) was authored against the placeholder. The
- * resulting dead-air at scene tails is deliberately left for video-director
- * review per the agent runbook — do not rescale beats here.
+ * Note: voiceover came in at 204.936s. Each scene's frame budget is wired from
+ * the real audio boundaries; scene-internal beat timing (REVEAL.* etc.) is left
+ * as authored — any tail dead-air is deliberate per the agent runbook.
  */
 
 export const FPS = 30;
@@ -63,26 +67,27 @@ export type SceneTiming = {
   durationInFrames: number;
 };
 
-// Derived from timestamps.json last endMs (203616).
-export const TOTAL_DURATION_MS = 203_616;
-export const TOTAL_DURATION_FRAMES = Math.round((TOTAL_DURATION_MS * FPS) / 1000); // 6108
+// Derived from timestamps.json last endMs (204936).
+export const TOTAL_DURATION_MS = 204_936;
+export const TOTAL_DURATION_FRAMES = Math.round((TOTAL_DURATION_MS * FPS) / 1000); // 6148
 
 /**
- * Wired from `02-audio/timestamps.json` (Stage 3).
- * Verified: Σ durationInFrames === TOTAL_DURATION_FRAMES (6108), drift = 0.
+ * Wired from `02-audio/timestamps.json` (Stage 3, re-edit).
+ * Array order = playback order = [01,02,03,04,05,06,10,07,08,09,11].
+ * Verified: Σ durationInFrames === TOTAL_DURATION_FRAMES (6148), drift = 0.
  */
 export const SCENES: SceneTiming[] = [
   { id: "scene-01", from: 0, durationInFrames: 424 },
   { id: "scene-02", from: 424, durationInFrames: 361 },
   { id: "scene-03", from: 785, durationInFrames: 629 },
   { id: "scene-04", from: 1414, durationInFrames: 394 },
-  { id: "scene-05", from: 1808, durationInFrames: 600 },
-  { id: "scene-06", from: 2408, durationInFrames: 512 },
-  { id: "scene-07", from: 2920, durationInFrames: 449 },
-  { id: "scene-08", from: 3369, durationInFrames: 958 },
-  { id: "scene-09", from: 4327, durationInFrames: 545 },
-  { id: "scene-10", from: 4872, durationInFrames: 434 },
-  { id: "scene-11", from: 5306, durationInFrames: 802 },
+  { id: "scene-05", from: 1808, durationInFrames: 601 },
+  { id: "scene-06", from: 2409, durationInFrames: 511 },
+  { id: "scene-10", from: 2920, durationInFrames: 473 },
+  { id: "scene-07", from: 3393, durationInFrames: 449 },
+  { id: "scene-08", from: 3842, durationInFrames: 959 },
+  { id: "scene-09", from: 4801, durationInFrames: 544 },
+  { id: "scene-11", from: 5345, durationInFrames: 803 },
 ];
 
 export const sceneOf = (id: SceneId): SceneTiming => {

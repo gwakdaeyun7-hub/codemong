@@ -27,7 +27,7 @@ import {
   PyToken,
   StateBoxSwap,
 } from "../primitives";
-import { colors, fonts, radii } from "../theme";
+import { colors, fonts, radii, shadows } from "../theme";
 
 const REVEAL = {
   codePanel: 0.3,
@@ -38,6 +38,9 @@ const REVEAL = {
   stateBox: 2.8, // 잠자는 박스 등장
   line3: 5.5, // greet("철수")
   stateSwap: 6.5, // 잠자는 → 실행 중 (R-002 swap timing buffer)
+  flowInput: 7.2, // 실행 과정: "철수" 입력 박스 등장
+  flowFunc: 8.3, // → greet 함수 박스
+  flowResult: 9.6, // → "안녕, 철수" 결과 박스 (콘솔 결과보다 살짝 먼저 = 과정 → 출력 확정)
   consoleResult: 10.5,
   lowerThird: 11.0,
 } as const;
@@ -101,6 +104,13 @@ export const Scene04: React.FC = () => {
             width={320}
             height={140}
           />
+
+          {/* 실행 과정 흐름 — "철수"(넣은 값) → greet(함수) → "안녕, 철수"(나온 결과) */}
+          <ExecutionFlow
+            inputAt={REVEAL.flowInput}
+            funcAt={REVEAL.flowFunc}
+            resultAt={REVEAL.flowResult}
+          />
         </div>
 
         {/* 우측 — 콘솔 + 라벨 */}
@@ -151,6 +161,105 @@ export const Scene04: React.FC = () => {
         delaySec={REVEAL.lowerThird}
       />
     </PageBackground>
+  );
+};
+
+/**
+ * 실행 과정 흐름 — StateBoxSwap("실행 중") 아래.
+ * "철수"(넣은 값) → greet(함수) → "안녕, 철수"(나온 결과) 를 가로 흐름으로 시각화.
+ * 부른 값이 함수에 _들어가서_ 결과가 _나오는_ 과정을 직접 보여줌.
+ */
+const ExecutionFlow: React.FC<{
+  inputAt: number;
+  funcAt: number;
+  resultAt: number;
+}> = ({ inputAt, funcAt, resultAt }) => {
+  return (
+    <div style={{ display: "flex", alignItems: "flex-end", gap: 12 }}>
+      <FadeIn delaySec={inputAt} translateY={8}>
+        <FlowBox label="넣은 값" value={'"철수"'} tone="input" />
+      </FadeIn>
+      <FlowArrow delaySec={funcAt - 0.3} />
+      <FadeIn delaySec={funcAt} translateY={8}>
+        <FlowBox label="함수" value="greet" tone="func" />
+      </FadeIn>
+      <FlowArrow delaySec={resultAt - 0.3} />
+      <FadeIn delaySec={resultAt} translateY={8}>
+        <FlowBox label="나온 결과" value="안녕, 철수" tone="output" />
+      </FadeIn>
+    </div>
+  );
+};
+
+const FlowBox: React.FC<{
+  label: string;
+  value: string;
+  tone: "input" | "func" | "output";
+}> = ({ label, value, tone }) => {
+  const palette =
+    tone === "input"
+      ? { bg: colors.accentSoft, border: colors.accent, valueColor: colors.accentInk, mono: true }
+      : tone === "func"
+        ? { bg: colors.darkBg, border: colors.darkBg2, valueColor: colors.darkAccent, mono: true }
+        : { bg: colors.bgWhite, border: colors.accentDeep, valueColor: colors.accentDeep, mono: false };
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+      <span
+        style={{
+          fontFamily: fonts.sans,
+          fontSize: 15,
+          fontWeight: 700,
+          color: colors.inkMuted,
+          letterSpacing: "-0.01em",
+        }}
+      >
+        {label}
+      </span>
+      <div
+        style={{
+          padding: "12px 22px",
+          borderRadius: 12,
+          background: palette.bg,
+          border: `2.5px solid ${palette.border}`,
+          boxShadow: shadows.cardSoft,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: palette.mono ? fonts.mono : fonts.sans,
+            fontSize: 26,
+            fontWeight: 800,
+            color: palette.valueColor,
+            letterSpacing: "-0.01em",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {value}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/** 흐름 화살표 — 박스 하단 근처에 정렬되도록 paddingBottom 보정. */
+const FlowArrow: React.FC<{ delaySec: number }> = ({ delaySec }) => {
+  return (
+    <FadeIn delaySec={delaySec} durationSec={0.4} translateY={0} style={{ paddingBottom: 10 }}>
+      <span
+        style={{
+          fontFamily: fonts.sans,
+          fontSize: 34,
+          fontWeight: 800,
+          color: colors.accent,
+          lineHeight: 1,
+        }}
+      >
+        →
+      </span>
+    </FadeIn>
   );
 };
 

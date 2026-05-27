@@ -1,7 +1,7 @@
 /**
  * Scene 10 — 지역변수: 함수 안 이름은 함수 안에서만 (14s)
  *
- * - 0~4s: 상단 pill 라벨 "네 번째 — 함수 안의 이름" + 부제 "_함수 안에서만 살아있다_".
+ * - 0~4s: 상단 pill 라벨 "세 번째 — 함수 안의 이름" + 부제 "_함수 안에서만 살아있다_".
  *         (R-025: Scene 03/05/07 과 동일 정형.)
  * - 4~8s: 화면을 _두 칸 메모리_ 로 분할 — 좌측 큰 박스 "함수 바깥", 우측 큰 박스 "함수 안".
  *         좌측 코드 패널 작게: def f(): / x = 10 / f() / print(x)
@@ -37,8 +37,8 @@ const REVEAL = {
   line3: 4.0, // (empty)  f()
   line4: 5.5, // print(x)
   scopePair: 1.8,
-  innerVarEnter: 3.5, // x = 10 라벨이 우측 박스에 등장 (line2 강조 시점에 맞춰)
-  innerVarFadeOut: 6.5, // f() 끝나면 사라짐 (line3 직후)
+  innerVarEnter: 3.5, // x = 10 라벨이 우측 박스에 등장 → 이후 계속 유지 (사라지지 않음)
+  scopeRange: 6.0, // 코드 패널에 함수 범위 박스 (def f(): + x = 10) — print(x) 가 밖임을 강조
   outerNotFound: 8.5, // print(x) 등장 후 좌측 박스에 빨간 X
   lowerThird: 11.0,
 } as const;
@@ -73,7 +73,7 @@ export const Scene10: React.FC = () => {
               letterSpacing: "-0.01em",
             }}
           >
-            네 번째 — 함수 안의 이름
+            세 번째 — 함수 안의 이름
           </div>
         </FadeIn>
         <FadeIn delaySec={REVEAL.headerLabel + 0.4} translateY={6}>
@@ -111,32 +111,36 @@ export const Scene10: React.FC = () => {
           }}
         >
           <FadeIn delaySec={REVEAL.codePanel} translateY={20}>
-            <CodePanel fileName="scope.py" width={520} height={320}>
-              <CodeLine lineNumber={1} revealAtSec={REVEAL.line1}>
-                <PyToken text="def" kind="keyword" />
-                <PyToken text=" " />
-                <PyToken text="f" kind="name" />
-                <PyToken text="(" kind="op" />
-                <PyToken text=")" kind="op" />
-                <PyToken text=":" kind="op" />
-              </CodeLine>
-              <CodeLine lineNumber={2} revealAtSec={REVEAL.line2}>
-                <PyToken text="    " />
-                <PyToken text="x" kind="dictKey" highlight />
-                <PyToken text=" = " kind="op" />
-                <PyToken text="10" kind="number" />
-              </CodeLine>
-              <CodeLine lineNumber={3} revealAtSec={REVEAL.line3}>
-                <PyToken text="f" kind="name" />
-                <PyToken text="()" kind="op" />
-              </CodeLine>
-              <CodeLine lineNumber={4} revealAtSec={REVEAL.line4} highlighted>
-                <PyToken text="print" kind="func" />
-                <PyToken text="(" kind="op" />
-                <PyToken text="x" kind="dictKey" highlight />
-                <PyToken text=")" kind="op" />
-              </CodeLine>
-            </CodePanel>
+            <div style={{ position: "relative" }}>
+              <CodePanel fileName="scope.py" width={520} height={320}>
+                <CodeLine lineNumber={1} revealAtSec={REVEAL.line1}>
+                  <PyToken text="def" kind="keyword" />
+                  <PyToken text=" " />
+                  <PyToken text="f" kind="name" />
+                  <PyToken text="(" kind="op" />
+                  <PyToken text=")" kind="op" />
+                  <PyToken text=":" kind="op" />
+                </CodeLine>
+                <CodeLine lineNumber={2} revealAtSec={REVEAL.line2}>
+                  <PyToken text="    " />
+                  <PyToken text="x" kind="dictKey" highlight />
+                  <PyToken text=" = " kind="op" />
+                  <PyToken text="10" kind="number" />
+                </CodeLine>
+                <CodeLine lineNumber={3} revealAtSec={REVEAL.line3}>
+                  <PyToken text="f" kind="name" />
+                  <PyToken text="()" kind="op" />
+                </CodeLine>
+                <CodeLine lineNumber={4} revealAtSec={REVEAL.line4} highlighted>
+                  <PyToken text="print" kind="func" />
+                  <PyToken text="(" kind="op" />
+                  <PyToken text="x" kind="dictKey" highlight />
+                  <PyToken text=")" kind="op" />
+                </CodeLine>
+              </CodePanel>
+              {/* 함수 f 의 범위 (def f(): + x = 10) 를 둘러싸는 표시 — f() / print(x) 는 밖 */}
+              <ScopeRangeOverlay enterAt={REVEAL.scopeRange} panelWidth={520} />
+            </div>
           </FadeIn>
         </div>
 
@@ -153,7 +157,6 @@ export const Scene10: React.FC = () => {
             delaySec={REVEAL.scopePair}
             innerVarLabel="x = 10"
             innerVarEnterAtSec={REVEAL.innerVarEnter}
-            innerVarFadeOutAtSec={REVEAL.innerVarFadeOut}
             outerNotFoundAtSec={REVEAL.outerNotFound}
             width={300}
             height={280}
@@ -173,5 +176,69 @@ export const Scene10: React.FC = () => {
         delaySec={REVEAL.lowerThird}
       />
     </PageBackground>
+  );
+};
+
+/**
+ * 함수 범위 표시 오버레이 — 코드 패널 위에 겹쳐, def f(): + x = 10 (함수 본문)을
+ * 둘러싸는 둥근 박스 + "함수 f 의 범위" 라벨. f() / print(x) 는 박스 밖 = 함수 바깥.
+ *
+ * 좌표는 CodePanel 기준 (header 40 + content padding 20, 줄 높이 ~48):
+ *   line1 (def f():)   center ≈ 84
+ *   line2 (    x = 10) center ≈ 132
+ *   → 범위 박스 top 54, height 104 (line1~line2 를 감쌈).
+ */
+const ScopeRangeOverlay: React.FC<{ enterAt: number; panelWidth: number }> = ({
+  enterAt,
+  panelWidth,
+}) => {
+  return (
+    <FadeIn
+      delaySec={enterAt}
+      durationSec={0.5}
+      translateY={0}
+      style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: panelWidth,
+        height: "100%",
+        pointerEvents: "none",
+      }}
+    >
+      {/* 범위 박스 — 함수 본문 (def f(): + x = 10) 을 감쌈 */}
+      <div
+        style={{
+          position: "absolute",
+          left: 12,
+          top: 54,
+          width: panelWidth - 24,
+          height: 104,
+          borderRadius: 12,
+          background: "rgba(196, 181, 253, 0.10)",
+          border: `2px dashed ${colors.accentLight}`,
+          boxShadow: "0 0 0 1px rgba(139, 92, 246, 0.08)",
+        }}
+      />
+      {/* "함수 f 의 범위" 라벨 — 박스 우측 상단 걸침 */}
+      <div
+        style={{
+          position: "absolute",
+          right: 16,
+          top: 42,
+          padding: "3px 12px",
+          borderRadius: radii.pill,
+          background: colors.accent,
+          color: "#ffffff",
+          fontFamily: fonts.sans,
+          fontSize: 15,
+          fontWeight: 700,
+          letterSpacing: "-0.01em",
+          whiteSpace: "nowrap",
+        }}
+      >
+        함수 f 의 범위
+      </div>
+    </FadeIn>
   );
 };

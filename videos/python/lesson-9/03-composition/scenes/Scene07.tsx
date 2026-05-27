@@ -1,7 +1,7 @@
 /**
  * Scene 7 — `return`: 값을 돌려준다 (16s)
  *
- * - 0~4s: 상단 pill 라벨 "세 번째 — return" + 부제 "_값을 부른 자리로 돌려주기_".
+ * - 0~4s: 상단 pill 라벨 "네 번째 — return" + 부제 "_값을 부른 자리로 돌려주기_".
  *         (R-025: Scene 03/05/10 과 동일 정형.)
  * - 4~9s: 좌측 코드 패널 — 세 줄 (def add(a, b): / return a + b 유지) 그 아래 새 줄 type-on.
  *         result = add(3, 5)
@@ -78,7 +78,7 @@ export const Scene07: React.FC = () => {
               letterSpacing: "-0.01em",
             }}
           >
-            세 번째 —{" "}
+            네 번째 —{" "}
             <span style={{ fontFamily: fonts.mono, fontWeight: 800 }}>return</span>
           </div>
         </FadeIn>

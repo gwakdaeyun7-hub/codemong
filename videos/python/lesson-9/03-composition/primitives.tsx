@@ -1473,7 +1473,6 @@ export const ScopeMemoryPair: React.FC<{
   delaySec?: number;
   innerVarLabel: React.ReactNode;
   innerVarEnterAtSec: number;
-  innerVarFadeOutAtSec: number;
   outerNotFoundAtSec: number;
   width?: number;
   height?: number;
@@ -1482,7 +1481,6 @@ export const ScopeMemoryPair: React.FC<{
   delaySec = 0,
   innerVarLabel,
   innerVarEnterAtSec,
-  innerVarFadeOutAtSec,
   outerNotFoundAtSec,
   width = 420,
   height = 280,
@@ -1498,33 +1496,15 @@ export const ScopeMemoryPair: React.FC<{
     extrapolateRight: "clamp",
   });
 
-  // 함수 안 변수 라벨 — 등장 + 함수 끝나면 회색→사라짐
+  // 함수 안 변수 라벨 — 등장 후 _계속 유지_ (재편집).
+  // x = 10 이 함수 범위 안에 있다는 것을 정적으로 보여주기 위해 fade-out / 회색 전환 /
+  // "실행 중" 주황 펄스 ring 을 모두 제거했다 (사용자 요청).
   const innerStart = innerVarEnterAtSec * fps;
   const innerEnter = interpolate(frame, [innerStart, innerStart + 0.4 * fps], [0, 1], {
     easing: easeOutCubic,
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const fadeStart = innerVarFadeOutAtSec * fps;
-  const fadeEnd = (innerVarFadeOutAtSec + 0.8) * fps;
-  const innerFade = interpolate(frame, [fadeStart, fadeEnd], [1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const innerGrayProgress = interpolate(
-    frame,
-    [fadeStart - 0.4 * fps, fadeStart],
-    [0, 1],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
-
-  // 우측 박스의 "실행 중" 라이트 펄스 (innerVarEnterAtSec ~ fadeStart)
-  const runningRingOpacity = interpolate(
-    frame,
-    [innerStart, innerStart + 0.3 * fps, fadeStart - 0.2 * fps, fadeStart],
-    [0, 1, 1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
 
   // 좌측 박스 안 빨간 X (이름 없음)
   const xStart = outerNotFoundAtSec * fps;
@@ -1543,9 +1523,6 @@ export const ScopeMemoryPair: React.FC<{
       extrapolateRight: "clamp",
     },
   );
-
-  const innerLabelColor =
-    innerGrayProgress > 0.5 ? colors.inkSubtle : colors.accentInk;
 
   return (
     <div
@@ -1661,32 +1638,19 @@ export const ScopeMemoryPair: React.FC<{
         >
           함수 안
         </div>
-        {/* "실행 중" 펄스 ring */}
+        {/* 함수 안 변수 라벨 — 등장 후 계속 유지 (사라지지 않음) */}
         <div
           style={{
-            position: "absolute",
-            inset: -6,
-            borderRadius: radii.card,
-            border: `3px solid ${colors.runningBorder}`,
-            opacity: runningRingOpacity * 0.7,
-            pointerEvents: "none",
-          }}
-        />
-        {/* 함수 안 변수 라벨 */}
-        <div
-          style={{
-            opacity: innerEnter * innerFade,
+            opacity: innerEnter,
             transform: `translateY(${(1 - innerEnter) * 6}px)`,
             padding: "10px 22px",
             background: colors.bgWhite,
-            border: `2px solid ${
-              innerGrayProgress > 0.5 ? colors.inkSubtle : colors.accent
-            }`,
+            border: `2px solid ${colors.accent}`,
             borderRadius: 14,
             fontFamily: fonts.mono,
             fontSize: 34,
             fontWeight: 800,
-            color: innerLabelColor,
+            color: colors.accentInk,
             letterSpacing: "-0.01em",
             boxShadow: shadows.cardSoft,
           }}

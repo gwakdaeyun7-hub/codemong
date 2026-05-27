@@ -203,18 +203,22 @@ export const Scene08: React.FC = () => {
               <span style={{ fontSize: 36, fontWeight: 800, color: colors.darkAccent }}>10</span>
             </ConsoleLine>
             <ConsoleLine revealAtSec={REVEAL.leftConsoleNone}>
-              <NonePulseSpan pulseAt={REVEAL.leftNonePulse}>
-                <span
-                  style={{
-                    fontSize: 26,
-                    fontWeight: 700,
-                    color: colors.darkMuted,
-                    fontStyle: "italic",
-                  }}
-                >
-                  None
-                </span>
-              </NonePulseSpan>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 16 }}>
+                <NonePulseSpan pulseAt={REVEAL.leftNonePulse}>
+                  <span
+                    style={{
+                      fontSize: 26,
+                      fontWeight: 700,
+                      color: colors.darkMuted,
+                      fontStyle: "italic",
+                    }}
+                  >
+                    None
+                  </span>
+                </NonePulseSpan>
+                {/* None 이 왜 뜨는지 — return 이 없어 돌려줄 값이 없음 */}
+                <NoneReasonLabel enterAt={REVEAL.leftConsoleNone + 0.4} />
+              </span>
             </ConsoleLine>
           </ConsolePanel>
         </FadeIn>
@@ -497,6 +501,30 @@ const ReturnPulseToken: React.FC<{ pulseAt: number; children: React.ReactNode }>
         }}
       />
     </span>
+  );
+};
+
+/** None 원인 설명 라벨 — "return 이 없어 돌려줄 값이 없음" (콘솔 None 옆 inline). */
+const NoneReasonLabel: React.FC<{ enterAt: number }> = ({ enterAt }) => {
+  return (
+    <FadeIn delaySec={enterAt} durationSec={0.5} translateY={0}>
+      <span
+        style={{
+          fontFamily: fonts.sans,
+          fontSize: 17,
+          fontWeight: 600,
+          color: colors.darkMuted,
+          letterSpacing: "-0.01em",
+          whiteSpace: "nowrap",
+        }}
+      >
+        ←{" "}
+        <span style={{ fontFamily: fonts.mono, fontWeight: 700, color: colors.darkAccent }}>
+          return
+        </span>{" "}
+        이 없어 돌려줄 값이 없음
+      </span>
+    </FadeIn>
   );
 };
 
