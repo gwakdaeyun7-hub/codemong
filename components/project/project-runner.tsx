@@ -118,8 +118,9 @@ export function ProjectRunner({
       setConsoleOut((out || "(출력 없음)") + (r.error ? `\n⚠ ${r.error}` : ""));
     } catch (err) {
       console.error("[CodeMong] Pyodide 실행 실패:", err);
+      const detail = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
       setConsoleOut(
-        "파이썬 실행 환경을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.\n(브라우저 개발자 도구 콘솔에서 자세한 오류를 확인할 수 있어요.)",
+        `파이썬 실행 환경을 불러오지 못했어요.\n오류: ${detail}\n\n(사내·학교 네트워크나 광고 차단 확장프로그램이 cdn.jsdelivr.net 을 막으면 이 오류가 납니다.)`,
       );
     } finally {
       setRunning(false);
@@ -150,6 +151,8 @@ export function ProjectRunner({
     } catch (err) {
       console.error("[CodeMong] Pyodide 채점 실패:", err);
       setCases(null);
+      const detail = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+      setConsoleOut(`파이썬 실행 환경을 불러오지 못했어요.\n오류: ${detail}`);
       toastError("파이썬 실행 환경을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.");
     } finally {
       setRunning(false);
