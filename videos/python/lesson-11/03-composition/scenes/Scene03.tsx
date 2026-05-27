@@ -8,7 +8,7 @@
  *         줄 전체가 한 번 짧게 violet-300 펄스.
  * - 4~16s: 한 줄이 네 부분으로 sequential 박스 분해 (delaySec 차이 1.2초씩):
  *   - `open`        (delaySec 2.4) — accent (도구)
- *   - `"memo.txt"`  (delaySec 3.6) — yellow (어느 파일)
+ *   - `"memo.txt"`  (delaySec 3.6) — yellow (파일 이름)
  *   - `"w"`         (delaySec 4.8) — pink (어떤 방식)
  *   - `as f`        (delaySec 6.0) — blue (이름표)
  * - 16~22s: LowerThird fade-in (delaySec 7.6).
@@ -100,7 +100,7 @@ export const Scene03: React.FC = () => {
             },
             {
               token: '"memo.txt"',
-              meaningLabel: "어느 파일",
+              meaningLabel: "파일 이름",
               color: "yellow",
               enterAtSec: REVEAL.partFile,
             },

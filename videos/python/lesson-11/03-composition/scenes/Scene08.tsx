@@ -204,7 +204,7 @@ export const Scene08: React.FC = () => {
             </span>{" "}
             —{" "}
             <span style={{ color: colors.dangerRedBorder, fontWeight: 700 }}>
-              기존 내용은 지워진다
+              기존 내용을 지우고 새로 쓴다
             </span>
           </span>
         }
