@@ -14,11 +14,12 @@ export type CodeEditorProps = {
 
 export default function CodeEditor({ value, onChange, readOnly = false }: CodeEditorProps) {
   return (
-    <div className="overflow-hidden rounded-xl ring-1 ring-zinc-200">
+    <div className="overflow-hidden rounded-xl ring-1 ring-zinc-700">
       <CodeMirror
         value={value}
         onChange={onChange}
         editable={!readOnly}
+        theme="dark"
         extensions={[python()]}
         minHeight="200px"
         maxHeight="440px"

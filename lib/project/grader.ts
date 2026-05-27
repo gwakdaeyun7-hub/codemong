@@ -19,7 +19,11 @@ const INDEX_URL = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
 
 type PyodideInterface = {
   runPythonAsync: (code: string) => Promise<unknown>;
-  globals: { get: (key: string) => unknown };
+  globals: {
+    get: (key: string) => unknown;
+    set: (key: string, value: unknown) => void;
+    delete?: (key: string) => void;
+  };
 };
 
 type PyodideWindow = Window & {
@@ -119,6 +123,57 @@ export async function runPythonProgram(userCode: string, stdin: string[]): Promi
   const errRaw = py.globals.get("__cm_err");
   const error = errRaw ? String(errRaw) : "";
   return { stdout, error: error || null };
+}
+
+export type InputRequester = (prompt: string) => Promise<string>;
+
+// 대화형 실행 — 학습자 코드를 비동기로 변환한다.
+//   input(...) → await __cm_ainput(...) 치환 + 전체를 async 함수로 감쌈.
+// 그러면 입력을 화면 내 커스텀 UI(Promise) 로 받을 수 있다 — input() 을 만날 때마다 멈춰서
+// 모달이 뜨고, 입력하면 진행. Web Worker/SharedArrayBuffer/특수 헤더 없이 메인스레드에서 동작.
+function buildAsyncWrapper(userCode: string): string {
+  const transformed = userCode.replace(/\binput\s*\(/g, "await __cm_ainput(");
+  const body = transformed
+    .split("\n")
+    .map((line) => "    " + line)
+    .join("\n");
+  return [
+    "import sys, io",
+    "__cm_buf = io.StringIO()",
+    "__cm_old = sys.stdout",
+    "__cm_err = ''",
+    "async def __cm_main():",
+    "    pass",
+    body,
+    "sys.stdout = __cm_buf",
+    "try:",
+    "    await __cm_main()",
+    "except EOFError:",
+    "    pass",
+    "except Exception as __cm_e:",
+    "    __cm_err = type(__cm_e).__name__ + ': ' + str(__cm_e)",
+    "finally:",
+    "    sys.stdout = __cm_old",
+    "__cm_out = __cm_buf.getvalue()",
+  ].join("\n");
+}
+
+/** 대화형 실행 — input() 마다 onInput(화면 내 입력 모달)을 호출해 값을 받는다. 채점이 아닌 '직접 돌려보기' 용. */
+export async function runPythonInteractive(
+  userCode: string,
+  onInput: InputRequester,
+): Promise<RunResult> {
+  const py = await preloadPyodide();
+  py.globals.set("__cm_ainput", (prompt: string) => onInput(prompt ?? ""));
+  try {
+    await py.runPythonAsync(buildAsyncWrapper(userCode));
+    const stdout = String(py.globals.get("__cm_out") ?? "");
+    const errRaw = py.globals.get("__cm_err");
+    const error = errRaw ? String(errRaw) : "";
+    return { stdout, error: error || null };
+  } finally {
+    py.globals.delete?.("__cm_ainput");
+  }
 }
 
 // ─── 채점 ──────────────────────────────────────────────────────────

@@ -11,7 +11,12 @@ import { Check, ChevronRight, Lightbulb, Lock, Play, RotateCcw, Send } from "luc
 
 import { useToast } from "@/components/toast";
 import { passStepAction } from "@/lib/learning/project-actions";
-import { gradeStep, preloadPyodide, runPythonProgram, type CaseResult } from "@/lib/project/grader";
+import {
+  gradeStep,
+  preloadPyodide,
+  runPythonInteractive,
+  type CaseResult,
+} from "@/lib/project/grader";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/lib/project-content";
 
@@ -64,7 +69,12 @@ export function ProjectRunner({
   const [cases, setCases] = useState<CaseResult[] | null>(null);
   const [consoleOut, setConsoleOut] = useState<string | null>(null);
   const [hintCount, setHintCount] = useState(0);
-  const [stdinText, setStdinText] = useState("");
+  const [inputReq, setInputReq] = useState<{
+    prompt: string;
+    resolve: (v: string) => void;
+    reject: (e: unknown) => void;
+  } | null>(null);
+  const [inputValue, setInputValue] = useState("");
   const [, startTransition] = useTransition();
 
   // Pyodide 백그라운드 프리로드 (첫 실행 지연 완화).
@@ -96,7 +106,6 @@ export function ProjectRunner({
     setCases(null);
     setConsoleOut(null);
     setHintCount(0);
-    setStdinText("");
   }
 
   function handleChange(value: string) {
@@ -107,7 +116,28 @@ export function ProjectRunner({
     setCodeByStep((prev) => ({ ...prev, [step.id]: step.starterCode }));
     setCases(null);
     setConsoleOut(null);
-    setStdinText("");
+  }
+
+  // 대화형 입력 — 실행 중 input() 이 호출하면 모달을 띄우고, 입력/중단까지 Promise 로 기다린다.
+  function requestInput(prompt: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      setInputValue("");
+      setInputReq({ prompt, resolve, reject });
+    });
+  }
+
+  function submitInput() {
+    if (!inputReq) return;
+    inputReq.resolve(inputValue);
+    setInputReq(null);
+    setInputValue("");
+  }
+
+  function cancelInput() {
+    if (!inputReq) return;
+    inputReq.reject(new Error("입력을 중단했어요"));
+    setInputReq(null);
+    setInputValue("");
   }
 
   async function handleRun() {
@@ -115,15 +145,10 @@ export function ProjectRunner({
     setCases(null);
     setConsoleOut(null);
     try {
-      // 직접 입력 모드 — 학습자가 적은 값(한 줄에 하나)을 input() 에 순서대로 넣는다.
-      const trimmed = stdinText.replace(/\s+$/, "");
-      const stdin = trimmed === "" ? [] : trimmed.split("\n").map((s) => s.trim());
-      const r = await runPythonProgram(code, stdin);
+      // 대화형 실행 — input() 을 만나면 화면 내 입력 모달이 뜬다(터미널처럼).
+      const r = await runPythonInteractive(code, requestInput);
       const out = r.stdout.trimEnd();
-      const inputLabel = stdin.length ? stdin.join(", ") : "(입력 없음)";
-      setConsoleOut(
-        `입력: ${inputLabel}\n──────\n${out || "(출력 없음)"}` + (r.error ? `\n⚠ ${r.error}` : ""),
-      );
+      setConsoleOut((out || "(출력 없음)") + (r.error ? `\n⚠ ${r.error}` : ""));
     } catch (err) {
       console.error("[CodeMong] Pyodide 실행 실패:", err);
       const detail = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
@@ -182,7 +207,9 @@ export function ProjectRunner({
         </p>
         {project.concepts.length > 0 && (
           <div className="mt-3">
-            <p className="mb-1.5 text-[11px] font-medium text-zinc-400">이 프로젝트에 필요한 개념</p>
+            <p className="mb-1.5 text-[11px] font-medium text-zinc-400">
+              이 프로젝트에 필요한 개념
+            </p>
             <div className="flex flex-wrap gap-1.5">
               {project.concepts.map((c) => (
                 <span
@@ -289,24 +316,12 @@ export function ProjectRunner({
             )}
             <CodeEditor value={code} onChange={handleChange} />
 
-            {/* 직접 입력 — input() 이 받을 값 (한 줄에 하나) */}
-            <div>
-              <label
-                htmlFor="project-stdin"
-                className="mb-1 block text-[11px] font-semibold text-zinc-500"
-              >
-                입력값 — input() 이 받을 값을 한 줄에 하나씩 적어요
-              </label>
-              <textarea
-                id="project-stdin"
-                value={stdinText}
-                onChange={(e) => setStdinText(e.target.value)}
-                placeholder={step.example ? `예:\n${step.example.stdin.join("\n")}` : "예: 3"}
-                rows={3}
-                spellCheck={false}
-                className="w-full resize-y rounded-xl bg-zinc-50 px-3 py-2 font-mono text-[13px] text-zinc-800 ring-1 ring-zinc-200 placeholder:text-zinc-400 focus:ring-2 focus:ring-violet-300 focus:outline-none"
-              />
-            </div>
+            {/* 실행 안내 — input() 은 실행 중 입력창으로 받는다 */}
+            <p className="text-[12px] leading-relaxed text-zinc-500">
+              <span className="font-semibold text-zinc-600">실행</span> 하면 코드가 돌아가다 input()
+              을 만날 때마다 입력 창이 떠요. 위 「입력 예시」의 값을 차례대로 넣어보세요. (제출하면
+              정해진 입력들로 자동 채점)
+            </p>
 
             {/* 버튼 행 */}
             <div className="flex flex-wrap items-center gap-2">
@@ -357,8 +372,8 @@ export function ProjectRunner({
                   채점 결과 — {passedCases}/{cases.length} 통과
                 </p>
                 <p className="text-[11px] text-zinc-400">
-                  채점은 정해진 입력들을 자동으로 넣어 코드가 여러 경우에 맞게 도는지 확인해요. (위에서
-                  직접 입력한 값과는 별개)
+                  채점은 정해진 입력들을 자동으로 넣어 코드가 여러 경우에 맞게 도는지 확인해요.
+                  (위에서 직접 입력한 값과는 별개)
                 </p>
                 {cases.map((c, i) => (
                   <div
@@ -449,6 +464,46 @@ export function ProjectRunner({
           </div>
         )}
       </div>
+
+      {/* 대화형 입력 모달 — 실행 중 input() 이 호출하면 뜬다 */}
+      {inputReq && (
+        <div
+          role="dialog"
+          aria-modal
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+        >
+          <div className="w-full max-w-sm rounded-2xl bg-white p-5 shadow-xl">
+            <p className="text-[13px] font-semibold text-zinc-800">
+              {inputReq.prompt || "입력값을 넣어주세요"}
+            </p>
+            <input
+              autoFocus
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") submitInput();
+              }}
+              className="mt-2 w-full rounded-lg bg-zinc-50 px-3 py-2 font-mono text-[13px] text-zinc-800 ring-1 ring-zinc-300 focus:ring-2 focus:ring-violet-400 focus:outline-none"
+            />
+            <div className="mt-3 flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={cancelInput}
+                className="rounded-lg px-3 py-1.5 text-[13px] font-medium text-zinc-500 transition hover:text-zinc-700"
+              >
+                중단
+              </button>
+              <button
+                type="button"
+                onClick={submitInput}
+                className="rounded-lg bg-violet-600 px-3.5 py-1.5 text-[13px] font-semibold text-white transition hover:bg-violet-700"
+              >
+                입력
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
