@@ -12,6 +12,8 @@ export type Lesson = {
   /** 예상 학습 시간(분) */
   durationMinutes: number
   status: LessonStatus
+  /** 강의 종류 — 미지정/"video"=영상 강의, "project"=직접 코드 구현 프로젝트(13강~) */
+  kind?: "video" | "project"
 }
 
 export type LessonBadge = {
@@ -34,7 +36,7 @@ export type LessonPlan = {
 
 export const pythonLessonPlan: LessonPlan = {
   courseId: "be-python",
-  totalLessons: 12,
+  totalLessons: 13,
   lessons: [
     { id: "lesson-1", number: 1, title: "파이썬 개요 & 개발환경", durationMinutes: 18, status: "completed" },
     { id: "lesson-2", number: 2, title: "코딩의 표현 방법", durationMinutes: 12, status: "completed" },
@@ -48,6 +50,7 @@ export const pythonLessonPlan: LessonPlan = {
     { id: "lesson-10", number: 10, title: "모듈 & 랜덤", durationMinutes: 18, status: "not-started" },
     { id: "lesson-11", number: 11, title: "파일 입출력", durationMinutes: 20, status: "not-started" },
     { id: "lesson-12", number: 12, title: "디버깅 & AI 활용", durationMinutes: 22, status: "not-started" },
+    { id: "lesson-13", number: 13, title: "계산기 만들기", durationMinutes: 45, status: "not-started", kind: "project" },
   ],
   tips: [
     "매일 짧게라도 코드를 직접 쳐보세요",

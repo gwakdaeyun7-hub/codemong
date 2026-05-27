@@ -36,7 +36,8 @@ export function LessonContentHeader({
         </span>
       </div>
 
-      {/* 서브탭 행 */}
+      {/* 서브탭 행 (프로젝트 강의는 subtabs 가 비어 미표시) */}
+      {subtabs.length > 0 && (
       <nav
         aria-label="강의 콘텐츠 서브탭"
         className="mt-3.5 -mx-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -68,6 +69,7 @@ export function LessonContentHeader({
           })}
         </ul>
       </nav>
+      )}
     </section>
   )
 }

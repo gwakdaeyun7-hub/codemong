@@ -41,16 +41,26 @@ export async function getCourseCompletion(
 
   if (!userId || total === 0) return { completed: 0, total };
 
-  const completed = await prisma.lessonProgress.count({
-    where: {
-      userId,
-      learnCompletedAt: { not: null },
-      lessonRef: { startsWith: `${courseId}/` },
-    },
-  });
+  // 이수율 = 영상 강의 완료(learnCompletedAt) + 프로젝트 강의 완료(completedAt).
+  const [lessonCompleted, projectCompleted] = await Promise.all([
+    prisma.lessonProgress.count({
+      where: {
+        userId,
+        learnCompletedAt: { not: null },
+        lessonRef: { startsWith: `${courseId}/` },
+      },
+    }),
+    prisma.projectProgress.count({
+      where: {
+        userId,
+        completedAt: { not: null },
+        lessonRef: { startsWith: `${courseId}/` },
+      },
+    }),
+  ]);
 
   // 완료 기록이 정적 강의 수를 넘지 않도록 보정 (lessonRef 잔재 등 방어).
-  return { completed: Math.min(completed, total), total };
+  return { completed: Math.min(lessonCompleted + projectCompleted, total), total };
 }
 
 // 코스의 강의별 진도 상태 맵 (lessonId → status). 강의 목록/상세 통계가 mock 대신 실데이터를 쓰도록.
@@ -70,16 +80,30 @@ export async function getCourseLessonStatuses(
   for (const lesson of plan.lessons) result[lesson.id] = "not-started";
   if (!userId) return result;
 
-  const rows = await prisma.lessonProgress.findMany({
-    where: { userId, lessonRef: { startsWith: `${courseId}/` } },
-    select: { lessonRef: true, videoWatchedAt: true, learnCompletedAt: true },
-  });
+  const [lessonRows, projectRows] = await Promise.all([
+    prisma.lessonProgress.findMany({
+      where: { userId, lessonRef: { startsWith: `${courseId}/` } },
+      select: { lessonRef: true, videoWatchedAt: true, learnCompletedAt: true },
+    }),
+    prisma.projectProgress.findMany({
+      where: { userId, lessonRef: { startsWith: `${courseId}/` } },
+      select: { lessonRef: true, completedAt: true },
+    }),
+  ]);
 
-  for (const row of rows) {
+  for (const row of lessonRows) {
     const lessonId = row.lessonRef.split("/")[1];
     if (!lessonId || !(lessonId in result)) continue;
     if (row.learnCompletedAt != null) result[lessonId] = "completed";
     else if (row.videoWatchedAt != null) result[lessonId] = "in-progress";
   }
+
+  // 프로젝트형 강의: 진도 행이 있으면 최소 진행 중, completedAt 있으면 완료.
+  for (const row of projectRows) {
+    const lessonId = row.lessonRef.split("/")[1];
+    if (!lessonId || !(lessonId in result)) continue;
+    result[lessonId] = row.completedAt != null ? "completed" : "in-progress";
+  }
+
   return result;
 }

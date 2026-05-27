@@ -55,7 +55,7 @@ export const pythonCourseDetail: CourseDetail = {
   stats: {
     // 총 학습 시간 = 영상 시청(약 4시간) + 복습·실습 포함 기준. 영상 길이 합보다 큰 건 의도된 것.
     totalHours: "약 10시간",
-    totalLessons: "12강",
+    totalLessons: "13강",
     // enrolledCount·rating: 실제 수강생/평점 데이터가 없어 미노출 (정직 톤 — 가짜 수치 금지).
   },
   learningOutcomes: [

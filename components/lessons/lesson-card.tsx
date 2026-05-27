@@ -5,6 +5,7 @@ import Link from "next/link"
 import { CheckCircle2, Circle, Clock, Flame, Play, RotateCcw } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { getProject } from "@/lib/project-content"
 
 import type { Lesson, LessonStatus } from "@/lib/lesson-plan"
 
@@ -50,6 +51,9 @@ export function LessonCard({
         ? Flame
         : Circle
 
+  // 프로젝트형 강의면 필요 개념 태그를 카드에 노출 (영상 강의는 undefined).
+  const project = lesson.kind === "project" ? getProject(courseId, lesson.id) : undefined
+
   return (
     <article
       className={cn(
@@ -78,6 +82,11 @@ export function LessonCard({
           <h3 className="truncate text-sm font-semibold text-zinc-900 sm:text-[15px]">
             {lesson.number}. {lesson.title}
           </h3>
+          {lesson.kind === "project" && (
+            <span className="inline-flex items-center rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-700">
+              프로젝트
+            </span>
+          )}
           <span
             className={cn(
               "inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold",
@@ -91,6 +100,18 @@ export function LessonCard({
           <Clock className="size-3" strokeWidth={2.25} aria-hidden />
           {lesson.durationMinutes}분
         </p>
+        {project && project.concepts.length > 0 && (
+          <div className="mt-1.5 flex flex-wrap gap-1">
+            {project.concepts.map((c) => (
+              <span
+                key={c}
+                className="inline-flex items-center rounded-md bg-violet-50 px-1.5 py-0.5 text-[10px] font-medium text-violet-600"
+              >
+                {c}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* 우측: 액션 버튼 */}
