@@ -13,32 +13,35 @@
  * That yields Σ dur_i == TOTAL_DURATION_FRAMES with 0 frame drift even after
  * rounding (the last boundary acts as the rounding sink).
  *
- * Source data — timestamps.json (11 scenes, last endMs 201936):
+ * Source data — timestamps.json (11 scenes, last endMs 206544):
  *
  *   i  | sceneId  | startMs | endMs  | from = round(startMs*30/1000)
- *   01 | scene-01 |       0 |  13710 |    0
- *   02 | scene-02 |   13710 |  28663 |  411
- *   03 | scene-03 |   28663 |  43569 |  860
- *   04 | scene-04 |   43569 |  61490 | 1307
- *   05 | scene-05 |   61490 |  77520 | 1845
- *   06 | scene-06 |   77520 |  97570 | 2326
- *   07 | scene-07 |   97570 | 119870 | 2927
- *   08 | scene-08 |  119870 | 137982 | 3596
- *   09 | scene-09 |  137982 | 155184 | 4139
- *   10 | scene-10 |  155184 | 178823 | 4656
- *   11 | scene-11 |  178823 | 201936 | 5365
- *   TOTAL                              6058  (= round(201936*30/1000))
+ *   01 | scene-01 |       0 |  13711 |    0
+ *   02 | scene-02 |   13711 |  28665 |  411
+ *   03 | scene-03 |   28665 |  48166 |  860
+ *   04 | scene-04 |   48166 |  66088 | 1445
+ *   05 | scene-05 |   66088 |  82120 | 1983
+ *   06 | scene-06 |   82120 | 102171 | 2464
+ *   07 | scene-07 |  102171 | 124472 | 3065
+ *   08 | scene-08 |  124472 | 142585 | 3734
+ *   09 | scene-09 |  142585 | 159789 | 4278
+ *   10 | scene-10 |  159789 | 183430 | 4794
+ *   11 | scene-11 |  183430 | 206544 | 5503
+ *   TOTAL                              6196  (= round(206544*30/1000))
  *
  * Durations (adjacent-boundary):
- *   411, 449, 447, 538, 481, 601, 669, 543, 517, 709, 693
- *   Σ = 6058 == TOTAL_DURATION_FRAMES ✓
+ *   411, 449, 585, 538, 481, 601, 669, 544, 516, 709, 693
+ *   Σ = 6196 == TOTAL_DURATION_FRAMES ✓
  *
- * Note: voiceover came in at 201.936s (vs Stage 2 placeholder 182s, +11%).
- * Each scene's frame budget shifted but scene-internal beat timing
- * (REVEAL.line1 etc.) was authored against the placeholder. Any resulting
- * dead-air at scene tails is left for video-director review per the agent
- * runbook — do not rescale beats here. Scene 08's Active Recall reveal
- * (revealAt) IS retimed in Scene08.tsx via R-004 sub-clip probe.
+ * Note: voiceover re-synthed 2026-05-27 (2nd round) → 206.544s. scene-03 is
+ * 585 frames (~19.5s): narration carries the "import 를 빼먹으면 오류가 난다"
+ * explanation, now pulled to right after "임포트 랜덤" + the "한 줄" filler
+ * dropped (user feedback). Its beats were re-authored in Scene03.tsx against
+ * measured phrase timings ("오류가 납니다" ≈ 8.2~9.1s, s6 시작 ≈ 14.8s).
+ * Other scenes' audio/internal beats are unchanged (only scene-03 text moved);
+ * their startMs merely shifts as scene-03 shrank. Scene 08's Active Recall
+ * reveal (revealAt) IS retimed in Scene08.tsx via R-004 sub-clip probe
+ * (a0/s1/a2 = 10200/1800/5760 unchanged).
  *
  * Scene-08 subClip probes (ffprobe):
  *   - a0 (질문 발화) = 10.200s
@@ -72,25 +75,25 @@ export type SceneTiming = {
 };
 
 // Derived from timestamps.json last endMs (201936).
-export const TOTAL_DURATION_MS = 201_936;
-export const TOTAL_DURATION_FRAMES = Math.round((TOTAL_DURATION_MS * FPS) / 1000); // 6058
+export const TOTAL_DURATION_MS = 206_544;
+export const TOTAL_DURATION_FRAMES = Math.round((TOTAL_DURATION_MS * FPS) / 1000); // 6196
 
 /**
- * Wired from `02-audio/timestamps.json` (Stage 3).
- * Verified: Σ durationInFrames === TOTAL_DURATION_FRAMES (6058), drift = 0.
+ * Wired from `02-audio/timestamps.json` (re-synthed 2026-05-27, 2nd round).
+ * Verified: Σ durationInFrames === TOTAL_DURATION_FRAMES (6196), drift = 0.
  */
 export const SCENES: SceneTiming[] = [
   { id: "scene-01", from: 0, durationInFrames: 411 },
   { id: "scene-02", from: 411, durationInFrames: 449 },
-  { id: "scene-03", from: 860, durationInFrames: 447 },
-  { id: "scene-04", from: 1307, durationInFrames: 538 },
-  { id: "scene-05", from: 1845, durationInFrames: 481 },
-  { id: "scene-06", from: 2326, durationInFrames: 601 },
-  { id: "scene-07", from: 2927, durationInFrames: 669 },
-  { id: "scene-08", from: 3596, durationInFrames: 543 },
-  { id: "scene-09", from: 4139, durationInFrames: 517 },
-  { id: "scene-10", from: 4656, durationInFrames: 709 },
-  { id: "scene-11", from: 5365, durationInFrames: 693 },
+  { id: "scene-03", from: 860, durationInFrames: 585 },
+  { id: "scene-04", from: 1445, durationInFrames: 538 },
+  { id: "scene-05", from: 1983, durationInFrames: 481 },
+  { id: "scene-06", from: 2464, durationInFrames: 601 },
+  { id: "scene-07", from: 3065, durationInFrames: 669 },
+  { id: "scene-08", from: 3734, durationInFrames: 544 },
+  { id: "scene-09", from: 4278, durationInFrames: 516 },
+  { id: "scene-10", from: 4794, durationInFrames: 709 },
+  { id: "scene-11", from: 5503, durationInFrames: 693 },
 ];
 
 export const sceneOf = (id: SceneId): SceneTiming => {

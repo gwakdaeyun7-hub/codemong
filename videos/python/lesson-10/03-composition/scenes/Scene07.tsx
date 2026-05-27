@@ -37,11 +37,13 @@ const REVEAL = {
   header: 0.1,
   leftPanel: 0.4,
   rightPanel: 0.6,
+  leftImportLine: 1.4, // import random (context, 회색 강조 X)
   leftLine1: 1.6,
   // 좌측 값이 잠깐 보였다 사라짐
   leftValueShow: 2.4,
   leftValueHide: 3.4,
   // 우측
+  rightImportLine: 1.6, // import random (context)
   rightLine1: 1.8,
   rightFlowArrowReturn: 4.2,
   rightLine2: 5.6,
@@ -55,7 +57,9 @@ const REVEAL = {
 } as const;
 
 const CARD_WIDTH = 640;
-const CARD_HEIGHT = 380;
+// 우측 카드가 3줄(import / 눈= / print)로 늘어 CodePanel 240 + gap 18 + console 90
+// + padding 64 = 412 → 430 으로 상향 (R-008: 좌·우 동일 height 유지).
+const CARD_HEIGHT = 430;
 
 export const Scene07: React.FC = () => {
   return (
@@ -182,8 +186,13 @@ const LeftCard: React.FC = () => {
           padding: "32px 40px",
         }}
       >
-        <CodePanel fileName="dice.py" width={520} height={130}>
-          <CodeLine lineNumber={1} revealAtSec={REVEAL.leftLine1}>
+        <CodePanel fileName="dice.py" width={520} height={180}>
+          <CodeLine lineNumber={1} revealAtSec={REVEAL.leftImportLine}>
+            <PyToken text="import" kind="keyword" />
+            <PyToken text=" " />
+            <PyToken text="random" kind="name" />
+          </CodeLine>
+          <CodeLine lineNumber={2} revealAtSec={REVEAL.leftLine1}>
             <PyToken text="random" kind="name" />
             <PyToken text="." kind="op" />
             <PyToken text="randint" kind="func" />
@@ -319,8 +328,13 @@ const RightCard: React.FC = () => {
           position: "relative",
         }}
       >
-        <CodePanel fileName="dice.py" width={520} height={170}>
-          <CodeLine lineNumber={1} revealAtSec={REVEAL.rightLine1}>
+        <CodePanel fileName="dice.py" width={520} height={240}>
+          <CodeLine lineNumber={1} revealAtSec={REVEAL.rightImportLine}>
+            <PyToken text="import" kind="keyword" />
+            <PyToken text=" " />
+            <PyToken text="random" kind="name" />
+          </CodeLine>
+          <CodeLine lineNumber={2} revealAtSec={REVEAL.rightLine1}>
             <PyToken
               text="눈"
               kind="name"
@@ -338,7 +352,7 @@ const RightCard: React.FC = () => {
             <PyToken text="6" kind="number" />
             <PyToken text=")" kind="op" />
           </CodeLine>
-          <CodeLine lineNumber={2} revealAtSec={REVEAL.rightLine2}>
+          <CodeLine lineNumber={3} revealAtSec={REVEAL.rightLine2}>
             <PyToken text="print" kind="func" />
             <PyToken text="(" kind="op" />
             <PyToken

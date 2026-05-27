@@ -28,6 +28,7 @@ import { colors, fonts } from "../theme";
 const REVEAL = {
   header: 0.1,
   codePanel: 0.3,
+  importLine: 0.7, // import random (context, 회색 강조 X)
   line1: 0.9,
   card1: 3.2, // 가위
   card2: 3.6, // 바위
@@ -92,8 +93,13 @@ export const Scene09: React.FC = () => {
             gap: 30,
           }}
         >
-          <CodePanel fileName="rps.py" width={720} height={130}>
-            <CodeLine lineNumber={1} revealAtSec={REVEAL.line1}>
+          <CodePanel fileName="rps.py" width={720} height={180}>
+            <CodeLine lineNumber={1} revealAtSec={REVEAL.importLine}>
+              <PyToken text="import" kind="keyword" />
+              <PyToken text=" " />
+              <PyToken text="random" kind="name" />
+            </CodeLine>
+            <CodeLine lineNumber={2} revealAtSec={REVEAL.line1}>
               <PyToken text="random" kind="name" />
               <PyToken text="." kind="op" />
               <PyToken text="choice" kind="func" highlight />
@@ -159,7 +165,7 @@ export const Scene09: React.FC = () => {
           startX={1080}
           startY={120}
           endX={300}
-          endY={230}
+          endY={255}
           curve={70}
           delaySec={REVEAL.flowArrowReturn}
           durationSec={0.7}
