@@ -64,6 +64,7 @@ export function ProjectRunner({
   const [cases, setCases] = useState<CaseResult[] | null>(null);
   const [consoleOut, setConsoleOut] = useState<string | null>(null);
   const [hintCount, setHintCount] = useState(0);
+  const [stdinText, setStdinText] = useState("");
   const [, startTransition] = useTransition();
 
   // Pyodide 백그라운드 프리로드 (첫 실행 지연 완화).
@@ -95,6 +96,7 @@ export function ProjectRunner({
     setCases(null);
     setConsoleOut(null);
     setHintCount(0);
+    setStdinText("");
   }
 
   function handleChange(value: string) {
@@ -105,6 +107,7 @@ export function ProjectRunner({
     setCodeByStep((prev) => ({ ...prev, [step.id]: step.starterCode }));
     setCases(null);
     setConsoleOut(null);
+    setStdinText("");
   }
 
   async function handleRun() {
@@ -112,10 +115,15 @@ export function ProjectRunner({
     setCases(null);
     setConsoleOut(null);
     try {
-      const stdin = step.tests[0]?.stdin ?? [];
+      // 직접 입력 모드 — 학습자가 적은 값(한 줄에 하나)을 input() 에 순서대로 넣는다.
+      const trimmed = stdinText.replace(/\s+$/, "");
+      const stdin = trimmed === "" ? [] : trimmed.split("\n").map((s) => s.trim());
       const r = await runPythonProgram(code, stdin);
       const out = r.stdout.trimEnd();
-      setConsoleOut((out || "(출력 없음)") + (r.error ? `\n⚠ ${r.error}` : ""));
+      const inputLabel = stdin.length ? stdin.join(", ") : "(입력 없음)";
+      setConsoleOut(
+        `입력: ${inputLabel}\n──────\n${out || "(출력 없음)"}` + (r.error ? `\n⚠ ${r.error}` : ""),
+      );
     } catch (err) {
       console.error("[CodeMong] Pyodide 실행 실패:", err);
       const detail = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
@@ -263,7 +271,42 @@ export function ProjectRunner({
 
         {isGraded ? (
           <div className="mt-4 flex flex-col gap-3">
+            {step.example && (
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <p className="mb-1 text-[11px] font-semibold text-zinc-500">입력 예시</p>
+                  <pre className="overflow-x-auto rounded-lg bg-zinc-50 px-3 py-2 font-mono text-[12px] whitespace-pre-wrap text-zinc-700 ring-1 ring-zinc-200">
+                    {step.example.stdin.join("\n")}
+                  </pre>
+                </div>
+                <div>
+                  <p className="mb-1 text-[11px] font-semibold text-zinc-500">출력 예시</p>
+                  <pre className="overflow-x-auto rounded-lg bg-zinc-50 px-3 py-2 font-mono text-[12px] whitespace-pre-wrap text-zinc-700 ring-1 ring-zinc-200">
+                    {step.example.stdout}
+                  </pre>
+                </div>
+              </div>
+            )}
             <CodeEditor value={code} onChange={handleChange} />
+
+            {/* 직접 입력 — input() 이 받을 값 (한 줄에 하나) */}
+            <div>
+              <label
+                htmlFor="project-stdin"
+                className="mb-1 block text-[11px] font-semibold text-zinc-500"
+              >
+                입력값 — input() 이 받을 값을 한 줄에 하나씩 적어요
+              </label>
+              <textarea
+                id="project-stdin"
+                value={stdinText}
+                onChange={(e) => setStdinText(e.target.value)}
+                placeholder={step.example ? `예:\n${step.example.stdin.join("\n")}` : "예: 3"}
+                rows={3}
+                spellCheck={false}
+                className="w-full resize-y rounded-xl bg-zinc-50 px-3 py-2 font-mono text-[13px] text-zinc-800 ring-1 ring-zinc-200 placeholder:text-zinc-400 focus:ring-2 focus:ring-violet-300 focus:outline-none"
+              />
+            </div>
 
             {/* 버튼 행 */}
             <div className="flex flex-wrap items-center gap-2">
@@ -312,6 +355,10 @@ export function ProjectRunner({
               <div className="flex flex-col gap-1.5">
                 <p className="text-[11px] font-semibold text-zinc-500">
                   채점 결과 — {passedCases}/{cases.length} 통과
+                </p>
+                <p className="text-[11px] text-zinc-400">
+                  채점은 정해진 입력들을 자동으로 넣어 코드가 여러 경우에 맞게 도는지 확인해요. (위에서
+                  직접 입력한 값과는 별개)
                 </p>
                 {cases.map((c, i) => (
                   <div

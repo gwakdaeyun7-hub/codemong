@@ -41,6 +41,8 @@ export type ProjectStep = {
   solutionCode: string;
   /** 힌트 사다리 (단계적으로 공개, 마지막은 정답 안내) */
   hints: string[];
+  /** 입출력 예시 (문제 카드에 표시 + 입력칸 placeholder). 보통 채점 첫 케이스와 일치 */
+  example?: { stdin: string[]; stdout: string };
   /** 채점 테스트. 빈 배열이면 채점 없는 읽기 스텝(Step 0 설계) */
   tests: TestCase[];
 };
@@ -94,6 +96,7 @@ input() 으로 받은 값은 "글자"라서, float() 로 감싸 숫자로 바꿔
 
 예) 3 과 4 를 입력하면 → 3.0 과 4.0 이 출력됩니다.`,
   conceptTags: ["3강 변수/print", "4강 input/형변환"],
+  example: { stdin: ["3", "4"], stdout: "3.0\n4.0" },
   starterCode: `# 첫 번째 수를 입력받아 숫자로 바꾸세요
 a = float(input())
 
@@ -153,6 +156,7 @@ const step2: ProjectStep = {
 
 예) 3 과 4 를 입력하면 → 7.0 이 출력됩니다.`,
   conceptTags: ["4강 산술 연산자"],
+  example: { stdin: ["3", "4"], stdout: "7.0" },
   starterCode: `a = float(input())
 b = float(input())
 
@@ -190,6 +194,7 @@ const step3: ProjectStep = {
 
 주의: 연산자는 글자라서 float() 로 바꾸면 안 돼요. op = input() 그대로 받습니다.`,
   conceptTags: ["5강 if/elif/else", "4강 비교 연산"],
+  example: { stdin: ["3", "+", "4"], stdout: "7.0" },
   starterCode: `a = float(input())
 op = input()   # 연산자는 글자 — float() 쓰지 않기
 b = float(input())
@@ -251,6 +256,7 @@ const step4: ProjectStep = {
 
 나누기(/) 갈래 "안에서" 다시 한 번 if 로 b 가 0 인지 확인합니다. 이렇게 조건문 안에 조건문을 넣는 것을 중첩 조건문이라고 해요 (5강).`,
   conceptTags: ["5강 중첩 조건문"],
+  example: { stdin: ["5", "/", "0"], stdout: "0으로 나눌 수 없습니다" },
   starterCode: `a = float(input())
 op = input()
 b = float(input())
@@ -318,6 +324,7 @@ while True: 로 전체를 감싸고, 맨 끝에서 계속 여부를 입력받아
 
 주의: 계산하는 부분 전체가 while 안으로 들어가야 합니다 (들여쓰기).`,
   conceptTags: ["6강 while/break"],
+  example: { stdin: ["3", "+", "4", "y", "10", "-", "2", "n"], stdout: "7.0\n8.0" },
   starterCode: `# 전체를 while True: 로 감싸고, 끝에서 계속할지 물어보세요
 while True:
     a = float(input())
@@ -398,6 +405,7 @@ const step6: ProjectStep = {
 
 아래 빈 칸에 완성된 계산기를 직접 작성해 제출하세요. 막히면 5단계까지 만든 코드를 떠올려 보세요.`,
   conceptTags: ["1~6강 종합"],
+  example: { stdin: ["6", "+", "2", "y", "6", "/", "2", "n"], stdout: "8.0\n3.0" },
   starterCode: `# 지금까지 배운 것을 합쳐 완성된 계산기를 작성하세요.
 # (반복 + 사칙연산 분기 + 0 나누기 처리 + 모르는 연산자 처리)
 `,
