@@ -15,7 +15,7 @@
 - **lucide-react v1.14.0** ← v0.x 아님. 컴포넌트 폴더별 `icon-map.ts` 화이트리스트로만 import (트리쉐이킹 보호)
 - **Supabase** (`@supabase/ssr` + `@supabase/supabase-js`) — middleware/proxy, server/client helpers (`lib/supabase/`), 인증 UI 전체 구현 (`lib/auth/`, `app/(auth)/`, `app/auth/callback/`). OAuth Google + Kakao 지원
 - **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`). 모델 9개: Post / Comment / PostLike / CommentLike / LessonLike / PostReport / CommentReport / LessonProgress / ProjectProgress
-- **CodeMirror 6** (`@uiw/react-codemirror` + `@codemirror/lang-python`) — 프로젝트형 강의(13강~) 코드 에디터. **Pyodide**(브라우저 Python 실행/채점 엔진)는 CDN 동적 로드(v0.27.2 jsdelivr) — 메인 앱 의존성 아님
+- **CodeMirror 6** (`@uiw/react-codemirror` + `@codemirror/lang-python`) — 프로젝트형 강의(13강~) 코드 에디터. **Pyodide**(브라우저 Python 실행/채점 엔진)는 CDN 동적 로드(v0.28.3 jsdelivr) — 메인 앱 의존성 아님
 - **pnpm** (workspace + onlyBuiltDependencies)
 - **Remotion 4.0.456** (`remotion/` workspace 멤버, 영상 제작용 — 메인 앱 의존성 아님, sibling project)
 
