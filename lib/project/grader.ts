@@ -14,7 +14,7 @@ import type { ExpectedOutput, TestCase } from "@/lib/project-content";
 
 // ─── Pyodide 로더 (CDN, 싱글톤) ────────────────────────────────────
 
-const PYODIDE_VERSION = "0.27.2";
+const PYODIDE_VERSION = "0.28.3";
 const INDEX_URL = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
 
 type PyodideInterface = {
@@ -54,7 +54,11 @@ export function preloadPyodide(): Promise<PyodideInterface> {
     }
     if (!w.loadPyodide) throw new Error("Pyodide 를 불러오지 못했습니다.");
     return w.loadPyodide({ indexURL: INDEX_URL });
-  })();
+  })().catch((err) => {
+    // 실패한 promise 를 캐시에 남기면 "다시 시도" 해도 같은 실패만 반복된다 → 리셋해 재로드 허용.
+    pyodidePromise = null;
+    throw err;
+  });
   return pyodidePromise;
 }
 

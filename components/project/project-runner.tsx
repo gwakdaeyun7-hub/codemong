@@ -116,8 +116,11 @@ export function ProjectRunner({
       const r = await runPythonProgram(code, stdin);
       const out = r.stdout.trimEnd();
       setConsoleOut((out || "(출력 없음)") + (r.error ? `\n⚠ ${r.error}` : ""));
-    } catch {
-      setConsoleOut("파이썬 실행 환경을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.");
+    } catch (err) {
+      console.error("[CodeMong] Pyodide 실행 실패:", err);
+      setConsoleOut(
+        "파이썬 실행 환경을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.\n(브라우저 개발자 도구 콘솔에서 자세한 오류를 확인할 수 있어요.)",
+      );
     } finally {
       setRunning(false);
     }
@@ -144,7 +147,8 @@ export function ProjectRunner({
           }
         });
       }
-    } catch {
+    } catch (err) {
+      console.error("[CodeMong] Pyodide 채점 실패:", err);
       setCases(null);
       toastError("파이썬 실행 환경을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.");
     } finally {
