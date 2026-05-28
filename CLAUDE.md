@@ -29,6 +29,7 @@
 | `/courses/[courseId]` | 강좌 소개 탭 | 사이드바 7탭 중 "소개" 활성. `python` / `be-python` 만 매칭, 그 외 `notFound()` |
 | `/courses/[courseId]/lessons` | 강의 목록 (12강) | 좌 메인 + 우 320px 사이드바 (lg+ sticky) |
 | `/courses/[courseId]/lessons/[lessonId]` | 강의 상세 (개념 탭) | **로그인 필수** (영상 게이팅 — 페이지 레벨 `redirect('/login?next=...')`, proxy 아님). `lesson-1` ~ `lesson-11` (파이썬 개요·개발환경 / 코딩의 표현 방법 / 변수와 자료형 / 입력과 연산자 / 조건문 / 반복문 / 리스트 / 딕셔너리 & 자료구조 / 함수 / 모듈 & 랜덤 / 파일 입출력) 매칭. `lesson-1`~`lesson-11` 은 **영상-only 모드** — 강의 헤더 + 영상 카드 + LessonLikeBar(좋아요+댓글 카운트) + CommentSection(댓글 임베드) + 이전/다음 네비. 우측 통계·진행률은 `LessonProgress` 실데이터(`getCourseLessonStatuses`). **`lesson-13` 은 프로젝트형** — 영상 대신 `ProjectRunner`(텍스트 문제 → 코드 작성 → Pyodide 실행 → 테스트 채점). 로그인 게이팅·헤더 동일(`LessonContentHeader subtabs=[]` 재사용). 현재 마지막 강이라 다음 네비 없음 |
+| `/courses/[courseId]/lessons/[lessonId]/practice` | 강별 연습 문제 | **로그인 게이팅 없음**(진행 저장이 없어 비로그인 풀이 가능). `getExercises` 있는 강만(현재 `lesson-4`). `ExerciseRunner`(문제 칩 자유 전환 + CodeMirror + 실행(입력 모달)/제출 채점 — 13강 ProjectRunner 단순화, `lib/project/grader.ts` 재사용). 진입점 2곳: 강의 목록 카드 "연습" 버튼 + 영상 상세 `PracticeEntryLink` 카드. **통과 저장·이수율 연동 미구현**(통과 표시는 로컬 state) |
 | `/login` | 로그인 | 이메일 + Google/Kakao OAuth |
 | `/signup` | 회원가입 | 이메일/비밀번호/닉네임 |
 | `/forgot-password` | 비밀번호 재설정 요청 | 메일 링크 전송 |
@@ -76,7 +77,7 @@
 | `lib/learning/progress-actions.ts` | Server Actions: `markVideoWatchedAction` (영상 90% 시청 멱등 기록), `toggleLessonCompleteAction` (완료 토글 = `learnCompletedAt` on/off) |
 | `lib/learning/progress-queries.ts` | `getLessonProgress` (강의 진도 상태), `getCourseCompletion` (코스 이수율 = 완료 강의 수 / 전체), `getCourseLessonStatuses` (코스 강의별 status 맵 `lessonId → LessonStatus` — 강의 목록/상세 진행률 실데이터). 둘 다 `LessonProgress`(영상 강의 `learnCompletedAt`) + `ProjectProgress`(프로젝트 강의 `completedAt`) 를 **함께 집계**. 영상: `learnCompletedAt`→completed, `videoWatchedAt`만→in-progress / 프로젝트: `completedAt`→completed, 진도 행만→in-progress / 없음·비로그인→not-started |
 | `lib/project-content.ts` | 프로젝트형 강의 콘텐츠. `Project` / `ProjectStep` / `TestCase` / `ExpectedOutput` 타입 + `pythonLesson13Project` (7스텝: 설계 Step0 + 구현 Step1~6) + `getProject(courseId, lessonId)` (python/be-python 둘 다 매칭). `Project.concepts` = 필요 개념 태그. 함수 없는 코드라 채점은 전부 stdin→stdout 시나리오 |
-| `lib/exercise-content.ts` | `Exercise` / `ExerciseSet` 타입 + `pythonLesson4Exercises` (4강 「입력과 연산자」 3문제) + `exercisesByRef` / `getExercises(courseId, lessonId)`. 13강 `project-content.ts` 와 **별개**인 강별 연습 문제 트랙 — 영상 보고 그 강 문법만으로 푸는 단일 채점 미니 문제(강당 0~3, `note` = 영상 밖 보충 고정글). 채점은 `lib/project/grader.ts` 재사용, `tests` 는 13강 `TestCase` 공유. **현재 4강 데이터만 — 러너 UI / `ExerciseProgress` 모델 / 진입점 / random seed 주입 미구현** |
+| `lib/exercise-content.ts` | `Exercise` / `ExerciseSet` 타입 + `pythonLesson4Exercises` (4강 「입력과 연산자」 3문제) + `exercisesByRef` / `getExercises(courseId, lessonId)`. 13강 `project-content.ts` 와 **별개**인 강별 연습 문제 트랙 — 영상 보고 그 강 문법만으로 푸는 단일 채점 미니 문제(강당 0~3, `note` = 영상 밖 보충 고정글). 채점은 `lib/project/grader.ts` 재사용, `tests` 는 13강 `TestCase` 공유. **현재 4강 데이터만. 러너 UI(`components/exercise/`)·진입점(강의 목록/상세)·`/practice` 라우트 구현됨. 통과 저장(`ExerciseProgress`)·이수율 연동·random seed 주입은 미구현** |
 | `lib/project/grader.ts` | **클라이언트 전용** 코드 실행+채점 엔진. Pyodide(CDN 동적 로드) 로 `exec`, `input()` 모킹 + `print` stdout 캡처. `matchesExpected` 는 `ExpectedOutput` 순차 소비(숫자 허용오차 1e-9 / 텍스트 부분일치). export: `preloadPyodide` / `runPythonProgram` / `matchesExpected` / `gradeStep` + 타입 `CaseResult` / `RunResult` |
 | `lib/learning/project-actions.ts` | Server Actions: `passStepAction` (스텝 통과 기록+코드 저장, 채점 스텝 전부 통과 시 `completedAt`=학습완료) / `saveStepCodeAction` (코드만 저장, 이어하기). 채점은 클라(Pyodide), 통과 결과만 기록 |
 | `lib/learning/project-queries.ts` | `getProjectProgress(lessonRef, userId)` → `{ stepStatuses, submittedCode, completed }` |
@@ -95,6 +96,7 @@
 | `components/lessons/` | 강의 목록 페이지 (course-progress-header, lesson-list, lesson-card, progress-stat-card, stats-card, tips-card, badges-card) |
 | `components/lesson-content/` | 강의 상세 영상 영역 (lesson-content-header, lesson-video-card — **Client Component**(영상 90% 시청 추적 + 학습 완료 버튼), lesson-navigation — 영상-only 모드) |
 | `components/project/` | 프로젝트형 강의 실행 UI (project-runner — **Client Component**(스텝 칩/진행바·에디터·실행/제출·콘솔·케이스별 채점결과·힌트 사다리, 통과해야 다음 스텝 해금), code-editor — CodeMirror 6 래퍼, ProjectRunner 에서 `dynamic(ssr:false)` 로 로드(브라우저 전용)) |
+| `components/exercise/` | 강별 연습 문제 (exercise-runner — **Client**(문제 칩 자유 전환·CodeMirror·실행/제출 채점, 13강 ProjectRunner 단순화·`grader.ts` 재사용), practice-entry-link — 영상 상세 진입 카드). icon-map 없이 직접 import(`components/project`와 동일 예외) |
 | `components/auth/` | 인증 폼 (이메일 로그인/회원가입, OAuth 버튼 — Kakao+Google 인라인 SVG, 비번 재설정/재발급, AuthLayout 좌측 브랜드+우측 폼, or-divider, form-feedback) |
 | `components/mypage/` | 마이페이지 (사이드바, 프로필 카드, 학습 통계 카드(mock), 닉네임/비번 변경 폼, settings-section wrapper) |
 | `components/comments/` | 영상/게시글 공용 댓글 (CommentSection — lesson\|post 통합 Server, CommentForm create+edit 통합, CommentItem, LikeButton — comment/lesson/post 통합, ReportForm — comment/post 통합, LessonLikeBar) |
