@@ -2,9 +2,10 @@
 // Server Component — 액션 버튼은 강의 상세 라우트로 가는 <Link>.
 
 import Link from "next/link"
-import { CheckCircle2, Circle, Clock, Flame, Play, RotateCcw } from "lucide-react"
+import { CheckCircle2, Circle, Clock, Flame, Pencil, Play, RotateCcw } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { getExercises } from "@/lib/exercise-content"
 import { getProject } from "@/lib/project-content"
 
 import type { Lesson, LessonStatus } from "@/lib/lesson-plan"
@@ -53,6 +54,10 @@ export function LessonCard({
 
   // 프로젝트형 강의면 필요 개념 태그를 카드에 노출 (영상 강의는 undefined).
   const project = lesson.kind === "project" ? getProject(courseId, lesson.id) : undefined
+
+  // 이 강에 코드 연습 문제가 있으면 "연습" 진입 버튼을 노출 (현재는 4강에만 데이터 존재).
+  // getExercises 는 순수 데이터 모듈이라 client 트리(LessonList) 안에서도 안전하게 호출된다.
+  const hasExercises = Boolean(getExercises(courseId, lesson.id))
 
   return (
     <article
@@ -114,8 +119,19 @@ export function LessonCard({
         )}
       </div>
 
-      {/* 우측: 액션 버튼 */}
-      <LessonAction status={lesson.status} href={`/courses/${courseId}/lessons/${lesson.id}`} />
+      {/* 우측: 액션 버튼 (연습 데이터가 있으면 아래에 "연습" 보조 버튼) */}
+      <div className="flex shrink-0 flex-col items-stretch gap-1.5">
+        <LessonAction status={lesson.status} href={`/courses/${courseId}/lessons/${lesson.id}`} />
+        {hasExercises && (
+          <Link
+            href={`/courses/${courseId}/lessons/${lesson.id}/practice`}
+            className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-violet-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-violet-700 transition hover:bg-violet-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500 sm:px-3 sm:py-2 sm:text-[13px]"
+          >
+            <Pencil className="size-3.5" strokeWidth={2.5} aria-hidden />
+            연습
+          </Link>
+        )}
+      </div>
     </article>
   )
 }

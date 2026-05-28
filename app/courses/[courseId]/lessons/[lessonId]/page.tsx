@@ -16,6 +16,7 @@ import { notFound, redirect } from "next/navigation";
 import { CommentSection } from "@/components/comments/comment-section";
 import { LessonLikeBar } from "@/components/comments/lesson-like-bar";
 import { CourseDetailSidebar } from "@/components/course-detail/course-detail-sidebar";
+import { PracticeEntryLink } from "@/components/exercise/practice-entry-link";
 import { LessonContentHeader } from "@/components/lesson-content/lesson-content-header";
 import { LessonNavigation } from "@/components/lesson-content/lesson-navigation";
 import { LessonVideoCard } from "@/components/lesson-content/lesson-video-card";
@@ -29,6 +30,7 @@ import { TopNav } from "@/components/top-nav";
 import { getCurrentUser } from "@/lib/auth/get-user";
 import { getCourseDetail } from "@/lib/course-detail";
 import { courses } from "@/lib/courses";
+import { getExercises } from "@/lib/exercise-content";
 import { getLessonContent, type LessonNavigation as LessonNavData } from "@/lib/lesson-content";
 import { getCourseLessonStatuses, getLessonProgress } from "@/lib/learning/progress-queries";
 import { getProjectProgress } from "@/lib/learning/project-queries";
@@ -64,6 +66,9 @@ export default async function LessonContentPage({
   }
 
   const lessonRef = `${courseId}/${lessonId}`;
+
+  // 이 강에 코드 연습 문제가 있으면 영상 아래에 진입 링크를 노출 (현재는 4강에만 데이터 존재).
+  const exerciseSet = getExercises(courseId, lessonId);
 
   // 학습 진도 — 코스 전체(우측 통계) + 현재 강의(영상이면 시청/완료, 프로젝트면 스텝/코드).
   const [lessonStatuses, videoProgress, projectProgress] = await Promise.all([
@@ -185,6 +190,12 @@ export default async function LessonContentPage({
                     initialLearnCompleted={videoProgress.learnCompleted}
                   />
                   <LessonLikeBar lessonRef={lessonRef} />
+                  {exerciseSet && (
+                    <PracticeEntryLink
+                      href={`/courses/${courseId}/lessons/${lessonId}/practice`}
+                      exerciseCount={exerciseSet.exercises.length}
+                    />
+                  )}
                   <LessonNavigation
                     navigation={content.navigation}
                     previousHref={previousHref}
