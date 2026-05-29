@@ -75,13 +75,18 @@ export type RunResult = {
   error: string | null;
 };
 
-function buildWrapper(userCode: string, stdin: string[]): string {
+function buildWrapper(userCode: string, stdin: string[], seed?: number): string {
   const stdinLiteral = JSON.stringify(JSON.stringify(stdin));
   // json.loads 로 디코드하므로 stdin 과 동일하게 "이중" 인코딩한다.
   // (단일 인코딩이면 학습자 코드가 그대로 JSON 으로 파싱돼 JSONDecodeError 가 난다.)
   const codeLiteral = JSON.stringify(JSON.stringify(userCode));
+  // seed 가 주어지면 학습자 코드 실행 전에 random 을 고정한다 (채점 결정성 — 10강 random 문제).
+  // 학습자의 `import random` 은 sys.modules 의 동일 모듈을 받으므로 seed 가 유지된다.
+  // (seed 는 Exercise.seed: number 라 숫자만 들어온다 — 인젝션 위험 없음.)
+  const seedLines = seed !== undefined ? ["import random", `random.seed(${seed})`, ""] : [];
   // 학습자 코드는 exec 로 실행 → 래퍼와의 들여쓰기 충돌이 없다.
   return [
+    ...seedLines,
     "import sys, io, json, builtins",
     "",
     "class __CMOut(io.StringIO):",
@@ -115,10 +120,14 @@ function buildWrapper(userCode: string, stdin: string[]): string {
   ].join("\n");
 }
 
-/** 학습자 코드를 주어진 stdin 으로 실행하고 (stdout, error) 를 돌려준다. */
-export async function runPythonProgram(userCode: string, stdin: string[]): Promise<RunResult> {
+/** 학습자 코드를 주어진 stdin 으로 실행하고 (stdout, error) 를 돌려준다. seed 주어지면 random 고정. */
+export async function runPythonProgram(
+  userCode: string,
+  stdin: string[],
+  seed?: number,
+): Promise<RunResult> {
   const py = await preloadPyodide();
-  await py.runPythonAsync(buildWrapper(userCode, stdin));
+  await py.runPythonAsync(buildWrapper(userCode, stdin, seed));
   const stdout = String(py.globals.get("__cm_out") ?? "");
   const errRaw = py.globals.get("__cm_err");
   const error = errRaw ? String(errRaw) : "";
@@ -214,14 +223,15 @@ export type CaseResult = {
   error: string | null;
 };
 
-/** 한 스텝의 모든 테스트케이스를 실행/채점한다. */
+/** 한 스텝의 모든 테스트케이스를 실행/채점한다. seed 주어지면 매 케이스 random 을 동일하게 고정. */
 export async function gradeStep(
   userCode: string,
   tests: TestCase[],
+  seed?: number,
 ): Promise<{ allPassed: boolean; cases: CaseResult[] }> {
   const cases: CaseResult[] = [];
   for (const t of tests) {
-    const { stdout, error } = await runPythonProgram(userCode, t.stdin);
+    const { stdout, error } = await runPythonProgram(userCode, t.stdin, seed);
     const passed = !error && matchesExpected(stdout, t.expect);
     cases.push({ label: t.label, passed, stdin: t.stdin, stdout, error });
   }

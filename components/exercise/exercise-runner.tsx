@@ -132,7 +132,8 @@ export function ExerciseRunner({ set }: { set: ExerciseSet }) {
     setRunning(true);
     setConsoleOut(null);
     try {
-      const result = await gradeStep(code, exercise.tests);
+      // seed 가 있으면(10강 random) 채점만 random 을 고정한다. 실행(handleRun)은 고정 안 함 — 진짜 무작위 체험.
+      const result = await gradeStep(code, exercise.tests, exercise.seed);
       setCases(result.cases);
       if (result.allPassed) {
         setPassedById((prev) => ({ ...prev, [exercise.id]: true }));
