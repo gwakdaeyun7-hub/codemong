@@ -30,7 +30,7 @@ export async function GrowthReportCard({ userId }: { userId: string }) {
           <span className="inline-block size-2.5 rounded-sm bg-violet-500" />나
         </span>
         <span className="inline-flex items-center gap-1.5 text-zinc-600">
-          <span className="inline-block h-0 w-3.5 border-t-2 border-dashed border-zinc-400" />
+          <span className="inline-block size-2.5 rounded-sm bg-amber-500" />
           전체 평균
         </span>
       </div>

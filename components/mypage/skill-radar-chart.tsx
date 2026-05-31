@@ -1,7 +1,7 @@
 import type { RadarPoint } from "@/lib/learning/skill-radar";
 
 // 순수 SVG 레이더(스파이더) 차트 — Server Component (인터랙션/브라우저 API 없음).
-// 사용자 폴리곤(violet) 과 전체 평균 곡선(zinc 점선) 을 같은 N축 위에 겹쳐 그린다.
+// 사용자 폴리곤(violet) 과 전체 평균 곡선(amber 실선) 을 같은 N축 위에 겹쳐 그린다.
 // 좌표는 삼각함수로 직접 계산 — 차트 라이브러리 의존성 없음.
 
 const VW = 360; // viewBox 가로
@@ -76,14 +76,14 @@ export function SkillRadarChart({ points }: { points: RadarPoint[] }) {
         );
       })}
 
-      {/* 전체 평균 곡선 폴리곤 (zinc 점선) */}
+      {/* 전체 평균 곡선 폴리곤 (amber 실선 — 사용자 violet 과 뚜렷이 대비) */}
       <polygon
         points={basePoly}
-        fill="#a1a1aa"
-        fillOpacity={0.1}
-        stroke="#a1a1aa"
-        strokeWidth={1}
-        strokeDasharray="4 3"
+        fill="#f59e0b"
+        fillOpacity={0.12}
+        stroke="#d97706"
+        strokeWidth={1.5}
+        strokeLinejoin="round"
       />
 
       {/* 사용자 폴리곤 (violet) */}
