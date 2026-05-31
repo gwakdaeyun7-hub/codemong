@@ -94,7 +94,7 @@
 
 | Path | 역할 |
 |------|------|
-| `components/` (root) | 글로벌: `top-nav`, `user-menu`, `course-card`, `status-badge`, `level-badge`, `course-icon`, `toast` (ToastProvider/useToast — 버튼형 mutation 성공·실패 알림, `app/layout.tsx` body 에서 children 감쌈), `learning-mode-toggle` (현재 미사용 — 홈에서 제거됨, 향후 코드에디터 모드용 보존) |
+| `components/` (root) | 글로벌: `top-nav`, `site-footer` (전역 푸터 — `top-nav` 와 동일하게 앱 셸 페이지가 직접 배치, auth 풀스크린 제외), `user-menu`, `course-card`, `status-badge`, `level-badge`, `course-icon`, `toast` (ToastProvider/useToast — 버튼형 mutation 성공·실패 알림, `app/layout.tsx` body 에서 children 감쌈), `learning-mode-toggle` (현재 미사용 — 홈에서 제거됨, 향후 코드에디터 모드용 보존) |
 | `components/course-detail/` | 소개 탭 섹션 (header, sidebar — **Link 기반 Server Component**(탭별 라우팅, 미구현 탭은 "준비 중" 비활성), learning-outcomes, roadmap, checklist, reviews, cta, section-card) |
 | `components/lessons/` | 강의 목록 페이지 (course-progress-header, lesson-list, lesson-card, progress-stat-card, stats-card, tips-card, badges-card) |
 | `components/lesson-content/` | 강의 상세 영상 영역 (lesson-content-header, lesson-video-card — **Client Component**(영상 90% 시청 추적 + 학습 완료 버튼), lesson-navigation — 영상-only 모드) |
@@ -179,7 +179,7 @@
 
 1. **Server Component default**, `'use client'` 는 leaf 인터랙션에만 (예: `lesson-list` 필터). 레이아웃 통째로 client 로 마킹 금지.
 2. **shadcn Card/Button 미사용** — 디자인 톤이 안 맞아서 native + Tailwind 직접 구성. 새 카드 만들 때 `components/ui/card` import 하지 말 것.
-3. **카드 디자인 톤**: 흰 배경, `rounded-2xl`, 부드러운 shadow. 페이지 배경 `bg-zinc-50`. 메인 액센트 `violet-500` ~ `purple-600`.
+3. **카드 디자인 톤**: 흰 배경, `rounded-2xl`, 부드러운 shadow. 페이지 배경 `bg-zinc-50`. 메인 액센트 `violet-500` ~ `purple-600`. 진행중/이어가기 등 진행 상태 시각 요소(상태 배지·이어가기 버튼·진행바)도 이 액센트로 통일 (컴포넌트별로 blue/orange 등 제각각 쓰지 말 것).
 4. **모바일-first 반응형**: 데스크톱 기준으로 디자인하되 모바일에서 자연스럽게 무너져야. 사이드바는 `lg+` 에서만, 모바일에선 가로 스크롤 탭으로 대체.
 5. **Prop drilling > cloneElement** — `courseId` 같은 메타는 명시적 prop으로. children에 `cloneElement` 로 inject 하지 말 것.
 6. **lucide 아이콘은 항상 명시 import + 폴더별 `icon-map.ts` 화이트리스트** 통과. `<Icon name={dynamic} />` 같은 동적 매핑은 그 맵을 거치게.
