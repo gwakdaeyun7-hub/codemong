@@ -14,7 +14,7 @@
 - **shadcn/ui** v4 — 사실상 미사용 (디자인 톤 충돌). `components/ui/` 에 button/card/dialog/input/label/dropdown-menu 가 있지만 페이지는 native `<button>`/`<div>` + Tailwind 직접 구성으로 만들어짐
 - **lucide-react v1.14.0** ← v0.x 아님. 컴포넌트 폴더별 `icon-map.ts` 화이트리스트로만 import (트리쉐이킹 보호)
 - **Supabase** (`@supabase/ssr` + `@supabase/supabase-js`) — middleware/proxy, server/client helpers (`lib/supabase/`), 인증 UI 전체 구현 (`lib/auth/`, `app/(auth)/`, `app/auth/callback/`). OAuth Google + Kakao 지원
-- **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`). 모델 10개: Post / Comment / PostLike / CommentLike / LessonLike / PostReport / CommentReport / LessonProgress / ProjectProgress / ExerciseProgress
+- **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`). 모델 11개: Post / Comment / PostLike / CommentLike / LessonLike / PostReport / CommentReport / LessonProgress / ProjectProgress / ExerciseProgress / Notification
 - **CodeMirror 6** (`@uiw/react-codemirror` + `@codemirror/lang-python`) — 프로젝트형 강의(13강~) 코드 에디터. **Pyodide**(브라우저 Python 실행/채점 엔진)는 CDN 동적 로드(v0.28.3 jsdelivr) — 메인 앱 의존성 아님
 - **pnpm** (workspace + onlyBuiltDependencies)
 - **Remotion 4.0.456** (`remotion/` workspace 멤버, 영상 제작용 — 메인 앱 의존성 아님, sibling project)
@@ -68,12 +68,15 @@
 | `lib/auth/validation.ts` | email/password/nickname 검증 + `translateAuthError()` Supabase 에러 한국어 매핑 |
 | `lib/community/types.ts` | `PostCategory`, `CommentNode`, `PostListItem`, `PostDetail`, `LikedLessonItem`, `LikedPostItem`, `REPORT_REASONS`, `ReportReason` |
 | `lib/community/validation.ts` | post title/body, comment body, report reason/detail, lessonRef 검증 |
-| `lib/community/comments-actions.ts` | Server Actions: `createLessonCommentAction`, `createPostCommentAction`, `updateCommentAction`, `deleteCommentAction` (soft), `reportCommentAction` |
+| `lib/community/comments-actions.ts` | Server Actions: `createLessonCommentAction`, `createPostCommentAction`, `updateCommentAction`, `deleteCommentAction` (soft), `reportCommentAction`. **+ 알림 생성(`createNotification`) 통합**(글 작성자에게 `post_comment`, 답글이면 부모 댓글 작성자에게 `comment_reply`, lesson 답글도 `comment_reply` — best-effort, 기존 트랜잭션/카운트 캐시 불변) |
 | `lib/community/comments-queries.ts` | `listLessonComments` / `listPostComments` (1-depth 트리 구성), `listMyComments` |
 | `lib/community/posts-actions.ts` | `createPostAction`, `updatePostAction`, `deletePostAction` (soft), `toggleResolvedAction` (Q&A 해결, 작성자만), `reportPostAction` |
 | `lib/community/posts-queries.ts` | `listPosts` (category 필터), `getPost`, `listMyPosts` |
-| `lib/community/likes-actions.ts` | `togglePostLikeAction` / `toggleCommentLikeAction` / `toggleLessonLikeAction`, `getLessonLikeStatus` |
+| `lib/community/likes-actions.ts` | `togglePostLikeAction` / `toggleCommentLikeAction` / `toggleLessonLikeAction`, `getLessonLikeStatus`. **+ 알림 생성(`createNotification`) 통합**(`togglePostLikeAction`=`post_like` / `toggleCommentLikeAction`=`comment_like` — 좋아요 누를 때만, best-effort) |
 | `lib/community/likes-queries.ts` | `listMyLikedLessons` (lesson-plan join), `listMyLikedPosts` |
+| `lib/notifications/create.ts` | 알림 생성 내부 헬퍼(comments/likes actions 가 호출). `createNotification` — 본인→본인 skip + best-effort try/catch(실패해도 원 액션 불변), `toNotificationExcerpt`(미리보기 절단). 기존 Comment/Post 의 닉네임/아바타 스냅샷 패턴 답습 |
+| `lib/notifications/queries.ts` | `NotificationItem` 타입 + `getUnreadNotificationCount(userId)` (안읽음 수) + `listNotifications(userId, limit=10)` (최신순, 읽음/안읽음 모두, type 별 `href` 계산 포함). `top-nav` 가 로그인 사용자면 조회 |
+| `lib/notifications/actions.ts` | Server Action: `markNotificationsReadAction()` — 현재 사용자의 안읽음 일괄 읽음 처리(종 드롭다운 처음 열 때 호출) |
 | `lib/learning/progress-actions.ts` | Server Actions: `markVideoWatchedAction` (영상 90% 시청 멱등 기록), `toggleLessonCompleteAction` (완료 토글 = `learnCompletedAt` on/off) |
 | `lib/learning/progress-queries.ts` | `getLessonProgress` (강의 진도 상태 — 기존 필드 + `lessonCompleted`(= learnCompleted AND 연습 완료) 추가, 시그니처 `(lessonRef, userId)` 그대로), `getCourseCompletion` (코스 이수율 = 완료 강의 수 / 전체 — 자체 count 대신 `getCourseLessonStatuses` 의 completed 수에 위임해 "완료" 정의 단일화, 반환 `{completed, total}` 유지), `getCourseLessonStatuses` (코스 강의별 status 맵 `lessonId → LessonStatus` — 강의 목록/상세/홈 진행률 실데이터). `LessonProgress`(영상) + `ProjectProgress`(프로젝트) + `ExerciseProgress`(연습) 를 **함께 집계** (코스 전체 연습 현황은 `getCourseExerciseStatuses` 로 Promise.all 일괄 조회). 영상: `learnCompletedAt` 있음 **AND** 연습 완료(연습 0개 면제 OR `passed >= total`)→completed / 영상 시청·완료 흔적 또는 연습 일부 통과(`passed > 0`)→in-progress / 없음·비로그인→not-started. 프로젝트(연습 트랙 없음): `completedAt`→completed, 진도 행만→in-progress (판정 변경 없음) |
 | `lib/project-content.ts` | 프로젝트형 강의 콘텐츠. `Project` / `ProjectExample` / `TestCase` / `ExpectedOutput` 타입 + `pythonLesson13Project` + `getProject(courseId, lessonId)` (python/be-python 둘 다 매칭). **코딩테스트(백준/프로그래머스) 스타일** — 스텝 누적이 아니라 문제 1개를 한 번에 완성해 제출. `Project` = `prompt`(전체 요구사항) + `examples`(입출력 예시) + `starterCode` + `solutionCode`(완전한 모범답안) + `hints`(힌트 사다리) + `tests`(종합 `TestCase[]`) + `concepts`(필요 개념 태그). 함수 없는 코드라 채점은 전부 stdin→stdout 시나리오 |
@@ -104,9 +107,10 @@
 | `components/mypage/` | 마이페이지 (사이드바, 프로필 카드, 학습 통계 카드(mock), 성장 레이더 차트(growth-report-card — `getSkillRadar` 인지형 6축·나 vs 전체 평균·현재 고정 데모 데이터, skill-radar-chart — **순수 SVG, 의존성 0, 두 곡선·N축 동적**), 닉네임/비번 변경 폼, settings-section wrapper) |
 | `components/comments/` | 영상/게시글 공용 댓글 (CommentSection — lesson\|post 통합 Server, CommentForm create+edit 통합, CommentItem, LikeButton — comment/lesson/post 통합, ReportForm — comment/post 통합, LessonLikeBar) |
 | `components/community/` | 커뮤니티 (CategoryTabs, PostCard, PostForm create+edit 통합, PostActions — 수정/삭제/해결토글/신고) |
+| `components/notifications/` | 알림 종 드롭다운 (notification-menu — **Client**, 안읽음 rose 점 뱃지·처음 열 때 `markNotificationsReadAction` 로 읽음 처리·최신 10개·항목 클릭 시 해당 글/강의 이동. `top-nav` 가 조회한 데이터를 prop 으로 받음. icon-map 없이 직접 import — Bell 하나뿐, `components/lesson-content`·`components/project` 와 같은 예외) |
 | `components/ui/` | shadcn 원본 (현재는 거의 안 씀 — 향후 디자인 시스템화하면 cva variant로 흡수) |
 
-**각 도메인 폴더에 `icon-map.ts`** — lucide 아이콘 화이트리스트. 어떤 컴포넌트도 lucide에서 직접 동적 import 하지 않음. 단, 사용 아이콘이 적어 직접 import 만으로 충분한 폴더는 예외 — 현재 `components/lesson-content/` 와 `components/project/` 가 그 케이스.
+**각 도메인 폴더에 `icon-map.ts`** — lucide 아이콘 화이트리스트. 어떤 컴포넌트도 lucide에서 직접 동적 import 하지 않음. 단, 사용 아이콘이 적어 직접 import 만으로 충분한 폴더는 예외 — 현재 `components/lesson-content/` 와 `components/project/` 와 `components/notifications/`(Bell 하나) 가 그 케이스.
 
 ---
 
@@ -114,7 +118,7 @@
 
 `prisma/schema.prisma`. Supabase Postgres + Prisma 7. connection URL은 `prisma.config.ts`에서 관리 (Prisma 7에서 schema datasource의 `url`/`directUrl` 제거됨).
 
-### 모델 10개 + enum 1개
+### 모델 11개 + enum 2개
 
 | 모델 | 테이블 | 역할 |
 |------|-------|------|
@@ -128,7 +132,9 @@
 | `LessonProgress` | lesson_progress | 학습 진도(이수율/이해도 2층). lessonRef+userId 복합 PK. `learnCompletedAt`=학습완료(이수율), `quizPassedAt`/`quizBestScore`=이해완료(이해도, 2단계 미구현) |
 | `ProjectProgress` | project_progress | 프로젝트형 강의(13강~) 진도. lessonRef+userId 복합 PK. `stepStatuses`(스텝별 통과 여부) / `submittedCode`(스텝별 작성 코드, 이어하기) 둘 다 `Json @default("{}")`, `completedAt`=채점 스텝 전부 통과 시점(=학습완료, 이수율 집계). 단일 문제 코딩테스트로 바뀐 13강은 `"solution"` 키 하나만 사용 |
 | `ExerciseProgress` | exercise_progress | 강별 연습 문제 통과 기록. lessonRef+userId 복합 PK, `passed`(통과한 문제 id 맵 `Json @default("{}")`). 채점은 클라(Pyodide), 통과 결과만 멱등 기록. 13강 ProjectProgress 와 별개 트랙이지만, 영상 강의 강 완료(이수율) 판정에 **AND 조건**으로 함께 집계됨(연습 전부 통과해야 완료, 연습 0개 강은 면제) |
+| `Notification` | notifications | 커뮤니티 알림(댓글/답글/좋아요). `recipientId`(받는 userId)+`actorId`(행위자)+`actorNickname`/`actorAvatarUrl` 스냅샷(Comment/Post 패턴), `type`(NotificationType), `postId?`/`lessonRef?`/`commentId?`(이동 대상), `excerpt?`(미리보기), `readAt?`(null=안읽음). 인덱스 `[recipientId, readAt]`/`[recipientId, createdAt]`. 받는사람 귀속(로그아웃해도 유지), 무기한 보관·종 목록 최신 10개·**"열 때 조회"** |
 | `enum PostCategory` | — | question / free |
+| `enum NotificationType` | — | post_comment / comment_reply / post_like / comment_like |
 
 ### 설계 결정
 
@@ -139,6 +145,7 @@
 5. **답글 1-depth**: parentId가 있는 댓글에는 추가 답글 불가. application code에서 강제 (`parent.parentId !== null`이면 reject).
 6. **진도 2층 구조**: 영상 90% 시청 + 완료 버튼 = "학습 완료"(이수율, `learnCompletedAt`), 퀴즈 통과 = "이해 완료"(이해도, `quizPassedAt`/`quizBestScore`). lesson은 Prisma 외부라 외래키 대신 `lessonRef` 문자열 (`LessonLike`와 동일 패턴).
 7. **프로젝트 진도**: `ProjectProgress` 도 `lessonRef`+`userId` 복합 PK (`LessonProgress`와 동일 패턴). 스텝별 통과·작성 코드는 정규화하지 않고 `stepStatuses`/`submittedCode` Json 컬럼에 맵으로 저장. 채점은 클라이언트(Pyodide) 결과(`passed`)만 기록 — 학습용이라 정답 노출/우회 위험이 낮아 서버 재검증은 미구현 (신뢰가 필요해지면 얹는다).
+8. **알림 생성**: 댓글/답글/좋아요 액션에서 **best-effort**(try/catch 로 실패해도 원 액션·트랜잭션 불변), **본인→본인 skip**(자기 글에 자기가 단 행위는 알림 X). 갱신은 폴링/Realtime 이 아니라 **"열 때 조회"**(`top-nav` 가 매 페이지 server render 시 안읽음 수+목록 조회). 무기한 보관(자동삭제 X), 종 목록은 최신 10개만 노출.
 
 ### Auth
 
@@ -183,7 +190,7 @@
 4. **모바일-first 반응형**: 데스크톱 기준으로 디자인하되 모바일에서 자연스럽게 무너져야. 사이드바는 `lg+` 에서만, 모바일에선 가로 스크롤 탭으로 대체.
 5. **Prop drilling > cloneElement** — `courseId` 같은 메타는 명시적 prop으로. children에 `cloneElement` 로 inject 하지 말 것.
 6. **lucide 아이콘은 항상 명시 import + 폴더별 `icon-map.ts` 화이트리스트** 통과. `<Icon name={dynamic} />` 같은 동적 매핑은 그 맵을 거치게.
-7. **TopNav 배치**: 좌측 [로고 + `코드학습` / `실력향상` / `커뮤니티` / `마이페이지`], 우측 [검색 / 알림 / 프로필]. (이미지 보고 결정한 최종 배치 — 변경하지 말 것.)
+7. **TopNav 배치**: 좌측 [로고 + `코드학습` / `실력향상` / `커뮤니티` / `마이페이지`], 우측 [알림 / 프로필]. (검색은 기능 제거로 빠짐. 좌측 배치는 이미지 보고 결정한 최종 — 변경하지 말 것.)
 8. **카피 톤**: 한국어, 입문자 친화, 정직. "쉬워요!" 같은 과장 금지. 이모지 거의 안 씀.
 9. **버튼형 mutation 알림 = `useToast`, `alert()` 금지**: 좋아요/삭제/완료 등 버튼형 액션의 성공·실패 알림은 `components/toast.tsx` 의 `useToast` 로 통일 (`alert()` 쓰지 말 것). 핸들러는 `startTransition` 내부 `try/catch` 로 server action 의 `!result.ok` 뿐 아니라 예상 못한 throw 도 잡아 "잠시 후 다시 시도해 주세요." toast 로 안내. 단 폼(댓글/게시글/신고)의 입력 검증은 inline(FormFeedback) 유지 — toast 로 옮기지 말 것.
 10. **프로젝트형 강의(13~15강)**: 영상 없이 텍스트 문제 → 직접 코드 작성·실행·채점하는 **코딩테스트 스타일**(문제 1개를 한 번에 완성해 제출, 스텝 누적 아님) 미션 (영상 강의 1~12강과 별개 트랙). 실행 엔진은 **Pyodide**(브라우저 Python, CDN 로드 — 서버 채점 X). 13강 「계산기 만들기」는 **1~6강 문법만** 사용 (함수·리스트·딕셔너리·try·split 미사용) — 강의가 다룬 범위 안에서만 풀리도록. 14·15강도 이 패턴 답습.
@@ -213,7 +220,7 @@ pip install edge-tts        # 처음 한 번 (Python 3.10+)
 - **dev mode 첫 클릭 ~2s 지연**: Next.js JIT 정상 동작. 사용자 노트북 탓 아님.
 - **`pnpm install` 시 `cd remotion && pnpm install` 하지 말 것**: pnpm이 root `pnpm-workspace.yaml`을 보고 root install을 돌려서 의도한 remotion install이 안 됨. root에서 `pnpm install`로 둘 다 install 되거나, 특정 프로젝트만이면 `pnpm --filter remotion install`.
 - **Vercel build 가 `Cannot find module 'remotion'` 으로 실패**: `videos/<courseId>/<lessonId>/03-composition/*.tsx` 가 `import ... from "remotion"` 하는데, 메인 앱 `tsconfig.json` 의 `include` 가 모든 .tsx 를 잡아 그 파일들도 type check 대상이 됨. `remotion` 은 `remotion/` 워크스페이스에만 있어 메인 앱은 모듈을 못 찾음. 해결: `tsconfig.json` 의 `exclude` 에 `"videos"`, `"remotion"` 명시 (적용됨). Remotion 워크스페이스 자체 `tsconfig` 가 `../videos/**/*.tsx` 를 include 해 그쪽에서 type check 됨.
-- **프로젝트형 강의(13강) 실행 환경**: Pyodide 는 CDN 동적 로드라 첫 진입 시 수 초 로딩(이후 싱글톤 재사용). CodeMirror(`code-editor.tsx`)는 브라우저 전용이라 ProjectRunner 에서 `dynamic(ssr:false)` 로 로드 — 직접 import 하면 SSR 단계에서 깨짐. 새 프로젝트 강의 배포 전 `pnpm db:push` 로 `project_progress` 테이블 생성 필요. (강별 연습 문제 통과 저장도 동일 — `exercise_progress` 테이블이 없으면 배포 전 `pnpm db:push` 필요.)
+- **프로젝트형 강의(13강) 실행 환경**: Pyodide 는 CDN 동적 로드라 첫 진입 시 수 초 로딩(이후 싱글톤 재사용). CodeMirror(`code-editor.tsx`)는 브라우저 전용이라 ProjectRunner 에서 `dynamic(ssr:false)` 로 로드 — 직접 import 하면 SSR 단계에서 깨짐. 새 프로젝트 강의 배포 전 `pnpm db:push` 로 `project_progress` 테이블 생성 필요. (강별 연습 문제 통과 저장도 동일 — `exercise_progress` 테이블이 없으면 배포 전 `pnpm db:push` 필요. 커뮤니티 알림도 동일 — `notifications` 테이블이 없으면 배포 전 `pnpm db:push` 필요.)
 
 **전역 에러 바운더리 / 404**: `app/error.tsx`(렌더 에러 — 다시 시도), `app/not-found.tsx`(404), `app/global-error.tsx`(루트 레이아웃 폴백 — 인라인 스타일) 가 전역 폴백. 새 라우트별 에러 처리를 만들 때 이들과 중복/충돌하지 않게.
 
@@ -311,4 +318,4 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능. 단, 영상 아래에 LessonLikeBar(좋아요 + 댓글 카운트) + CommentSection(댓글) 은 추가됨.
 - 학습 진도 — **이수율(1층)은 구현 완료**: 영상 강의(90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`) + 프로젝트 강의(채점 통과 → `ProjectProgress.completedAt`) 가 **함께 집계**됨. 단 영상 강의 강 완료는 학습완료에 더해 **그 강 연습 문제 전부 통과(`ExerciseProgress`)까지 AND**(연습 0개 강은 면제, 프로젝트 강의는 연습 트랙 없어 자동 면제). 홈 카드뿐 아니라 **강의 목록·강의 상세 우측 진행률/통계까지 실데이터(`getCourseLessonStatuses`)로 연결** (비로그인이면 전부 not-started). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현 (`lib/lesson-plan.ts` 의 badges 는 전부 `acquired: false`, 뱃지 카드도 "준비 중"). `/mypage/page.tsx`의 성장 레이더 카드(`getSkillRadar`)는 **코딩 역량 인지형 6축(이해도/논리성/응용력/구현력/정확성/꾸준함)을 "나 vs 전체 평균" 으로 보여주되 현재는 고정 데모 데이터**(연습 문제가 적어 이수율 기반이 이상하게 나와 발표/미리보기용 정적값 — 양쪽 곡선 모두 `DEMO_VALUES`). 각 축 실측 공식은 `SkillAxis.measure` 주석에 명시, 실데이터 전환 시 `getSkillRadar` 본문만 교체(seam). 나머지 학습 통계 카드(`MasteryStatsCard`)와 `/mypage/calendar`는 여전히 mock (`LessonProgress`/`ProjectProgress` 집계로 추후 연결 가능).
 - 계정 삭제 자동화 — service_role admin API 필요. 현재 settings 페이지는 운영팀 메일 문의 안내만.
-- Realtime / 알림 센터 / 검색 — TopNav 알림·검색 아이콘은 "준비 중" 비활성(`disabled` + title 툴팁, 가짜 "읽지 않은 알림" 점 제거). 실제 기능 미구현.
+- 검색 — 기능 자체가 제거됨(TopNav 우측에서 검색 아이콘 삭제). / 실시간 푸시(Realtime) — 미구현. **알림 센터는 구현됨** (커뮤니티 댓글/답글/좋아요 기반, TopNav 종 드롭다운, **"열 때 조회"**(폴링/Realtime 아님 — `top-nav` 가 매 페이지 server render 시 안읽음 수+목록 조회), 무기한 보관·최신 10개 노출, 받는사람 귀속이라 로그아웃해도 유지). Realtime 푸시·읽음 동기화만 추후 과제.
