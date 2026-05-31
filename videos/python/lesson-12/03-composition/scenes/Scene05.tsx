@@ -4,10 +4,13 @@
  * 00-objectives §4 오개념 3 (에러 없으면 맞다는 착각) 함정 깔기 + Active Recall.
  * 12강 가장 무게 큰 구간의 도입. 정답 reveal 은 scene-06 으로 넘김 (R-004).
  *
- * - 0~4s: 코드 패널 (sum.py, width 720, height 240). 네 줄 sequential type-on.
- *         버그 = 세 번째 줄 `합계 = 합계 + n` 들여쓰기 0칸 (for 블록 밖). 이 시점엔
+ * - 0~4s: 코드 패널 (sum.py, width 720, height 360). 다섯 줄 sequential type-on.
+ *         for 블록 본문 = `print(합계)` (들여쓰기 4칸) — 코드가 실제로 돌아가게 하는
+ *         본문이자 scene-06 의 중간값 추적 print (이게 없으면 for 블록이 비어
+ *         IndentationError). 버그 = 네 번째 줄 `합계 = 합계 + n` 들여쓰기 0칸
+ *         (for 블록 밖 → 마지막 n=3 만 한 번 누적되어 합계 3). 이 시점엔
  *         _버그 강조 안 함_ (함정).
- * - 4~10s: 콘솔 패널 (출력, width 360, height 120) — _비어있음_. 큰 `?` (2.6).
+ * - 4~10s: 콘솔 패널 (출력, width 360, height 360 — 코드 패널과 동일) — _비어있음_. 큰 `?` (2.6).
  *          "에러 없음 ✓" 함정 라벨 (3.0).
  * - 10~18s: QuestionBox "합계엔 얼마가 나올까요?" (4.0) — 정답 _가림_. 2.5s 정적.
  *           이 scene 에선 정답 reveal 안 함 (scene-06 에서).
@@ -98,8 +101,8 @@ export const Scene05: React.FC = () => {
           gap: 64,
         }}
       >
-        {/* 코드 패널 — 합계 버그 (함정: 세 번째 줄 들여쓰기 0칸) */}
-        <CodePanel fileName="sum.py" width={720} height={240}>
+        {/* 코드 패널 — 합계 버그 (함정: 네 번째 줄 들여쓰기 0칸 → for 블록 밖) */}
+        <CodePanel fileName="sum.py" width={720} height={360}>
           <CodeLine lineNumber={1} revealAtSec={REVEAL.line0}>
             <PyToken text="합계" kind="name" /> <PyToken text="=" kind="op" />{" "}
             <PyToken text="0" kind="number" />
@@ -109,13 +112,22 @@ export const Scene05: React.FC = () => {
             <PyToken text="in" kind="keyword" /> <PyToken text="[1, 2, 3]" kind="number" />
             <PyToken text=":" kind="op" />
           </CodeLine>
-          {/* 버그 줄 — 들여쓰기 0칸 (for 블록 밖). 강조 X (함정) */}
+          {/* for 블록 본문 — print(합계) 들여쓰기 4칸. 코드가 실제로 돌아가게 하는 본문이자
+              scene-06 에서 중간값을 추적할 print. (이게 없으면 for 블록이 비어 IndentationError) */}
           <CodeLine lineNumber={3} revealAtSec={REVEAL.line0 + REVEAL.lineStep * 2}>
+            <span style={{ whiteSpace: "pre" }}>{"    "}</span>
+            <PyToken text="print" kind="func" />
+            <PyToken text="(" kind="op" />
+            <PyToken text="합계" kind="name" />
+            <PyToken text=")" kind="op" />
+          </CodeLine>
+          {/* 버그 줄 — 들여쓰기 0칸 (for 블록 밖). 강조 X (함정) */}
+          <CodeLine lineNumber={4} revealAtSec={REVEAL.line0 + REVEAL.lineStep * 3}>
             <PyToken text="합계" kind="name" /> <PyToken text="=" kind="op" />{" "}
             <PyToken text="합계" kind="name" /> <PyToken text="+" kind="op" />{" "}
             <PyToken text="n" kind="name" />
           </CodeLine>
-          <CodeLine lineNumber={4} revealAtSec={REVEAL.line0 + REVEAL.lineStep * 3}>
+          <CodeLine lineNumber={5} revealAtSec={REVEAL.line0 + REVEAL.lineStep * 4}>
             <PyToken text="print" kind="func" />
             <PyToken text="(" kind="op" />
             <PyToken text="합계" kind="name" />
@@ -126,7 +138,7 @@ export const Scene05: React.FC = () => {
         {/* 콘솔 패널 — 비어있음 (Active Recall) + 큰 ? */}
         <div style={{ position: "relative" }}>
           <FadeIn delaySec={REVEAL.consolePanel} translateY={12}>
-            <ConsolePanel title="출력" width={360} height={240}>
+            <ConsolePanel title="출력" width={360} height={360}>
               {/* 비어있음 — 결과 안 보여줌 (Active Recall) */}
               <span aria-hidden />
             </ConsolePanel>

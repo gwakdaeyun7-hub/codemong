@@ -2,18 +2,17 @@
  * Scene 3 — NameError: 마지막 줄부터 아래에서 위로 읽기 (26s placeholder)
  *
  * 00-objectives §4 오개념 2 (위에서부터 읽다 길 잃음) + 학습목표 1·3 핵심 처치.
- * 읽는 _방향_ 을 아래→위 화살표로 박는 것이 이 컷의 핵심 시각 장치.
  *
- * - 0~5s: scene-02 Traceback 박스가 좌측으로 (width 920). 윗줄 두 줄 흐림(0.4).
- * - 5~13s: 박스 우측 UpArrow (delaySec 1.4, strokeWidth 6, length 240 — R-012).
- *          맨 아래 `NameError` 줄 노란 full 강조 (2.0) + "① 무슨 에러".
- *          `line 3` 토큰 partial 강조 (3.6) + "② 몇 번째 줄".
- * - 13~20s: 우측 코드 패널 (delaySec 5.0). `scroe` 빨간 강조 + 말풍선
- *           "score 인데 scroe?" (7.4 — wrapper-relative, R-022).
+ * - 0~5s: scene-02 Traceback 박스가 좌측으로 (width 820). 윗줄 두 줄 흐림(0.4).
+ * - 5~13s: 박스 우측에 ①② 라벨 (화살표 없이 — 보라 세로바/화살표가 겹쳐 제거).
+ *          ② "몇 번째 줄" = File 줄(2번째 줄) 세로 위치 / ① "무슨 에러" = NameError
+ *          줄(4번째 줄) 세로 위치에 정렬. 맨 아래 `NameError` 줄 노란 full 강조 (2.0).
+ * - 13~20s: 우측 코드 패널 (delaySec 5.0, width 640). `scroe` 빨간 강조 + 같은 줄
+ *           오른쪽 인라인 힌트 "← score 인데 scroe?" (7.4 — 코드박스 안, 겹침 없음).
  * - 20~25s: `scroe` → `score` letter swap (8.0, R-002 buffer). 초록 ✓ (9.2,
  *           패널 안쪽 inset right 24 — R-024). LowerThird (9.6).
  *
- * R-012 / R-016 / R-022 / R-024 / R-002 충족.
+ * R-016 / R-024 / R-002 충족. (UpArrow 제거 — 사용자 피드백: 세로바/화살표 겹침.)
  */
 
 import React from "react";
@@ -27,27 +26,29 @@ import {
   PageBackground,
   PyToken,
   SwapLabel,
-  TokenWithBubble,
   TraceLine,
   TracebackBox,
-  UpArrow,
 } from "../primitives";
 import { colors, fonts, radii } from "../theme";
 
+// scene-03.mp3 silencedetect 실측(local s)으로 재동기:
+//   "맨 마지막 줄부터" 3.4s / "네임 에러" 5.7s / "바로 그 위를 보면" 9.07s
+//   ("위를" ~9.4) / "세 번째 줄" 10.8s / "가서 보니" 13.0s
+//   / "스코어를 스크로라고 잘못 쳤네요" 14.1~16.1s / "오타입니다" 16.8~19.2s
+//   / "마지막 줄과 줄 번호" 20.0s. (이전 placeholder 는 전 비트가 5~9s 일찍 떴음.)
 const REVEAL = {
   boxMove: 0.2,
-  upArrow: 1.4,
-  errHighlight: 2.0, // narration "맨 마지막 줄부터" ~5.5s
-  errLabel: 2.4,
-  lineHighlight: 3.6, // narration "라인 쓰리" ~9s
-  lineLabel: 4.0,
-  codePanel: 5.0,
-  scroeHighlight: 6.4,
-  bubble: 7.4, // narration "스코어를 스크로라고 잘못 쳤네요" ~15s
-  swapOldFadeOut: 8.0,
-  swapNewFadeIn: 8.6, // 0.2s buffer (R-002)
-  checkMark: 9.2,
-  lowerThird: 9.6,
+  errHighlight: 3.5, // "맨 마지막 줄부터" → NameError 줄 노란 강조
+  errLabel: 4.2, // ① 무슨 에러
+  fileHighlight: 9.4, // "위를 보면" → File(line 3) 줄 가벼운(partial) 강조
+  lineLabel: 9.7, // ② 몇 번째 줄
+  codePanel: 12.8, // "가서 보니" → 원인 코드 패널 등장
+  scroeHighlight: 14.5, // "스코어를 스크로라고" → scroe 빨간 강조
+  bubble: 14.9, // "스크로라고 잘못" → "score 인데 scroe?" 힌트
+  swapOldFadeOut: 16.3, // "잘못 쳤네요" 후 → scroe→score 교정
+  swapNewFadeIn: 16.9, // 0.2s buffer (R-002)
+  checkMark: 17.9, // "변수 이름 오타입니다" → 교정 ✓
+  lowerThird: 20.0, // "마지막 줄과 줄 번호" → 정리
 } as const;
 
 export const Scene03: React.FC = () => {
@@ -83,7 +84,7 @@ export const Scene03: React.FC = () => {
         </FadeIn>
       </div>
 
-      {/* 메인 row — [Traceback] [중간 컬럼: ② / UpArrow / ①] [코드 패널] */}
+      {/* 메인 row — [Traceback (+우측 ①②라벨)] [코드 패널] */}
       <div
         style={{
           position: "absolute",
@@ -96,52 +97,72 @@ export const Scene03: React.FC = () => {
           gap: 44,
         }}
       >
-        {/* 좌측 — Traceback 박스 */}
-        <FadeIn delaySec={REVEAL.boxMove} translateY={0}>
-          <TracebackBox width={820}>
-            <TraceLine revealAtSec={REVEAL.boxMove} dimmed>
-              {`Traceback (most recent call last):`}
-            </TraceLine>
-            <TraceLine revealAtSec={REVEAL.boxMove} dimmed>
-              {`  File "main.py", line 3, in <module>`}
-            </TraceLine>
-            <TraceLine revealAtSec={REVEAL.boxMove} style={{ paddingLeft: 24 }}>
-              <span style={{ color: colors.syntaxFunc }}>print</span>
-              <span style={{ color: colors.traceMuted }}>(</span>
-              <span style={{ color: colors.traceInk }}>scroe</span>
-              <span style={{ color: colors.traceMuted }}>)</span>
-            </TraceLine>
-            <TraceLine
-              revealAtSec={REVEAL.boxMove}
-              highlightAtSec={REVEAL.errHighlight}
-              highlightStrength="full"
-            >
-              <span style={{ color: colors.traceErrName, fontWeight: 800 }}>NameError</span>
-              <span>{`: name 'scroe' is not defined`}</span>
-            </TraceLine>
-          </TracebackBox>
-        </FadeIn>
+        {/* 좌측 — Traceback 박스 + 우측 ①②라벨 (에러 줄에 세로 정렬, 화살표 제거) */}
+        <div style={{ position: "relative", marginRight: 210 }}>
+          <FadeIn delaySec={REVEAL.boxMove} translateY={0}>
+            <TracebackBox width={820}>
+              <TraceLine revealAtSec={REVEAL.boxMove} dimmed>
+                {`Traceback (most recent call last):`}
+              </TraceLine>
+              {/* File 줄(line 3) — "위를 보면" 발화 때 가볍게(partial) 강조 + 밝아짐 */}
+              <TraceLine
+                revealAtSec={REVEAL.boxMove}
+                dimmed
+                highlightAtSec={REVEAL.fileHighlight}
+                highlightStrength="partial"
+              >
+                {`  File "main.py", line 3, in <module>`}
+              </TraceLine>
+              <TraceLine revealAtSec={REVEAL.boxMove} style={{ paddingLeft: 24 }}>
+                <span style={{ color: colors.syntaxFunc }}>print</span>
+                <span style={{ color: colors.traceMuted }}>(</span>
+                <span style={{ color: colors.traceInk }}>scroe</span>
+                <span style={{ color: colors.traceMuted }}>)</span>
+              </TraceLine>
+              <TraceLine
+                revealAtSec={REVEAL.boxMove}
+                highlightAtSec={REVEAL.errHighlight}
+                highlightStrength="full"
+              >
+                <span style={{ color: colors.traceErrName, fontWeight: 800 }}>NameError</span>
+                <span>{`: name 'scroe' is not defined`}</span>
+              </TraceLine>
+            </TracebackBox>
+          </FadeIn>
 
-        {/* 중간 컬럼 — ② 라벨 (위) / UpArrow / ① 라벨 (아래) */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 14,
-            width: 150,
-            flexShrink: 0,
-          }}
-        >
-          <OrderLabel num="②" text="몇 번째 줄" delaySec={REVEAL.lineLabel} />
-          <UpArrow length={200} strokeWidth={6} delaySec={REVEAL.upArrow} uid="s03-read" />
-          <OrderLabel num="①" text="무슨 에러" delaySec={REVEAL.errLabel} />
+          {/* ② 몇 번째 줄 — File 줄(2번째 줄) 세로 위치에 정렬 */}
+          <div
+            style={{
+              position: "absolute",
+              left: "100%",
+              marginLeft: 36,
+              top: 107,
+              transform: "translateY(-50%)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <OrderLabel num="②" text="몇 번째 줄" delaySec={REVEAL.lineLabel} />
+          </div>
+
+          {/* ① 무슨 에러 — NameError 줄(4번째 줄) 세로 위치에 정렬 */}
+          <div
+            style={{
+              position: "absolute",
+              left: "100%",
+              marginLeft: 36,
+              top: 215,
+              transform: "translateY(-50%)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <OrderLabel num="①" text="무슨 에러" delaySec={REVEAL.errLabel} />
+          </div>
         </div>
 
         {/* 우측 — 원인 코드 패널 */}
         <div style={{ position: "relative" }}>
           <FadeIn delaySec={REVEAL.codePanel} translateY={16}>
-            <CodePanel fileName="main.py" width={560} height={220} style={{ overflow: "visible" }}>
+            <CodePanel fileName="main.py" width={640} height={240}>
               <CodeLine lineNumber={1} revealAtSec={REVEAL.codePanel}>
                 <PyToken text="score" kind="name" /> <PyToken text="=" kind="op" />{" "}
                 <PyToken text="90" kind="number" />
@@ -157,6 +178,7 @@ export const Scene03: React.FC = () => {
                 <PyToken text="(" kind="op" />
                 <ScroeToScoreSwap />
                 <PyToken text=")" kind="op" />
+                <ScroeHint />
               </CodeLine>
             </CodePanel>
           </FadeIn>
@@ -171,10 +193,9 @@ export const Scene03: React.FC = () => {
       <LowerThird
         text={
           <span>
-            에러는{" "}
-            <span style={{ color: colors.accentLight, fontWeight: 700 }}>아래에서 위로</span> —{" "}
-            <span style={{ color: colors.highlightYellow, fontWeight: 700 }}>마지막 줄</span> →{" "}
-            줄 번호
+            에러는 <span style={{ color: colors.accentLight, fontWeight: 700 }}>아래에서 위로</span>{" "}
+            — <span style={{ color: colors.highlightYellow, fontWeight: 700 }}>마지막 줄</span> → 줄
+            번호
           </span>
         }
         delaySec={REVEAL.lowerThird}
@@ -233,30 +254,19 @@ const ScroeToScoreSwap: React.FC = () => {
       newFadeInAtSec={REVEAL.swapNewFadeIn}
       fadeDurationSec={0.4}
       initial={
-        <TokenWithBubble
-          bubble={
-            <span>
-              <span style={{ fontFamily: fonts.mono, color: colors.accentInk }}>score</span> 인데{" "}
-              <span style={{ fontFamily: fonts.mono, color: colors.dangerRedDeep }}>scroe</span>?
-            </span>
-          }
-          bubbleDelaySec={REVEAL.bubble}
-          offsetY={16}
+        <span
+          style={{
+            display: "inline-block",
+            color: colors.traceInk,
+            borderBottom: hi > 0.05 ? `3px solid ${colors.dangerRed}` : "3px solid transparent",
+            background: hi > 0.05 ? "rgba(220, 38, 38, 0.18)" : "transparent",
+            borderRadius: 3,
+            padding: "0 2px",
+            whiteSpace: "nowrap",
+          }}
         >
-          <span
-            style={{
-              display: "inline-block",
-              color: colors.traceInk,
-              borderBottom: hi > 0.05 ? `3px solid ${colors.dangerRed}` : "3px solid transparent",
-              background: hi > 0.05 ? "rgba(220, 38, 38, 0.18)" : "transparent",
-              borderRadius: 3,
-              padding: "0 2px",
-              whiteSpace: "nowrap",
-            }}
-          >
-            scroe
-          </span>
-        </TokenWithBubble>
+          scroe
+        </span>
       }
       newLabel={
         <span
@@ -273,5 +283,35 @@ const ScroeToScoreSwap: React.FC = () => {
         </span>
       }
     />
+  );
+};
+
+/**
+ * `score` 인데 `scroe`? 힌트 — 코드 패널 안, `print(scroe)` 오른쪽 인라인 주석.
+ * (기존 토큰 위 말풍선이 윗줄 코드와 겹쳐서, 같은 줄 오른쪽으로 옮김.)
+ */
+const ScroeHint: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const start = REVEAL.bubble * fps;
+  const op = interpolate(frame, [start, start + 0.4 * fps], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return (
+    <span
+      style={{
+        marginLeft: 28,
+        opacity: op,
+        fontFamily: fonts.sans,
+        fontSize: 22,
+        fontWeight: 600,
+        color: colors.accentLight,
+        whiteSpace: "nowrap",
+      }}
+    >
+      ← <span style={{ fontFamily: fonts.mono, color: colors.darkAccent }}>score</span> 인데{" "}
+      <span style={{ fontFamily: fonts.mono, color: colors.traceErrName }}>scroe</span>?
+    </span>
   );
 };

@@ -402,6 +402,10 @@ export const CodePanel: React.FC<{
           height: 40,
           background: "#1c1c20",
           borderBottom: `1px solid ${colors.darkBg2}`,
+          // 윗모서리 둥글게 — overflow: visible 인 패널에서도 헤더 각진 모서리가
+          // 둥근 패널 테두리 밖으로 삐지지 않게 (panel borderRadius 14 − border 1px)
+          borderTopLeftRadius: 13,
+          borderTopRightRadius: 13,
           display: "flex",
           alignItems: "center",
           padding: "0 16px",
@@ -555,6 +559,9 @@ export const ConsolePanel: React.FC<{
           height: 40,
           background: "#222226",
           borderBottom: `1px solid ${colors.darkBg2}`,
+          // 윗모서리 둥글게 (CodePanel 과 동일 — overflow visible 대비)
+          borderTopLeftRadius: 13,
+          borderTopRightRadius: 13,
           display: "flex",
           alignItems: "center",
           padding: "0 18px",
@@ -751,14 +758,7 @@ export const SwapLabel: React.FC<{
   newFadeInAtSec: number;
   fadeDurationSec?: number;
   style?: React.CSSProperties;
-}> = ({
-  initial,
-  newLabel,
-  oldFadeOutAtSec,
-  newFadeInAtSec,
-  fadeDurationSec = 0.4,
-  style,
-}) => {
+}> = ({ initial, newLabel, oldFadeOutAtSec, newFadeInAtSec, fadeDurationSec = 0.4, style }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const oldFadeStart = oldFadeOutAtSec * fps;
@@ -815,11 +815,7 @@ export const EmphasisPulse: React.FC<{
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  return (
-    <span style={{ display: "inline-block", transform: `scale(${scale})` }}>
-      {children}
-    </span>
-  );
+  return <span style={{ display: "inline-block", transform: `scale(${scale})` }}>{children}</span>;
 };
 
 /* ------------------------------------------------------------------ */
@@ -995,9 +991,10 @@ export const TracebackBox: React.FC<{
         border: `1px solid ${colors.darkBg2}`,
         borderLeftWidth: 6,
         borderLeftColor: colors.traceBarRed,
-        boxShadow: glow > 0.02
-          ? `${shadows.card}, 0 0 ${40 * glow}px ${10 * glow}px ${colors.traceBgGlow}`
-          : shadows.card,
+        boxShadow:
+          glow > 0.02
+            ? `${shadows.card}, 0 0 ${40 * glow}px ${10 * glow}px ${colors.traceBgGlow}`
+            : shadows.card,
         overflow: "hidden",
         fontFamily: fonts.mono,
         ...style,
@@ -1062,34 +1059,38 @@ export const TraceLine: React.FC<{
   });
   const hi =
     typeof highlightAtSec === "number"
-      ? interpolate(
-          frame,
-          [highlightAtSec * fps, (highlightAtSec + 0.4) * fps],
-          [0, 1],
-          { easing: easeOutCubic, extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-        )
+      ? interpolate(frame, [highlightAtSec * fps, (highlightAtSec + 0.4) * fps], [0, 1], {
+          easing: easeOutCubic,
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        })
       : 0;
+
+  // dimmed 줄이 강조(highlightAtSec)되면 0.4 → 1.0 으로 밝아진다 (안 그러면 강조 박스도
+  // 부모 opacity 0.4 에 묶여 거의 안 보임). 색도 강조가 들어오면 밝은 traceInk 로.
+  const dimOpacity = dimmed ? 0.4 + 0.6 * hi : 1;
 
   return (
     <div
       style={{
         position: "relative",
-        opacity: reveal * (dimmed ? 0.4 : 1),
+        opacity: reveal * dimOpacity,
         transform: `translateY(${(1 - reveal) * 6}px)`,
-        color: dimmed ? colors.traceMuted : colors.traceInk,
+        color: dimmed && hi < 0.5 ? colors.traceMuted : colors.traceInk,
         whiteSpace: "pre",
         display: "inline-block",
         alignSelf: "flex-start",
         ...style,
       }}
     >
-      {/* 노란 강조 배경 (마지막 줄/줄번호) */}
-      {typeof highlightAtSec === "number" ? (
+      {/* 노란 강조 배경 — full 강조만. partial(가벼운 강조)은 박스 없이 _줄이 밝아지는 것_
+          (dimmed 0.4 → 1.0) 으로만 표현 (사용자 피드백: 테두리·노란 배경 모두 제거) */}
+      {typeof highlightAtSec === "number" && highlightStrength === "full" ? (
         <div
           style={{
             position: "absolute",
             left: -6,
-            right: highlightStrength === "full" ? -10 : "40%",
+            right: -10,
             top: -2,
             bottom: -2,
             background: colors.highlightYellowSoft,
@@ -1135,7 +1136,12 @@ export const Chip: React.FC<{
     typeof pulseAtSec === "number"
       ? interpolate(
           frame,
-          [pulseAtSec * fps, (pulseAtSec + 0.25) * fps, (pulseAtSec + 0.6) * fps, (pulseAtSec + 1.0) * fps],
+          [
+            pulseAtSec * fps,
+            (pulseAtSec + 0.25) * fps,
+            (pulseAtSec + 0.6) * fps,
+            (pulseAtSec + 1.0) * fps,
+          ],
           [0, 1, 1, 0],
           { easing: easeInOut, extrapolateLeft: "clamp", extrapolateRight: "clamp" },
         )
@@ -1336,12 +1342,11 @@ export const QuestionBox: React.FC<{
   const { fps } = useVideoConfig();
   const revealed =
     typeof revealAtSec === "number"
-      ? interpolate(
-          frame,
-          [revealAtSec * fps, (revealAtSec + 0.4) * fps],
-          [0, 1],
-          { easing: easeOutCubic, extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-        )
+      ? interpolate(frame, [revealAtSec * fps, (revealAtSec + 0.4) * fps], [0, 1], {
+          easing: easeOutCubic,
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+        })
       : 0;
 
   return (
@@ -1453,12 +1458,11 @@ export const ReframeMark: React.FC<{
     extrapolateRight: "clamp",
   });
   // 🔍 fade-in (R-002: ⚠ fade-out [swap, swap+0.35] 후 0.2s buffer)
-  const lensIn = interpolate(
-    frame,
-    [(swapAtSec + 0.55) * fps, (swapAtSec + 0.95) * fps],
-    [0, 1],
-    { easing: easeOutCubic, extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
+  const lensIn = interpolate(frame, [(swapAtSec + 0.55) * fps, (swapAtSec + 0.95) * fps], [0, 1], {
+    easing: easeOutCubic,
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   const base: React.CSSProperties = {
     position: "absolute",

@@ -5,7 +5,7 @@
  * accent) / 우 절반 `<Card variant="accent">` 다음 강의 카드 / 하단 LowerThird.
  *
  * 세 가지 디버깅 사고를 CodeMong 오답분류 세 단어로 정리 (scene-02 의 세 칩이
- * 여기서 _완성_ — 셋 다 강조). 13강 프로젝트 hook ("직접 만들 차례 / 단어 암기장").
+ * 여기서 _완성_ — 셋 다 강조). 13강 프로젝트 hook ("직접 만들 차례 / 계산기").
  *
  * delaySec 시퀀스 (lesson-11 답습):
  *   - 체크리스트 0.6 + i × 0.35 (i = 0/1/2 → 0.6 / 0.95 / 1.3)
@@ -17,14 +17,7 @@
  */
 
 import React from "react";
-import {
-  Card,
-  Chip,
-  ChipTone,
-  FadeIn,
-  LowerThird,
-  PageBackground,
-} from "../primitives";
+import { Card, Chip, ChipTone, FadeIn, LowerThird, PageBackground } from "../primitives";
 import { colors, fonts, radii } from "../theme";
 
 const checklist: { label: React.ReactNode; chipLabel: string; chipTone: ChipTone }[] = [
@@ -171,15 +164,13 @@ export const Scene09: React.FC = () => {
                 }}
               >
                 <span style={{ fontStyle: "italic" }}>내 디버깅</span> ={" "}
-                <span style={{ fontWeight: 800, color: colors.accentDeep }}>
-                  코드몽의 오답분석
-                </span>
+                <span style={{ fontWeight: 800, color: colors.accentDeep }}>코드몽의 오답분석</span>
               </div>
             </FadeIn>
           </Card>
         </FadeIn>
 
-        {/* Right: 다음 강의 — 13강 단어 암기장 만들기 */}
+        {/* Right: 다음 강의 — 13강 계산기 만들기 */}
         <FadeIn delaySec={1.6} translateY={20}>
           <Card
             variant="accent"
@@ -214,7 +205,7 @@ export const Scene09: React.FC = () => {
                 marginBottom: 18,
               }}
             >
-              단어 암기장 만들기
+              계산기 만들기
             </div>
             <div
               style={{
@@ -254,10 +245,7 @@ export const Scene09: React.FC = () => {
         </FadeIn>
       </div>
 
-      <LowerThird
-        text="에러는 읽고, 흐름은 찍어 보고, 모르면 다시 배우세요"
-        delaySec={3.0}
-      />
+      <LowerThird text="에러는 읽고, 흐름은 찍어 보고, 모르면 다시 배우세요" delaySec={3.0} />
     </PageBackground>
   );
 };

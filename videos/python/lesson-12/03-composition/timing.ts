@@ -13,29 +13,32 @@
  * That yields Σ dur_i == TOTAL_DURATION_FRAMES with 0 frame drift even after
  * rounding (the last boundary acts as the rounding sink).
  *
- * Source data — timestamps.json (9 scenes, last endMs 211488):
+ * Source data — timestamps.json (9 scenes, last endMs 210216):
  *
  *   i  | sceneId  | startMs | endMs  | from = round(startMs*30/1000)
  *   01 | scene-01 |       0 |  15972 |    0
- *   02 | scene-02 |   15972 |  38002 |  479
- *   03 | scene-03 |   38002 |  64031 | 1140
- *   04 | scene-04 |   64031 |  88288 | 1921
- *   05 | scene-05 |   88288 | 112473 | 2649
- *   06 | scene-06 |  112473 | 139890 | 3374
- *   07 | scene-07 |  139890 | 161944 | 4197
- *   08 | scene-08 |  161944 | 184980 | 4858
- *   09 | scene-09 |  184980 | 211488 | 5549
- *   TOTAL                              6345  (= round(211488*30/1000))
+ *   02 | scene-02 |   15972 |  38001 |  479
+ *   03 | scene-03 |   38001 |  63096 | 1140
+ *   04 | scene-04 |   63096 |  87353 | 1893
+ *   05 | scene-05 |   87353 | 111537 | 2621
+ *   06 | scene-06 |  111537 | 138955 | 3346
+ *   07 | scene-07 |  138955 | 161008 | 4169
+ *   08 | scene-08 |  161008 | 184044 | 4830
+ *   09 | scene-09 |  184044 | 210216 | 5521
+ *   TOTAL                              6306  (= round(210216*30/1000))
  *
  * Durations (adjacent-boundary):
- *   479, 661, 781, 728, 725, 823, 661, 691, 796
- *   Σ = 6345 == TOTAL_DURATION_FRAMES (drift 0)
+ *   479, 661, 753, 728, 725, 823, 661, 691, 785
+ *   Σ = 6306 == TOTAL_DURATION_FRAMES (drift 0)
  *
- * Note: voiceover came in at 211.488s (vs Stage 2 placeholder 213s, -0.7%).
- * Scene-internal beat timing (delaySec) was authored against the placeholder;
- * Active Recall (scene-05 question / scene-06 answer reveal) is re-synced to
- * measured audio per R-004/R-027 — see those scenes. Other scenes' tail
- * dead-air, if any, is left for video-director review (do not rescale beats).
+ * Note: voiceover re-synthesized twice. (1) scene-03 narration fix ("바로 그 위,
+ * 라인 쓰리 —" → "바로 그 위를 보면," — TTS 가 "그 위" 를 "그이" 로 뭉개고 영어
+ * "라인 쓰리" 읽기 제거). (2) scene-09 13강 hook "단어 암기장" → "계산기" (13강이
+ * 계산기 만들기로 확정). 211.488s → 210.552s → 210.216s. scene-09 만 796→785
+ * frames(-11), 그 외 scene 은 길이·from 불변 (scene-09 가 마지막이라 from 변동 없음).
+ * scene-05 sub-clip(a0 21336 / s1 2500)도 동일 — Active Recall 동기 보존.
+ * Scene-internal beat timing(delaySec)은 placeholder; scene-03 은 측정 재동기,
+ * scene-05/06 Active Recall 은 R-004/R-027 로 측정 동기됨 (do not rescale beats).
  *
  * Active Recall re-sync source (probed from _scenes/, stdlib MP3 parser):
  *   scene-05.a0 (question narration) = 21.336s -> local frame 640
@@ -68,9 +71,9 @@ export type SceneTiming = {
   durationInFrames: number;
 };
 
-// Derived from timestamps.json last endMs (211488).
-export const TOTAL_DURATION_MS = 211_488;
-export const TOTAL_DURATION_FRAMES = Math.round((TOTAL_DURATION_MS * FPS) / 1000); // 6345
+// Derived from timestamps.json last endMs (210216).
+export const TOTAL_DURATION_MS = 210_216;
+export const TOTAL_DURATION_FRAMES = Math.round((TOTAL_DURATION_MS * FPS) / 1000); // 6306
 
 /**
  * Wired from `02-audio/timestamps.json` (Stage 3).
@@ -79,13 +82,13 @@ export const TOTAL_DURATION_FRAMES = Math.round((TOTAL_DURATION_MS * FPS) / 1000
 export const SCENES: SceneTiming[] = [
   { id: "scene-01", from: 0, durationInFrames: 479 },
   { id: "scene-02", from: 479, durationInFrames: 661 },
-  { id: "scene-03", from: 1140, durationInFrames: 781 },
-  { id: "scene-04", from: 1921, durationInFrames: 728 },
-  { id: "scene-05", from: 2649, durationInFrames: 725 },
-  { id: "scene-06", from: 3374, durationInFrames: 823 },
-  { id: "scene-07", from: 4197, durationInFrames: 661 },
-  { id: "scene-08", from: 4858, durationInFrames: 691 },
-  { id: "scene-09", from: 5549, durationInFrames: 796 },
+  { id: "scene-03", from: 1140, durationInFrames: 753 },
+  { id: "scene-04", from: 1893, durationInFrames: 728 },
+  { id: "scene-05", from: 2621, durationInFrames: 725 },
+  { id: "scene-06", from: 3346, durationInFrames: 823 },
+  { id: "scene-07", from: 4169, durationInFrames: 661 },
+  { id: "scene-08", from: 4830, durationInFrames: 691 },
+  { id: "scene-09", from: 5521, durationInFrames: 785 },
 ];
 
 export const sceneOf = (id: SceneId): SceneTiming => {

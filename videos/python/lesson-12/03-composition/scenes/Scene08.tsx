@@ -8,8 +8,9 @@
  * - 4~12s: 좌우 두 패널 (0.8 / 1.6 — R-008 동일 width 620/height 360).
  *          왼쪽(나쁨): ✕ 마커(inset, R-024) + "코드가 안 돼요. 고쳐 주세요" → AI 큰 `?` (3.0).
  *          오른쪽(좋음): ✓ 마커(inset) + 코드 `print(scroe)` + 빨간 에러 `NameError`
- *          + "이 에러가 왜 나는지 같이 봐 주세요" → AI "scroe → score 오타예요" + 화살표 (4.0).
- *          (scroe 오타 = scene-03 재활용 — mental model 연결.)
+ *          + "이 에러가 왜 나는지 같이 봐 주세요" → AI "scroe → score 오타예요" 카드 (4.0).
+ *          (scroe 오타 = scene-03 재활용 — mental model 연결. 큰 FlowArrow 는 제거 —
+ *          사용자 피드백: AI→ 위 큰 화살표 삭제.)
  * - 12~22s: 강조 라벨 (5.6). 오른쪽 패널 펄스 (6.0 — narration "조수" 동기, R-016).
  *           LowerThird (6.4).
  *
@@ -18,14 +19,7 @@
 
 import React from "react";
 import { interpolate, useCurrentFrame, useVideoConfig } from "remotion";
-import {
-  CheckMark,
-  FadeIn,
-  FlowArrow,
-  LowerThird,
-  PageBackground,
-  XMark,
-} from "../primitives";
+import { CheckMark, FadeIn, LowerThird, PageBackground, XMark } from "../primitives";
 import { colors, fonts, radii, shadows } from "../theme";
 
 const REVEAL = {
@@ -226,7 +220,12 @@ const GoodPanel: React.FC = () => {
   const pulseStart = REVEAL.goodPulse * fps;
   const pulse = interpolate(
     frame,
-    [pulseStart, pulseStart + 0.3 * fps, (REVEAL.goodPulse + 0.7) * fps, (REVEAL.goodPulse + 1.1) * fps],
+    [
+      pulseStart,
+      pulseStart + 0.3 * fps,
+      (REVEAL.goodPulse + 0.7) * fps,
+      (REVEAL.goodPulse + 1.1) * fps,
+    ],
     [0, 1, 1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
@@ -241,7 +240,8 @@ const GoodPanel: React.FC = () => {
           borderRadius: radii.card,
           background: colors.aiGoodTint,
           border: `2px solid ${pulse > 0.05 ? colors.accent : colors.aiGoodBorder}`,
-          boxShadow: pulse > 0.05 ? `${shadows.card}, 0 0 0 4px rgba(139, 92, 246, 0.18)` : shadows.card,
+          boxShadow:
+            pulse > 0.05 ? `${shadows.card}, 0 0 0 4px rgba(139, 92, 246, 0.18)` : shadows.card,
           padding: "28px 32px",
           display: "flex",
           flexDirection: "column",
@@ -284,7 +284,15 @@ const GoodPanel: React.FC = () => {
         </div>
 
         {/* AI 응답 — 정확히 그 줄을 짚음 */}
-        <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 16, paddingLeft: 56 }}>
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            paddingLeft: 56,
+          }}
+        >
           <span
             style={{
               fontFamily: fonts.sans,
@@ -314,23 +322,6 @@ const GoodPanel: React.FC = () => {
             </div>
           </FadeIn>
         </div>
-
-        {/* AI 응답 → 코드 조각(scroe) 가리키는 화살표 (panel-relative, 안쪽에 머무름) */}
-        <FlowArrow
-          startX={132}
-          startY={240}
-          endX={132}
-          endY={140}
-          curve={-40}
-          delaySec={REVEAL.goodAi + 0.3}
-          durationSec={0.6}
-          strokeWidth={5}
-          color={colors.accentDeep}
-          width={PANEL_W}
-          height={PANEL_H}
-          uid="s08-good-point"
-          style={{ left: 0, top: 0 }}
-        />
       </div>
     </FadeIn>
   );

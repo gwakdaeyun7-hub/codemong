@@ -1,7 +1,7 @@
 // 강의 상세(개념 탭) 화면 데이터 모듈 — 영상-only 모드.
 // 화면은 강의 헤더 + 영상 카드 + 이전/다음 네비만 표시. 본문 카드(개념/구조/문법/예시/핵심정리/활용)는 제거됨.
 // 추후 본문을 다시 채우거나 새 콘텐츠 모델로 확장할 때 타입을 다시 늘릴 것.
-// MVP: lesson-1 ~ lesson-11 정적 객체 보유. lesson-12 는 영상 미제작 — 별도 라운드.
+// MVP: lesson-1 ~ lesson-12 정적 객체 보유 (12강 = 마지막 영상 강의, 13강은 프로젝트형).
 // 추후 backend-developer가 만들 API로 교체 예정.
 // (이 파일은 클라이언트/서버 어디서든 import 가능한 순수 데이터 모듈)
 
@@ -244,10 +244,29 @@ export const pythonLesson11Content: LessonContent = {
   },
 };
 
+export const pythonLesson12Content: LessonContent = {
+  lessonId: "lesson-12",
+  lessonNumber: 12,
+  title: "디버깅 & AI 활용",
+  durationMinutes: 22,
+  subtabs: ["개념", "응용", "시각자료"],
+  activeSubtab: "개념",
+  video: {
+    posterDescription: "안 돌아가는 코드를 읽고 고치기 — 에러는 마지막 줄부터, 흐름은 print 로",
+    transcriptSummary:
+      "이 영상에서는 새 문법 대신, 짠 코드가 안 돌아갈 때 무엇을 보고 어떻게 고치는지를 배웁니다. 빨간 에러(Traceback)는 마지막 줄부터 읽어 원인을 좁히고(문법오류), 에러가 없는데 결과가 틀릴 땐 print 로 중간값을 찍어 기대와 갈라지는 자리를 찾습니다(논리오류). 모르겠으면 그 개념의 강의로 돌아가고(개념미숙), AI 에게는 안 된 코드와 에러를 같이 붙여 묻는 태도까지 — 다음 계산기 만들기 프로젝트에서 막힐 때 빠져나오는 힘을 익혀 봅니다.",
+    videoSrc: "/videos/python-lesson-12.mp4",
+  },
+  navigation: {
+    previous: { number: 11, title: "파일 입출력" },
+    next: { number: 13, title: "계산기 만들기" },
+  },
+};
+
 /**
  * (courseId, lessonId) → LessonContent 룩업.
- * MVP: (python | be-python) + (lesson-1 ~ lesson-11) 매칭.
- * lesson-12 는 영상 미제작 — 호출부에서 notFound() 로 떨어짐.
+ * MVP: (python | be-python) + (lesson-1 ~ lesson-12) 매칭.
+ * lesson-13 은 프로젝트형(영상 콘텐츠 아님) — getProject 로 별도 분기.
  */
 const LESSON_CONTENT_INDEX: Record<string, Record<string, LessonContent>> = {
   python: {
@@ -262,6 +281,7 @@ const LESSON_CONTENT_INDEX: Record<string, Record<string, LessonContent>> = {
     "lesson-9": pythonLesson9Content,
     "lesson-10": pythonLesson10Content,
     "lesson-11": pythonLesson11Content,
+    "lesson-12": pythonLesson12Content,
   },
   "be-python": {
     "lesson-1": pythonLesson1Content,
@@ -275,6 +295,7 @@ const LESSON_CONTENT_INDEX: Record<string, Record<string, LessonContent>> = {
     "lesson-9": pythonLesson9Content,
     "lesson-10": pythonLesson10Content,
     "lesson-11": pythonLesson11Content,
+    "lesson-12": pythonLesson12Content,
   },
 };
 

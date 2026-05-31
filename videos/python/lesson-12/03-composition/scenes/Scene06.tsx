@@ -4,19 +4,22 @@
  * **12강 시그니처 = 가장 무게 큰 컷.** 00-objectives §6 + §2 학습목표 2.
  * scene-05 의 합계 버그 시나리오를 이어가 print 로 중간값을 추적한다.
  *
- * - 0~5s: scene-05 빈 콘솔에 결과 `3` type-on (0.4, fontSize 32 — R-001, 본문 28의
- *         1.14×). QuestionBox 정답 reveal (0.6 — narration "정답은 삼" 발화 동기,
- *         R-004). 기대 `6` 회색 + 실제 `3` + ≠ 빨강. 라벨 "기대 6, 실제 3" (2.0).
- * - 5~13s: 코드 패널에 for 블록 _안_ `print(합계)` 줄 추가 type-on (2.4, violet-300 —
- *          narration "프린트를 한 줄 넣어" 동기, R-016). 버그 줄 `합계 = 합계 + n`
+ * 코드는 scene-05 와 동일한 5줄(유효 Python — for 블록 본문 = print(합계)). 버그는
+ * 네 번째 줄 `합계 = 합계 + n` 들여쓰기 0칸(블록 밖) → 합계가 안 자라 최종 3.
+ *
+ * - 0~5s: QuestionBox 정답 reveal (0.6 — narration "정답은 삼" 발화 동기, R-004).
+ *         기대 `6` 회색 + 실제 `3` + ≠ 빨강. 라벨 "기대 6, 실제 3" (2.0).
+ * - 5~13s: for 블록 안 `print(합계)` 줄(scene-05 부터 이어짐)을 violet-300 으로 강조
+ *          (2.4 — narration "프린트를 한 줄 넣어" 동기, R-016). 버그 줄 `합계 = 합계 + n`
  *          들여쓰기 0칸을 빨간 RedIndentGuide 로 강조 (5.0, panel.height fit — R-021).
- * - 13~20s: 콘솔 매 바퀴 추적 — `0`/`3` type-on (4.0~, fontSize 30 — R-001/R-017).
- *           기대(0→1→2 회색) vs 실제(갈라지는 줄 빨강).
- * - 20~25s: 버그 줄 들여쓰기 4칸으로 교정 (8.0, 우측 슬라이드 + buffer). 콘솔
- *           0/1/3 + 최종 6 초록. LowerThird (9.6).
+ * - 13~20s: 콘솔 매 바퀴 print(합계) — 합계가 0 에 멈춰 `0`/`0`/`0` → 최종 `3` (빨강)
+ *           type-on (4.0~, fontSize 30 — R-001/R-017). 기대(0→1→3→6 회색) vs 실제 대비.
+ * - 20~25s: 버그 줄 들여쓰기 4칸으로 교정 (8.0, 우측 슬라이드 + buffer). 동시에 콘솔이
+ *           정상 출력 `0`/`1`/`3` + 최종 `6` 초록으로 크로스페이드. LowerThird (9.6).
  *
  * R-001/R-004/R-016/R-017/R-021 충족.
- * ⚠️ wire 단계에서 scene-06 첫 문장 발화 실측으로 answerReveal/콘솔 `3` re-sync 필수.
+ * ⚠️ 내부 비트(printLineAdd/bugGuide/traceStart/fixSlide) 는 placeholder 타이밍 —
+ *    narration 실측 재동기는 별도 라운드(R-004/R-027). answerReveal 만 실측 동기.
  */
 
 import React from "react";
@@ -37,14 +40,12 @@ import { colors, fonts } from "../theme";
 
 const REVEAL = {
   answerReveal: 0.6, // narration "정답은 삼" 발화 동기 (R-004, wire re-sync)
-  consoleThree: 0.4, // 콘솔 첫 결과 3
   expectActualLabel: 2.0,
-  printLineAdd: 2.4, // for 블록 안 print 줄 추가 (narration "프린트를 넣어" 동기)
+  printLineAdd: 2.4, // for 블록 안 print 줄 violet 강조 (narration "프린트를 넣어" 동기)
   bugGuide: 5.0, // 버그 줄 빨간 IndentGuide (narration "블록 밖" 동기)
   traceStart: 4.0, // 콘솔 매 바퀴 추적 시작
   traceStep: 1.0,
-  fixSlide: 8.0, // 버그 줄 들여쓰기 교정 (우측 슬라이드)
-  finalSix: 9.0, // 교정 후 최종 6 (초록)
+  fixSlide: 8.0, // 버그 줄 들여쓰기 교정 (우측 슬라이드) + 콘솔 0,0,0,3 → 0,1,3,6 크로스페이드
   lowerThird: 9.6,
 } as const;
 
@@ -134,8 +135,7 @@ export const Scene06: React.FC = () => {
             <span style={{ fontFamily: fonts.mono, color: colors.accentLight, fontWeight: 700 }}>
               print
             </span>
-            로{" "}
-            <span style={{ color: colors.accentLight, fontWeight: 700 }}>중간값</span>을 찍어라
+            로 <span style={{ color: colors.accentLight, fontWeight: 700 }}>중간값</span>을 찍어라
           </span>
         }
         delaySec={REVEAL.lowerThird}
@@ -165,7 +165,12 @@ const TracedCodePanel: React.FC = () => {
   const printHiStart = REVEAL.printLineAdd * fps;
   const printHi = interpolate(
     frame,
-    [printHiStart, printHiStart + 0.3 * fps, (REVEAL.printLineAdd + 1.2) * fps, (REVEAL.printLineAdd + 1.6) * fps],
+    [
+      printHiStart,
+      printHiStart + 0.3 * fps,
+      (REVEAL.printLineAdd + 1.2) * fps,
+      (REVEAL.printLineAdd + 1.6) * fps,
+    ],
     [0, 1, 1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
@@ -187,7 +192,7 @@ const TracedCodePanel: React.FC = () => {
 
   return (
     <div style={{ position: "relative" }}>
-      <CodePanel fileName="sum.py" width={720} height={CODE_H} style={{ overflow: "visible" }}>
+      <CodePanel fileName="sum.py" width={720} height={CODE_H}>
         <CodeLine lineNumber={1} revealAtSec={0}>
           <PyToken text="합계" kind="name" /> <PyToken text="=" kind="op" />{" "}
           <PyToken text="0" kind="number" />
@@ -197,8 +202,9 @@ const TracedCodePanel: React.FC = () => {
           <PyToken text="in" kind="keyword" /> <PyToken text="[1, 2, 3]" kind="number" />
           <PyToken text=":" kind="op" />
         </CodeLine>
-        {/* 추가된 print 줄 (for 블록 안, 들여쓰기 4칸) — violet-300 강조 */}
-        <CodeLine lineNumber={3} revealAtSec={REVEAL.printLineAdd}>
+        {/* for 블록 안 print 줄 (들여쓰기 4칸) — scene-05 부터 이어진 줄. "프린트를 넣어"
+            발화 시점에 violet-300 으로 강조 (continuity 위해 처음부터 표시, type-on X) */}
+        <CodeLine lineNumber={3} revealAtSec={0}>
           <span style={{ whiteSpace: "pre" }}>{"    "}</span>
           <span
             style={{
@@ -285,58 +291,115 @@ const TraceConsole: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // 교정 후 최종 6 (초록) 등장 여부
-  const sixIn = interpolate(frame, [REVEAL.finalSix * fps, (REVEAL.finalSix + 0.4) * fps], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  // 교정(fixSlide)에 버그 출력(0,0,0,3) → 정상 출력(0,1,3,6) 크로스페이드
+  const buggyOp = interpolate(
+    frame,
+    [REVEAL.fixSlide * fps, (REVEAL.fixSlide + 0.4) * fps],
+    [1, 0],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    },
+  );
+  const fixedOp = interpolate(
+    frame,
+    [(REVEAL.fixSlide + 0.3) * fps, (REVEAL.fixSlide + 0.7) * fps],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-      {/* 기대 흐름 (회색) */}
-      <FadeIn delaySec={REVEAL.traceStart - 0.4} translateY={6}>
-        <div
-          style={{
-            fontFamily: fonts.sans,
-            fontSize: 22,
-            fontWeight: 600,
-            color: colors.inkMuted,
-            letterSpacing: "-0.01em",
-            paddingLeft: 4,
-          }}
-        >
-          기대:{" "}
-          <span style={{ fontFamily: fonts.mono, fontWeight: 700 }}>0 → 1 → 2</span>
-        </div>
-      </FadeIn>
-
-      {/* 실제 콘솔 — 매 바퀴 한 줄씩 (버그: 0 → 3 으로 갈라짐) */}
-      <ConsolePanel title="실제 출력" width={360} height={300}>
-        <ConsoleLine revealAtSec={REVEAL.traceStart}>
-          <span style={{ color: colors.darkInk }}>0</span>
-        </ConsoleLine>
-        {/* 갈라지는 줄 — 기대 1 인데 실제 3 (빨강) */}
-        <ConsoleLine revealAtSec={REVEAL.traceStart + REVEAL.traceStep} danger>
-          3
-        </ConsoleLine>
-        {/* 교정 후 최종 합계 6 (초록) */}
-        <div style={{ opacity: sixIn, transform: `translateY(${(1 - sixIn) * 6}px)` }}>
+    // position: relative + 콘솔이 직접 자식 → flex-start row 에서 코드 패널 상단과 정렬.
+    // 기대 라벨은 콘솔 위로 absolute (콘솔을 아래로 밀지 않음 — 코드박스와 높이 맞춤).
+    <div style={{ position: "relative" }}>
+      {/* 기대 흐름 (회색) — 콘솔 바로 위 (코드 패널 상단보다 위) */}
+      <div
+        style={{
+          position: "absolute",
+          left: 4,
+          bottom: "calc(100% + 10px)",
+          whiteSpace: "nowrap",
+        }}
+      >
+        <FadeIn delaySec={REVEAL.traceStart - 0.4} translateY={6}>
           <div
             style={{
-              marginTop: 8,
-              paddingTop: 10,
-              borderTop: `1px dashed ${colors.darkMuted}`,
-              fontFamily: fonts.mono,
-              fontSize: 32,
-              fontWeight: 800,
-              color: colors.safeGreen,
-              whiteSpace: "pre",
+              fontFamily: fonts.sans,
+              fontSize: 22,
+              fontWeight: 600,
+              color: colors.inkMuted,
+              letterSpacing: "-0.01em",
             }}
           >
-            6
+            기대: <span style={{ fontFamily: fonts.mono, fontWeight: 700 }}>0 → 1 → 3 → 6</span>
+          </div>
+        </FadeIn>
+      </div>
+
+      {/* 실제 콘솔 — 매 바퀴 print(합계). 버그: 합계가 안 자라 0,0,0 → 최종 3 (교정 시 0,1,3,6) */}
+      <ConsolePanel title="실제 출력" width={360} height={360}>
+        <div style={{ position: "relative", width: "100%" }}>
+          {/* 버그 출력 layer — 합계가 0 에 멈춰 0,0,0 → 최종 3 (블록 밖 누적) */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 6, opacity: buggyOp }}>
+            <ConsoleLine revealAtSec={REVEAL.traceStart}>0</ConsoleLine>
+            <ConsoleLine revealAtSec={REVEAL.traceStart + REVEAL.traceStep}>0</ConsoleLine>
+            <ConsoleLine revealAtSec={REVEAL.traceStart + REVEAL.traceStep * 2}>0</ConsoleLine>
+            <ResultRow
+              revealAtSec={REVEAL.traceStart + REVEAL.traceStep * 3}
+              value="3"
+              color={colors.traceErrName}
+            />
+          </div>
+          {/* 교정 출력 layer (absolute overlay) — 0,1,3 누적 → 최종 6 (초록) */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              flexDirection: "column",
+              gap: 6,
+              opacity: fixedOp,
+            }}
+          >
+            <ConsoleLine revealAtSec={0}>0</ConsoleLine>
+            <ConsoleLine revealAtSec={0}>1</ConsoleLine>
+            <ConsoleLine revealAtSec={0}>3</ConsoleLine>
+            <ResultRow revealAtSec={0} value="6" color={colors.safeGreen} />
           </div>
         </div>
       </ConsolePanel>
+    </div>
+  );
+};
+
+/* 콘솔 최종 결과 줄 (구분선 + 큰 값) — 버그 3(빨강) / 교정 6(초록) */
+const ResultRow: React.FC<{ revealAtSec: number; value: string; color: string }> = ({
+  revealAtSec,
+  value,
+  color,
+}) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const r = interpolate(frame, [revealAtSec * fps, (revealAtSec + 0.4) * fps], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return (
+    <div
+      style={{
+        opacity: r,
+        transform: `translateY(${(1 - r) * 6}px)`,
+        marginTop: 8,
+        paddingTop: 10,
+        borderTop: `1px dashed ${colors.darkMuted}`,
+        fontFamily: fonts.mono,
+        fontSize: 32,
+        fontWeight: 800,
+        color,
+        whiteSpace: "pre",
+      }}
+    >
+      {value}
     </div>
   );
 };
