@@ -4,6 +4,10 @@ import { revalidatePath } from "next/cache";
 
 import { getCurrentUser } from "@/lib/auth/get-user";
 import { prisma } from "@/lib/prisma";
+import {
+  createNotification,
+  toNotificationExcerpt,
+} from "@/lib/notifications/create";
 
 import type { FieldErrors } from "./validation";
 import {
@@ -45,7 +49,8 @@ export async function createLessonCommentAction(
     return { ok: false, error: "입력값을 확인해주세요.", fieldErrors };
   }
 
-  // 답글의 답글 차단 (1-depth)
+  // 답글의 답글 차단 (1-depth). 부모 작성자는 알림 대상이라 참조를 들고 있는다.
+  let parentAuthorId: string | null = null;
   if (parentId) {
     const parent = await prisma.comment.findUnique({ where: { id: parentId } });
     if (!parent) return { ok: false, error: "대상 댓글을 찾을 수 없습니다." };
@@ -53,6 +58,7 @@ export async function createLessonCommentAction(
       return { ok: false, error: "답글에는 답글을 달 수 없습니다." };
     if (parent.lessonRef !== lessonRef)
       return { ok: false, error: "대상 댓글이 일치하지 않습니다." };
+    parentAuthorId = parent.authorId;
   }
 
   const comment = await prisma.comment.create({
@@ -65,6 +71,21 @@ export async function createLessonCommentAction(
       parentId,
     },
   });
+
+  // 알림(best-effort): lesson 답글이면 부모 댓글 작성자에게.
+  // 최상위 lesson 댓글은 수신자(작성자)가 없으므로 알림 생성 안 함.
+  if (parentAuthorId) {
+    await createNotification({
+      recipientId: parentAuthorId,
+      actorId: user.id,
+      actorNickname: user.nickname,
+      actorAvatarUrl: user.avatarUrl,
+      type: "comment_reply",
+      lessonRef,
+      commentId: comment.id,
+      excerpt: toNotificationExcerpt(comment.body),
+    });
+  }
 
   revalidateForLesson(lessonRef);
   return { ok: true, data: { commentId: comment.id } };
@@ -98,6 +119,8 @@ export async function createPostCommentAction(
   });
   if (!post) return { ok: false, error: "게시글을 찾을 수 없습니다." };
 
+  // 답글이면 부모 작성자가 알림 대상이라 참조를 들고 있는다.
+  let parentAuthorId: string | null = null;
   if (parentId) {
     const parent = await prisma.comment.findUnique({ where: { id: parentId } });
     if (!parent) return { ok: false, error: "대상 댓글을 찾을 수 없습니다." };
@@ -105,9 +128,11 @@ export async function createPostCommentAction(
       return { ok: false, error: "답글에는 답글을 달 수 없습니다." };
     if (parent.postId !== postId)
       return { ok: false, error: "대상 댓글이 일치하지 않습니다." };
+    parentAuthorId = parent.authorId;
   }
 
-  await prisma.$transaction([
+  // 기존 트랜잭션/카운트 캐시는 그대로. 알림용으로 생성된 댓글 id 만 캡처한다.
+  const [comment] = await prisma.$transaction([
     prisma.comment.create({
       data: {
         authorId: user.id,
@@ -123,6 +148,33 @@ export async function createPostCommentAction(
       data: { commentCount: { increment: 1 } },
     }),
   ]);
+
+  // 알림(best-effort): 최상위 댓글이면 글 작성자에게 post_comment,
+  // 답글이면 부모 댓글 작성자에게 comment_reply. 자기 행위는 헬퍼가 skip.
+  const excerpt = toNotificationExcerpt(comment.body);
+  if (parentAuthorId) {
+    await createNotification({
+      recipientId: parentAuthorId,
+      actorId: user.id,
+      actorNickname: user.nickname,
+      actorAvatarUrl: user.avatarUrl,
+      type: "comment_reply",
+      postId,
+      commentId: comment.id,
+      excerpt,
+    });
+  } else {
+    await createNotification({
+      recipientId: post.authorId,
+      actorId: user.id,
+      actorNickname: user.nickname,
+      actorAvatarUrl: user.avatarUrl,
+      type: "post_comment",
+      postId,
+      commentId: comment.id,
+      excerpt,
+    });
+  }
 
   revalidatePath(`/community/${postId}`);
   revalidatePath(`/community`);

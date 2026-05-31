@@ -217,3 +217,45 @@ model CommentReport {
   @@index([createdAt])
   @@map("comment_reports")
 }
+
+// ─── 알림 ────────────────────────────────────────────────────
+// 커뮤니티 기반 "내게 온 것만" 알림. 내 글에 댓글 / 내 댓글에 답글 /
+// 내 글·댓글에 좋아요 4종. 본인→본인 행위는 생성하지 않는다(application code 에서 skip).
+//
+// 갱신 방식 = "열 때 조회"(폴링/Realtime 아님). 종 클릭/페이지 진입 시 서버 조회만.
+// 알림은 부가 기능 — 생성 실패가 본래 액션(댓글/좋아요)을 깨면 안 되므로 best-effort 로 만든다.
+//
+// 행위자(actor) 표시 정보는 Comment/Post 와 동일하게 작성 시점 스냅샷으로 저장한다.
+// (Supabase auth.users 는 Prisma 외부라 join 불가 — 닉네임 변경은 신규 알림에만 반영.)
+//
+// lesson/post 는 Prisma 외부(lessonRef) 또는 내부(postId) 참조라 외래키를 걸지 않는다.
+// 대상이 soft delete 되어도 알림 행은 남되, 조회 시점에 이동 href 만 계산해 내려준다.
+enum NotificationType {
+  post_comment // 내 글에 댓글
+  comment_reply // 내 댓글에 답글 (post/lesson 공통)
+  post_like // 내 글에 좋아요
+  comment_like // 내 댓글에 좋아요
+}
+
+model Notification {
+  id             String           @id @default(cuid())
+  recipientId    String           @db.Uuid // 알림 받는 userId
+  actorId        String           @db.Uuid // 행위자 userId
+  actorNickname  String // 스냅샷 (Comment/Post 패턴 동일)
+  actorAvatarUrl String?
+
+  type           NotificationType
+
+  // 이동 대상 식별자 — 알림 타입에 따라 일부만 채워진다.
+  postId         String? // post 관련(댓글/답글/좋아요)
+  lessonRef      String? // lesson 댓글 답글이면 "<courseId>/<lessonId>"
+  commentId      String? // 답글이 달린/좋아요 받은 댓글 id
+
+  excerpt        String? // 미리보기 (댓글 본문 일부 또는 글 제목)
+  readAt         DateTime? // 읽은 시점 (null = 안읽음)
+  createdAt      DateTime         @default(now())
+
+  @@index([recipientId, readAt]) // 안읽음 카운트
+  @@index([recipientId, createdAt]) // 최신순 목록
+  @@map("notifications")
+}

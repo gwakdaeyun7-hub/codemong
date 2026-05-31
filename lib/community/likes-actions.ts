@@ -4,6 +4,10 @@ import { revalidatePath } from "next/cache";
 
 import { getCurrentUser } from "@/lib/auth/get-user";
 import { prisma } from "@/lib/prisma";
+import {
+  createNotification,
+  toNotificationExcerpt,
+} from "@/lib/notifications/create";
 import { validateLessonRef } from "./validation";
 
 export type LikeResult =
@@ -31,13 +35,26 @@ export async function togglePostLikeAction(postId: string): Promise<LikeResult> 
     return { ok: true, liked: false };
   }
 
-  await prisma.$transaction([
+  // 기존 트랜잭션/카운트 캐시 그대로. update 결과로 글 작성자/제목을 얻어 알림에 쓴다.
+  const [, post] = await prisma.$transaction([
     prisma.postLike.create({ data: { postId, userId: user.id } }),
     prisma.post.update({
       where: { id: postId },
       data: { likeCount: { increment: 1 } },
     }),
   ]);
+
+  // 알림(best-effort): 좋아요를 누를 때만 글 작성자에게 post_like. 취소(위 분기)는 알림 없음.
+  await createNotification({
+    recipientId: post.authorId,
+    actorId: user.id,
+    actorNickname: user.nickname,
+    actorAvatarUrl: user.avatarUrl,
+    type: "post_like",
+    postId,
+    excerpt: toNotificationExcerpt(post.title),
+  });
+
   revalidatePath(`/community/${postId}`);
   revalidatePath("/community");
   return { ok: true, liked: true };
@@ -64,13 +81,29 @@ export async function toggleCommentLikeAction(
     return { ok: true, liked: false };
   }
 
-  await prisma.$transaction([
+  // 기존 트랜잭션/카운트 캐시 그대로. update 결과로 댓글 작성자/본문/대상을 얻어 알림에 쓴다.
+  const [, comment] = await prisma.$transaction([
     prisma.commentLike.create({ data: { commentId, userId: user.id } }),
     prisma.comment.update({
       where: { id: commentId },
       data: { likeCount: { increment: 1 } },
     }),
   ]);
+
+  // 알림(best-effort): 좋아요를 누를 때만 댓글 작성자에게 comment_like. 취소(위 분기)는 알림 없음.
+  // postId/lessonRef 를 그대로 넘겨 조회 시 이동 href 를 계산하게 한다(댓글은 둘 중 하나만 보유).
+  await createNotification({
+    recipientId: comment.authorId,
+    actorId: user.id,
+    actorNickname: user.nickname,
+    actorAvatarUrl: user.avatarUrl,
+    type: "comment_like",
+    postId: comment.postId,
+    lessonRef: comment.lessonRef,
+    commentId: comment.id,
+    excerpt: toNotificationExcerpt(comment.body),
+  });
+
   return { ok: true, liked: true };
 }
 

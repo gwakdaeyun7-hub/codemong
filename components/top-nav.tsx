@@ -1,8 +1,12 @@
 import Link from "next/link";
-import { Bell, Search } from "lucide-react";
 
 import { getCurrentUser } from "@/lib/auth/get-user";
+import {
+  getUnreadNotificationCount,
+  listNotifications,
+} from "@/lib/notifications/queries";
 import { cn } from "@/lib/utils";
+import { NotificationMenu } from "./notifications/notification-menu";
 import { UserMenu } from "./user-menu";
 
 type NavKey = "study" | "skill" | "community" | "mypage";
@@ -17,12 +21,22 @@ const NAV_ITEMS: { key: NavKey; label: string; href: string }[] = [
 /**
  * 글로벌 상단 네비.
  * Server Component — getCurrentUser() 로 로그인 상태를 직접 읽어
- *   - 미로그인: [검색] + [로그인 버튼]
- *   - 로그인: [검색] + [알림] + [UserMenu 드롭다운]
+ *   - 미로그인: [로그인 버튼]
+ *   - 로그인: [알림 종 드롭다운] + [UserMenu 드롭다운]
  * 으로 우측 액션을 분기. 활성 메뉴는 active prop 으로 받음.
+ * 로그인 사용자면 진입 시점에 알림(안읽음 수 + 목록)을 함께 조회해 NotificationMenu 로 내린다.
  */
 export async function TopNav({ active = "study" }: { active?: NavKey }) {
   const user = await getCurrentUser();
+
+  // "열 때 조회" 정책: top-nav 가 매 페이지 server render 되므로,
+  // 로그인 사용자면 진입 시점에 안읽음 수 + 목록을 함께 조회해 종 메뉴에 내린다.
+  const [unreadCount, notifications] = user
+    ? await Promise.all([
+        getUnreadNotificationCount(user.id),
+        listNotifications(user.id),
+      ])
+    : [0, []];
 
   return (
     <header className="sticky top-0 z-30 border-b border-zinc-200 bg-white/95 backdrop-blur">
@@ -72,29 +86,11 @@ export async function TopNav({ active = "study" }: { active?: NavKey }) {
           </nav>
         </div>
 
-        {/* 우측: 검색 / (알림) / 프로필 또는 로그인 */}
+        {/* 우측: 알림 / 프로필 또는 로그인 */}
         <div className="flex shrink-0 items-center gap-1">
-          <button
-            type="button"
-            aria-label="검색 (준비 중)"
-            title="검색 기능은 준비 중이에요"
-            disabled
-            className="inline-flex size-9 cursor-not-allowed items-center justify-center rounded-full text-zinc-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
-          >
-            <Search className="size-4" />
-          </button>
-
           {user ? (
             <>
-              <button
-                type="button"
-                aria-label="알림 (준비 중)"
-                title="알림 기능은 준비 중이에요"
-                disabled
-                className="relative inline-flex size-9 cursor-not-allowed items-center justify-center rounded-full text-zinc-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
-              >
-                <Bell className="size-4" />
-              </button>
+              <NotificationMenu unreadCount={unreadCount} items={notifications} />
 
               <UserMenu
                 nickname={user.nickname}

@@ -64,10 +64,10 @@ export default async function SettingsPage() {
             <p>
               계정 삭제는 현재 자동 처리되지 않습니다. 삭제를 원하시면{" "}
               <a
-                href="mailto:support@codemong.kr?subject=계정%20삭제%20요청"
+                href="mailto:gwakdaeyun7@gmail.com?subject=계정%20삭제%20요청"
                 className="font-medium underline underline-offset-2 hover:text-rose-900"
               >
-                support@codemong.kr
+                gwakdaeyun7@gmail.com
               </a>{" "}
               로 문의해주세요.
             </p>
