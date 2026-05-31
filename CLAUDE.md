@@ -37,7 +37,7 @@
 | `/verify-email` | 이메일 인증 안내 | |
 | `/auth/callback` | OAuth/이메일확인/비번복구 공용 콜백 | Route Handler. PKCE `exchangeCodeForSession` |
 | `/skill` | 실력향상 | "준비 중" 안내 stub (TopNav "실력향상" 메뉴 404 해소) |
-| `/mypage` | 마이페이지 홈 | 프로필 카드 + 학습 통계(mock) + 성장 레이더(이수율 기반 실데이터) + 최근 학습 |
+| `/mypage` | 마이페이지 홈 | 프로필 카드 + 학습 통계(mock) + 성장 레이더(코딩 역량 6축, 나 vs 전체 평균 — 현재 고정 데모 데이터) + 최근 학습 |
 | `/mypage/settings` | 설정 | 닉네임/비밀번호 변경 + 계정 삭제 안내 |
 | `/mypage/comments` | 내가 쓴 댓글 | |
 | `/mypage/posts` | 내가 쓴 글 | |
@@ -83,7 +83,7 @@
 | `lib/learning/project-queries.ts` | `getProjectProgress(lessonRef, userId)` → `{ stepStatuses, submittedCode, completed }` (단일 문제는 `stepStatuses["solution"]`/`submittedCode["solution"]`) |
 | `lib/learning/exercise-actions.ts` | Server Action: `passExerciseAction(lessonRef, exerciseId)` — 로그인 필수, 한 문제 통과를 `ExerciseProgress.passed` 맵에 멱등 병합(이미 통과면 write 생략). 통과가 이수율을 바꾸므로 `revalidatePath` 가 강의 목록·practice 에 더해 **영상 상세(`/courses/[courseId]/lessons/[lessonId]`)·홈(`/`)·마이페이지(`/mypage`)** 까지 확장(강좌 소개 `/courses/[courseId]` 는 이수율 미사용이라 제외). 채점은 클라(Pyodide), 통과 결과만 기록. 13강 ProjectProgress 패턴 답습 |
 | `lib/learning/exercise-queries.ts` | `getExerciseProgress(lessonRef, userId)` → `{ passed }` (연습 페이지 초기 ✓ 복원) / `getCourseExerciseStatuses(courseId, userId)` → `Record<lessonId, { passed, total }>` (강의 목록·영상 상세 "N/M 통과"). 비로그인이면 빈 결과. 현재 존재하는 문제 id 에 한해 카운트(min(passed, total) 보장) |
-| `lib/learning/skill-radar.ts` | 마이페이지 성장 레이더(스파이더) 차트 어댑터. `SkillAxis`/`RadarPoint` 타입 + `PYTHON_SKILL_AXES` (커리큘럼을 5영역으로: 환경·기초/제어 흐름/자료구조/함수·추상화/실전·종합) + `getSkillRadar(courseId, userId)` → `RadarPoint[]`. **현재 소스 = 이수율**(`getCourseLessonStatuses` 를 영역별 평균, completed=100/in-progress=50/not-started=0). `baselineValue` 기준 곡선은 임시 설계값. 이해도 구축 시 같은 시그니처 소스로 교체하면 "이해도 레이더" 로 승급(seam) |
+| `lib/learning/skill-radar.ts` | 마이페이지 성장 레이더(스파이더) 차트 어댑터. `SkillAxis`(`key`/`label`/`measure`)/`RadarPoint`(`userValue`/`averageValue`) 타입 + `PYTHON_SKILL_AXES` (코딩 역량 **인지형 6축**: 이해도/논리성/응용력/구현력/정확성/꾸준함) + `getSkillRadar(courseId, userId)` → `RadarPoint[]`. **현재 소스 = 고정 데모 데이터**(`DEMO_VALUES` — "나 vs 전체 평균" 현실적 강약 프로파일). 연습 문제가 적어 이수율 기반이 이상하게 나와서 발표/미리보기용으로 정적값 사용. 각 축의 실측 공식은 `SkillAxis.measure` 주석에 박혀 있음(이해도=퀴즈 isomorph 전이율 / 논리성=논리오류율 / 응용력=applied·복합개념 통과율 / 구현력=코드문제 통과율 / 정확성=첫시도 통과율 / 꾸준함=주간 학습일). 실데이터 전환 시 `getSkillRadar` 본문만 각 measure 공식대로 실집계로 교체(시그니처·호출처·차트 무변경 = seam) |
 | `lib/format.ts` | `timeAgoKo`, `fmtCount` 헬퍼 |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
@@ -101,7 +101,7 @@
 | `components/project/` | 프로젝트형 강의 실행 UI (project-runner — **Client Component**(코딩테스트 스타일 단일 문제 러너: 문제·입출력 예시·단일 에디터·실행(대화형 입력 모달)/제출·콘솔·케이스별 채점결과·힌트 사다리. 스텝 칩/진행바/해금 없음 — 통과 시 `passProjectAction`), code-editor — CodeMirror 6 래퍼, ProjectRunner 에서 `dynamic(ssr:false)` 로 로드(브라우저 전용)) |
 | `components/exercise/` | 강별 연습 문제 (exercise-runner — **Client**(문제 칩 자유 전환·CodeMirror·실행/제출 채점, 13강 ProjectRunner 단순화·`grader.ts` 재사용), practice-entry-link — 영상 상세 진입 카드). icon-map 없이 직접 import(`components/project`와 동일 예외) |
 | `components/auth/` | 인증 폼 (이메일 로그인/회원가입, OAuth 버튼 — Kakao+Google 인라인 SVG, 비번 재설정/재발급, AuthLayout 좌측 브랜드+우측 폼, or-divider, form-feedback) |
-| `components/mypage/` | 마이페이지 (사이드바, 프로필 카드, 학습 통계 카드(mock), 성장 레이더 차트(growth-report-card — `getSkillRadar` 이수율 기반 실데이터, skill-radar-chart — **순수 SVG, 의존성 0**), 닉네임/비번 변경 폼, settings-section wrapper) |
+| `components/mypage/` | 마이페이지 (사이드바, 프로필 카드, 학습 통계 카드(mock), 성장 레이더 차트(growth-report-card — `getSkillRadar` 인지형 6축·나 vs 전체 평균·현재 고정 데모 데이터, skill-radar-chart — **순수 SVG, 의존성 0, 두 곡선·N축 동적**), 닉네임/비번 변경 폼, settings-section wrapper) |
 | `components/comments/` | 영상/게시글 공용 댓글 (CommentSection — lesson\|post 통합 Server, CommentForm create+edit 통합, CommentItem, LikeButton — comment/lesson/post 통합, ReportForm — comment/post 통합, LessonLikeBar) |
 | `components/community/` | 커뮤니티 (CategoryTabs, PostCard, PostForm create+edit 통합, PostActions — 수정/삭제/해결토글/신고) |
 | `components/ui/` | shadcn 원본 (현재는 거의 안 씀 — 향후 디자인 시스템화하면 cva variant로 흡수) |
@@ -309,6 +309,6 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 - Python 영상 — **1~12강 전편 완성·임베드 완료** (Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 12강("디버깅 & AI 활용")도 풀렌더(`public/videos/python-lesson-12.mp4`) + lesson detail 임베드(`pythonLesson12Content`) 완료. 13강은 영상이 아니라 프로젝트형(계산기 만들기).
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능. 단, 영상 아래에 LessonLikeBar(좋아요 + 댓글 카운트) + CommentSection(댓글) 은 추가됨.
-- 학습 진도 — **이수율(1층)은 구현 완료**: 영상 강의(90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`) + 프로젝트 강의(채점 통과 → `ProjectProgress.completedAt`) 가 **함께 집계**됨. 단 영상 강의 강 완료는 학습완료에 더해 **그 강 연습 문제 전부 통과(`ExerciseProgress`)까지 AND**(연습 0개 강은 면제, 프로젝트 강의는 연습 트랙 없어 자동 면제). 홈 카드뿐 아니라 **강의 목록·강의 상세 우측 진행률/통계까지 실데이터(`getCourseLessonStatuses`)로 연결** (비로그인이면 전부 not-started). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현 (`lib/lesson-plan.ts` 의 badges 는 전부 `acquired: false`, 뱃지 카드도 "준비 중"). `/mypage/page.tsx`의 성장 레이더 카드(`getSkillRadar`)는 이수율 기반 실데이터지만, 나머지 학습 통계 카드(`MasteryStatsCard`)와 `/mypage/calendar`는 여전히 mock (`LessonProgress`/`ProjectProgress` 집계로 추후 연결 가능). 성장 레이더의 기준 곡선(baseline)도 실제 평균이 아니라 임시 설계값.
+- 학습 진도 — **이수율(1층)은 구현 완료**: 영상 강의(90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`) + 프로젝트 강의(채점 통과 → `ProjectProgress.completedAt`) 가 **함께 집계**됨. 단 영상 강의 강 완료는 학습완료에 더해 **그 강 연습 문제 전부 통과(`ExerciseProgress`)까지 AND**(연습 0개 강은 면제, 프로젝트 강의는 연습 트랙 없어 자동 면제). 홈 카드뿐 아니라 **강의 목록·강의 상세 우측 진행률/통계까지 실데이터(`getCourseLessonStatuses`)로 연결** (비로그인이면 전부 not-started). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현 (`lib/lesson-plan.ts` 의 badges 는 전부 `acquired: false`, 뱃지 카드도 "준비 중"). `/mypage/page.tsx`의 성장 레이더 카드(`getSkillRadar`)는 **코딩 역량 인지형 6축(이해도/논리성/응용력/구현력/정확성/꾸준함)을 "나 vs 전체 평균" 으로 보여주되 현재는 고정 데모 데이터**(연습 문제가 적어 이수율 기반이 이상하게 나와 발표/미리보기용 정적값 — 양쪽 곡선 모두 `DEMO_VALUES`). 각 축 실측 공식은 `SkillAxis.measure` 주석에 명시, 실데이터 전환 시 `getSkillRadar` 본문만 교체(seam). 나머지 학습 통계 카드(`MasteryStatsCard`)와 `/mypage/calendar`는 여전히 mock (`LessonProgress`/`ProjectProgress` 집계로 추후 연결 가능).
 - 계정 삭제 자동화 — service_role admin API 필요. 현재 settings 페이지는 운영팀 메일 문의 안내만.
 - Realtime / 알림 센터 / 검색 — TopNav 알림·검색 아이콘은 "준비 중" 비활성(`disabled` + title 툴팁, 가짜 "읽지 않은 알림" 점 제거). 실제 기능 미구현.
