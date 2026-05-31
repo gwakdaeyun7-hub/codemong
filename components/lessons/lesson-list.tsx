@@ -50,10 +50,16 @@ const FILTERS: {
 export function LessonList({
   lessons,
   courseId,
+  exerciseStatuses,
 }: {
   lessons: Lesson[]
   /** 강의 카드의 액션 버튼 Link href prefix 용 */
   courseId: string
+  /**
+   * 강의별 연습 통과 현황 (lessonId → {passed,total}). 연습 없는 강은 키 없음.
+   * 비로그인이면 빈 맵 — 하위 카드는 "N문제"만 표시. 카드로 그대로 prop 전달(명시적, cloneElement X).
+   */
+  exerciseStatuses?: Record<string, { passed: number; total: number }>
 }) {
   // 기본값: 모든 status 활성. 칩 클릭 시 해당 status 가 visible 토글.
   const [active, setActive] = useState<Set<FilterKey>>(
@@ -135,7 +141,11 @@ export function LessonList({
         <ul className="flex flex-col gap-3">
           {visible.map((lesson) => (
             <li key={lesson.id}>
-              <LessonCard lesson={lesson} courseId={courseId} />
+              <LessonCard
+                lesson={lesson}
+                courseId={courseId}
+                exerciseStatus={exerciseStatuses?.[lesson.id]}
+              />
             </li>
           ))}
         </ul>

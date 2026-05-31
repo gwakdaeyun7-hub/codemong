@@ -3,16 +3,18 @@
 //
 // 라우팅: /courses/[courseId]/lessons/[lessonId]/practice
 //   - getExercises(courseId, lessonId) 가 없으면 notFound()
-//   - 로그인 게이팅 없음 — 이번 라운드는 진행 저장이 없어 비로그인도 풀 수 있다.
-//     (영상 상세 page.tsx 의 로그인 redirect 는 여기엔 적용하지 않는다.)
+//   - 로그인 필수 — 통과 기록을 저장하므로 (영상 상세 page.tsx 와 동일한 redirect 패턴).
+//   - 로그인 시 getExerciseProgress 로 초기 통과 상태를 조회해 ExerciseRunner 에 넘긴다.
 
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
 import { ExerciseRunner } from "@/components/exercise/exercise-runner";
 import { TopNav } from "@/components/top-nav";
+import { getCurrentUser } from "@/lib/auth/get-user";
 import { getExercises } from "@/lib/exercise-content";
+import { getExerciseProgress } from "@/lib/learning/exercise-queries";
 
 export default async function LessonPracticePage({
   params,
@@ -25,6 +27,17 @@ export default async function LessonPracticePage({
   if (!set) {
     notFound();
   }
+
+  // 통과 기록 저장이 있으므로 로그인 필수 — 비로그인은 로그인 후 이 연습으로 돌아오게 한다.
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect(
+      `/login?next=${encodeURIComponent(`/courses/${courseId}/lessons/${lessonId}/practice`)}`,
+    );
+  }
+
+  const lessonRef = `${courseId}/${lessonId}`;
+  const { passed } = await getExerciseProgress(lessonRef, user.id);
 
   const lessonHref = `/courses/${courseId}/lessons/${lessonId}`;
 
@@ -56,7 +69,7 @@ export default async function LessonPracticePage({
           </p>
         </header>
 
-        <ExerciseRunner set={set} />
+        <ExerciseRunner set={set} lessonRef={lessonRef} initialPassed={passed} />
       </main>
     </>
   );

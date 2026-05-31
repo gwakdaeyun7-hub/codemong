@@ -13,6 +13,7 @@ import { TopNav } from "@/components/top-nav"
 import { getCurrentUser } from "@/lib/auth/get-user"
 import { getCourseDetail } from "@/lib/course-detail"
 import { courses } from "@/lib/courses"
+import { getCourseExerciseStatuses } from "@/lib/learning/exercise-queries"
 import { getCourseLessonStatuses } from "@/lib/learning/progress-queries"
 import { getLessonPlan } from "@/lib/lesson-plan"
 
@@ -43,6 +44,12 @@ export default async function CourseLessonsPage({
     ...l,
     status: statusMap[l.id] ?? l.status,
   }))
+
+  // 강의별 연습 통과 현황 — 하위 "코드 연습" 카드의 N/M 배지용. 비로그인이면 빈 맵(배지 없음).
+  // (키는 연습이 있는 강의 lessonId 만 존재 — 카드 쪽에서 undefined 면 "N문제"만 표시.)
+  const exerciseStatusMap = user
+    ? await getCourseExerciseStatuses(courseId, user.id)
+    : {}
 
   // status 별 카운트 — 헤더/사이드바 양쪽에서 재사용.
   const completedCount = lessons.filter((l) => l.status === "completed").length
@@ -81,7 +88,11 @@ export default async function CourseLessonsPage({
               totalHours={detail.stats.totalHours}
             />
 
-            <LessonList lessons={lessons} courseId={courseId} />
+            <LessonList
+              lessons={lessons}
+              courseId={courseId}
+              exerciseStatuses={exerciseStatusMap}
+            />
           </div>
 
           {/* 우측 사이드바 — lg+ 에서 sticky 로 따라옴 */}

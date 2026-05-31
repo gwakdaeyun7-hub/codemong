@@ -41,10 +41,16 @@ const STATUS_PILL_TONE: Record<LessonStatus, string> = {
 export function LessonCard({
   lesson,
   courseId,
+  exerciseStatus,
 }: {
   lesson: Lesson;
   /** 강의 상세 라우트 prefix 용 — `/courses/{courseId}/lessons/{lessonId}` */
   courseId: string;
+  /**
+   * 이 강의 연습 통과 현황 ({passed,total}). 로그인 사용자에게만 전달 — 없으면(비로그인) 배지 없이 "N문제"만.
+   * total 은 여기 값을 우선 쓰고, 없으면 getExercises 의 문제 수로 폴백한다.
+   */
+  exerciseStatus?: { passed: number; total: number };
 }) {
   const StatusIcon =
     lesson.status === "completed" ? CheckCircle2 : lesson.status === "in-progress" ? Flame : Circle;
@@ -128,7 +134,8 @@ export function LessonCard({
         <div className="mt-1.5 ml-12 sm:ml-14">
           <LessonPracticeLink
             href={`/courses/${courseId}/lessons/${lesson.id}/practice`}
-            count={exerciseSet.exercises.length}
+            count={exerciseStatus?.total ?? exerciseSet.exercises.length}
+            passedCount={exerciseStatus?.passed}
           />
         </div>
       )}

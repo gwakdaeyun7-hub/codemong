@@ -1,16 +1,20 @@
 "use client";
 
 // 강별 코드 연습 문제 실행 화면 — 13강 ProjectRunner 의 단순화 버전.
-// 차이: 스텝 해금/진행바/힌트 사다리/설계(Step0) 없음. 문제는 자유롭게 전환할 수 있고,
-//   통과 여부는 로컬 state 로만 표시한다 (이번 라운드는 진행 저장·이수율 연동 제외).
+// 차이: 스텝 해금/진행바/힌트 사다리/설계(Step0) 없음. 문제는 자유롭게 전환할 수 있다.
+// 통과 표시는 initialPassed(DB 조회 초기값) + 이번 세션 통과의 합집합으로 보여주고,
+//   allPassed 채점 시 passExerciseAction 으로 서버에 통과를 기록한다.
+//   채점 자체는 클라(Pyodide)에서 끝나고 — 통과 결과(✓)는 저장 성공/실패와 무관하게 즉시 표시,
+//   저장 실패만 toast 로 알린다 (낙관적 표시).
 // 채점·실행 엔진은 프로젝트 강의와 동일한 Pyodide(lib/project/grader.ts)를 재사용한다.
 // (아이콘이 적어 icon-map 없이 직접 import — components/project · lesson-content 와 동일한 예외.)
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import dynamic from "next/dynamic";
 import { Check, Play, RotateCcw, Send } from "lucide-react";
 
 import { useToast } from "@/components/toast";
+import { passExerciseAction } from "@/lib/learning/exercise-actions";
 import {
   gradeStep,
   preloadPyodide,
@@ -30,8 +34,22 @@ const CodeEditor = dynamic(() => import("@/components/project/code-editor"), {
   ),
 });
 
-export function ExerciseRunner({ set }: { set: ExerciseSet }) {
+export function ExerciseRunner({
+  set,
+  lessonRef,
+  initialPassed,
+}: {
+  set: ExerciseSet;
+  /**
+   * URL 기준 lessonRef (`${courseId}/${lessonId}`). passExerciseAction 에 그대로 넘긴다.
+   * set.courseId 는 데이터의 정식 courseId("be-python")라 URL courseId 와 다를 수 있어 쓰지 않는다.
+   */
+  lessonRef: string;
+  /** DB 조회 초기 통과 상태 (exerciseId → 통과 여부). 비로그인/없으면 생략 */
+  initialPassed?: Record<string, boolean>;
+}) {
   const { success, error: toastError } = useToast();
+  const [, startSave] = useTransition();
 
   // 문제별 작성 코드 (전환해도 보존). 초기값은 각 문제의 starterCode.
   const [codeById, setCodeById] = useState<Record<string, string>>(() => {
@@ -39,8 +57,10 @@ export function ExerciseRunner({ set }: { set: ExerciseSet }) {
     for (const ex of set.exercises) m[ex.id] = ex.starterCode;
     return m;
   });
-  // 통과 표시 (로컬 전용 — 저장 아님).
-  const [passedById, setPassedById] = useState<Record<string, boolean>>({});
+  // 통과 표시 — DB 초기값(initialPassed) + 이번 세션 통과의 합집합.
+  const [passedById, setPassedById] = useState<Record<string, boolean>>(
+    () => ({ ...initialPassed }),
+  );
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [running, setRunning] = useState(false);
@@ -82,6 +102,22 @@ export function ExerciseRunner({ set }: { set: ExerciseSet }) {
     setCodeById((prev) => ({ ...prev, [exercise.id]: exercise.starterCode }));
     setCases(null);
     setConsoleOut(null);
+  }
+
+  // 통과를 서버에 기록. 채점(Pyodide)은 이미 끝났고 통과 표시도 했으므로, 저장 실패는 toast 로만 안내.
+  // (startTransition 안에서 !ok 와 예상 못한 throw 를 둘 다 잡는다 — CodeMong mutation 규약.)
+  function persistPass(exerciseId: string) {
+    startSave(async () => {
+      try {
+        const result = await passExerciseAction(lessonRef, exerciseId);
+        if (!result.ok) {
+          toastError("통과는 됐지만 기록 저장에 실패했어요. 잠시 후 다시 시도해 주세요.");
+        }
+      } catch (err) {
+        console.error("[CodeMong] passExerciseAction 실패:", err);
+        toastError("통과는 됐지만 기록 저장에 실패했어요. 잠시 후 다시 시도해 주세요.");
+      }
+    });
   }
 
   // 실행 중 input() 이 부르면 모달을 띄우고, 입력/중단까지 Promise 로 기다린다.
@@ -136,8 +172,10 @@ export function ExerciseRunner({ set }: { set: ExerciseSet }) {
       const result = await gradeStep(code, exercise.tests, exercise.seed);
       setCases(result.cases);
       if (result.allPassed) {
+        // 통과 ✓ 는 저장 결과와 무관하게 즉시 표시 (낙관적). 저장 실패는 아래 toast 로만 안내.
         setPassedById((prev) => ({ ...prev, [exercise.id]: true }));
         success("정답이에요! 모든 테스트를 통과했어요.");
+        persistPass(exercise.id);
       }
     } catch (err) {
       console.error("[CodeMong] Pyodide 채점 실패:", err);
@@ -155,15 +193,15 @@ export function ExerciseRunner({ set }: { set: ExerciseSet }) {
 
   return (
     <section className="flex flex-col gap-4">
-      {/* 진행 안내 (저장 아님 — 이번 세션 동안만) */}
+      {/* 진행 안내 */}
       <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-zinc-200/80 sm:p-6">
         <p className="text-xs font-semibold tracking-wide text-violet-600">
           코드 연습 · {passedCount}/{set.exercises.length}문제 통과
         </p>
         <h2 className="mt-1 text-lg font-bold text-zinc-900 sm:text-xl">{set.title}</h2>
         <p className="mt-1.5 text-[13px] leading-relaxed text-zinc-600 sm:text-sm">
-          영상에서 배운 문법으로 직접 코드를 작성해 풀어보세요. 정해진 입력으로 자동 채점됩니다.
-          <span className="text-zinc-400"> (이번에는 통과 기록이 저장되지 않아요.)</span>
+          영상에서 배운 문법으로 직접 코드를 작성해 풀어보세요. 정해진 입력으로 자동 채점되고, 통과한
+          문제는 기록돼요.
         </p>
       </div>
 

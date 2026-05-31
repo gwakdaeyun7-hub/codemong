@@ -159,6 +159,23 @@ model ProjectProgress {
   @@map("project_progress")
 }
 
+// 강별 연습 문제(exercise-content.ts) 통과 기록. lesson은 Prisma 외부(정적 mock)라 lessonRef 문자열.
+// lessonRef 포맷: "<courseId>/<lessonId>" (예: "python/lesson-4")
+//  · passed : 통과한 문제 id 맵 { "ex-1": true, "ex-2": true }
+// 채점은 클라이언트(Pyodide)에서 수행하고 통과 결과(passed)만 멱등 기록한다.
+// (ProjectProgress 와 동일한 "서버 재검증 안 함" 정책 — 신뢰가 필요해지면 얹는다.)
+// 13강 ProjectProgress 와 별개 트랙이며, 이번 범위는 "통과 저장"만 — 이수율 연동은 별도.
+model ExerciseProgress {
+  lessonRef String
+  userId    String   @db.Uuid
+  passed    Json     @default("{}")
+  updatedAt DateTime @updatedAt
+
+  @@id([lessonRef, userId])
+  @@index([userId])
+  @@map("exercise_progress")
+}
+
 model CommentLike {
   commentId String
   userId    String   @db.Uuid

@@ -3,7 +3,7 @@
 //
 // 라우팅: /courses/[courseId]/lessons/[lessonId]
 //   - courseId ∈ {python, be-python}
-//   - 영상 강의: lessonId ∈ {"lesson-1" ~ "lesson-11"} (getLessonContent 매칭) → 영상 카드
+//   - 영상 강의: lessonId ∈ {"lesson-1" ~ "lesson-12"} (getLessonContent 매칭) → 영상 카드
 //   - 프로젝트 강의: lessonId == "lesson-13" (getProject 매칭) → 영상 대신 ProjectRunner
 //   - 그 외엔 notFound()
 //   - 로그인 필수 (영상/프로젝트 모두) — 비로그인은 로그인 후 이 강의로 돌아오게 한다.
@@ -31,7 +31,12 @@ import { getCurrentUser } from "@/lib/auth/get-user";
 import { getCourseDetail } from "@/lib/course-detail";
 import { courses } from "@/lib/courses";
 import { getExercises } from "@/lib/exercise-content";
-import { getLessonContent, type LessonNavigation as LessonNavData } from "@/lib/lesson-content";
+import {
+  getLessonContent,
+  type LessonNavigation as LessonNavData,
+  type LessonNavTarget,
+} from "@/lib/lesson-content";
+import { getCourseExerciseStatuses } from "@/lib/learning/exercise-queries";
 import { getCourseLessonStatuses, getLessonProgress } from "@/lib/learning/progress-queries";
 import { getProjectProgress } from "@/lib/learning/project-queries";
 import { getLessonPlan } from "@/lib/lesson-plan";
@@ -70,27 +75,34 @@ export default async function LessonContentPage({
   // 이 강에 코드 연습 문제가 있으면 영상 아래에 진입 링크를 노출 (현재는 4강에만 데이터 존재).
   const exerciseSet = getExercises(courseId, lessonId);
 
-  // 학습 진도 — 코스 전체(우측 통계) + 현재 강의(영상이면 시청/완료, 프로젝트면 스텝/코드).
-  const [lessonStatuses, videoProgress, projectProgress] = await Promise.all([
+  // 학습 진도 — 코스 전체(우측 통계) + 현재 강의(영상이면 시청/완료, 프로젝트면 스텝/코드)
+  //   + 코스 연습 통과 현황(진입 카드 N/M 배지).
+  const [lessonStatuses, videoProgress, projectProgress, exerciseStatuses] = await Promise.all([
     getCourseLessonStatuses(courseId, user.id),
     content ? getLessonProgress(lessonRef, user.id) : Promise.resolve(null),
     project ? getProjectProgress(lessonRef, user.id) : Promise.resolve(null),
+    exerciseSet
+      ? getCourseExerciseStatuses(courseId, user.id)
+      : Promise.resolve<Record<string, { passed: number; total: number }>>({}),
   ]);
 
-  // 영상 강의 이전/다음 라우트 — 콘텐츠 등록된 강의로만 활성 링크.
+  // 이 강의 연습 통과 수 — 진입 카드 "N/M 통과" 배지용 (연습 없으면 카드 자체가 안 뜸).
+  const exercisePassedCount = exerciseStatuses[lessonId]?.passed;
+
+  // 영상 강의 이전/다음 라우트 — 콘텐츠 등록된 영상 강의 또는 프로젝트 강의(lesson-13)면 활성 링크.
+  // (12강 → 13강 계산기처럼 영상→프로젝트 전환도 getProject 로 매칭해 링크 활성화)
   let previousHref: string | null = null;
   let nextHref: string | null = null;
   if (content) {
-    previousHref =
-      content.navigation.previous &&
-      getLessonContent(courseId, `lesson-${content.navigation.previous.number}`)
-        ? `/courses/${courseId}/lessons/lesson-${content.navigation.previous.number}`
+    const resolveLessonHref = (target: LessonNavTarget | null): string | null => {
+      if (!target) return null;
+      const targetId = `lesson-${target.number}`;
+      return getLessonContent(courseId, targetId) || getProject(courseId, targetId)
+        ? `/courses/${courseId}/lessons/${targetId}`
         : null;
-    nextHref =
-      content.navigation.next &&
-      getLessonContent(courseId, `lesson-${content.navigation.next.number}`)
-        ? `/courses/${courseId}/lessons/lesson-${content.navigation.next.number}`
-        : null;
+    };
+    previousHref = resolveLessonHref(content.navigation.previous);
+    nextHref = resolveLessonHref(content.navigation.next);
   }
 
   // 프로젝트 강의 네비 — 이전 강의(번호-1)만, 다음은 없음(현재 마지막 강).
@@ -159,8 +171,8 @@ export default async function LessonContentPage({
                   <ProjectRunner
                     project={project}
                     lessonRef={lessonRef}
-                    initialStatuses={projectProgress.stepStatuses}
-                    initialCode={projectProgress.submittedCode}
+                    initialCompleted={projectProgress.completed}
+                    initialCode={projectProgress.submittedCode["solution"] ?? ""}
                   />
                   <LessonLikeBar lessonRef={lessonRef} />
                   {projectNav && (
@@ -194,6 +206,7 @@ export default async function LessonContentPage({
                     <PracticeEntryLink
                       href={`/courses/${courseId}/lessons/${lessonId}/practice`}
                       exerciseCount={exerciseSet.exercises.length}
+                      passedCount={exercisePassedCount}
                     />
                   )}
                   <LessonNavigation
