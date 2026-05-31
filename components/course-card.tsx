@@ -52,7 +52,7 @@ function CardAction({
     <Link
       href={href}
       aria-label={`${title} 이어가기`}
-      className="inline-flex items-center gap-1 rounded-md bg-blue-600 px-2.5 py-1 text-xs font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      className="inline-flex items-center gap-1 rounded-md bg-gradient-to-r from-violet-500 to-purple-600 px-2.5 py-1 text-xs font-semibold text-white transition hover:from-violet-600 hover:to-purple-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
     >
       <Play className="size-3 fill-white" strokeWidth={0} />
       이어가기

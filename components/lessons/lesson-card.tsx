@@ -159,7 +159,7 @@ function LessonAction({ status, href }: { status: LessonStatus; href: string }) 
       return (
         <Link
           href={href}
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-gradient-to-r from-orange-500 to-rose-500 px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:from-orange-600 hover:to-rose-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 sm:px-3 sm:py-2 sm:text-[13px]"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-gradient-to-r from-violet-500 to-purple-600 px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:from-violet-600 hover:to-purple-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500 sm:px-3 sm:py-2 sm:text-[13px]"
         >
           <Play className="size-3.5 fill-white" strokeWidth={0} aria-hidden />
           이어보기

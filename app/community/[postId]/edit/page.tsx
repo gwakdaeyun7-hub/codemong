@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { communityIcons } from "@/components/community/icon-map";
 import { PostForm } from "@/components/community/post-form";
+import { SiteFooter } from "@/components/site-footer";
 import { TopNav } from "@/components/top-nav";
 import { getCurrentUser } from "@/lib/auth/get-user";
 import { getPost } from "@/lib/community/posts-queries";
@@ -50,6 +51,8 @@ export default async function EditPostPage({
           initialBody={post.body}
         />
       </main>
+
+      <SiteFooter />
     </>
   );
 }

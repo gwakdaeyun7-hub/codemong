@@ -5,6 +5,7 @@ import { CommentSection } from "@/components/comments/comment-section";
 import { LikeButton } from "@/components/comments/like-button";
 import { communityIcons } from "@/components/community/icon-map";
 import { PostActions } from "@/components/community/post-actions";
+import { SiteFooter } from "@/components/site-footer";
 import { TopNav } from "@/components/top-nav";
 import { getCurrentUser } from "@/lib/auth/get-user";
 import { getPost } from "@/lib/community/posts-queries";
@@ -118,6 +119,8 @@ export default async function PostDetailPage({
           <CommentSection target={{ kind: "post", postId: post.id }} />
         </div>
       </main>
+
+      <SiteFooter />
     </>
   );
 }

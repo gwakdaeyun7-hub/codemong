@@ -11,6 +11,7 @@ import { notFound, redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
 import { ExerciseRunner } from "@/components/exercise/exercise-runner";
+import { SiteFooter } from "@/components/site-footer";
 import { TopNav } from "@/components/top-nav";
 import { getCurrentUser } from "@/lib/auth/get-user";
 import { getExercises } from "@/lib/exercise-content";
@@ -71,6 +72,8 @@ export default async function LessonPracticePage({
 
         <ExerciseRunner set={set} lessonRef={lessonRef} initialPassed={passed} />
       </main>
+
+      <SiteFooter />
     </>
   );
 }

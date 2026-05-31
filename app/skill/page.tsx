@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { TrendingUp } from "lucide-react"
 
+import { SiteFooter } from "@/components/site-footer"
 import { TopNav } from "@/components/top-nav"
 
 export const metadata = { title: "실력향상 · CodeMong" }
@@ -35,6 +36,8 @@ export default function SkillPage() {
           </Link>
         </section>
       </main>
+
+      <SiteFooter />
     </>
   )
 }

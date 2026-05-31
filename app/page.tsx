@@ -1,8 +1,11 @@
 import { CourseCard } from "@/components/course-card"
+import { SiteFooter } from "@/components/site-footer"
 import { TopNav } from "@/components/top-nav"
 import { getCurrentUser } from "@/lib/auth/get-user"
 import { backendCourses, type CourseStatus } from "@/lib/courses"
 import { getCourseCompletion } from "@/lib/learning/progress-queries"
+
+export const metadata = { title: "코드 학습 · CodeMong" }
 
 // 홈 화면 = 코드학습 페이지 (Server Component).
 // MVP 범위: Python 백엔드 1개 코스만 노출. 카드 진행률/상태는 로그인 사용자의 실제 학습 완료(이수율)로 채운다.
@@ -48,6 +51,8 @@ export default async function HomePage() {
           ))}
         </div>
       </main>
+
+      <SiteFooter />
     </>
   )
 }

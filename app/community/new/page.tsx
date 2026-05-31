@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import { communityIcons } from "@/components/community/icon-map";
 import { PostForm } from "@/components/community/post-form";
+import { SiteFooter } from "@/components/site-footer";
 import { TopNav } from "@/components/top-nav";
 import { getCurrentUser } from "@/lib/auth/get-user";
 
@@ -37,6 +38,8 @@ export default async function NewPostPage() {
 
         <PostForm mode="create" />
       </main>
+
+      <SiteFooter />
     </>
   );
 }

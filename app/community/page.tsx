@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CategoryTabs } from "@/components/community/category-tabs";
 import { communityIcons } from "@/components/community/icon-map";
 import { PostCard } from "@/components/community/post-card";
+import { SiteFooter } from "@/components/site-footer";
 import { TopNav } from "@/components/top-nav";
 import { getCurrentUser } from "@/lib/auth/get-user";
 import { listPosts } from "@/lib/community/posts-queries";
@@ -85,6 +86,8 @@ export default async function CommunityPage({
           </>
         )}
       </main>
+
+      <SiteFooter />
     </>
   );
 }

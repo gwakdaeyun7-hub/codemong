@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 
+import { SiteFooter } from "@/components/site-footer";
 import { TopNav } from "@/components/top-nav";
 import { MypageSidebar } from "@/components/mypage/mypage-sidebar";
 import { getCurrentUser } from "@/lib/auth/get-user";
@@ -26,6 +27,8 @@ export default async function MypageLayout({
           <div>{children}</div>
         </div>
       </main>
+
+      <SiteFooter />
     </>
   );
 }

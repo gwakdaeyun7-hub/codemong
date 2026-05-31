@@ -26,6 +26,7 @@ import { ProgressStatCard } from "@/components/lessons/progress-stat-card";
 import { StatsCard } from "@/components/lessons/stats-card";
 import { TipsCard } from "@/components/lessons/tips-card";
 import { ProjectRunner } from "@/components/project/project-runner";
+import { SiteFooter } from "@/components/site-footer";
 import { TopNav } from "@/components/top-nav";
 import { getCurrentUser } from "@/lib/auth/get-user";
 import { getCourseDetail } from "@/lib/course-detail";
@@ -238,6 +239,8 @@ export default async function LessonContentPage({
           </div>
         </div>
       </main>
+
+      <SiteFooter />
     </>
   );
 }

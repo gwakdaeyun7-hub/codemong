@@ -7,6 +7,7 @@ import { CtaCard } from "@/components/course-detail/cta-card"
 import { LearningOutcomesCard } from "@/components/course-detail/learning-outcomes-card"
 import { ReviewsCard } from "@/components/course-detail/reviews-card"
 import { RoadmapCard } from "@/components/course-detail/roadmap-card"
+import { SiteFooter } from "@/components/site-footer"
 import { TopNav } from "@/components/top-nav"
 import { getCourseDetail } from "@/lib/course-detail"
 import { courses } from "@/lib/courses"
@@ -72,6 +73,8 @@ export default async function CourseDetailPage({
           </div>
         </div>
       </main>
+
+      <SiteFooter />
     </>
   )
 }
