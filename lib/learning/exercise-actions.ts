@@ -12,7 +12,8 @@ import { getExercises } from "@/lib/exercise-content";
 // 채점 자체는 클라이언트(Pyodide, lib/project/grader.ts)에서 끝나고 통과 결과(boolean)만 기록한다.
 // (학습용이라 정답 노출/우회 위험이 낮음 — ProjectProgress 와 동일하게 서버 재검증은 하지 않는다.)
 //
-// 이번 범위는 "통과 저장"만. 이수율(강 완료 조건) 연동은 별도 라운드 — 여기서 LessonProgress 등을 건드리지 않는다.
+// 연습 통과는 이제 "강 완료(이수율)" 조건의 일부다 (강 완료 = 학습 완료 AND 연습 전부 통과).
+// 따라서 통과 1건이 코스 이수율·강별 status·성장 레이더까지 바꾼다 — 관련 화면을 모두 revalidate 한다.
 
 export type ExerciseActionResult = { ok: true } | { ok: false; error: string };
 
@@ -60,10 +61,18 @@ export async function passExerciseAction(
     create: { lessonRef, userId: user.id, passed },
   });
 
-  // 통과 기록이라 강의 목록(N/M 표시)·practice 페이지(초기 ✓ 복원)를 재검증.
-  // 이수율(홈/마이페이지) 은 이번 범위가 아니라 revalidate 하지 않는다.
-  revalidatePath(`/courses/${courseId}/lessons`);
+  // 통과 1건이 바꾸는 화면을 모두 재검증:
+  //  · practice               — 초기 ✓ 복원 (getExerciseProgress)
+  //  · lessons (목록)          — 강별 N/M 배지 + 강 완료 status (getCourseExerciseStatuses / getCourseLessonStatuses)
+  //  · lessons/[lessonId]      — 영상 상세 우측 통계 + 진입 카드 N/M + 단일 강 완료 (getCourseLessonStatuses / getLessonProgress)
+  //  · / (홈)                  — 코스 이수율 카드 (getCourseCompletion)
+  //  · /mypage                 — 성장 레이더 (getSkillRadar → getCourseLessonStatuses)
+  // (강좌 소개 /courses/[courseId] 는 이수율/진행률을 조회하지 않아 제외.)
   revalidatePath(`/courses/${courseId}/lessons/${lessonId}/practice`);
+  revalidatePath(`/courses/${courseId}/lessons`);
+  revalidatePath(`/courses/${courseId}/lessons/${lessonId}`);
+  revalidatePath("/");
+  revalidatePath("/mypage");
 
   return { ok: true };
 }
