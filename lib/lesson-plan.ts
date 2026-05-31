@@ -50,7 +50,7 @@ export const pythonLessonPlan: LessonPlan = {
     { id: "lesson-10", number: 10, title: "모듈 & 랜덤", durationMinutes: 18, status: "not-started" },
     { id: "lesson-11", number: 11, title: "파일 입출력", durationMinutes: 20, status: "not-started" },
     { id: "lesson-12", number: 12, title: "디버깅 & AI 활용", durationMinutes: 22, status: "not-started" },
-    { id: "lesson-13", number: 13, title: "계산기 만들기", durationMinutes: 45, status: "not-started", kind: "project" },
+    { id: "lesson-13", number: 13, title: "계산기 만들기", durationMinutes: 30, status: "not-started", kind: "project" },
   ],
   tips: [
     "매일 짧게라도 코드를 직접 쳐보세요",

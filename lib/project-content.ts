@@ -6,7 +6,7 @@
 // 스텝별 누적 빌드가 아니라 단일 에디터 + 종합 테스트케이스 채점.
 //
 // 13강 "계산기 만들기"는 영상 없이 텍스트 문제를 읽고 직접 코드를 작성·실행·채점받는다.
-// 1~6강 문법(변수·입출력·연산자·조건문·반복문)만으로 구성한다.
+// 1~6강 범위(변수·입출력·연산자·조건문)만으로 구성한다. (반복문도 쓰지 않는 단일 계산.)
 // 함수(def)·리스트·딕셔너리·예외처리(try)·split() 은 의도적으로 사용하지 않는다.
 //
 // 채점: 함수가 없으므로 함수 단위 assert 가 불가 → 전부 stdin→stdout 시나리오 채점.
@@ -65,166 +65,95 @@ export const pythonLesson13Project: Project = {
   lessonId: "lesson-13",
   lessonNumber: 13,
   title: "계산기 만들기",
-  overview: "1~6강에서 배운 것만으로 동작하는 사칙연산 계산기를 한 번에 완성하는 프로젝트입니다.",
-  goal: "입력 → 연산 → 조건 분기 → 반복을 모두 담아, 사칙연산 계산기를 완성합니다.",
-  concepts: ["변수와 출력", "입력과 형변환", "연산자", "조건문", "반복문"],
+  overview: "수와 연산자를 입력받아 결과를 출력하는 사칙연산 계산기를 한 번에 완성하는 미션입니다.",
+  goal: "입력 → 형변환 → 조건 분기로 사칙연산 계산기를 완성합니다.",
+  concepts: ["변수와 출력", "입력과 형변환", "연산자", "조건문"],
   prompt: `1~6강에서 배운 것만으로 사칙연산 계산기를 완성하세요.
 
-프로그램은 다음을 반복합니다.
+프로그램은 다음 순서로 동작합니다.
 1) 첫 번째 수를 입력받습니다.
 2) 연산자(+, -, *, /)를 입력받습니다.
 3) 두 번째 수를 입력받습니다.
-4) 연산자에 맞게 계산한 결과를 출력합니다.
-5) 계산이 끝나면 계속할지 물어봅니다. "y" 를 입력하면 처음부터 다시, 아니면 프로그램을 끝냅니다.
+4) 연산자에 맞게 계산한 결과를 한 번 출력합니다.
 
 [규칙]
-· 입력한 수는 float() 로 숫자로 바꿔 계산합니다. (연산자는 글자라서 바꾸지 않아요)
+· 입력한 두 수는 float() 로 숫자로 바꿔 계산합니다. (연산자는 글자라서 바꾸지 않아요)
 · 나누기인데 두 번째 수가 0 이면, 계산 대신 "0으로 나눌 수 없습니다" 를 출력합니다.
 · +, -, *, / 가 아닌 연산자가 들어오면 "알 수 없는 연산자" 를 출력합니다.
 
-입력은 한 줄에 하나씩 받습니다. (첫 수 → 연산자 → 둘째 수 → 계속 여부 순서)`,
+입력은 한 줄에 하나씩, 첫 수 → 연산자 → 둘째 수 순서로 받습니다.`,
   examples: [
-    { stdin: ["3", "+", "4", "n"], stdout: "7.0" },
-    { stdin: ["5", "/", "0", "n"], stdout: "0으로 나눌 수 없습니다" },
-    { stdin: ["3", "+", "4", "y", "6", "*", "2", "n"], stdout: "7.0\n12.0" },
+    { stdin: ["3", "+", "4"], stdout: "7.0" },
+    { stdin: ["5", "/", "0"], stdout: "0으로 나눌 수 없습니다" },
+    { stdin: ["10", "%", "3"], stdout: "알 수 없는 연산자" },
   ],
   starterCode: `# 1~6강 문법만으로 계산기를 완성하세요.
-# while 반복 안에서: 두 수와 연산자를 입력받아 계산하고,
-# 0으로 나누기와 모르는 연산자를 처리한 뒤, 계속할지 물어보세요.
+# 두 수와 연산자를 입력받아 계산하고,
+# 0으로 나누기와 모르는 연산자를 처리한 뒤 결과를 출력하세요.
 
 `,
-  solutionCode: `while True:
-    a = float(input())
-    op = input()
-    b = float(input())
-    if op == "+":
-        print(a + b)
-    elif op == "-":
-        print(a - b)
-    elif op == "*":
-        print(a * b)
-    elif op == "/":
-        if b == 0:
-            print("0으로 나눌 수 없습니다")
-        else:
-            print(a / b)
+  solutionCode: `a = float(input())
+op = input()
+b = float(input())
+if op == "+":
+    print(a + b)
+elif op == "-":
+    print(a - b)
+elif op == "*":
+    print(a * b)
+elif op == "/":
+    if b == 0:
+        print("0으로 나눌 수 없습니다")
     else:
-        print("알 수 없는 연산자")
-    again = input()
-    if again != "y":
-        break
+        print(a / b)
+else:
+    print("알 수 없는 연산자")
 `,
   hints: [
-    "먼저 한 번만 계산하는 것부터 만들어요. a = float(input()), op = input(), b = float(input()) 로 세 줄을 입력받으세요. (연산자 op 는 글자라서 float() 을 쓰지 않아요.)",
-    'if op == "+": print(a + b) 처럼 +, -, *, / 를 elif 로 나누고, 그 외 연산자는 else: 에서 "알 수 없는 연산자" 를 출력하세요.',
+    "세 줄을 입력받으세요. a = float(input()), op = input(), b = float(input()). (연산자 op 는 글자라서 float() 을 쓰지 않아요.)",
+    'if op == "+": print(a + b) 처럼 +, -, *, / 를 if/elif 로 나누고, 그 외 연산자는 else: 에서 "알 수 없는 연산자" 를 출력하세요.',
     '나누기(/) 갈래 안에서 다시 if b == 0: 으로 확인해, 0 이면 "0으로 나눌 수 없습니다", 아니면 a / b 를 출력하세요. (조건문 안의 조건문 = 중첩 조건문)',
-    '마지막으로 전체를 while True: 로 감싸고(아래를 모두 들여쓰기), 맨 끝에 again = input() 으로 계속할지 받아 if again != "y": break 로 빠져나오세요.',
     `정답 예시:
-while True:
-    a = float(input())
-    op = input()
-    b = float(input())
-    if op == "+":
-        print(a + b)
-    elif op == "-":
-        print(a - b)
-    elif op == "*":
-        print(a * b)
-    elif op == "/":
-        if b == 0:
-            print("0으로 나눌 수 없습니다")
-        else:
-            print(a / b)
+a = float(input())
+op = input()
+b = float(input())
+if op == "+":
+    print(a + b)
+elif op == "-":
+    print(a - b)
+elif op == "*":
+    print(a * b)
+elif op == "/":
+    if b == 0:
+        print("0으로 나눌 수 없습니다")
     else:
-        print("알 수 없는 연산자")
-    again = input()
-    if again != "y":
-        break`,
+        print(a / b)
+else:
+    print("알 수 없는 연산자")`,
   ],
   tests: [
+    { label: "덧셈 (3 + 4)", stdin: ["3", "+", "4"], expect: [{ kind: "number", value: 7 }] },
+    { label: "뺄셈 (10 - 3)", stdin: ["10", "-", "3"], expect: [{ kind: "number", value: 7 }] },
+    { label: "곱셈 (6 * 2)", stdin: ["6", "*", "2"], expect: [{ kind: "number", value: 12 }] },
+    { label: "나눗셈 (9 / 2)", stdin: ["9", "/", "2"], expect: [{ kind: "number", value: 4.5 }] },
     {
-      label: "사칙연산 연속 (6+2, 6-2, 6*2, 6/2)",
-      stdin: ["6", "+", "2", "y", "6", "-", "2", "y", "6", "*", "2", "y", "6", "/", "2", "n"],
-      expect: [
-        { kind: "number", value: 8 },
-        { kind: "number", value: 4 },
-        { kind: "number", value: 12 },
-        { kind: "number", value: 3 },
-      ],
-    },
-    {
-      label: "한 번 계산 후 종료 (10 - 3)",
-      stdin: ["10", "-", "3", "n"],
-      expect: [{ kind: "number", value: 7 }],
-    },
-    {
-      label: "0으로 나누기",
-      stdin: ["5", "/", "0", "n"],
+      label: "0으로 나누기 (5 / 0)",
+      stdin: ["5", "/", "0"],
       expect: [{ kind: "text", contains: "0으로 나눌 수 없습니다" }],
     },
     {
-      label: "0으로 나눈 뒤 계속 계산",
-      stdin: ["5", "/", "0", "y", "9", "+", "1", "n"],
-      expect: [
-        { kind: "text", contains: "0으로 나눌 수 없습니다" },
-        { kind: "number", value: 10 },
-      ],
-    },
-    {
-      label: "모르는 연산자",
-      stdin: ["3", "%", "2", "n"],
+      label: "모르는 연산자 (3 % 2)",
+      stdin: ["3", "%", "2"],
       expect: [{ kind: "text", contains: "알 수 없는 연산자" }],
     },
     {
-      label: "모르는 연산자 뒤 계속 계산",
-      stdin: ["3", "%", "2", "y", "3", "+", "2", "n"],
-      expect: [
-        { kind: "text", contains: "알 수 없는 연산자" },
-        { kind: "number", value: 5 },
-      ],
+      label: "소수 곱셈 (2.5 * 4)",
+      stdin: ["2.5", "*", "4"],
+      expect: [{ kind: "number", value: 10 }],
     },
     {
-      label: "소수와 음수 (2.5*4, -3+3)",
-      stdin: ["2.5", "*", "4", "y", "-3", "+", "3", "n"],
-      expect: [
-        { kind: "number", value: 10 },
-        { kind: "number", value: 0 },
-      ],
-    },
-    {
-      label: "여러 번 반복 (1+1, 2+2, 3+3, 4+4)",
-      stdin: ["1", "+", "1", "y", "2", "+", "2", "y", "3", "+", "3", "y", "4", "+", "4", "n"],
-      expect: [
-        { kind: "number", value: 2 },
-        { kind: "number", value: 4 },
-        { kind: "number", value: 6 },
-        { kind: "number", value: 8 },
-      ],
-    },
-    {
-      label: "0을 피연산자로 (5*0, 0+7)",
-      stdin: ["5", "*", "0", "y", "0", "+", "7", "n"],
-      expect: [
-        { kind: "number", value: 0 },
-        { kind: "number", value: 7 },
-      ],
-    },
-    {
-      label: "0으로 나누기 두 번 연속",
-      stdin: ["4", "/", "0", "y", "8", "/", "0", "n"],
-      expect: [
-        { kind: "text", contains: "0으로 나눌 수 없습니다" },
-        { kind: "text", contains: "0으로 나눌 수 없습니다" },
-      ],
-    },
-    {
-      label: "큰 수 (1000+2000)",
-      stdin: ["1000", "+", "2000", "n"],
-      expect: [{ kind: "number", value: 3000 }],
-    },
-    {
-      label: "음수 입력 빼기 (-5 - -3)",
-      stdin: ["-5", "-", "-3", "n"],
+      label: "음수 빼기 (-5 - -3)",
+      stdin: ["-5", "-", "-3"],
       expect: [{ kind: "number", value: -2 }],
     },
   ],
