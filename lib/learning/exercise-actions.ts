@@ -66,7 +66,8 @@ export async function passExerciseAction(
   //  · lessons (목록)          — 강별 N/M 배지 + 강 완료 status (getCourseExerciseStatuses / getCourseLessonStatuses)
   //  · lessons/[lessonId]      — 영상 상세 우측 통계 + 진입 카드 N/M + 단일 강 완료 (getCourseLessonStatuses / getLessonProgress)
   //  · / (홈)                  — 코스 이수율 카드 (getCourseCompletion)
-  //  · /mypage                 — 성장 레이더 (getSkillRadar → getCourseLessonStatuses)
+  //  · /mypage                 — 성장 레이더는 현재 고정 데모 데이터라 연습 통과와 무관.
+  //                              (실데이터 레이더로 되돌리면 다시 필요해지므로 revalidate 는 유지)
   // (강좌 소개 /courses/[courseId] 는 이수율/진행률을 조회하지 않아 제외.)
   revalidatePath(`/courses/${courseId}/lessons/${lessonId}/practice`);
   revalidatePath(`/courses/${courseId}/lessons`);

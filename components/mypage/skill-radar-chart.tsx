@@ -1,7 +1,7 @@
 import type { RadarPoint } from "@/lib/learning/skill-radar";
 
 // 순수 SVG 레이더(스파이더) 차트 — Server Component (인터랙션/브라우저 API 없음).
-// 사용자 폴리곤(violet) 과 기준 곡선(zinc 점선) 을 같은 N축 위에 겹쳐 그린다.
+// 사용자 폴리곤(violet) 과 전체 평균 곡선(zinc 점선) 을 같은 N축 위에 겹쳐 그린다.
 // 좌표는 삼각함수로 직접 계산 — 차트 라이브러리 의존성 없음.
 
 const VW = 360; // viewBox 가로
@@ -40,14 +40,14 @@ export function SkillRadarChart({ points }: { points: RadarPoint[] }) {
   if (n === 0) return null;
 
   const userPoly = polygonPoints(points.map((p) => p.userValue));
-  const basePoly = polygonPoints(points.map((p) => p.baselineValue));
+  const basePoly = polygonPoints(points.map((p) => p.averageValue));
 
   return (
     <svg
       viewBox={`0 0 ${VW} ${VH}`}
       className="mx-auto h-auto w-full max-w-[360px]"
       role="img"
-      aria-label="영역별 학습 진행 레이더 차트"
+      aria-label="코딩 역량 레이더 차트 (나 vs 전체 평균)"
     >
       {/* 동심 격자 */}
       {RINGS.map((r) => (
@@ -76,7 +76,7 @@ export function SkillRadarChart({ points }: { points: RadarPoint[] }) {
         );
       })}
 
-      {/* 기준 곡선 폴리곤 (zinc 점선) */}
+      {/* 전체 평균 곡선 폴리곤 (zinc 점선) */}
       <polygon
         points={basePoly}
         fill="#a1a1aa"
