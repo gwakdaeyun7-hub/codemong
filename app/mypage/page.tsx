@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 
+import { GrowthReportCard } from "@/components/mypage/growth-report-card";
 import { MasteryStatsCard } from "@/components/mypage/mastery-stats-card";
 import { ProfileSummaryCard } from "@/components/mypage/profile-summary-card";
 import { RecentActivityCard } from "@/components/mypage/recent-activity-card";
@@ -24,6 +25,7 @@ export default async function MypagePage() {
 
       <ProfileSummaryCard user={user} />
       <MasteryStatsCard />
+      <GrowthReportCard userId={user.id} />
       <RecentActivityCard />
     </div>
   );
