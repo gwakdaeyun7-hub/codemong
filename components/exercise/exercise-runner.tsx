@@ -14,7 +14,7 @@ import dynamic from "next/dynamic";
 import { Check, Play, RotateCcw, Send } from "lucide-react";
 
 import { useToast } from "@/components/toast";
-import { passExerciseAction } from "@/lib/learning/exercise-actions";
+import { passExerciseAction, recordAttemptAction } from "@/lib/learning/exercise-actions";
 import {
   gradeStep,
   preloadPyodide,
@@ -120,6 +120,25 @@ export function ExerciseRunner({
     });
   }
 
+  // 제출 시도 1건을 서버에 기록 (성장 레이더 실데이터). 분석용 배경 작업이라 fire-and-forget —
+  // 실패해도 사용자에게 알리지 않고(콘솔만), 채점/통과 표시에는 영향 주지 않는다.
+  function recordAttempt(cases: CaseResult[]) {
+    const casesTotal = cases.length;
+    const casesPassed = cases.filter((c) => c.passed).length;
+    const firstError = cases.find((c) => c.error)?.error ?? null;
+    const hadError = firstError !== null;
+    // grader 에러 포맷 "SyntaxError: ..." 에서 종류만 추출 (없으면 null).
+    const errorType = firstError ? firstError.split(":")[0].trim() : null;
+    void recordAttemptAction(lessonRef, exercise.id, {
+      hadError,
+      errorType,
+      casesPassed,
+      casesTotal,
+    }).catch((err) => {
+      console.error("[CodeMong] recordAttemptAction 실패:", err);
+    });
+  }
+
   // 실행 중 input() 이 부르면 모달을 띄우고, 입력/중단까지 Promise 로 기다린다.
   function requestInput(prompt: string): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -171,6 +190,8 @@ export function ExerciseRunner({
       // seed 가 있으면(10강 random) 채점만 random 을 고정한다. 실행(handleRun)은 고정 안 함 — 진짜 무작위 체험.
       const result = await gradeStep(code, exercise.tests, exercise.seed);
       setCases(result.cases);
+      // 통과/오답 모두 시도로 기록 (레이더 실데이터). 통과 기록(persistPass)과 별개·병행.
+      recordAttempt(result.cases);
       if (result.allPassed) {
         // 통과 ✓ 는 저장 결과와 무관하게 즉시 표시 (낙관적). 저장 실패는 아래 toast 로만 안내.
         setPassedById((prev) => ({ ...prev, [exercise.id]: true }));

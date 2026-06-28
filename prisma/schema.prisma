@@ -176,6 +176,30 @@ model ExerciseProgress {
   @@map("exercise_progress")
 }
 
+// 강별 연습 문제 "제출 시도" 로그 — 성장 레이더(스파이더) 실데이터 소스.
+// ExerciseProgress(통과 여부 멱등 맵)와 별개로, 제출 1건마다 한 행씩 append-only 로 쌓는다.
+// (통과/오답 모두 기록 — 이게 있어야 첫시도 통과율·구문 정확도·로직 통과율 같은 "과정" 지표를 잰다.)
+// 채점은 클라이언트(Pyodide, lib/project/grader.ts)에서 끝나고, 그 결과 요약만 기록한다(서버 재검증 X).
+//  · hadError    : 실행 자체 실패(문법/런타임 예외)가 있었는지 — 구문 정확도 축 proxy
+//  · errorType   : 첫 에러 종류("SyntaxError" 등) — 향후 오답 분류/논리성 축용 (없으면 null)
+//  · casesPassed / casesTotal : 테스트케이스 통과/전체 — 로직 구현도 축 proxy
+// lessonRef 포맷: "<courseId>/<lessonId>" (다른 진도 모델과 동일).
+model ExerciseAttempt {
+  id          String   @id @default(cuid())
+  lessonRef   String
+  userId      String   @db.Uuid
+  exerciseId  String
+  hadError    Boolean
+  errorType   String?
+  casesPassed Int
+  casesTotal  Int
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([lessonRef, userId])
+  @@map("exercise_attempts")
+}
+
 model CommentLike {
   commentId String
   userId    String   @db.Uuid
