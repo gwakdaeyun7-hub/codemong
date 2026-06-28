@@ -14,7 +14,7 @@
 - **shadcn/ui** v4 — 사실상 미사용 (디자인 톤 충돌). `components/ui/` 에 button/card/dialog/input/label/dropdown-menu 가 있지만 페이지는 native `<button>`/`<div>` + Tailwind 직접 구성으로 만들어짐
 - **lucide-react v1.14.0** ← v0.x 아님. 컴포넌트 폴더별 `icon-map.ts` 화이트리스트로만 import (트리쉐이킹 보호)
 - **Supabase** (`@supabase/ssr` + `@supabase/supabase-js`) — middleware/proxy, server/client helpers (`lib/supabase/`), 인증 UI 전체 구현 (`lib/auth/`, `app/(auth)/`, `app/auth/callback/`). OAuth Google + Kakao 지원
-- **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`). 모델 11개: Post / Comment / PostLike / CommentLike / LessonLike / PostReport / CommentReport / LessonProgress / ProjectProgress / ExerciseProgress / Notification
+- **Prisma 7.8** → Supabase Postgres (singleton: `lib/prisma.ts`, generated client: `lib/generated/prisma/`). 모델 12개: Post / Comment / PostLike / CommentLike / LessonLike / PostReport / CommentReport / LessonProgress / ProjectProgress / ExerciseProgress / ExerciseAttempt / Notification
 - **CodeMirror 6** (`@uiw/react-codemirror` + `@codemirror/lang-python`) — 프로젝트형 강의(13강~) 코드 에디터. **Pyodide**(브라우저 Python 실행/채점 엔진)는 CDN 동적 로드(v0.28.3 jsdelivr) — 메인 앱 의존성 아님
 - **pnpm** (workspace + onlyBuiltDependencies)
 - **Remotion 4.0.456** (`remotion/` workspace 멤버, 영상 제작용 — 메인 앱 의존성 아님, sibling project)
@@ -37,7 +37,7 @@
 | `/verify-email` | 이메일 인증 안내 | |
 | `/auth/callback` | OAuth/이메일확인/비번복구 공용 콜백 | Route Handler. PKCE `exchangeCodeForSession` |
 | `/skill` | 실력향상 | "준비 중" 안내 stub (TopNav "실력향상" 메뉴 404 해소) |
-| `/mypage` | 마이페이지 홈 | 프로필 카드 + 학습 통계(mock) + 성장 레이더(코딩 역량 6축, 나 vs 전체 평균 — 현재 고정 데모 데이터) + 최근 학습 |
+| `/mypage` | 마이페이지 홈 | 프로필 카드 + 학습 통계(mock) + 성장 레이더(코드 품질 5축, 나 vs 전체 평균 — 결정적 2축 실측 / AI 3축·평균 데모) + 최근 학습 |
 | `/mypage/settings` | 설정 | 닉네임/비밀번호 변경 + 계정 삭제 안내 |
 | `/mypage/comments` | 내가 쓴 댓글 | |
 | `/mypage/posts` | 내가 쓴 글 | |
@@ -84,9 +84,9 @@
 | `lib/project/grader.ts` | **클라이언트 전용** 코드 실행+채점 엔진. Pyodide(CDN 동적 로드) 로 `exec`, `input()` 모킹 + `print` stdout 캡처. `matchesExpected` 는 `ExpectedOutput` 순차 소비(숫자 허용오차 1e-9 / 텍스트 부분일치). export: `preloadPyodide` / `runPythonProgram` / `runPythonInteractive`(대화형 실행 — input() 마다 화면 내 입력 모달, 채점 아닌 '직접 돌려보기' 용) / `matchesExpected` / `gradeStep` + 타입 `CaseResult` / `RunResult`. `gradeStep`/`runPythonProgram` 의 `seed?` 옵션은 wrapper 에 `random.seed(N)` 을 주입해 random 을 결정적으로 채점(10강 연습용) |
 | `lib/learning/project-actions.ts` | Server Actions: `passProjectAction` (채점 통과 기록+코드 저장, `completedAt`=학습완료) / `saveProjectCodeAction` (코드만 저장, 이어하기). 채점은 클라(Pyodide), 통과 결과만 기록. 단일 문제라 `ProjectProgress` 의 `stepStatuses`/`submittedCode` Json 맵에 `"solution"` 키 하나만 운용(스키마 변경 없이 단일 문제로) |
 | `lib/learning/project-queries.ts` | `getProjectProgress(lessonRef, userId)` → `{ stepStatuses, submittedCode, completed }` (단일 문제는 `stepStatuses["solution"]`/`submittedCode["solution"]`) |
-| `lib/learning/exercise-actions.ts` | Server Action: `passExerciseAction(lessonRef, exerciseId)` — 로그인 필수, 한 문제 통과를 `ExerciseProgress.passed` 맵에 멱등 병합(이미 통과면 write 생략). 통과가 이수율을 바꾸므로 `revalidatePath` 가 강의 목록·practice 에 더해 **영상 상세(`/courses/[courseId]/lessons/[lessonId]`)·홈(`/`)·마이페이지(`/mypage`)** 까지 확장(강좌 소개 `/courses/[courseId]` 는 이수율 미사용이라 제외). 채점은 클라(Pyodide), 통과 결과만 기록. 13강 ProjectProgress 패턴 답습 |
+| `lib/learning/exercise-actions.ts` | Server Actions: `passExerciseAction(lessonRef, exerciseId)` — 로그인 필수, 한 문제 통과를 `ExerciseProgress.passed` 맵에 멱등 병합(이미 통과면 write 생략). 통과가 이수율을 바꾸므로 `revalidatePath` 가 강의 목록·practice 에 더해 **영상 상세(`/courses/[courseId]/lessons/[lessonId]`)·홈(`/`)·마이페이지(`/mypage`)** 까지 확장(강좌 소개 `/courses/[courseId]` 는 이수율 미사용이라 제외). 채점은 클라(Pyodide), 통과 결과만 기록. 13강 ProjectProgress 패턴 답습. / `recordAttemptAction(lessonRef, exerciseId, summary)`(+`AttemptSummary` = hadError/errorType/casesPassed/casesTotal) — 제출마다 `ExerciseAttempt` 에 append(통과·오답 모두), 로그인 필수·존재하는 강/문제만·수치 방어적 정규화. 성장 레이더 실데이터용 로그라 `revalidatePath` 안 함(이수율 반영·레이더 무효화는 `passExerciseAction` 이 함께 처리 → 중복 회피) |
 | `lib/learning/exercise-queries.ts` | `getExerciseProgress(lessonRef, userId)` → `{ passed }` (연습 페이지 초기 ✓ 복원) / `getCourseExerciseStatuses(courseId, userId)` → `Record<lessonId, { passed, total }>` (강의 목록·영상 상세 "N/M 통과"). 비로그인이면 빈 결과. 현재 존재하는 문제 id 에 한해 카운트(min(passed, total) 보장) |
-| `lib/learning/skill-radar.ts` | 마이페이지 성장 레이더(스파이더) 차트 어댑터. `SkillAxis`(`key`/`label`/`measure`)/`RadarPoint`(`userValue`/`averageValue`) 타입 + `PYTHON_SKILL_AXES` (코딩 역량 **인지형 6축**: 이해도/논리성/응용력/구현력/정확성/꾸준함) + `getSkillRadar(courseId, userId)` → `RadarPoint[]`. **현재 소스 = 고정 데모 데이터**(`DEMO_VALUES` — "나 vs 전체 평균" 현실적 강약 프로파일). 연습 문제가 적어 이수율 기반이 이상하게 나와서 발표/미리보기용으로 정적값 사용. 각 축의 실측 공식은 `SkillAxis.measure` 주석에 박혀 있음(이해도=퀴즈 isomorph 전이율 / 논리성=논리오류율 / 응용력=applied·복합개념 통과율 / 구현력=코드문제 통과율 / 정확성=첫시도 통과율 / 꾸준함=주간 학습일). 실데이터 전환 시 `getSkillRadar` 본문만 각 measure 공식대로 실집계로 교체(시그니처·호출처·차트 무변경 = seam) |
+| `lib/learning/skill-radar.ts` | 마이페이지 성장 레이더(스파이더) 차트 어댑터. `SkillAxis`(`key`/`label`/`measure`)/`RadarPoint`(`userValue`/`averageValue`) 타입 + `PYTHON_SKILL_AXES` (**코드 품질 5축**: 구문 정확도(`syntax`)/로직 구현도(`logic`)/개념 이해도(`concept`)/코드 효율성(`efficiency`)/문제 해석력(`interpretation`) — 코드 작성 문제 전용) + `getSkillRadar(courseId, userId)` → `RadarPoint[]`. **결정적 2축(구문 정확도·로직 구현도)은 `ExerciseAttempt` 실집계**(구문 정확도=hadError=false 제출 비율 / 로직 구현도=sum(casesPassed)/sum(casesTotal)), **AI 3축(개념·효율·해석)+전체 평균은 아직 데모값**. 사용자 시도 0건이면 5축 모두 데모 폴백. MVP 단일 코스라 courseId 로 안 좁히고 userId 전체 시도 집계. 각 축 proxy 공식은 `SkillAxis.measure` 주석. `getSkillRadar` 본문이 seam — AI 3축은 Gemini 분석 도입 시 실집계로 승급(시그니처·호출처·차트 무변경) |
 | `lib/format.ts` | `timeAgoKo`, `fmtCount` 헬퍼 |
 
 룩업 함수는 모두 `python` / `be-python` 두 ID 모두 매칭 (홈 카드 ID 와 detail 페이지 fallback ID 가 분리되어 있어서).
@@ -104,7 +104,7 @@
 | `components/project/` | 프로젝트형 강의 실행 UI (project-runner — **Client Component**(코딩테스트 스타일 단일 문제 러너: 문제·입출력 예시·단일 에디터·실행(대화형 입력 모달)/제출·콘솔·케이스별 채점결과·힌트 사다리. 스텝 칩/진행바/해금 없음 — 통과 시 `passProjectAction`), code-editor — CodeMirror 6 래퍼, ProjectRunner 에서 `dynamic(ssr:false)` 로 로드(브라우저 전용)) |
 | `components/exercise/` | 강별 연습 문제 (exercise-runner — **Client**(문제 칩 자유 전환·CodeMirror·실행/제출 채점, 13강 ProjectRunner 단순화·`grader.ts` 재사용), practice-entry-link — 영상 상세 진입 카드). icon-map 없이 직접 import(`components/project`와 동일 예외) |
 | `components/auth/` | 인증 폼 (이메일 로그인/회원가입, OAuth 버튼 — Kakao+Google 인라인 SVG, 비번 재설정/재발급, AuthLayout 좌측 브랜드+우측 폼, or-divider, form-feedback) |
-| `components/mypage/` | 마이페이지 (사이드바, 프로필 카드, 학습 통계 카드(mock), 성장 레이더 차트(growth-report-card — `getSkillRadar` 인지형 6축·나 vs 전체 평균·현재 고정 데모 데이터, skill-radar-chart — **순수 SVG, 의존성 0, 두 곡선·N축 동적**), 닉네임/비번 변경 폼, settings-section wrapper) |
+| `components/mypage/` | 마이페이지 (사이드바, 프로필 카드, 학습 통계 카드(mock), 성장 레이더 차트(growth-report-card — `getSkillRadar` 코드 품질 5축·나 vs 전체 평균·결정적 2축(구문 정확도·로직 구현도) 실측 / AI 3축(개념·효율·해석)+전체 평균 데모, skill-radar-chart — **순수 SVG, 의존성 0, 두 곡선·N축 동적**), 닉네임/비번 변경 폼, settings-section wrapper) |
 | `components/comments/` | 영상/게시글 공용 댓글 (CommentSection — lesson\|post 통합 Server, CommentForm create+edit 통합, CommentItem, LikeButton — comment/lesson/post 통합, ReportForm — comment/post 통합, LessonLikeBar) |
 | `components/community/` | 커뮤니티 (CategoryTabs, PostCard, PostForm create+edit 통합, PostActions — 수정/삭제/해결토글/신고) |
 | `components/notifications/` | 알림 종 드롭다운 (notification-menu — **Client**, 안읽음 rose 점 뱃지·처음 열 때 `markNotificationsReadAction` 로 읽음 처리·최신 10개·항목 클릭 시 해당 글/강의 이동. `top-nav` 가 조회한 데이터를 prop 으로 받음. icon-map 없이 직접 import — Bell 하나뿐, `components/lesson-content`·`components/project` 와 같은 예외) |
@@ -118,7 +118,7 @@
 
 `prisma/schema.prisma`. Supabase Postgres + Prisma 7. connection URL은 `prisma.config.ts`에서 관리 (Prisma 7에서 schema datasource의 `url`/`directUrl` 제거됨).
 
-### 모델 11개 + enum 2개
+### 모델 12개 + enum 2개
 
 | 모델 | 테이블 | 역할 |
 |------|-------|------|
@@ -132,6 +132,7 @@
 | `LessonProgress` | lesson_progress | 학습 진도(이수율/이해도 2층). lessonRef+userId 복합 PK. `learnCompletedAt`=학습완료(이수율), `quizPassedAt`/`quizBestScore`=이해완료(이해도, 2단계 미구현) |
 | `ProjectProgress` | project_progress | 프로젝트형 강의(13강~) 진도. lessonRef+userId 복합 PK. `stepStatuses`(스텝별 통과 여부) / `submittedCode`(스텝별 작성 코드, 이어하기) 둘 다 `Json @default("{}")`, `completedAt`=채점 스텝 전부 통과 시점(=학습완료, 이수율 집계). 단일 문제 코딩테스트로 바뀐 13강은 `"solution"` 키 하나만 사용 |
 | `ExerciseProgress` | exercise_progress | 강별 연습 문제 통과 기록. lessonRef+userId 복합 PK, `passed`(통과한 문제 id 맵 `Json @default("{}")`). 채점은 클라(Pyodide), 통과 결과만 멱등 기록. 13강 ProjectProgress 와 별개 트랙이지만, 영상 강의 강 완료(이수율) 판정에 **AND 조건**으로 함께 집계됨(연습 전부 통과해야 완료, 연습 0개 강은 면제) |
+| `ExerciseAttempt` | exercise_attempts | 강별 연습 문제 제출 시도 로그(append-only). `id`(cuid) + lessonRef/userId/exerciseId + `hadError`/`errorType?`/`casesPassed`/`casesTotal` + createdAt. 인덱스 `[userId]`/`[lessonRef, userId]`. 제출 1건마다 한 행(통과·오답 모두). 성장 레이더 실데이터 소스 — `ExerciseProgress`(통과 멱등 맵, 이수율용)와 **별개·병행** 트랙. 채점은 클라(Pyodide), 결과 요약만 기록(서버 재검증 X) |
 | `Notification` | notifications | 커뮤니티 알림(댓글/답글/좋아요). `recipientId`(받는 userId)+`actorId`(행위자)+`actorNickname`/`actorAvatarUrl` 스냅샷(Comment/Post 패턴), `type`(NotificationType), `postId?`/`lessonRef?`/`commentId?`(이동 대상), `excerpt?`(미리보기), `readAt?`(null=안읽음). 인덱스 `[recipientId, readAt]`/`[recipientId, createdAt]`. 받는사람 귀속(로그아웃해도 유지), 무기한 보관·종 목록 최신 10개·**"열 때 조회"** |
 | `enum PostCategory` | — | question / free |
 | `enum NotificationType` | — | post_comment / comment_reply / post_like / comment_like |
@@ -220,7 +221,7 @@ pip install edge-tts        # 처음 한 번 (Python 3.10+)
 - **dev mode 첫 클릭 ~2s 지연**: Next.js JIT 정상 동작. 사용자 노트북 탓 아님.
 - **`pnpm install` 시 `cd remotion && pnpm install` 하지 말 것**: pnpm이 root `pnpm-workspace.yaml`을 보고 root install을 돌려서 의도한 remotion install이 안 됨. root에서 `pnpm install`로 둘 다 install 되거나, 특정 프로젝트만이면 `pnpm --filter remotion install`.
 - **Vercel build 가 `Cannot find module 'remotion'` 으로 실패**: `videos/<courseId>/<lessonId>/03-composition/*.tsx` 가 `import ... from "remotion"` 하는데, 메인 앱 `tsconfig.json` 의 `include` 가 모든 .tsx 를 잡아 그 파일들도 type check 대상이 됨. `remotion` 은 `remotion/` 워크스페이스에만 있어 메인 앱은 모듈을 못 찾음. 해결: `tsconfig.json` 의 `exclude` 에 `"videos"`, `"remotion"` 명시 (적용됨). Remotion 워크스페이스 자체 `tsconfig` 가 `../videos/**/*.tsx` 를 include 해 그쪽에서 type check 됨.
-- **프로젝트형 강의(13강) 실행 환경**: Pyodide 는 CDN 동적 로드라 첫 진입 시 수 초 로딩(이후 싱글톤 재사용). CodeMirror(`code-editor.tsx`)는 브라우저 전용이라 ProjectRunner 에서 `dynamic(ssr:false)` 로 로드 — 직접 import 하면 SSR 단계에서 깨짐. 새 프로젝트 강의 배포 전 `pnpm db:push` 로 `project_progress` 테이블 생성 필요. (강별 연습 문제 통과 저장도 동일 — `exercise_progress` 테이블이 없으면 배포 전 `pnpm db:push` 필요. 커뮤니티 알림도 동일 — `notifications` 테이블이 없으면 배포 전 `pnpm db:push` 필요.)
+- **프로젝트형 강의(13강) 실행 환경**: Pyodide 는 CDN 동적 로드라 첫 진입 시 수 초 로딩(이후 싱글톤 재사용). CodeMirror(`code-editor.tsx`)는 브라우저 전용이라 ProjectRunner 에서 `dynamic(ssr:false)` 로 로드 — 직접 import 하면 SSR 단계에서 깨짐. 새 프로젝트 강의 배포 전 `pnpm db:push` 로 `project_progress` 테이블 생성 필요. (강별 연습 문제 통과 저장도 동일 — `exercise_progress` 테이블이 없으면 배포 전 `pnpm db:push` 필요. 성장 레이더 실측용 `exercise_attempts` 테이블도 동일 — 없으면 배포 전 `pnpm db:push` 필요. 커뮤니티 알림도 동일 — `notifications` 테이블이 없으면 배포 전 `pnpm db:push` 필요.)
 
 **전역 에러 바운더리 / 404**: `app/error.tsx`(렌더 에러 — 다시 시도), `app/not-found.tsx`(404), `app/global-error.tsx`(루트 레이아웃 폴백 — 인라인 스타일) 가 전역 폴백. 새 라우트별 에러 처리를 만들 때 이들과 중복/충돌하지 않게.
 
@@ -316,6 +317,6 @@ UI + 콘텐츠를 동시에 다루는 작업 (예: 새 강의 페이지)은 **fr
 - Python 영상 — **1~12강 전편 완성·임베드 완료** (Hyunsu voice, 자막 정책상 미생성, lesson detail 페이지 임베드 완료). 12강("디버깅 & AI 활용")도 풀렌더(`public/videos/python-lesson-12.mp4`) + lesson detail 임베드(`pythonLesson12Content`) 완료. 13강은 영상이 아니라 프로젝트형(계산기 만들기).
 - 다른 강좌 (CSS, React, Next, 상태관리, HTML, TypeScript 등) — 홈 카드만, detail 미구현
 - 강의 상세 본문 카드 (개념 소개 / 구조 다이어그램 / 문법 가이드 / 예시 코드 / 핵심 정리 / 일상 속 활용) — 영상-only 모드라 제거됨. 추후 콘텐츠 모델 확장 시 재도입 가능. 단, 영상 아래에 LessonLikeBar(좋아요 + 댓글 카운트) + CommentSection(댓글) 은 추가됨.
-- 학습 진도 — **이수율(1층)은 구현 완료**: 영상 강의(90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`) + 프로젝트 강의(채점 통과 → `ProjectProgress.completedAt`) 가 **함께 집계**됨. 단 영상 강의 강 완료는 학습완료에 더해 **그 강 연습 문제 전부 통과(`ExerciseProgress`)까지 AND**(연습 0개 강은 면제, 프로젝트 강의는 연습 트랙 없어 자동 면제). 홈 카드뿐 아니라 **강의 목록·강의 상세 우측 진행률/통계까지 실데이터(`getCourseLessonStatuses`)로 연결** (비로그인이면 전부 not-started). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현 (`lib/lesson-plan.ts` 의 badges 는 전부 `acquired: false`, 뱃지 카드도 "준비 중"). `/mypage/page.tsx`의 성장 레이더 카드(`getSkillRadar`)는 **코딩 역량 인지형 6축(이해도/논리성/응용력/구현력/정확성/꾸준함)을 "나 vs 전체 평균" 으로 보여주되 현재는 고정 데모 데이터**(연습 문제가 적어 이수율 기반이 이상하게 나와 발표/미리보기용 정적값 — 양쪽 곡선 모두 `DEMO_VALUES`). 각 축 실측 공식은 `SkillAxis.measure` 주석에 명시, 실데이터 전환 시 `getSkillRadar` 본문만 교체(seam). 나머지 학습 통계 카드(`MasteryStatsCard`)와 `/mypage/calendar`는 여전히 mock (`LessonProgress`/`ProjectProgress` 집계로 추후 연결 가능).
+- 학습 진도 — **이수율(1층)은 구현 완료**: 영상 강의(90% 시청 + 완료 버튼 → `LessonProgress.learnCompletedAt`) + 프로젝트 강의(채점 통과 → `ProjectProgress.completedAt`) 가 **함께 집계**됨. 단 영상 강의 강 완료는 학습완료에 더해 **그 강 연습 문제 전부 통과(`ExerciseProgress`)까지 AND**(연습 0개 강은 면제, 프로젝트 강의는 연습 트랙 없어 자동 면제). 홈 카드뿐 아니라 **강의 목록·강의 상세 우측 진행률/통계까지 실데이터(`getCourseLessonStatuses`)로 연결** (비로그인이면 전부 not-started). **이해도(2층: 퀴즈 통과 → `quizPassedAt`/`quizBestScore`)는 퀴즈 화면 구현 후 미구현**. streak/배지 추적 모델도 미구현 (`lib/lesson-plan.ts` 의 badges 는 전부 `acquired: false`, 뱃지 카드도 "준비 중"). `/mypage/page.tsx`의 성장 레이더 카드(`getSkillRadar`)는 **코드 품질 5축(구문 정확도/로직 구현도/개념 이해도/코드 효율성/문제 해석력)을 "나 vs 전체 평균" 으로** 보여줌. **결정적 2축(구문 정확도·로직 구현도)은 `ExerciseAttempt` 실측 전환 완료**(시도 0건이면 데모 폴백), **AI 3축(개념·효율·해석)+전체 평균은 아직 데모값**(Gemini 분석 도입 시 승급). 각 축 실측 공식은 `SkillAxis.measure` 주석에 명시, seam=`getSkillRadar` 본문(시그니처·호출처·차트 무변경). 나머지 학습 통계 카드(`MasteryStatsCard`)와 `/mypage/calendar`는 여전히 mock (`LessonProgress`/`ProjectProgress` 집계로 추후 연결 가능).
 - 계정 삭제 자동화 — service_role admin API 필요. 현재 settings 페이지는 운영팀 메일 문의 안내만.
 - 검색 — 기능 자체가 제거됨(TopNav 우측에서 검색 아이콘 삭제). / 실시간 푸시(Realtime) — 미구현. **알림 센터는 구현됨** (커뮤니티 댓글/답글/좋아요 기반, TopNav 종 드롭다운, **"열 때 조회"**(폴링/Realtime 아님 — `top-nav` 가 매 페이지 server render 시 안읽음 수+목록 조회), 무기한 보관·최신 10개 노출, 받는사람 귀속이라 로그아웃해도 유지). Realtime 푸시·읽음 동기화만 추후 과제.
