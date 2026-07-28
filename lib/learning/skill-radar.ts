@@ -199,17 +199,21 @@ async function collectSamples(
     }),
   ]);
 
+  // 빈 제출(skipped_empty)은 표본에서 제외 — "코드 없음 = 오류 없음/비효율 없음" 같은
+  // 무의미한 만점 표본이 구문·효율 축을 오염시키는 것 방지.
+  const meaningful = submissions.filter((s) => s.aiStatus !== "skipped_empty");
+
   const latestAttempts = dedupeLatest(
     attempts,
     (a) => `${a.userId}|${a.lessonRef}|${a.exerciseId}`,
   );
   const latestSubmissions = dedupeLatest(
-    submissions,
+    meaningful,
     (s) => `${s.userId}|${s.lessonRef}|${s.problemId}`,
   );
   // AI 축은 채점 성공(ok) 제출만 대상 — 문제당 "최신 ok" 1건.
   const latestOkSubmissions = dedupeLatest(
-    submissions.filter(
+    meaningful.filter(
       (s) =>
         s.aiStatus === "ok" &&
         s.conceptScore !== null &&

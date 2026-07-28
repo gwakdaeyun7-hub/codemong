@@ -211,6 +211,7 @@ enum AiFeedbackStatus {
   failed // 호출/파싱 실패 — 채점 결과만 표시
   skipped_no_key // GEMINI_API_KEY 미설정 (AI 기능 전체 off)
   skipped_limit // 무료 하루 한도 초과
+  skipped_empty // 사실상 빈 제출(주석·공백뿐) — AI 호출 안 함 + 레이더 표본 제외
 }
 
 model ProblemSubmission {

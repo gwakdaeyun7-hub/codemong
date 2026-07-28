@@ -9,6 +9,7 @@ import { getGeminiModel, isAiEnabled } from "@/lib/ai/config";
 import { gradeSubmissionWithAi } from "@/lib/ai/grade-submission";
 import { hasAiQuotaToday } from "@/lib/ai/limits";
 import type { AiDeduction } from "@/lib/ai/rubric";
+import { isEffectivelyEmptyCode } from "@/lib/code-inspect";
 import { getProblem } from "@/lib/problems";
 
 // 실력향상(시험) 트랙 제출 Server Action.
@@ -22,7 +23,7 @@ import { getProblem } from "@/lib/problems";
 // AI 결과는 반환값으로도 내려 클라가 즉시 피드백 카드를 그린다.
 
 export type SubmissionAiPayload = {
-  status: "ok" | "failed" | "skipped_no_key" | "skipped_limit";
+  status: "ok" | "failed" | "skipped_no_key" | "skipped_limit" | "skipped_empty";
   conceptScore: number | null;
   efficiencyScore: number | null;
   interpretationScore: number | null;
@@ -55,7 +56,9 @@ export type SubmissionSummary = {
 
 const CODE_MAX_BYTES = 10_000;
 
-function skippedPayload(status: "skipped_no_key" | "skipped_limit"): SubmissionAiPayload {
+function skippedPayload(
+  status: "skipped_no_key" | "skipped_limit" | "skipped_empty",
+): SubmissionAiPayload {
   return {
     status,
     conceptScore: null,
@@ -105,9 +108,12 @@ export async function submitProblemAction(
     caseResults,
   };
 
-  // AI 게이트 — 키 없으면 전부 off, 있으면 하루 한도 확인 (skipped_* 는 한도 미차감).
-  let aiStatus: "pending" | "skipped_no_key" | "skipped_limit";
-  if (!isAiEnabled()) {
+  // AI 게이트 — 빈 제출은 평가할 코드가 없으니 호출 자체를 스킵 (쿼터 미차감),
+  // 그다음 키 존재 → 하루 한도 순서로 확인 (skipped_* 는 한도 미차감).
+  let aiStatus: "pending" | "skipped_no_key" | "skipped_limit" | "skipped_empty";
+  if (isEffectivelyEmptyCode(trimmedCode)) {
+    aiStatus = "skipped_empty";
+  } else if (!isAiEnabled()) {
     aiStatus = "skipped_no_key";
   } else if (!(await hasAiQuotaToday(user.id))) {
     aiStatus = "skipped_limit";

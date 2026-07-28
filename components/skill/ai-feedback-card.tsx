@@ -1,6 +1,7 @@
 // AI 진단 카드 — 제출 직후 러너가 받은 SubmissionAiPayload 를 그린다.
 // 상태별 카피:
 //  · ok            — 3축 점수 칩 + 감점 근거 + 힌트형 피드백 문단
+//  · skipped_empty — 빈 제출 안내 (코드 작성 후 제출하면 진단 가능)
 //  · skipped_limit — 오늘 무료 분석 횟수 소진 안내 (채점 결과는 정상 저장)
 //  · failed        — 짧은 안내 한 줄 (채점 결과는 정상 저장)
 //  · skipped_no_key — 아무것도 렌더하지 않음 (AI 기능 자체가 꺼진 배포)
@@ -25,6 +26,18 @@ export function AiFeedbackCard({ ai }: { ai: SubmissionAiPayload | "loading" }) 
   }
 
   if (ai.status === "skipped_no_key") return null;
+
+  if (ai.status === "skipped_empty") {
+    return (
+      <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-zinc-200/80 sm:p-6">
+        <p className="text-xs font-semibold tracking-wide text-violet-600">AI 진단</p>
+        <p className="mt-2 text-[13px] leading-relaxed text-zinc-600">
+          작성된 코드가 없어 AI 진단을 건너뛰었어요. 코드를 작성한 뒤 제출하면 개념·효율·해석 진단을
+          받을 수 있어요.
+        </p>
+      </section>
+    );
+  }
 
   if (ai.status === "skipped_limit") {
     return (

@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import { Check, Play, RotateCcw, Send } from "lucide-react";
 
 import { useToast } from "@/components/toast";
+import { isEffectivelyEmptyCode } from "@/lib/code-inspect";
 import { passExerciseAction, recordAttemptAction } from "@/lib/learning/exercise-actions";
 import {
   gradeStep,
@@ -58,9 +59,9 @@ export function ExerciseRunner({
     return m;
   });
   // 통과 표시 — DB 초기값(initialPassed) + 이번 세션 통과의 합집합.
-  const [passedById, setPassedById] = useState<Record<string, boolean>>(
-    () => ({ ...initialPassed }),
-  );
+  const [passedById, setPassedById] = useState<Record<string, boolean>>(() => ({
+    ...initialPassed,
+  }));
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [running, setRunning] = useState(false);
@@ -191,7 +192,9 @@ export function ExerciseRunner({
       const result = await gradeStep(code, exercise.tests, exercise.seed);
       setCases(result.cases);
       // 통과/오답 모두 시도로 기록 (레이더 실데이터). 통과 기록(persistPass)과 별개·병행.
-      recordAttempt(result.cases);
+      // 단, 빈 제출(주석·공백뿐)은 기록하지 않는다 — "오류 없는 실행" 무의미 표본이
+      // 구문 축을 오염시키는 것 방지 (실력향상 트랙의 skipped_empty 와 동일 원칙).
+      if (!isEffectivelyEmptyCode(code)) recordAttempt(result.cases);
       if (result.allPassed) {
         // 통과 ✓ 는 저장 결과와 무관하게 즉시 표시 (낙관적). 저장 실패는 아래 toast 로만 안내.
         setPassedById((prev) => ({ ...prev, [exercise.id]: true }));
@@ -221,8 +224,8 @@ export function ExerciseRunner({
         </p>
         <h2 className="mt-1 text-lg font-bold text-zinc-900 sm:text-xl">{set.title}</h2>
         <p className="mt-1.5 text-[13px] leading-relaxed text-zinc-600 sm:text-sm">
-          영상에서 배운 문법으로 직접 코드를 작성해 풀어보세요. 정해진 입력으로 자동 채점되고, 통과한
-          문제는 기록돼요.
+          영상에서 배운 문법으로 직접 코드를 작성해 풀어보세요. 정해진 입력으로 자동 채점되고,
+          통과한 문제는 기록돼요.
         </p>
       </div>
 
