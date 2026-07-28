@@ -151,7 +151,7 @@
 | `WeeklyReport` | weekly_reports | 주간 성장 리포트 — "열 때 생성"(E단계). `userId`+`weekStart`(KST 월요일) 복합 PK 로 유저·주당 1행 멱등. 주간 집계(`submissionCount`/`passRate`)+축 스냅샷/delta(`axisScores`/`axisDeltas` Json)+`weakestAxis`(규칙 기반 추천 seam)+`llmComment?`(Gemini, 실패 시 null — 숫자 리포트는 유지) |
 | `enum PostCategory` | — | question / free |
 | `enum NotificationType` | — | post_comment / comment_reply / post_like / comment_like |
-| `enum AiFeedbackStatus` | — | pending / ok / failed / skipped_no_key / skipped_limit |
+| `enum AiFeedbackStatus` | — | pending / ok / failed / skipped_no_key / skipped_limit / **skipped_empty**(빈 제출 — AI 호출 스킵 + 레이더 표본 제외. 빈 코드의 "효율 100/구문 깨끗" 무의미 만점 방지, `lib/code-inspect.ts` 의 `isEffectivelyEmptyCode` 로 판정. 연습 트랙(exercise-runner)도 같은 원칙으로 빈 제출은 ExerciseAttempt 기록 생략) |
 
 ### 설계 결정
 
