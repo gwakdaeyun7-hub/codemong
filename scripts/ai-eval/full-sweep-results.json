@@ -1,0 +1,285 @@
+[
+  {
+    "ref": "lesson-4/prob-1",
+    "title": "A+B",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-2",
+    "title": "사칙연산 5종 출력",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-3",
+    "title": "분→시간 변환",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-4",
+    "title": "거스름돈 동전 개수",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-5",
+    "title": "세 과목 평균",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-6",
+    "title": "자릿수 분해 곱셈",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-1",
+    "title": "두 수 비교",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-2",
+    "title": "짝수 홀수",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-3",
+    "title": "학점 계산기",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-4",
+    "title": "세 수 중 최댓값",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-5",
+    "title": "윤년 판단",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-6",
+    "title": "사분면 고르기",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-1",
+    "title": "1부터 N까지 합",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-2",
+    "title": "구구단 N단 출력",
+    "flag": "ok",
+    "scores": "100/90/90",
+    "deductions": [
+      {
+        "axis": "efficiency",
+        "reason": "print 함수에서 쉼표를 사용하면 자동으로 공백이 추가되어 출력 형식의 미세한 차이가 발생할 수 있습니다.",
+        "points": 10
+      },
+      {
+        "axis": "interpretation",
+        "reason": "출력 형식에서 숫자와 기호 사이의 공백을 정확히 맞추기 위해 f-string이나 문자열 포맷팅을 사용하는 것이 더 권장됩니다.",
+        "points": 10
+      }
+    ],
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-3",
+    "title": "N개의 수를 입력받아 합 구하기",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-4",
+    "title": "N의 약수 모두 출력",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-5",
+    "title": "별 찍기",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-6",
+    "title": "최대공약수",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-1",
+    "title": "N개 중 최댓값 찾기",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-2",
+    "title": "거꾸로 출력",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-3",
+    "title": "최댓값과 그 위치",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-4",
+    "title": "평균 넘는 수 세기",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-5",
+    "title": "짝수만 골라 새 리스트",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-6",
+    "title": "두 번째로 큰 수",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-1",
+    "title": "단어장 조회",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-2",
+    "title": "중복 없는 수 개수",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-3",
+    "title": "단어 빈도 세기",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-4",
+    "title": "공통 원소 찾기",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-5",
+    "title": "투표 최다 득표자",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-1",
+    "title": "인사 함수 만들기",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-2",
+    "title": "두 수 최댓값 함수",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-3",
+    "title": "온도 변환 함수",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-4",
+    "title": "소수 판별 함수",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-5",
+    "title": "팩토리얼 함수",
+    "flag": "ok",
+    "scores": "100/100/100",
+    "deductions": [],
+    "error": null
+  }
+]

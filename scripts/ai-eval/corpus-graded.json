@@ -1,0 +1,3426 @@
+[
+  {
+    "id": "C01",
+    "ref": "lesson-4/prob-1",
+    "persona": "P1",
+    "note": "모범",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "a = int(input())\nb = int(input())\nprint(a + b)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (3+4)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (12+25)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C02",
+    "ref": "lesson-4/prob-1",
+    "persona": "P2",
+    "note": "한글 변수 + 합계 변수 (통과)",
+    "expert": {
+      "c": 100,
+      "e": 90,
+      "i": 100
+    },
+    "code": "첫번째수 = int(input())\n두번째수 = int(input())\n합계 = 첫번째수 + 두번째수\nprint(합계)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (3+4)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (12+25)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C03",
+    "ref": "lesson-4/prob-1",
+    "persona": "P3",
+    "note": "불필요한 부호 분기 (통과)",
+    "expert": {
+      "c": 90,
+      "e": 60,
+      "i": 100
+    },
+    "code": "a = int(input())\nb = int(input())\nif a >= 0:\n    if b >= 0:\n        print(a + b)\n    else:\n        print(a + b)\nelse:\n    print(a + b)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (3+4)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (12+25)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C04",
+    "ref": "lesson-4/prob-1",
+    "persona": "P4",
+    "note": "int() 미사용 - 문자열 연결 '34'",
+    "expert": {
+      "c": 30,
+      "e": 100,
+      "i": 70
+    },
+    "code": "a = input()\nb = input()\nprint(a + b)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 1,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (3+4)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (12+25)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C05",
+    "ref": "lesson-4/prob-1",
+    "persona": "P5",
+    "note": "출력에 여분 텍스트 ('숫자만' 지시 위반, 관대한 채점기로 통과)",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 80
+    },
+    "code": "a = int(input())\nb = int(input())\nprint(\"두 수의 합:\", a + b)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (3+4)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (12+25)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C06",
+    "ref": "lesson-4/prob-1",
+    "persona": "P6",
+    "note": "미완성 - 입력만 받고 출력 없음",
+    "expert": {
+      "c": 50,
+      "e": 100,
+      "i": 40
+    },
+    "code": "a = int(input())\nb = int(input())\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 0,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (3+4)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (12+25)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C07",
+    "ref": "lesson-4/prob-1",
+    "persona": "P7",
+    "note": "괄호 누락 SyntaxError (의도는 정답)",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "a = int(input()\nb = int(input())\nprint(a + b)\n",
+    "summary": {
+      "passed": false,
+      "hadError": true,
+      "errorType": "SyntaxError",
+      "casesPassed": 0,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (3+4)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (12+25)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C08",
+    "ref": "lesson-4/prob-1",
+    "persona": "P8",
+    "note": "하드코딩 print(7)",
+    "expert": {
+      "c": 30,
+      "e": 100,
+      "i": 30
+    },
+    "code": "print(7)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 1,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (3+4)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (12+25)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C09",
+    "ref": "lesson-4/prob-5",
+    "persona": "P1",
+    "note": "모범",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "a = int(input())\nb = int(input())\nc = int(input())\nprint((a + b + c) / 3)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (90/80/70)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (100/90/80)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C10",
+    "ref": "lesson-4/prob-5",
+    "persona": "P2",
+    "note": "한글 변수 정답",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "국어 = int(input())\n영어 = int(input())\n수학 = int(input())\n평균 = (국어 + 영어 + 수학) / 3\nprint(평균)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (90/80/70)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (100/90/80)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C11",
+    "ref": "lesson-4/prob-5",
+    "persona": "P3",
+    "note": "각각 3으로 나눠 더함 (중복 연산, 통과)",
+    "expert": {
+      "c": 90,
+      "e": 80,
+      "i": 100
+    },
+    "code": "a = int(input())\nb = int(input())\nc = int(input())\nprint(a / 3 + b / 3 + c / 3)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (90/80/70)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (100/90/80)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C12",
+    "ref": "lesson-4/prob-5",
+    "persona": "P4",
+    "note": "// 오용 - 소수 케이스 실패",
+    "expert": {
+      "c": 60,
+      "e": 100,
+      "i": 70
+    },
+    "code": "a = int(input())\nb = int(input())\nc = int(input())\nprint((a + b + c) // 3)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 4,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (90/80/70)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (100/90/80)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C13",
+    "ref": "lesson-4/prob-5",
+    "persona": "P5",
+    "note": "임의 반올림 - '소수점까지 정확히' 위반",
+    "expert": {
+      "c": 80,
+      "e": 100,
+      "i": 60
+    },
+    "code": "a = int(input())\nb = int(input())\nc = int(input())\nprint(round((a + b + c) / 3, 1))\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 4,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (90/80/70)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (100/90/80)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C14",
+    "ref": "lesson-4/prob-5",
+    "persona": "P6",
+    "note": "미완성 - 합까지만",
+    "expert": {
+      "c": 50,
+      "e": 100,
+      "i": 40
+    },
+    "code": "a = int(input())\nb = int(input())\nc = int(input())\n합 = a + b + c\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 0,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (90/80/70)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (100/90/80)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C15",
+    "ref": "lesson-4/prob-5",
+    "persona": "P7",
+    "note": "괄호 불일치 SyntaxError",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "a = int(input())\nb = int(input())\nc = int(input())\nprint((a + b + c) / 3\n",
+    "summary": {
+      "passed": false,
+      "hadError": true,
+      "errorType": "SyntaxError",
+      "casesPassed": 0,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (90/80/70)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (100/90/80)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C16",
+    "ref": "lesson-4/prob-5",
+    "persona": "P8",
+    "note": "하드코딩 '80.0'",
+    "expert": {
+      "c": 30,
+      "e": 100,
+      "i": 30
+    },
+    "code": "print(\"80.0\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 1,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (90/80/70)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (100/90/80)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C17",
+    "ref": "lesson-5/prob-3",
+    "persona": "P1",
+    "note": "모범 elif",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "score = int(input())\nif score >= 90:\n    print(\"A\")\nelif score >= 80:\n    print(\"B\")\nelif score >= 70:\n    print(\"C\")\nelif score >= 60:\n    print(\"D\")\nelse:\n    print(\"F\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C18",
+    "ref": "lesson-5/prob-3",
+    "persona": "P2",
+    "note": "한글 변수 + 오름차순 elif (동급 정답)",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "점수 = int(input())\nif 점수 < 60:\n    print(\"F\")\nelif 점수 < 70:\n    print(\"D\")\nelif 점수 < 80:\n    print(\"C\")\nelif 점수 < 90:\n    print(\"B\")\nelse:\n    print(\"A\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C19",
+    "ref": "lesson-5/prob-3",
+    "persona": "P3",
+    "note": "과잉 중첩 if (통과)",
+    "expert": {
+      "c": 80,
+      "e": 80,
+      "i": 100
+    },
+    "code": "score = int(input())\nif score >= 60:\n    if score >= 70:\n        if score >= 80:\n            if score >= 90:\n                print(\"A\")\n            else:\n                print(\"B\")\n        else:\n            print(\"C\")\n    else:\n        print(\"D\")\nelse:\n    print(\"F\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C20",
+    "ref": "lesson-5/prob-3",
+    "persona": "P4",
+    "note": "가드 없는 if 나열 - 여러 학점 동시 출력 (관대한 채점기로 통과)",
+    "expert": {
+      "c": 50,
+      "e": 70,
+      "i": 50
+    },
+    "code": "score = int(input())\nif score >= 90:\n    print(\"A\")\nif score >= 80:\n    print(\"B\")\nif score >= 70:\n    print(\"C\")\nif score >= 60:\n    print(\"D\")\nif score < 60:\n    print(\"F\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C21",
+    "ref": "lesson-5/prob-3",
+    "persona": "P5",
+    "note": "D/F 조건 뒤바꿈",
+    "expert": {
+      "c": 70,
+      "e": 100,
+      "i": 60
+    },
+    "code": "score = int(input())\nif score >= 90:\n    print(\"A\")\nelif score >= 80:\n    print(\"B\")\nelif score >= 70:\n    print(\"C\")\nelif score < 60:\n    print(\"D\")\nelse:\n    print(\"F\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 4,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C22",
+    "ref": "lesson-5/prob-3",
+    "persona": "P6",
+    "note": "미완성 - A만 구현",
+    "expert": {
+      "c": 60,
+      "e": 100,
+      "i": 50
+    },
+    "code": "score = int(input())\nif score >= 90:\n    print(\"A\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 1,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C23",
+    "ref": "lesson-5/prob-3",
+    "persona": "P7",
+    "note": "elsif 오타 SyntaxError",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "score = int(input())\nif score >= 90:\n    print(\"A\")\nelsif score >= 80:\n    print(\"B\")\nelse:\n    print(\"F\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": true,
+      "errorType": "SyntaxError",
+      "casesPassed": 0,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C24",
+    "ref": "lesson-5/prob-3",
+    "persona": "P8",
+    "note": "공개 케이스 맞춤 하드코딩",
+    "expert": {
+      "c": 40,
+      "e": 90,
+      "i": 40
+    },
+    "code": "score = int(input())\nif score == 85:\n    print(\"B\")\nelif score == 59:\n    print(\"F\")\nelse:\n    print(\"A\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 3,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C25",
+    "ref": "lesson-5/prob-5",
+    "persona": "P1",
+    "note": "모범 (and/or 한 줄)",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "year = int(input())\nif (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):\n    print(\"윤년\")\nelse:\n    print(\"평년\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (2020 → 윤년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (1900 → 평년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C26",
+    "ref": "lesson-5/prob-5",
+    "persona": "P2",
+    "note": "400→100→4 순서 elif (동급 정답, 한글 변수)",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "년도 = int(input())\nif 년도 % 400 == 0:\n    print(\"윤년\")\nelif 년도 % 100 == 0:\n    print(\"평년\")\nelif 년도 % 4 == 0:\n    print(\"윤년\")\nelse:\n    print(\"평년\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (2020 → 윤년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (1900 → 평년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C27",
+    "ref": "lesson-5/prob-5",
+    "persona": "P3",
+    "note": "불필요 변수 3개 + 중복 검사 (통과)",
+    "expert": {
+      "c": 90,
+      "e": 80,
+      "i": 100
+    },
+    "code": "year = int(input())\n나머지4 = year % 4\n나머지100 = year % 100\n나머지400 = year % 400\nif 나머지400 == 0:\n    print(\"윤년\")\nelse:\n    if 나머지4 == 0 and 나머지100 != 0:\n        print(\"윤년\")\n    else:\n        print(\"평년\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (2020 → 윤년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (1900 → 평년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C28",
+    "ref": "lesson-5/prob-5",
+    "persona": "P4",
+    "note": "4의 배수만 검사 (100/400 예외 미이해)",
+    "expert": {
+      "c": 60,
+      "e": 100,
+      "i": 70
+    },
+    "code": "year = int(input())\nif year % 4 == 0:\n    print(\"윤년\")\nelse:\n    print(\"평년\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 5,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (2020 → 윤년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (1900 → 평년)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C29",
+    "ref": "lesson-5/prob-5",
+    "persona": "P5",
+    "note": "'윤년입니다' 형식 (허용 가능한 수준의 변형)",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 90
+    },
+    "code": "year = int(input())\nif (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):\n    print(\"윤년입니다\")\nelse:\n    print(\"평년입니다\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (2020 → 윤년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (1900 → 평년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C30",
+    "ref": "lesson-5/prob-5",
+    "persona": "P6",
+    "note": "미완성 - 나머지만 출력",
+    "expert": {
+      "c": 40,
+      "e": 100,
+      "i": 40
+    },
+    "code": "year = int(input())\nprint(year % 4)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 0,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (2020 → 윤년)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (1900 → 평년)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C31",
+    "ref": "lesson-5/prob-5",
+    "persona": "P7",
+    "note": "콜론 누락 SyntaxError",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "year = int(input())\nif (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)\n    print(\"윤년\")\nelse:\n    print(\"평년\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": true,
+      "errorType": "SyntaxError",
+      "casesPassed": 0,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (2020 → 윤년)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (1900 → 평년)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C32",
+    "ref": "lesson-5/prob-5",
+    "persona": "P8",
+    "note": "2020만 하드코딩",
+    "expert": {
+      "c": 40,
+      "e": 100,
+      "i": 40
+    },
+    "code": "year = int(input())\nif year == 2020:\n    print(\"윤년\")\nelse:\n    print(\"평년\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 4,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (2020 → 윤년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (1900 → 평년)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C33",
+    "ref": "lesson-6/prob-1",
+    "persona": "P1",
+    "note": "모범 for 누적",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "n = int(input())\ntotal = 0\nfor i in range(1, n + 1):\n    total = total + i\nprint(total)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (N=10)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (N=5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C34",
+    "ref": "lesson-6/prob-1",
+    "persona": "P2",
+    "note": "while 로 푼 동급 정답 (한글 변수)",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "끝수 = int(input())\n합 = 0\n숫자 = 1\nwhile 숫자 <= 끝수:\n    합 = 합 + 숫자\n    숫자 = 숫자 + 1\nprint(합)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (N=10)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (N=5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C35",
+    "ref": "lesson-6/prob-1",
+    "persona": "P3",
+    "note": "누적 + 불필요한 곱하기1, 임시변수 (통과)",
+    "expert": {
+      "c": 90,
+      "e": 80,
+      "i": 100
+    },
+    "code": "n = int(input())\ntotal = 0\nfor i in range(1, n + 1):\n    임시 = i * 1\n    total = total + 임시\n결과 = total\nprint(결과)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (N=10)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (N=5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C36",
+    "ref": "lesson-6/prob-1",
+    "persona": "P4",
+    "note": "반복 없이 공식 사용 (통과 - rubricNote 위반)",
+    "expert": {
+      "c": 60,
+      "e": 100,
+      "i": 90
+    },
+    "code": "n = int(input())\nprint(n * (n + 1) // 2)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (N=10)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (N=5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C37",
+    "ref": "lesson-6/prob-1",
+    "persona": "P5",
+    "note": "range 끝 미포함 오해 (off-by-one, 전 케이스 실패)",
+    "expert": {
+      "c": 60,
+      "e": 100,
+      "i": 60
+    },
+    "code": "n = int(input())\ntotal = 0\nfor i in range(1, n):\n    total = total + i\nprint(total)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 0,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (N=10)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (N=5)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C38",
+    "ref": "lesson-6/prob-1",
+    "persona": "P6",
+    "note": "미완성 - print 없음",
+    "expert": {
+      "c": 50,
+      "e": 100,
+      "i": 40
+    },
+    "code": "n = int(input())\ntotal = 0\nfor i in range(1, n + 1):\n    total = total + i\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 0,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (N=10)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (N=5)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C39",
+    "ref": "lesson-6/prob-1",
+    "persona": "P7",
+    "note": "for 콜론 누락 SyntaxError",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "n = int(input())\ntotal = 0\nfor i in range(1, n + 1)\n    total = total + i\nprint(total)\n",
+    "summary": {
+      "passed": false,
+      "hadError": true,
+      "errorType": "SyntaxError",
+      "casesPassed": 0,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (N=10)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (N=5)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C40",
+    "ref": "lesson-6/prob-1",
+    "persona": "P8",
+    "note": "공개 케이스 하드코딩",
+    "expert": {
+      "c": 30,
+      "e": 100,
+      "i": 30
+    },
+    "code": "n = int(input())\nif n == 10:\n    print(55)\nelif n == 5:\n    print(15)\nelse:\n    print(0)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 2,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (N=10)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (N=5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C41",
+    "ref": "lesson-6/prob-6",
+    "persona": "P1",
+    "note": "모범 유클리드 while",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "a = int(input())\nb = int(input())\nwhile b != 0:\n    r = a % b\n    a = b\n    b = r\nprint(a)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (12, 18)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (8, 12)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C42",
+    "ref": "lesson-6/prob-6",
+    "persona": "P2",
+    "note": "1부터 훑는 단순 접근 (지문이 허용한 동급 정답)",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "a = int(input())\nb = int(input())\n최대 = 1\ni = 1\nwhile i <= a and i <= b:\n    if a % i == 0 and b % i == 0:\n        최대 = i\n    i = i + 1\nprint(최대)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (12, 18)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (8, 12)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C43",
+    "ref": "lesson-6/prob-6",
+    "persona": "P3",
+    "note": "유클리드 + 불필요 임시변수 여럿 (통과)",
+    "expert": {
+      "c": 95,
+      "e": 85,
+      "i": 100
+    },
+    "code": "a = int(input())\nb = int(input())\n큰수 = a\n작은수 = b\nwhile 작은수 != 0:\n    나머지 = 큰수 % 작은수\n    큰수 = 작은수\n    작은수 = 나머지\n답 = 큰수\nprint(답)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (12, 18)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (8, 12)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C44",
+    "ref": "lesson-6/prob-6",
+    "persona": "P4",
+    "note": "나머지 방향 실수 (b%a) - 일부 케이스만 통과",
+    "expert": {
+      "c": 60,
+      "e": 100,
+      "i": 80
+    },
+    "code": "a = int(input())\nb = int(input())\nwhile b != 0:\n    r = b % a\n    a = b\n    b = r\nprint(a)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 3,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (12, 18)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (8, 12)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C45",
+    "ref": "lesson-6/prob-6",
+    "persona": "P5",
+    "note": "최소공배수로 오독",
+    "expert": {
+      "c": 70,
+      "e": 100,
+      "i": 40
+    },
+    "code": "a = int(input())\nb = int(input())\nn = a\nwhile n % b != 0:\n    n = n + a\nprint(n)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 1,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (12, 18)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (8, 12)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C46",
+    "ref": "lesson-6/prob-6",
+    "persona": "P6",
+    "note": "미완성 - 첫 수만 출력",
+    "expert": {
+      "c": 40,
+      "e": 100,
+      "i": 40
+    },
+    "code": "a = int(input())\nb = int(input())\nprint(a)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 3,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (12, 18)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (8, 12)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C47",
+    "ref": "lesson-6/prob-6",
+    "persona": "P7",
+    "note": "while 콜론 누락 SyntaxError",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "a = int(input())\nb = int(input())\nwhile b != 0\n    r = a % b\n    a = b\n    b = r\nprint(a)\n",
+    "summary": {
+      "passed": false,
+      "hadError": true,
+      "errorType": "SyntaxError",
+      "casesPassed": 0,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (12, 18)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (8, 12)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C48",
+    "ref": "lesson-6/prob-6",
+    "persona": "P8",
+    "note": "하드코딩 + else 1",
+    "expert": {
+      "c": 30,
+      "e": 100,
+      "i": 30
+    },
+    "code": "a = int(input())\nb = int(input())\nif a == 12:\n    print(6)\nelif a == 8:\n    print(4)\nelse:\n    print(1)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 4,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (12, 18)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (8, 12)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C49",
+    "ref": "lesson-7/prob-6",
+    "persona": "P1",
+    "note": "모범 2-pass",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nfirst = nums[0]\nfor x in nums:\n    if x > first:\n        first = x\nsecond = first\nfound = False\nfor x in nums:\n    if x < first:\n        if found == False:\n            second = x\n            found = True\n        elif x > second:\n            second = x\nprint(second)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (두 번째 5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (두 번째 9)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C50",
+    "ref": "lesson-7/prob-6",
+    "persona": "P2",
+    "note": "최댓값 찾고 그보다 작은 값 중 최대 (한글 변수, 동급 정답)",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "개수 = int(input())\n수들 = []\nfor i in range(개수):\n    수들.append(int(input()))\n최대 = 수들[0]\nfor x in 수들:\n    if x > 최대:\n        최대 = x\n둘째 = 최대\n찾음 = False\nfor x in 수들:\n    if x < 최대:\n        if 찾음 == False:\n            둘째 = x\n            찾음 = True\n        elif x > 둘째:\n            둘째 = x\nprint(둘째)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (두 번째 5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (두 번째 9)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C51",
+    "ref": "lesson-7/prob-6",
+    "persona": "P3",
+    "note": "리스트 복사본 등 불필요 작업 (통과)",
+    "expert": {
+      "c": 95,
+      "e": 80,
+      "i": 100
+    },
+    "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\n복사본 = []\nfor x in nums:\n    복사본.append(x)\nfirst = 복사본[0]\nfor x in 복사본:\n    if x > first:\n        first = x\nsecond = first\nfound = False\nfor x in 복사본:\n    if x < first:\n        if found == False:\n            second = x\n            found = True\n        elif x > second:\n            second = x\nprint(second)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (두 번째 5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (두 번째 9)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C52",
+    "ref": "lesson-7/prob-6",
+    "persona": "P4",
+    "note": "x != first 제외 방식 (설계 시 오개념으로 분류했으나 실제로는 올바른 대안 풀이 - 센티널 -999999 만 어색)",
+    "expert": {
+      "c": 95,
+      "e": 90,
+      "i": 100
+    },
+    "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nfirst = nums[0]\nfor x in nums:\n    if x > first:\n        first = x\nsecond = -999999\nfor x in nums:\n    if x != first:\n        if x > second:\n            second = x\nprint(second)\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (두 번째 5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (두 번째 9)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C53",
+    "ref": "lesson-7/prob-6",
+    "persona": "P5",
+    "note": "두 번째로 '작은' 수로 오독",
+    "expert": {
+      "c": 80,
+      "e": 100,
+      "i": 50
+    },
+    "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nfirst = nums[0]\nfor x in nums:\n    if x < first:\n        first = x\nsecond = first\nfound = False\nfor x in nums:\n    if x > first:\n        if found == False:\n            second = x\n            found = True\n        elif x < second:\n            second = x\nprint(second)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 3,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (두 번째 5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (두 번째 9)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C54",
+    "ref": "lesson-7/prob-6",
+    "persona": "P6",
+    "note": "미완성 - 두 번째 입력값 출력",
+    "expert": {
+      "c": 40,
+      "e": 100,
+      "i": 40
+    },
+    "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nprint(nums[1])\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 3,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (두 번째 5)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (두 번째 9)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C55",
+    "ref": "lesson-7/prob-6",
+    "persona": "P7",
+    "note": "append 오타 - 런타임 AttributeError",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.apend(int(input()))\nfirst = nums[0]\nfor x in nums:\n    if x > first:\n        first = x\nprint(first)\n",
+    "summary": {
+      "passed": false,
+      "hadError": true,
+      "errorType": "AttributeError",
+      "casesPassed": 0,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (두 번째 5)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (두 번째 9)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C56",
+    "ref": "lesson-7/prob-6",
+    "persona": "P8",
+    "note": "개수 기준 하드코딩",
+    "expert": {
+      "c": 30,
+      "e": 100,
+      "i": 30
+    },
+    "code": "n = int(input())\nfor i in range(n):\n    input()\nif n == 3:\n    print(5)\nelif n == 4:\n    print(9)\nelse:\n    print(3)\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 3,
+      "casesTotal": 6,
+      "caseResults": [
+        {
+          "label": "예시 1 (두 번째 5)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (두 번째 9)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C57",
+    "ref": "lesson-9/prob-4",
+    "persona": "P1",
+    "note": "모범 is_prime",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "def is_prime(n):\n    if n < 2:\n        return False\n    i = 2\n    while i < n:\n        if n % i == 0:\n            return False\n        i = i + 1\n    return True\n\nn = int(input())\nif is_prime(n):\n    print(\"소수입니다\")\nelse:\n    print(\"소수가 아닙니다\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (7, 소수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (10, 합성수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C58",
+    "ref": "lesson-9/prob-4",
+    "persona": "P2",
+    "note": "한글 함수명 동급 정답",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "def 소수인가(수):\n    if 수 < 2:\n        return False\n    나누는수 = 2\n    while 나누는수 < 수:\n        if 수 % 나누는수 == 0:\n            return False\n        나누는수 = 나누는수 + 1\n    return True\n\n수 = int(input())\nif 소수인가(수):\n    print(\"소수입니다\")\nelse:\n    print(\"소수가 아닙니다\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (7, 소수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (10, 합성수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C59",
+    "ref": "lesson-9/prob-4",
+    "persona": "P3",
+    "note": "flag 변수로 어색하게 (통과)",
+    "expert": {
+      "c": 90,
+      "e": 80,
+      "i": 100
+    },
+    "code": "def is_prime(n):\n    결과 = True\n    if n < 2:\n        결과 = False\n    i = 2\n    while i < n:\n        if n % i == 0:\n            결과 = False\n        i = i + 1\n    return 결과\n\nn = int(input())\nif is_prime(n):\n    print(\"소수입니다\")\nelse:\n    print(\"소수가 아닙니다\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (7, 소수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (10, 합성수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C60",
+    "ref": "lesson-9/prob-4",
+    "persona": "P4",
+    "note": "n<2 처리 누락 - 1을 소수로 판정",
+    "expert": {
+      "c": 70,
+      "e": 100,
+      "i": 80
+    },
+    "code": "def is_prime(n):\n    i = 2\n    while i < n:\n        if n % i == 0:\n            return False\n        i = i + 1\n    return True\n\nn = int(input())\nif is_prime(n):\n    print(\"소수입니다\")\nelse:\n    print(\"소수가 아닙니다\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (7, 소수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (10, 합성수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C61",
+    "ref": "lesson-9/prob-4",
+    "persona": "P5",
+    "note": "출력 문구를 '소수'/'합성수'로 - 전 케이스 실패",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 40
+    },
+    "code": "def is_prime(n):\n    if n < 2:\n        return False\n    i = 2\n    while i < n:\n        if n % i == 0:\n            return False\n        i = i + 1\n    return True\n\nn = int(input())\nif is_prime(n):\n    print(\"소수\")\nelse:\n    print(\"합성수\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 0,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (7, 소수)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (10, 합성수)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C62",
+    "ref": "lesson-9/prob-4",
+    "persona": "P6",
+    "note": "미완성 - 항상 True 반환",
+    "expert": {
+      "c": 40,
+      "e": 100,
+      "i": 50
+    },
+    "code": "def is_prime(n):\n    return True\n\nn = int(input())\nif is_prime(n):\n    print(\"소수입니다\")\nelse:\n    print(\"소수가 아닙니다\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 4,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (7, 소수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (10, 합성수)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C63",
+    "ref": "lesson-9/prob-4",
+    "persona": "P7",
+    "note": "def 콜론 누락 SyntaxError",
+    "expert": {
+      "c": 100,
+      "e": 100,
+      "i": 100
+    },
+    "code": "def is_prime(n)\n    if n < 2:\n        return False\n    return True\n\nn = int(input())\nif is_prime(n):\n    print(\"소수입니다\")\nelse:\n    print(\"소수가 아닙니다\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": true,
+      "errorType": "SyntaxError",
+      "casesPassed": 0,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (7, 소수)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (10, 합성수)",
+          "passed": false,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": false,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "C64",
+    "ref": "lesson-9/prob-4",
+    "persona": "P8",
+    "note": "함수 없이 직접 풀이 (통과 - rubricNote 위반)",
+    "expert": {
+      "c": 60,
+      "e": 100,
+      "i": 100
+    },
+    "code": "n = int(input())\n소수 = True\nif n < 2:\n    소수 = False\ni = 2\nwhile i < n:\n    if n % i == 0:\n        소수 = False\n    i = i + 1\nif 소수:\n    print(\"소수입니다\")\nelse:\n    print(\"소수가 아닙니다\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (7, 소수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (10, 합성수)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  }
+]

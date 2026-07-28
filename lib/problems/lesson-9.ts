@@ -1,0 +1,545 @@
+// 9강 「함수」 실력향상 문제 5개.
+// 지문·스토리·테스트 데이터 전부 자체 제작 (외부 저지는 유형만 참고).
+// 2026-07-16 승인 라운드 A-3 확정본 — 수정 시 solutionCode 가 전 테스트를 통과하는지 재검증할 것.
+
+import type { ProblemSet } from "./types";
+
+export const lesson9Problems: ProblemSet = {
+  "courseId": "be-python",
+  "lessonId": "lesson-9",
+  "lessonNumber": 9,
+  "title": "함수",
+  "problems": [
+    {
+      "id": "prob-1",
+      "number": 1,
+      "title": "인사 함수 만들기",
+      "difficulty": "easy",
+      "prompt": "이름을 받아 인사말을 돌려주는 함수를 만들어 사용하세요. def 로 함수를 만들어, 함수가 인사말 문자열을 return 하도록 합니다.\n\n인사말은 이름이 코드몽이면 안녕하세요, 코드몽님 처럼 안녕하세요, 뒤에 이름과 님을 붙인 형태입니다.\n\n[입력]\n첫째 줄: 이름 하나\n\n[출력]\n함수가 돌려준 인사말을 한 줄에 출력합니다.",
+      "conceptTags": [
+        "9강 def",
+        "9강 return",
+        "9강 매개변수"
+      ],
+      "examples": [
+        {
+          "stdin": [
+            "코드몽"
+          ],
+          "stdout": "안녕하세요, 코드몽님"
+        },
+        {
+          "stdin": [
+            "지윤"
+          ],
+          "stdout": "안녕하세요, 지윤님"
+        }
+      ],
+      "starterCode": "def greet(name):\n    # 여기를 채우세요\n\n\n# 아래에서 입력을 받아 함수를 호출하고 결과를 출력하세요\n",
+      "solutionCode": "def greet(name):\n    return \"안녕하세요, \" + name + \"님\"\n\nname = input()\nprint(greet(name))\n",
+      "publicTests": [
+        {
+          "label": "예시 1 (코드몽)",
+          "stdin": [
+            "코드몽"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "안녕하세요, 코드몽님"
+            }
+          ]
+        },
+        {
+          "label": "예시 2 (지윤)",
+          "stdin": [
+            "지윤"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "안녕하세요, 지윤님"
+            }
+          ]
+        }
+      ],
+      "hiddenTests": [
+        {
+          "label": "파이썬",
+          "stdin": [
+            "파이썬"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "안녕하세요, 파이썬님"
+            }
+          ]
+        },
+        {
+          "label": "민수",
+          "stdin": [
+            "민수"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "안녕하세요, 민수님"
+            }
+          ]
+        },
+        {
+          "label": "한 글자 이름",
+          "stdin": [
+            "A"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "안녕하세요, A님"
+            }
+          ]
+        }
+      ],
+      "rubricNote": "문자열을 만들어 return 하고 바깥에서 호출해 출력하는 함수 구조가 핵심. 함수 없이 풀면 개념 감점."
+    },
+    {
+      "id": "prob-2",
+      "number": 2,
+      "title": "두 수 최댓값 함수",
+      "difficulty": "medium",
+      "prompt": "두 수를 받아 더 큰 값을 돌려주는 함수를 def 로 만들어 사용하세요. 함수 안에서 조건문으로 비교해 더 큰 값을 return 합니다. 두 값이 같으면 그 값을 돌려줍니다.\n\n[입력]\n첫째 줄: 정수 A\n둘째 줄: 정수 B\n\n[출력]\n두 수 중 더 큰 값을 한 줄에 출력합니다.",
+      "conceptTags": [
+        "9강 def/return",
+        "5강 조건문"
+      ],
+      "examples": [
+        {
+          "stdin": [
+            "3",
+            "7"
+          ],
+          "stdout": "7"
+        },
+        {
+          "stdin": [
+            "10",
+            "2"
+          ],
+          "stdout": "10"
+        }
+      ],
+      "starterCode": "def bigger(a, b):\n    # 여기를 채우세요\n\n\n# 아래에서 입력을 받아 함수를 호출하고 결과를 출력하세요\n",
+      "solutionCode": "def bigger(a, b):\n    if a > b:\n        return a\n    else:\n        return b\n\nx = int(input())\ny = int(input())\nprint(bigger(x, y))\n",
+      "publicTests": [
+        {
+          "label": "예시 1 (3,7)",
+          "stdin": [
+            "3",
+            "7"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 7
+            }
+          ]
+        },
+        {
+          "label": "예시 2 (10,2)",
+          "stdin": [
+            "10",
+            "2"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 10
+            }
+          ]
+        }
+      ],
+      "hiddenTests": [
+        {
+          "label": "동점 (경계)",
+          "stdin": [
+            "5",
+            "5"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 5
+            }
+          ]
+        },
+        {
+          "label": "음수",
+          "stdin": [
+            "-1",
+            "-5"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": -1
+            }
+          ]
+        },
+        {
+          "label": "근소 차",
+          "stdin": [
+            "100",
+            "99"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 100
+            }
+          ]
+        },
+        {
+          "label": "B가 큼",
+          "stdin": [
+            "2",
+            "8"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 8
+            }
+          ]
+        }
+      ],
+      "rubricNote": "조건 비교 결과를 return 으로 돌려주는 함수 구조가 핵심. 동점 처리를 이해했는지 평가. 함수 없이 풀면 개념 감점."
+    },
+    {
+      "id": "prob-3",
+      "number": 3,
+      "title": "온도 변환 함수",
+      "difficulty": "medium",
+      "prompt": "섭씨 온도를 화씨 온도로 바꾸는 함수를 def 로 만들어 사용하세요. 변환 공식은 화씨 = 섭씨 × 9 / 5 + 32 입니다. 함수가 화씨 온도를 return 하게 만드세요.\n\n[입력]\n첫째 줄: 섭씨 온도를 나타내는 정수\n\n[출력]\n화씨 온도를 한 줄에 출력합니다.",
+      "conceptTags": [
+        "9강 def/return",
+        "4강 산술 연산자"
+      ],
+      "examples": [
+        {
+          "stdin": [
+            "100"
+          ],
+          "stdout": "212.0"
+        },
+        {
+          "stdin": [
+            "0"
+          ],
+          "stdout": "32.0"
+        }
+      ],
+      "starterCode": "def c_to_f(c):\n    # 여기를 채우세요\n\n\n# 아래에서 입력을 받아 함수를 호출하고 결과를 출력하세요\n",
+      "solutionCode": "def c_to_f(c):\n    return c * 9 / 5 + 32\n\nc = int(input())\nprint(c_to_f(c))\n",
+      "publicTests": [
+        {
+          "label": "예시 1 (100도)",
+          "stdin": [
+            "100"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 212
+            }
+          ]
+        },
+        {
+          "label": "예시 2 (0도)",
+          "stdin": [
+            "0"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 32
+            }
+          ]
+        }
+      ],
+      "hiddenTests": [
+        {
+          "label": "음수, 섭씨=화씨 지점",
+          "stdin": [
+            "-40"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": -40
+            }
+          ]
+        },
+        {
+          "label": "상온 25도",
+          "stdin": [
+            "25"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 77
+            }
+          ]
+        },
+        {
+          "label": "소수 결과 37도",
+          "stdin": [
+            "37"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 98.6
+            }
+          ]
+        },
+        {
+          "label": "큰 음수",
+          "stdin": [
+            "-273"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": -459.4
+            }
+          ]
+        }
+      ],
+      "rubricNote": "주어진 공식을 함수 안에서 계산해 return 하는 게 핵심. 나눗셈으로 소수 결과가 나오는 점을 이해했는지 평가. 함수 없이 풀면 개념 감점."
+    },
+    {
+      "id": "prob-4",
+      "number": 4,
+      "title": "소수 판별 함수",
+      "difficulty": "hard",
+      "prompt": "어떤 수가 소수인지 판단하는 함수를 def 로 만들어 사용하세요. 소수는 1보다 크고, 1과 자기 자신 말고는 나누어떨어지지 않는 수입니다. 함수가 소수이면 True, 아니면 False 를 return 하게 만드세요.\n\n[입력]\n첫째 줄: 정수 N\n\n[출력]\nN이 소수이면 소수입니다, 아니면 소수가 아닙니다 를 출력합니다.",
+      "conceptTags": [
+        "9강 def/return",
+        "6강 while",
+        "5강 조건문"
+      ],
+      "examples": [
+        {
+          "stdin": [
+            "7"
+          ],
+          "stdout": "소수입니다"
+        },
+        {
+          "stdin": [
+            "10"
+          ],
+          "stdout": "소수가 아닙니다"
+        }
+      ],
+      "starterCode": "def is_prime(n):\n    # 여기를 채우세요\n\n\n# 아래에서 입력을 받아 함수를 호출하고 결과를 출력하세요\n",
+      "solutionCode": "def is_prime(n):\n    if n < 2:\n        return False\n    i = 2\n    while i < n:\n        if n % i == 0:\n            return False\n        i = i + 1\n    return True\n\nn = int(input())\nif is_prime(n):\n    print(\"소수입니다\")\nelse:\n    print(\"소수가 아닙니다\")\n",
+      "publicTests": [
+        {
+          "label": "예시 1 (7, 소수)",
+          "stdin": [
+            "7"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "소수입니다"
+            }
+          ]
+        },
+        {
+          "label": "예시 2 (10, 합성수)",
+          "stdin": [
+            "10"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "소수가 아닙니다"
+            }
+          ]
+        }
+      ],
+      "hiddenTests": [
+        {
+          "label": "1 (경계, 소수 아님)",
+          "stdin": [
+            "1"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "소수가 아닙니다"
+            }
+          ]
+        },
+        {
+          "label": "2 (가장 작은 소수)",
+          "stdin": [
+            "2"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "소수입니다"
+            }
+          ]
+        },
+        {
+          "label": "97 (큰 소수)",
+          "stdin": [
+            "97"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "소수입니다"
+            }
+          ]
+        },
+        {
+          "label": "100 (합성수)",
+          "stdin": [
+            "100"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "소수가 아닙니다"
+            }
+          ]
+        },
+        {
+          "label": "13 (소수)",
+          "stdin": [
+            "13"
+          ],
+          "expect": [
+            {
+              "kind": "text",
+              "contains": "소수입니다"
+            }
+          ]
+        }
+      ],
+      "rubricNote": "2부터 n 직전까지 나눠떨어지는 수가 있는지 확인하고 True/False 를 return 하는 게 핵심. 1과 2의 경계 처리를 이해했는지 평가. 함수 없이 풀면 개념 감점."
+    },
+    {
+      "id": "prob-5",
+      "number": 5,
+      "title": "팩토리얼 함수",
+      "difficulty": "hard",
+      "prompt": "1부터 N까지 모두 곱한 값을 팩토리얼이라고 합니다. 팩토리얼을 구하는 함수를 def 로 만들어 사용하세요. 재귀 대신 반복문으로 1부터 N까지 곱해 나가면 됩니다. N이 0이면 팩토리얼은 1입니다.\n\n[입력]\n첫째 줄: 0 이상의 정수 N\n\n[출력]\nN 팩토리얼 값을 한 줄에 출력합니다.",
+      "conceptTags": [
+        "9강 def/return",
+        "6강 for/range",
+        "6강 누적 변수"
+      ],
+      "examples": [
+        {
+          "stdin": [
+            "5"
+          ],
+          "stdout": "120"
+        },
+        {
+          "stdin": [
+            "3"
+          ],
+          "stdout": "6"
+        }
+      ],
+      "starterCode": "def factorial(n):\n    # 여기를 채우세요\n\n\n# 아래에서 입력을 받아 함수를 호출하고 결과를 출력하세요\n",
+      "solutionCode": "def factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result = result * i\n    return result\n\nn = int(input())\nprint(factorial(n))\n",
+      "publicTests": [
+        {
+          "label": "예시 1 (5!)",
+          "stdin": [
+            "5"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 120
+            }
+          ]
+        },
+        {
+          "label": "예시 2 (3!)",
+          "stdin": [
+            "3"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 6
+            }
+          ]
+        }
+      ],
+      "hiddenTests": [
+        {
+          "label": "0! = 1 (경계)",
+          "stdin": [
+            "0"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "label": "1! = 1",
+          "stdin": [
+            "1"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "label": "6! = 720",
+          "stdin": [
+            "6"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 720
+            }
+          ]
+        },
+        {
+          "label": "10! = 3628800",
+          "stdin": [
+            "10"
+          ],
+          "expect": [
+            {
+              "kind": "number",
+              "value": 3628800
+            }
+          ]
+        }
+      ],
+      "rubricNote": "누적 곱 변수를 1에서 시작해 반복으로 곱해 나가는 게 핵심. N이 0일 때 반복이 한 번도 안 돌아 1이 되는 흐름을 이해했는지 평가. 함수 없이 풀면 개념 감점."
+    }
+  ]
+};

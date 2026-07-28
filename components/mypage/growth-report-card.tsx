@@ -1,15 +1,34 @@
-import { getSkillRadar } from "@/lib/learning/skill-radar";
+import { getSkillRadarDetail } from "@/lib/learning/skill-radar";
 
 import { mypageIcons } from "./icon-map";
 import { SkillRadarChart } from "./skill-radar-chart";
 
 // 성장 리포트 카드 — 코드 품질 5축을 레이더(스파이더) 차트로.
 // 나(사용자) vs 전체 평균을 겹쳐, 강점·약점을 한눈에 인식.
+// 어떤 축이 실측인지는 meta 로 받아 하단 카피에 정직하게 표기한다.
 export async function GrowthReportCard({ userId }: { userId: string }) {
-  // 단일 MVP 코스(be-python). 구문 정확도·로직 구현도는 실측(ExerciseAttempt),
-  // 개념/효율/해석 3축과 전체 평균은 아직 데모값이다.
-  const points = await getSkillRadar("be-python", userId);
+  const { points, meta } = await getSkillRadarDetail("be-python", userId);
   const Icon = mypageIcons.target;
+
+  // 실측 상태별 안내 카피 (정직 톤 — 예시값이 섞여 있으면 반드시 밝힌다).
+  const notes: string[] = [];
+  if (meta.deterministicLive) {
+    notes.push("구문 정확도·로직 구현도는 내 제출로 측정한 값이에요 (문제당 최신 제출 기준).");
+  } else {
+    notes.push(
+      "구문 정확도·로직 구현도는 아직 예시예요. 연습/실력향상 문제를 제출하면 실측으로 바뀝니다.",
+    );
+  }
+  if (meta.aiLive) {
+    notes.push("개념·효율·해석은 AI 진단 점수의 평균이에요.");
+  } else {
+    notes.push("개념·효율·해석은 아직 예시예요. 실력향상 문제를 제출하면 AI 진단으로 측정됩니다.");
+  }
+  notes.push(
+    meta.averageLive
+      ? "전체 평균은 이용자 데이터로 집계한 값이에요."
+      : "전체 평균은 아직 예시예요 (이용 데이터가 쌓이면 실제 평균으로 바뀝니다).",
+  );
 
   return (
     <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
@@ -36,9 +55,8 @@ export async function GrowthReportCard({ userId }: { userId: string }) {
         </span>
       </div>
 
-      <p className="mt-3 text-center text-[11px] text-zinc-400">
-        구문 정확도·로직 구현도는 푼 문제로 측정한 값이고, 개념·효율·해석 축과 전체 평균은 아직
-        예시예요. AI 분석이 붙으면 실제 측정값으로 전환됩니다.
+      <p className="mt-3 text-center text-[11px] leading-relaxed text-zinc-400">
+        {notes.join(" ")}
       </p>
     </section>
   );

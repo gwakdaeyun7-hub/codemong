@@ -1,0 +1,296 @@
+[
+  {
+    "id": "L1",
+    "desc": "모범 elif 사다리 (기준점)",
+    "code": "score = int(input())\nif score >= 90:\n    print(\"A\")\nelif score >= 80:\n    print(\"B\")\nelif score >= 70:\n    print(\"C\")\nelif score >= 60:\n    print(\"D\")\nelse:\n    print(\"F\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "L2",
+    "desc": "동급의 다른 스타일 (오름차순 elif — 공정성 확인)",
+    "code": "score = int(input())\nif score < 60:\n    print(\"F\")\nelif score < 70:\n    print(\"D\")\nelif score < 80:\n    print(\"C\")\nelif score < 90:\n    print(\"B\")\nelse:\n    print(\"A\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "L3",
+    "desc": "과잉 중첩 if (통과하지만 비효율)",
+    "code": "score = int(input())\nif score >= 60:\n    if score >= 70:\n        if score >= 80:\n            if score >= 90:\n                print(\"A\")\n            else:\n                print(\"B\")\n        else:\n            print(\"C\")\n    else:\n        print(\"D\")\nelse:\n    print(\"F\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "L4",
+    "desc": "if 연속 나열 (통과하지만 개념 부족)",
+    "code": "score = int(input())\nif score >= 90:\n    print(\"A\")\nif score >= 80 and score < 90:\n    print(\"B\")\nif score >= 70 and score < 80:\n    print(\"C\")\nif score >= 60 and score < 70:\n    print(\"D\")\nif score < 60:\n    print(\"F\")\n",
+    "summary": {
+      "passed": true,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 7,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "L5",
+    "desc": "경계 실수 (>= 대신 > — 90점 케이스만 실패)",
+    "code": "score = int(input())\nif score > 90:\n    print(\"A\")\nelif score >= 80:\n    print(\"B\")\nelif score >= 70:\n    print(\"C\")\nelif score >= 60:\n    print(\"D\")\nelse:\n    print(\"F\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 6,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": true,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "L6",
+    "desc": "공개 케이스 하드코딩 (일반화 실패)",
+    "code": "score = int(input())\nif score == 85:\n    print(\"B\")\nelse:\n    print(\"F\")\n",
+    "summary": {
+      "passed": false,
+      "hadError": false,
+      "errorType": null,
+      "casesPassed": 3,
+      "casesTotal": 7,
+      "caseResults": [
+        {
+          "label": "예시 1 (85 → B)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "예시 2 (59 → F)",
+          "passed": true,
+          "hidden": false
+        },
+        {
+          "label": "히든 1",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 2",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 3",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 4",
+          "passed": false,
+          "hidden": true
+        },
+        {
+          "label": "히든 5",
+          "passed": true,
+          "hidden": true
+        }
+      ]
+    }
+  }
+]

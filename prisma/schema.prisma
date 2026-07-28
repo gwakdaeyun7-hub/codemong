@@ -200,6 +200,65 @@ model ExerciseAttempt {
   @@map("exercise_attempts")
 }
 
+// ─── 실력향상(시험) 트랙 ─────────────────────────────────────
+// 문제 은행(lib/problems/) 제출 기록. 백준 "내 제출" 스타일 append-only — 제출 1건 = 1행.
+// 채점은 클라이언트(Pyodide, lib/project/grader.ts) — ExerciseAttempt 와 동일한 "서버 재검증 안 함" 정책.
+// AI 피드백(개념/효율/해석 3축 + 힌트형 코멘트)은 제출 저장 "후" 서버가 Gemini 를 호출해
+// 같은 행에 채우는 2단계 write — AI 실패/키 없음/한도 초과여도 제출·채점 기록은 항상 남는다.
+enum AiFeedbackStatus {
+  pending // 행 생성 직후 (AI 호출 전 — 액션이 중간에 죽으면 이 상태로 남음 = failed 취급)
+  ok // 3축 점수 + 피드백 채움
+  failed // 호출/파싱 실패 — 채점 결과만 표시
+  skipped_no_key // GEMINI_API_KEY 미설정 (AI 기능 전체 off)
+  skipped_limit // 무료 하루 한도 초과
+}
+
+model ProblemSubmission {
+  id          String  @id @default(cuid())
+  userId      String  @db.Uuid
+  lessonRef   String // "<courseId>/<lessonId>" — 데이터 정식 courseId 기준 "be-python/lesson-N"
+  problemId   String
+  code        String // 제출 코드 원문 (서버에서 10KB 상한 컷)
+  passed      Boolean // 공개+히든 전체 통과 여부
+  hadError    Boolean // 실행 예외 여부 — 구문 정확도 축 proxy (ExerciseAttempt 규약)
+  errorType   String? // "SyntaxError" 등 첫 에러 종류 (60자 컷)
+  casesPassed Int
+  casesTotal  Int
+  caseResults Json    @default("[]") // [{label, passed, hidden}] — stdout 은 저장 안 함 (용량/유출)
+
+  aiStatus            AiFeedbackStatus @default(pending)
+  conceptScore        Int? // 0-100 (개념 이해도)
+  efficiencyScore     Int? // 0-100 (코드 효율성)
+  interpretationScore Int? // 0-100 (문제 해석력)
+  aiFeedback          String? // 학습자용 한국어 힌트형 피드백 (정답 코드 미포함)
+  aiDeductions        Json? // [{axis, reason, points}] 감점 근거
+  aiModel             String? // "gemini-2.5-flash-lite" 스냅샷 (모델 교체 대비)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt]) // 제출 히스토리 최신순 + 하루 한도 count
+  @@index([userId, lessonRef]) // 단원별 레이더/해결 현황
+  @@index([lessonRef, problemId]) // 문제별 코호트 통계 (향후)
+  @@map("problem_submissions")
+}
+
+// 주간 성장 리포트 — "열 때 생성" (마이페이지/실력향상 진입 시 지난주 것이 없으면 생성).
+// 유저·주당 1행 멱등 (복합 PK). LLM 코멘트 실패 시 llmComment 만 null (숫자 리포트는 유지).
+model WeeklyReport {
+  userId          String   @db.Uuid
+  weekStart       DateTime @db.Date // 그 주 월요일 (KST 기준 날짜)
+  submissionCount Int // 그 주 ProblemSubmission 수
+  passRate        Int // 0-100 — 그 주 제출 통과율
+  axisScores      Json // {syntax, logic, concept, efficiency, interpretation} 주말 시점 누적 스냅샷
+  axisDeltas      Json // 전주 스냅샷 대비 변화 (전주 리포트 없으면 {})
+  weakestAxis     String? // 최저 축 key — 규칙 기반 다음 문제 추천 seam
+  llmComment      String? // Gemini 생성 코멘트 (실패/키 없음 null)
+  createdAt       DateTime @default(now())
+
+  @@id([userId, weekStart])
+  @@map("weekly_reports")
+}
+
 model CommentLike {
   commentId String
   userId    String   @db.Uuid
