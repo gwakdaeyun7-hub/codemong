@@ -13,7 +13,9 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "ai:usage": "node scripts/ai-usage.mjs",
+    "ai:audit": "node scripts/ai-audit.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",

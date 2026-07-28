@@ -55,7 +55,7 @@ async function generateComment(data: {
   if (data.weakestAxis) lines.push(`가장 약한 축: ${label(data.weakestAxis)}`);
 
   try {
-    const raw = await generateJson({
+    const { data: raw } = await generateJson({
       system: COMMENT_SYSTEM,
       user: lines.join("\n"),
       schema: COMMENT_SCHEMA,

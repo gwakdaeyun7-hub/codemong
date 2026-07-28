@@ -17,8 +17,14 @@ export class GeminiError extends Error {
   }
 }
 
+/** 호출 1회의 토큰 사용량 (usageMetadata 실측) — 무료/유료 티어 모두 응답에 포함된다 */
+export type GeminiUsage = {
+  promptTokens: number;
+  outputTokens: number;
+};
+
 /**
- * 구조화 JSON 생성 1회 호출. 성공 시 JSON.parse 결과를 돌려준다.
+ * 구조화 JSON 생성 1회 호출. 성공 시 JSON.parse 결과와 토큰 사용량을 돌려준다.
  * 키 없음/HTTP 실패/타임아웃/파싱 실패는 전부 GeminiError throw — 호출부가 failed 처리.
  */
 export async function generateJson({
@@ -33,7 +39,7 @@ export async function generateJson({
   schema: unknown;
   maxOutputTokens?: number;
   timeoutMs?: number;
-}): Promise<unknown> {
+}): Promise<{ data: unknown; usage: GeminiUsage | null }> {
   const key = getGeminiApiKey();
   if (!key) throw new GeminiError("GEMINI_API_KEY 미설정");
 
@@ -75,6 +81,7 @@ export async function generateJson({
 
     const data = (await res.json()) as {
       candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+      usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number };
     };
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
     if (debug) {
@@ -82,8 +89,14 @@ export async function generateJson({
     }
     if (!text) throw new GeminiError("응답에 텍스트가 없음");
 
+    const meta = data.usageMetadata;
+    const usage: GeminiUsage | null =
+      meta && typeof meta.promptTokenCount === "number"
+        ? { promptTokens: meta.promptTokenCount, outputTokens: meta.candidatesTokenCount ?? 0 }
+        : null;
+
     try {
-      return JSON.parse(text) as unknown;
+      return { data: JSON.parse(text) as unknown, usage };
     } catch {
       throw new GeminiError(`JSON 파싱 실패 — ${text.slice(0, 200)}`);
     }

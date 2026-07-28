@@ -138,7 +138,7 @@ export async function submitProblemAction(
     ai = skippedPayload(aiStatus);
   } else {
     try {
-      const verdict = await gradeSubmissionWithAi(problem, trimmedCode, normalized);
+      const { verdict, usage } = await gradeSubmissionWithAi(problem, trimmedCode, normalized);
       await prisma.problemSubmission.update({
         where: { id: submission.id },
         data: {
@@ -149,6 +149,9 @@ export async function submitProblemAction(
           aiFeedback: verdict.feedback,
           aiDeductions: verdict.deductions,
           aiModel: getGeminiModel(),
+          // 토큰 사용량 로깅 (무료 티어에서도 usageMetadata 는 온다) — scripts/ai-usage.mjs 가 집계.
+          promptTokens: usage?.promptTokens ?? null,
+          outputTokens: usage?.outputTokens ?? null,
         },
       });
       ai = {

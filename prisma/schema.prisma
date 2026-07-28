@@ -232,7 +232,9 @@ model ProblemSubmission {
   interpretationScore Int? // 0-100 (문제 해석력)
   aiFeedback          String? // 학습자용 한국어 힌트형 피드백 (정답 코드 미포함)
   aiDeductions        Json? // [{axis, reason, points}] 감점 근거
-  aiModel             String? // "gemini-2.5-flash-lite" 스냅샷 (모델 교체 대비)
+  aiModel             String? // "gemini-3.1-flash-lite" 스냅샷 (모델 교체 대비)
+  promptTokens        Int? // Gemini usageMetadata 실측 — 비용 로깅 (aiStatus=ok 일 때만)
+  outputTokens        Int? // 〃 (scripts/ai-usage.mjs 가 일별 집계·예상 비용 계산)
 
   createdAt DateTime @default(now())
 
