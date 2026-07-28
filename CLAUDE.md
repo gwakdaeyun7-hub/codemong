@@ -147,7 +147,7 @@
 | `ExerciseProgress` | exercise_progress | 강별 연습 문제 통과 기록. lessonRef+userId 복합 PK, `passed`(통과한 문제 id 맵 `Json @default("{}")`). 채점은 클라(Pyodide), 통과 결과만 멱등 기록. 13강 ProjectProgress 와 별개 트랙이지만, 영상 강의 강 완료(이수율) 판정에 **AND 조건**으로 함께 집계됨(연습 전부 통과해야 완료, 연습 0개 강은 면제) |
 | `ExerciseAttempt` | exercise_attempts | 강별 연습 문제 제출 시도 로그(append-only). `id`(cuid) + lessonRef/userId/exerciseId + `hadError`/`errorType?`/`casesPassed`/`casesTotal` + createdAt. 인덱스 `[userId]`/`[lessonRef, userId]`. 제출 1건마다 한 행(통과·오답 모두). 성장 레이더 실데이터 소스 — `ExerciseProgress`(통과 멱등 맵, 이수율용)와 **별개·병행** 트랙. 채점은 클라(Pyodide), 결과 요약만 기록(서버 재검증 X) |
 | `Notification` | notifications | 커뮤니티 알림(댓글/답글/좋아요). `recipientId`(받는 userId)+`actorId`(행위자)+`actorNickname`/`actorAvatarUrl` 스냅샷(Comment/Post 패턴), `type`(NotificationType), `postId?`/`lessonRef?`/`commentId?`(이동 대상), `excerpt?`(미리보기), `readAt?`(null=안읽음). 인덱스 `[recipientId, readAt]`/`[recipientId, createdAt]`. 받는사람 귀속(로그아웃해도 유지), 무기한 보관·종 목록 최신 10개·**"열 때 조회"** |
-| `ProblemSubmission` | problem_submissions | 실력향상(시험) 트랙 제출 기록 — 백준 "내 제출" 스타일 append-only. `code`(원문, 10KB 컷)+`passed`(공개+히든 전체)+`hadError`/`errorType`/`casesPassed`/`casesTotal`(ExerciseAttempt 규약)+`caseResults` Json([{label,passed,hidden}] — stdout 미저장). AI 필드: `aiStatus`(AiFeedbackStatus)+3축 점수(`conceptScore`/`efficiencyScore`/`interpretationScore`)+`aiFeedback`/`aiDeductions`/`aiModel` — 2단계 write(제출 확정 후 Gemini 가 같은 행 update, C단계). 인덱스 `[userId,createdAt]`(히스토리+하루 한도)/`[userId,lessonRef]`/`[lessonRef,problemId]` |
+| `ProblemSubmission` | problem_submissions | 실력향상(시험) 트랙 제출 기록 — 백준 "내 제출" 스타일 append-only. `code`(원문, 10KB 컷)+`passed`(공개+히든 전체)+`hadError`/`errorType`/`casesPassed`/`casesTotal`(ExerciseAttempt 규약)+`caseResults` Json([{label,passed,hidden}] — stdout 미저장). AI 필드: `aiStatus`(AiFeedbackStatus)+3축 점수(`conceptScore`/`efficiencyScore`/`interpretationScore`)+`aiFeedback`/`aiDeductions`/`aiModel`+`promptTokens`/`outputTokens`(usageMetadata 실측 — 비용 로깅, `pnpm ai:usage` 로 집계) — 2단계 write(제출 확정 후 Gemini 가 같은 행 update). 인덱스 `[userId,createdAt]`(히스토리+하루 한도)/`[userId,lessonRef]`/`[lessonRef,problemId]` |
 | `WeeklyReport` | weekly_reports | 주간 성장 리포트 — "열 때 생성"(E단계). `userId`+`weekStart`(KST 월요일) 복합 PK 로 유저·주당 1행 멱등. 주간 집계(`submissionCount`/`passRate`)+축 스냅샷/delta(`axisScores`/`axisDeltas` Json)+`weakestAxis`(규칙 기반 추천 seam)+`llmComment?`(Gemini, 실패 시 null — 숫자 리포트는 유지) |
 | `enum PostCategory` | — | question / free |
 | `enum NotificationType` | — | post_comment / comment_reply / post_like / comment_like |
@@ -222,6 +222,8 @@ pnpm install          # 의존성 + postinstall 로 prisma generate
 pnpm format           # prettier --write .
 pnpm db:push          # prisma schema → Supabase
 pnpm db:studio        # prisma studio
+pnpm ai:usage         # AI 토큰 사용량·예상 비용 리포트 (일별 KST + 이번 달 합계)
+pnpm ai:audit         # AI 채점 감사 — 이상 채점 후보 탐지 (규칙 위반·정답 유출 의심·과감점·실패율)
 pnpm --filter remotion dev   # Remotion Studio 실행 (영상 미리보기)
 pnpm --filter remotion build # Remotion 번들 빌드
 py videos/_assets/_synth_sample.py  # TTS voice 샘플 합성 (voice/rate 변경해 비교)
