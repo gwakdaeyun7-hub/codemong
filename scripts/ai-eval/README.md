@@ -27,6 +27,27 @@ node --experimental-strip-types run_stability.mjs    # 재현성 (같은 입력 
 py -X utf8 analyze_agreement.py  # → agreement-report.txt
 ```
 
+## discrimination/ — 변별력 전수 매트릭스 (2026-07-28)
+
+34문제 전부에 문제당 4단계 품질 사다리(V1 모범 / V2 결함 정답 / V3 오개념 오답 / V4 하드코딩,
+변형 102개는 실행 검증 후 사용)를 채점해 6개 기준(V1≥90, V2 결함 감지, V3 오개념 감지+
+"실패 시 3축 100 금지" 규칙, V4 개념·해석≤40 캘리브레이션, V1>V2·V4 최하 서열, 정답 유출 없음)을
+자동 판정한다. **최종 결과: 34/34 문제 전 기준 통과, 플래그 0건** (하드코딩 상한 문구 정밀화
+1회 + 판정 정규식 오탐 수정 + 무효 변형 2건 교체 후).
+
+```bash
+cd scripts/ai-eval/discrimination
+py -X utf8 grade_variants.py                       # 변형 재검증 + matrix-graded.json
+node --experimental-strip-types run_matrix.mjs     # Gemini 136건 (재개형 — 중단돼도 이어짐)
+py -X utf8 analyze_matrix.py                       # 판정 → matrix-report.txt
+```
+
+새 문제 추가 시: variants-lesson-N.json 에 V2/V3/V4 를 추가하고 위 3단계를 재실행.
+
+미해결 후속 아이디어: 관대한 채점기(부분 일치)가 통과시키는 두 패턴 — ① 함수가 print 하고
+호출부에서 또 출력해 None 이 덧붙는 코드 ② 중복 제거 없이 여러 번 출력하는 코드 — 는
+케이스를 통과하므로 AI 가 코드를 직접 읽고 잡아야 한다. 별도 변형 세트로 검증할 가치가 있음.
+
 ## 2026-07-16 최종 결과 (발표 인용 가능)
 
 - 재현성: 같은 입력 10/10 동일 점수

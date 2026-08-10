@@ -1,0 +1,2934 @@
+[
+  {
+    "ref": "lesson-4/prob-1",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "입력받은 값을 정수로 정확히 변환하여 덧셈을 수행하셨네요. 문제에서 요구한 대로 숫자만 깔끔하게 출력하는 모습이 아주 좋습니다. 앞으로도 지금처럼 기본 개념을 잘 활용해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-2",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "모든 테스트 케이스를 완벽하게 통과하셨습니다. 산술 연산자의 종류와 출력 순서를 정확히 이해하고 코드를 작성하셨네요. 앞으로도 지금처럼 깔끔하게 문제를 해결해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-3",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 문제를 정확하게 이해하고 몫과 나머지 연산자를 올바르게 활용하여 해결하셨습니다. 코드의 구조가 간결하고 명확하여 아주 좋습니다. 앞으로도 지금처럼 논리적인 흐름을 유지하며 학습해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-4",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "7/7",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "문제에서 요구하는 몫과 나머지 연산자를 정확하게 사용하여 거스름돈을 효율적으로 계산하셨습니다. 코드의 흐름이 매우 깔끔하고 논리적입니다. 앞으로도 지금처럼 명확한 코드를 작성해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-5",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "세 과목의 점수를 입력받아 정확하게 평균을 계산하셨네요. 나눗셈 연산자 /를 올바르게 사용하여 소수점까지 잘 출력되었습니다. 아주 깔끔하고 정확한 코드입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-6",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "몫과 나머지를 활용하여 세 자리 수의 각 자릿수를 정확하게 추출하고 연산하셨네요. 문제에서 요구하는 논리를 아주 깔끔하게 구현하였습니다. 앞으로도 이렇게 효율적인 코드 작성을 연습해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-1",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 문제의 요구사항을 완벽하게 이해하고 if, elif, else 구조를 아주 적절하게 활용하셨습니다. 코드의 가독성도 좋고 불필요한 연산 없이 깔끔하게 작성되었습니다. 앞으로도 지금처럼 논리적인 구조를 잘 설계해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-2",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 문제의 핵심 개념인 나머지 연산자를 정확하게 활용하여 짝수와 홀수를 잘 구분하였습니다. 코드의 구조가 매우 간결하고 명확하여 입문자로서 아주 훌륭한 풀이입니다. 앞으로도 지금처럼 논리적인 흐름을 유지하며 코드를 작성해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-3",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "7/7",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 기준에 맞춰 학점을 정확하게 분류하셨습니다. elif 문을 사용하여 조건의 범위를 깔끔하게 처리한 점이 매우 좋습니다. 앞으로도 지금처럼 논리적인 흐름을 유지하며 코드를 작성해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-4",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "7/7",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "모든 테스트 케이스를 완벽하게 통과하셨습니다. 조건문과 논리 연산자를 활용하여 세 수 중 최댓값을 찾는 로직을 매우 깔끔하게 구현하셨네요. 앞으로도 지금처럼 논리적인 흐름을 잘 설계해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-5",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "7/7",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "윤년의 복합적인 조건을 논리 연산자와 괄호를 사용하여 아주 정확하게 구현하셨습니다. 조건문의 우선순위를 잘 이해하고 계시네요. 앞으로도 이렇게 명확한 논리 구조로 코드를 작성해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-6",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "7/7",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "모든 테스트 케이스를 완벽하게 통과하셨습니다. 논리 연산자와 조건문을 사용하여 각 사분면의 조건을 정확하게 잘 나누어 구현하였습니다. 지금처럼 깔끔하게 코드를 작성하는 습관을 계속 유지해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-1",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 문제의 의도대로 반복문과 누적 변수를 사용하여 1부터 N까지의 합을 정확하게 구해주셨습니다. 코드의 흐름이 매우 깔끔하고 이해하기 좋습니다. 앞으로도 지금처럼 반복문의 구조를 잘 활용해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-2",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "모든 테스트 케이스를 완벽하게 통과하셨습니다. 반복문과 range 함수를 사용하여 구구단을 아주 깔끔하게 구현하셨네요. print 함수에서 쉼표를 사용하면 자동으로 공백이 추가된다는 점을 잘 활용하셨습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-3",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 문제를 정확하게 이해하고 반복문과 누적 변수를 활용하여 효율적으로 해결하셨습니다. 코드의 구조가 매우 깔끔하고 논리적입니다. 앞으로도 지금처럼 간결하고 명확한 코드를 작성하는 습관을 유지해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-4",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 문제를 완벽하게 이해하고 해결하셨습니다. 1부터 N까지의 범위를 설정하고 나머지 연산자를 활용해 약수를 정확히 찾아내셨네요. 반복문과 조건문을 아주 깔끔하게 잘 사용하셨습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-5",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "중첩 반복문과 문자열 누적 방식을 사용하여 문제를 아주 정확하게 해결하셨습니다. 코드의 구조가 깔끔하고 의도한 대로 잘 작동하네요. 앞으로도 이와 같은 논리적인 접근 방식을 유지해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-6",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "7/7",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "유클리드 호제법의 원리를 정확하게 이해하고 코드로 잘 구현하셨습니다. while 문을 사용하여 나머지가 0이 될 때까지 효율적으로 반복하는 방식이 매우 깔끔합니다. 앞으로도 이와 같이 논리적인 흐름을 코드로 옮기는 연습을 꾸준히 해보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-1",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 문제를 정확하게 이해하고 리스트를 순회하며 최댓값을 찾는 로직을 잘 구현했습니다. 파이썬의 내장 함수를 사용하지 않고 직접 비교하는 과정을 통해 리스트의 원리를 잘 파악하고 있네요. 아주 훌륭합니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-2",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "모든 테스트 케이스를 완벽하게 통과하셨습니다. 리스트의 인덱스를 활용하여 역순으로 접근하는 방식을 아주 정확하게 이해하고 구현하셨네요. 파이썬의 리스트 슬라이싱 기능을 활용하면 코드를 조금 더 간결하게 작성할 수도 있으니 나중에 한번 찾아보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-3",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 리스트와 반복문을 사용하여 최댓값과 그 위치를 효율적으로 잘 찾아내셨네요. 앞으로도 지금처럼 논리적인 흐름을 유지하며 코드를 작성해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-4",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 문제의 요구사항대로 리스트를 두 번 순회하여 합계와 평균을 구하고, 다시 평균보다 큰 값을 정확히 찾아내셨습니다. 코드의 구조가 매우 깔끔하고 논리적입니다. 앞으로도 이렇게 명확한 단계로 문제를 해결하는 습관을 유지해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-5",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 문제의 요구사항을 완벽하게 이해하고 리스트와 반복문을 적절히 활용하여 깔끔하게 작성하셨습니다. 짝수를 판별하는 논리와 리스트에 추가하는 과정 모두 정확합니다. 앞으로도 지금처럼 간결하고 명확한 코드를 유지해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-6",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 정렬 함수를 사용하지 않고 리스트를 두 번 순회하며 최댓값과 그 다음으로 큰 값을 찾아내는 논리가 매우 깔끔합니다. 앞으로도 이렇게 효율적인 알고리즘을 설계하는 연습을 계속해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-1",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "딕셔너리의 키 존재 여부를 확인하는 in 연산자를 아주 정확하게 활용하셨습니다. 코드의 구조가 깔끔하고 문제의 요구사항을 완벽하게 충족했습니다. 앞으로도 지금처럼 명확한 논리로 코드를 작성해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-2",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "제시된 문제의 핵심 개념인 셋(set)의 중복 제거 성질을 아주 정확하게 활용하셨습니다. 코드의 흐름이 매우 깔끔하고 논리적입니다. 앞으로도 지금처럼 파이썬의 자료구조를 적절히 활용하는 연습을 이어가 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-3",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "딕셔너리를 활용해 빈도를 계산하고 리스트로 순서를 관리하는 로직을 아주 정확하게 구현했습니다. 코드가 간결하고 가독성도 매우 좋습니다. 앞으로도 지금처럼 자료구조의 특성을 잘 활용해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-4",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "7/7",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "모든 테스트 케이스를 완벽하게 통과하셨습니다. 리스트의 in 연산자와 조건문을 활용하여 중복을 제거하고 순서를 유지하는 로직을 아주 깔끔하게 구현하셨네요. 앞으로도 지금처럼 논리적인 흐름을 잘 설계해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-5",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 90,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "변수를 개별적으로 선언하여 비교하는 대신 반복문을 활용하면 더 확장성 있는 코드가 됩니다.",
+          "points": 10
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 딕셔너리를 활용해 득표수를 집계하고 조건문으로 최댓값을 구하는 과정이 매우 깔끔합니다. 다만, 후보자가 늘어날 경우를 대비해 변수를 각각 선언하기보다 반복문을 사용하여 최댓값을 찾는 방식을 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-1",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "5/5",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "함수를 올바르게 정의하고 매개변수를 활용하여 요구사항대로 인사말을 잘 반환하고 있습니다. 함수를 호출한 결과를 출력하는 구조도 매우 깔끔합니다. 지금처럼 함수를 활용하는 습관을 계속 유지해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-2",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "함수를 정의하고 조건문을 사용하여 두 수 중 큰 값을 올바르게 반환하셨습니다. 동점인 경우에도 else 문을 통해 자연스럽게 처리된 점이 좋습니다. 앞으로도 이처럼 간결하고 명확한 함수 구조를 유지해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-3",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "함수를 올바르게 정의하고 반환값을 활용하여 문제를 완벽하게 해결하셨습니다. 산술 연산자의 우선순위와 소수점 계산 결과도 정확히 이해하고 계시네요. 지금처럼 함수를 활용해 코드를 구조화하는 습관을 계속 유지해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-4",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "7/7",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "작성하신 코드는 소수 판별의 핵심 개념을 정확히 이해하고 있으며, 경계값 처리와 함수 활용도 매우 훌륭합니다. 반복문을 활용한 로직이 깔끔하고 효율적입니다. 지금처럼 논리적인 구조를 유지하며 다양한 문제를 해결해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-5",
+    "variant": "V1",
+    "desc": "모범답안",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [],
+      "feedback": "함수를 정의하고 반복문을 사용하여 팩토리얼을 정확하게 구현하셨습니다. 특히 N이 0일 때의 예외 상황까지 깔끔하게 처리된 점이 매우 좋습니다. 지금처럼 논리적인 흐름을 유지하며 코드를 작성해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-1",
+    "variant": "V2",
+    "desc": "정답이지만 input 문자열을 int 로 바꿨다가 다시 str, 또 int 로 되돌리는 불필요한 왕복 변환과 중복 변수",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 85,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "합계를 다시 문자열로 변환했다가 정수로 바꾸는 불필요한 과정이 포함되어 있습니다.",
+          "points": 15
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 다만 합계를 구한 뒤 다시 문자열로 바꾸고 정수로 변환하는 과정은 코드의 효율성을 떨어뜨릴 수 있습니다. 계산된 결과값을 바로 출력하는 방식을 고민해보면 더 깔끔한 코드가 될 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-1",
+    "variant": "V3",
+    "desc": "int() 형변환을 빠뜨려 문자열끼리 이어 붙임 (+ 가 덧셈이 아니라 연결로 동작)",
+    "grading": "1/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "input()으로 받은 값은 문자열이므로 산술 연산을 수행하기 전에 정수형으로 변환해야 합니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "입력받은 값들이 문자열 상태로 더해져서 숫자의 합이 아닌 문자열의 결합이 발생하고 있습니다. input() 함수로 받은 데이터를 정수로 변환하는 방법을 다시 확인해 보세요. 형변환을 적용하면 의도한 대로 덧셈 결과를 얻을 수 있을 거예요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-2",
+    "variant": "V2",
+    "desc": "다섯 연산을 변수에 담아 놓고 하나도 쓰지 않은 채 print 안에서 전부 다시 계산",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 90,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "연산 결과를 변수에 저장했지만 출력 시 다시 연산을 수행하여 불필요한 중복 연산이 발생했습니다.",
+          "points": 10
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 연산 결과를 변수에 저장해 두셨는데, 출력할 때 다시 계산하기보다 저장된 변수를 활용하면 코드가 더 간결해질 것 같아요. 앞으로도 지금처럼 차근차근 문제를 해결해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-2",
+    "variant": "V3",
+    "desc": "몫 // 자리에 나눗셈 / 를 써서 나눠떨어지지 않을 때 소수가 그대로 출력됨",
+    "grading": "2/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 70,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "몫을 구하는 연산자 // 대신 나눗셈 연산자 /를 사용하여 정수 몫이 아닌 실수 결과가 출력되고 있습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구한 다섯 가지 연산 결과의 순서와 형식을 정확히 따르지 않아 테스트 케이스를 통과하지 못했습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "작성하신 코드에서 몫을 구하는 연산자와 나눗셈 연산자의 차이를 다시 한번 확인해 보세요. 문제에서 요구하는 몫 연산자(//)를 사용하면 정수 형태의 결과를 얻을 수 있습니다. 연산자들을 올바르게 수정하여 다시 시도해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-3",
+    "variant": "V2",
+    "desc": "나머지를 % 대신 뺄셈으로 우회하고 같은 값을 total/rest/minute 세 변수에 거듭 복사",
+    "grading": "6/6",
+    "ai": {
+      "concept": 85,
+      "efficiency": 90,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "나머지 연산자(%)를 사용하지 않고 뺄셈과 곱셈을 조합하여 분을 구했습니다.",
+          "points": 15
+        },
+        {
+          "axis": "efficiency",
+          "reason": "불필요한 변수 total을 선언하여 메모리를 추가로 사용했습니다.",
+          "points": 10
+        }
+      ],
+      "feedback": "모든 테스트를 통과하셨습니다! 다만 이번 문제의 핵심 개념인 나머지 연산자(%)를 활용하면 코드를 훨씬 간결하게 작성할 수 있습니다. 뺄셈 대신 % 연산자를 사용하여 남은 분을 구하는 연습을 해보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-3",
+    "variant": "V3",
+    "desc": "몫 // 와 나머지 % 의 역할을 뒤바꿔 시간과 분을 반대로 출력",
+    "grading": "1/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "몫을 구하는 연산자와 나머지를 구하는 연산자의 역할을 반대로 이해하고 있습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구한 출력 순서인 '시간(몫)' 다음 '분(나머지)'을 지키지 않았습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드에서 몫과 나머지를 구하는 연산자의 위치가 바뀌어 있습니다. 문제에서 요구한 출력 형식에 맞춰 시간과 분이 각각 어느 연산자로 계산되어야 할지 다시 한번 고민해 보세요. 연산자의 개념을 정확히 적용하면 올바른 결과를 얻을 수 있을 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-4",
+    "variant": "V2",
+    "desc": "남은 금액을 rest1, rest2 로 두 번 복사하고 500원 개수는 변수에 담아 놓고 print 에서 다시 계산",
+    "grading": "7/7",
+    "ai": {
+      "concept": 90,
+      "efficiency": 90,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "나머지 연산자(%)를 사용하면 더 간결하게 남은 금액을 구할 수 있습니다.",
+          "points": 10
+        },
+        {
+          "axis": "efficiency",
+          "reason": "불필요한 변수 할당과 중복된 연산 과정이 포함되어 있습니다.",
+          "points": 10
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 다만, 남은 금액을 계산할 때 뺄셈과 곱셈 대신 나머지 연산자(%)를 활용하면 코드가 훨씬 간결해집니다. 또한, 이미 계산한 값을 변수에 저장해 두었으니 이를 활용해 출력하면 더 효율적인 코드가 될 거예요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-4",
+    "variant": "V3",
+    "desc": "500원을 쓰고 남은 금액을 넘기지 않고 전체 금액을 그대로 100 으로 나눠 100원 개수를 셈",
+    "grading": "2/7",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "500원 동전으로 나눈 후 남은 금액을 처리하기 위해 나머지 연산자(%)를 사용해야 합니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "100원 동전 개수를 구할 때 전체 금액을 100으로 나누면 500원 동전으로 거슬러 준 금액까지 포함되어 계산됩니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "500원 동전 개수를 구한 뒤 남은 금액을 계산하지 않고 바로 100원 개수를 구하면 중복 계산이 발생합니다. 500원 동전으로 거슬러 주고 남은 금액을 구하는 방법을 고민해 보세요. 나머지 연산자(%)를 활용하면 남은 금액을 쉽게 구할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-5",
+    "variant": "V2",
+    "desc": "평균을 average, answer 두 변수에 담아 두고 정작 print 에서는 합을 처음부터 다시 계산",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 80,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "평균을 계산하기 위해 변수 average와 answer를 선언했으나, 정작 출력문에서 다시 계산식을 사용하여 불필요한 변수 선언이 발생했습니다.",
+          "points": 20
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 다만, 계산한 결과를 변수에 저장해두었다면 출력문에서는 그 변수를 활용하는 것이 더 깔끔한 코드가 됩니다. 불필요한 중복 연산을 줄여보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-5",
+    "variant": "V3",
+    "desc": "평균에 / 대신 몫 // 를 써서 소수점이 잘림",
+    "grading": "4/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "평균 계산 시 정수 나눗셈 연산자(//)를 사용하여 소수점 이하 값이 손실되었습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드는 정수 나눗셈 연산자를 사용하여 소수점 이하의 결과가 잘리고 있습니다. 문제에서 요구한 대로 소수점까지 정확한 평균을 구하려면 어떤 나눗셈 연산자를 사용해야 할지 다시 한번 고민해 보세요. 연산자 하나만 바꾸어도 정확한 결과를 얻을 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-6",
+    "variant": "V2",
+    "desc": "자리 숫자를 % 10 대신 뺄셈으로 걷어내고 마지막 A×B 도 앞서 구한 자리별 결과를 재조합해 우회 계산",
+    "grading": "6/6",
+    "ai": {
+      "concept": 85,
+      "efficiency": 90,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "백의 자리 숫자를 추출할 때 몫 연산자(//)를 더 간단하게 활용할 수 있는 방법이 있습니다.",
+          "points": 15
+        },
+        {
+          "axis": "efficiency",
+          "reason": "마지막 전체 곱셈 결과는 이미 입력받은 두 변수를 사용하여 더 효율적으로 계산할 수 있습니다.",
+          "points": 10
+        }
+      ],
+      "feedback": "모든 테스트를 통과하셨네요! 자리수를 추출할 때 몫 연산자(//)를 활용하면 코드를 조금 더 간결하게 작성할 수 있습니다. 또한 마지막 결과값은 이미 알고 있는 두 수를 직접 곱하는 것이 더 직관적일 수 있으니 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-6",
+    "variant": "V3",
+    "desc": "출력 순서를 문제와 반대로 읽어 백의 자리부터 일의 자리 순으로 출력",
+    "grading": "1/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "각 자릿수를 추출하는 논리는 올바르지만, 문제에서 요구한 출력 순서와 실제 코드의 출력 순서가 일치하지 않습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구한 출력 순서(일의 자리, 십의 자리, 백의 자리 순)를 지키지 않아 테스트케이스를 통과하지 못했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "각 자릿수를 구하는 공식은 아주 잘 작성하셨습니다. 다만 문제에서 요구한 출력 순서는 일의 자리, 십의 자리, 백의 자리 순서입니다. 출력문의 순서를 다시 한번 확인해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-1",
+    "variant": "V2",
+    "desc": "서로 배타적인 세 갈래를 elif 없이 if 세 번으로 나열하고 결과를 answer 변수에 담았다가 마지막에 출력",
+    "grading": "6/6",
+    "ai": {
+      "concept": 70,
+      "efficiency": 80,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "세 가지 경우를 처리할 때 if문을 나열하기보다 if-elif-else 구조를 사용하면 더 효율적이고 논리적인 흐름을 만들 수 있습니다.",
+          "points": 30
+        },
+        {
+          "axis": "efficiency",
+          "reason": "모든 if문을 순차적으로 검사하는 대신 조건이 충족되면 나머지 검사를 건너뛰는 구조가 더 바람직합니다.",
+          "points": 20
+        }
+      ],
+      "feedback": "모든 테스트를 통과하셨네요! 지금은 if문을 세 번 사용하셨지만, 세 가지 경우 중 하나만 선택되는 상황이므로 if-elif-else 구조를 사용하면 코드가 훨씬 간결해집니다. 다음에는 이 구조를 활용해 더 효율적인 코드를 작성해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-1",
+    "variant": "V3",
+    "desc": "두 수가 같은 경우를 빼먹고 크다/작다 두 갈래로만 나눔",
+    "grading": "4/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "두 수가 같은 경우를 처리하는 조건문이 누락되어 있습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "두 수가 같을 때 출력해야 하는 '==' 조건이 반영되지 않았습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드는 두 수가 같을 때의 경우를 고려하지 않아 일부 테스트를 통과하지 못했습니다. if와 else 사이에 두 수가 같은지 확인하는 조건을 추가해 보세요. 세 가지 경우를 모두 나누어 처리하면 정확한 결과를 얻을 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-2",
+    "variant": "V2",
+    "desc": "else 안에 다시 if/else 를 넣어 두 갈래 모두 같은 홀수 결과를 출력하는 과잉 중첩",
+    "grading": "6/6",
+    "ai": {
+      "concept": 90,
+      "efficiency": 85,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "나머지 연산의 결과가 0이 아니면 모두 홀수이므로, 중첩된 조건문 대신 else를 사용하는 것이 더 간결합니다.",
+          "points": 10
+        },
+        {
+          "axis": "efficiency",
+          "reason": "불필요한 중첩 조건문을 사용하여 코드의 가독성이 다소 떨어집니다.",
+          "points": 15
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 짝수와 홀수를 구분하는 나머지 연산 개념을 잘 활용하셨네요. 다만, 짝수가 아닌 경우는 모두 홀수이므로 중첩된 if문 대신 else 하나만 사용하면 코드를 훨씬 깔끔하게 작성할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-2",
+    "variant": "V3",
+    "desc": "짝수 조건에 n > 0 을 덧붙여 0 과 음수 짝수를 홀수로 잘못 판정",
+    "grading": "4/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 70,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "조건문에서 양수 조건만 고려하여 0과 음수 케이스를 올바르게 처리하지 못했습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "0과 음수 입력에 대한 경계 조건을 고려하지 않아 일부 테스트 케이스를 통과하지 못했습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "작성하신 코드는 양수일 때 짝수 판별은 잘 수행하고 있습니다. 다만 0이나 음수 입력 시에도 올바른 결과가 나오도록 조건문을 다시 점검해 보세요. 나머지 연산의 결과가 0인지 확인하는 로직을 활용하면 모든 경우를 포괄할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-3",
+    "variant": "V2",
+    "desc": "elif 사다리 대신 if 다섯 개를 나열하고 각 줄마다 상한 조건을 중복으로 덧붙임",
+    "grading": "7/7",
+    "ai": {
+      "concept": 70,
+      "efficiency": 80,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "if문을 연속으로 나열하는 대신 elif를 사용하면 조건 검사 과정을 더 효율적으로 구성할 수 있습니다.",
+          "points": 30
+        },
+        {
+          "axis": "efficiency",
+          "reason": "각 조건마다 불필요하게 범위를 이중으로 검사하고 있어 코드가 다소 길어집니다.",
+          "points": 20
+        }
+      ],
+      "feedback": "모든 테스트를 통과하셨네요! 지금처럼 if문을 나열해도 결과는 같지만, elif를 활용하면 앞선 조건이 거짓일 때만 다음 조건을 확인하므로 코드가 훨씬 깔끔해집니다. 다음에는 elif를 사용하여 조건문을 더 간결하게 작성해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-3",
+    "variant": "V3",
+    "desc": "이상(>=)을 초과(>)로 잘못 써서 90, 80, 70, 60 경계 점수가 한 단계씩 밀림",
+    "grading": "3/7",
+    "ai": {
+      "concept": 70,
+      "efficiency": 100,
+      "interpretation": 70,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "조건문에서 경계값 처리가 미흡하여 90점, 80점 등 정확히 경계에 해당하는 점수를 올바르게 분류하지 못합니다.",
+          "points": 30
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구한 90점 이상, 80점 이상 등의 기준을 코드에 정확히 반영하지 않아 일부 테스트 케이스를 통과하지 못했습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "제시된 기준에 따라 90점 이상은 A가 되어야 하는데, 현재 코드는 90점을 초과할 때만 A를 출력하고 있습니다. 부등호 기호를 조정하여 경계값을 포함하도록 수정해 보세요. 논리 구조를 다시 점검하면 모든 경우를 정확히 분류할 수 있을 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-4",
+    "variant": "V3",
+    "desc": "이상(>=) 대신 초과(>)만 써서 앞의 두 수가 동점으로 최대일 때 마지막 수를 출력",
+    "grading": "6/7",
+    "ai": {
+      "concept": 80,
+      "efficiency": 100,
+      "interpretation": 80,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "비교 연산 시 동점 상황을 고려하지 않아 일부 케이스에서 최댓값을 올바르게 판별하지 못합니다.",
+          "points": 20
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값 중 같은 값이 최댓값일 경우를 처리하지 못해 테스트케이스를 모두 통과하지 못했습니다.",
+          "points": 20
+        }
+      ],
+      "feedback": "작성하신 코드는 세 수의 크기를 비교하는 논리 구조를 잘 갖추고 있습니다. 다만, 입력값 중 서로 같은 숫자가 있을 때 최댓값을 제대로 찾지 못하는 경우가 발생합니다. 비교 연산자에서 '크다'뿐만 아니라 '크거나 같다'를 어떻게 활용할 수 있을지 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-5",
+    "variant": "V2",
+    "desc": "leap 플래그를 if 세 번으로 덮어쓰며 순서에 의존하게 만들고 출력도 else 없이 if 두 번으로 나눔",
+    "grading": "7/7",
+    "ai": {
+      "concept": 85,
+      "efficiency": 80,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "논리 연산자를 활용하여 조건문을 더 간결하게 구성할 수 있습니다.",
+          "points": 15
+        },
+        {
+          "axis": "efficiency",
+          "reason": "변수 leap를 사용하여 상태를 관리하는 대신 조건문 내에서 직접 출력하는 것이 더 효율적입니다.",
+          "points": 20
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 다만, 여러 개의 if문을 나열하는 대신 논리 연산자(and, or)를 활용하면 코드를 훨씬 간결하게 작성할 수 있습니다. 다음에는 조건들을 하나로 묶어 표현하는 연습을 해보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-5",
+    "variant": "V3",
+    "desc": "400 으로 나누어떨어지면 다시 윤년이라는 예외 규칙을 빠뜨림",
+    "grading": "5/7",
+    "ai": {
+      "concept": 70,
+      "efficiency": 100,
+      "interpretation": 70,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "400으로 나누어떨어지는 경우를 윤년으로 처리하는 논리가 누락되었습니다.",
+          "points": 30
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 제시한 세 가지 윤년 규칙 중 400의 배수에 대한 예외 처리가 반영되지 않았습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "작성하신 코드는 4의 배수이면서 100의 배수가 아닌 경우를 잘 처리하고 있습니다. 하지만 400으로 나누어떨어지는 해는 100의 배수라도 윤년이 되어야 한다는 규칙을 다시 한번 확인해 보세요. 논리 연산자 or를 활용하여 400의 배수인 경우를 추가하면 문제를 해결할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-6",
+    "variant": "V2",
+    "desc": "바깥 if 에서 이미 가른 x 의 부호를 안쪽에서 또 검사하는 중복 조건 + 중첩 구조",
+    "grading": "7/7",
+    "ai": {
+      "concept": 85,
+      "efficiency": 80,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "중첩된 if문 대신 논리 연산자(and)를 활용하여 사분면 조건을 더 직관적으로 표현할 수 있습니다.",
+          "points": 15
+        },
+        {
+          "axis": "efficiency",
+          "reason": "불필요한 중첩 구조가 포함되어 있어 코드의 가독성과 간결함이 다소 떨어집니다.",
+          "points": 20
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 현재는 if문 안에 if문을 넣는 중첩 구조를 사용하셨는데, 논리 연산자 and를 활용하면 코드를 훨씬 더 간결하게 작성할 수 있습니다. 다음에는 각 사분면의 조건을 한 줄의 조건식으로 표현해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-6",
+    "variant": "V3",
+    "desc": "사분면 번호를 시계 방향으로 세어 2사분면과 4사분면을 뒤바꿔 출력",
+    "grading": "4/7",
+    "ai": {
+      "concept": 70,
+      "efficiency": 100,
+      "interpretation": 70,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "사분면의 부호 조합에 따른 조건문 설정이 일부 잘못되어 논리적 오류가 발생했습니다.",
+          "points": 30
+        },
+        {
+          "axis": "interpretation",
+          "reason": "각 사분면별 x와 y의 부호 조건을 다시 확인하여 문제에서 요구하는 사분면 번호와 일치하는지 점검이 필요합니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "작성하신 코드의 조건문에서 사분면별 부호 조합을 다시 한번 꼼꼼히 확인해 보세요. 특히 2사분면과 4사분면의 x, y 부호 조건을 문제의 정의와 비교해 보면 해결의 실마리를 찾을 수 있을 것입니다. 논리 연산자를 활용한 조건 분기를 조금만 수정하면 정확한 결과를 얻을 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-1",
+    "variant": "V2",
+    "desc": "for 가 주는 반복 변수를 쓰지 않고 i 를 손으로 증가시키며 temp 임시 변수까지 거쳐 누적",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 70,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "반복문 내부에서 불필요한 변수 temp와 i를 추가로 사용하여 연산 과정이 다소 복잡합니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "모든 테스트를 통과하셨네요! 누적 변수를 활용해 합을 구하는 과정을 잘 구현했습니다. 다만 반복문 안에서 변수를 여러 번 거치지 않고도 더 간단하게 값을 더할 수 있는 방법이 있으니 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-1",
+    "variant": "V3",
+    "desc": "누적 변수 초기화를 반복문 안에 두어 매번 0 으로 되돌아가 마지막 값만 남음",
+    "grading": "1/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "누적 변수를 반복문 안에서 매번 0으로 초기화하고 있어 합계가 제대로 계산되지 않습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "반복문을 사용하여 합계를 구하는 흐름은 잘 이해하셨습니다. 다만 누적 변수를 반복문 안에서 초기화하면 이전까지 더해진 값이 사라지게 됩니다. 변수를 어디에서 선언해야 반복이 끝날 때까지 값이 유지될지 다시 한번 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-2",
+    "variant": "V2",
+    "desc": "range 가 주는 k 를 버리고 i 를 손으로 증가시키며 출력도 str() 로 일일이 이어 붙여 만듦",
+    "grading": "6/6",
+    "ai": {
+      "concept": 90,
+      "efficiency": 90,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "반복문 내에서 변수 i를 별도로 선언하고 수동으로 증가시키는 대신 range의 값을 직접 활용하는 것이 더 파이썬다운 방식입니다.",
+          "points": 10
+        },
+        {
+          "axis": "efficiency",
+          "reason": "반복문 외부에서 변수를 초기화하고 내부에서 증가시키는 과정은 불필요한 변수 할당을 발생시킵니다.",
+          "points": 10
+        }
+      ],
+      "feedback": "모든 테스트를 통과하셨습니다. 반복문에서 range(1, 10)을 사용하면 i를 따로 선언하거나 증가시킬 필요 없이 바로 1부터 9까지의 값을 가져올 수 있습니다. 코드를 더 간결하게 다듬어 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-2",
+    "variant": "V3",
+    "desc": "반복 횟수를 9 가 아니라 입력 N 으로 착각해 range(1, n + 1) 로 돌림",
+    "grading": "1/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "반복문의 범위 설정이 문제에서 요구하는 1부터 9까지가 아닌 입력값 N까지로 되어 있습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "출력 형식에서 숫자와 기호 사이의 공백이 print 함수의 기본 쉼표 구분자 때문에 의도와 다르게 출력되고 있습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "반복문이 1부터 9까지 실행되도록 range 함수의 범위를 다시 확인해 보세요. 또한 print 함수에서 쉼표를 사용하면 자동으로 공백이 추가되어 출력 형식이 어긋날 수 있습니다. 문자열 포맷팅을 활용하여 원하는 형식을 정확히 맞춰보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-3",
+    "variant": "V2",
+    "desc": "누적할 때 temp 임시 변수를 한 번 거치고, 끝까지 쓰이지 않는 count 카운터를 함께 굴림",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 85,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "누적 변수를 갱신할 때 불필요한 임시 변수 temp를 사용하고 있으며, 반복 횟수를 세는 count 변수 또한 문제 해결에 필수적이지 않습니다.",
+          "points": 15
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 누적 합을 구할 때 temp 변수를 거치지 않고 바로 total에 더하는 방식을 사용하면 코드가 더 간결해집니다. 또한, for문이 이미 N번 반복되므로 별도의 count 변수 없이도 합계를 구할 수 있다는 점을 참고해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-3",
+    "variant": "V3",
+    "desc": "반복 범위를 range(n) 대신 range(1, n) 으로 잡아 마지막 수를 한 개 덜 읽음",
+    "grading": "1/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "range(1, n)을 사용하면 반복 횟수가 n-1번이 되어 마지막 입력값을 처리하지 못합니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력받아야 할 수의 개수만큼 반복하지 않아 결과값이 정확하지 않습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드에서 반복문의 범위를 설정할 때 마지막 입력값이 포함되도록 다시 고민해 보세요. range 함수가 몇 번 반복을 수행하는지 확인하면 문제를 해결할 수 있을 거예요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-4",
+    "variant": "V2",
+    "desc": "약수를 찾은 뒤 항상 참인 answer > 0 조건을 한 겹 더 씌운 불필요한 중첩과 임시 변수",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 85,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "약수 여부를 판별한 후 불필요한 변수 할당과 추가적인 조건문 검사가 포함되어 있어 코드가 다소 복잡합니다.",
+          "points": 15
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 약수를 구하는 논리를 잘 이해하고 구현하셨네요. 다만, 조건문 안에서 변수를 새로 선언하거나 중복된 조건을 검사하는 대신, 바로 출력하는 방식을 사용하면 코드가 훨씬 간결해질 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-4",
+    "variant": "V3",
+    "desc": "나머지 연산의 순서를 뒤집어 n % i 대신 i % n 으로 판정",
+    "grading": "1/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "나머지 연산의 피연산자 순서가 바뀌어 약수를 올바르게 판별하지 못하고 있습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 약수의 정의와 다르게 코드가 작성되어 대부분의 테스트 케이스를 통과하지 못했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드에서 나머지 연산자 기호 앞뒤에 있는 변수의 위치를 다시 한번 확인해 보세요. N을 어떤 수로 나누었을 때 나머지가 0이 되어야 약수인지 고민해 보면 해결의 실마리를 찾을 수 있을 거예요. 논리 구조를 조금만 수정하면 올바른 결과를 얻을 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-5",
+    "variant": "V2",
+    "desc": "안쪽 반복에서 별 한 개를 star 변수에 담아 붙이고, 끝까지 쓰이지 않는 count 카운터를 함께 굴림",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 90,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "별의 개수를 세기 위해 사용한 count 변수는 코드 실행에 불필요한 연산입니다.",
+          "points": 10
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 중첩 반복문을 사용하여 별을 누적하는 방식을 아주 잘 이해하고 계시네요. 다만, 코드 내에서 별의 개수를 세는 count 변수는 결과값에 영향을 주지 않으므로 생략하면 더욱 깔끔한 코드가 될 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-5",
+    "variant": "V3",
+    "desc": "안쪽 반복 횟수를 줄 번호 i 가 아니라 N 으로 고정해 모든 줄에 별 N 개를 찍음",
+    "grading": "2/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "중첩 반복문을 사용했으나 안쪽 반복문의 범위가 줄 번호와 연동되지 않아 모든 줄에 동일한 개수의 별이 출력되고 있습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구한 i번째 줄에 별 i개를 출력하는 조건을 만족하지 못했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드에서 안쪽 반복문이 항상 N번 반복되도록 설정되어 있어 모든 줄의 별 개수가 동일하게 출력되고 있습니다. 안쪽 반복문의 범위를 현재 줄 번호를 나타내는 변수와 연관 지어 다시 생각해보면 좋을 것 같습니다. 중첩 반복문의 구조를 조금만 수정하면 원하는 모양을 만들 수 있을 거예요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-6",
+    "variant": "V3",
+    "desc": "공약수를 1부터 훑되 범위를 range(1, a) 로 잡아 a 자신을 후보에서 빠뜨림",
+    "grading": "5/7",
+    "ai": {
+      "concept": 70,
+      "efficiency": 100,
+      "interpretation": 70,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "반복문의 범위 설정이 잘못되어 입력값 자체가 최대공약수인 경우를 포함하지 못합니다.",
+          "points": 30
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력된 두 수 중 하나가 최대공약수일 때 결과가 올바르게 출력되지 않는 예외 케이스가 발생합니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "작성하신 코드는 공약수를 찾는 논리는 좋지만, 반복문의 범위가 입력값 a를 포함하지 않아 결과가 달라질 수 있습니다. range 함수의 끝 범위를 다시 한번 확인해 보세요. 입력값 자체가 최대공약수가 되는 경우를 고려하면 모든 테스트를 통과할 수 있을 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-1",
+    "variant": "V2",
+    "desc": "리스트를 통째로 복사하고 이중 순회로 최댓값을 찾음 (한 번 순회면 충분)",
+    "grading": "6/6",
+    "ai": {
+      "concept": 80,
+      "efficiency": 60,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "리스트를 한 번만 순회하며 최댓값을 갱신하는 방식이 아닌, 이중 반복문을 사용하여 불필요한 비교 연산이 포함되었습니다.",
+          "points": 20
+        },
+        {
+          "axis": "efficiency",
+          "reason": "이중 반복문을 사용하여 시간 복잡도가 불필요하게 증가하였으며, 리스트를 복사하는 과정 또한 메모리 효율 측면에서 아쉽습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 통과하여 정답을 잘 찾아내셨습니다. 다만 리스트를 한 번만 순회해도 최댓값을 충분히 찾을 수 있으므로, 이중 반복문 대신 단일 반복문을 사용하는 구조를 고민해 보세요. 또한 리스트를 별도로 복사하지 않고 입력받은 리스트를 바로 활용하면 코드가 더 간결해집니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-1",
+    "variant": "V3",
+    "desc": "최댓값 초기값을 0으로 둬서 전부 음수인 입력에서 0이 남음",
+    "grading": "5/6",
+    "ai": {
+      "concept": 70,
+      "efficiency": 100,
+      "interpretation": 80,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "최댓값을 0으로 초기화하면 입력된 모든 수가 음수인 경우 올바른 최댓값을 찾을 수 없습니다.",
+          "points": 30
+        },
+        {
+          "axis": "interpretation",
+          "reason": "모든 수가 음수인 경우를 고려하지 않아 일부 테스트 케이스에서 실패가 발생했습니다.",
+          "points": 20
+        }
+      ],
+      "feedback": "리스트를 순회하며 최댓값을 찾는 로직은 잘 구현하셨습니다. 다만, 최댓값을 0으로 초기화하면 입력값이 모두 음수일 때 문제가 생길 수 있어요. 리스트의 첫 번째 요소를 최댓값의 초기값으로 설정해보면 어떨까요?"
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-2",
+    "variant": "V2",
+    "desc": "역순 리스트를 만든 뒤 다시 임시 리스트로 복사해 출력 (복사 두 번)",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 70,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "리스트를 역순으로 만드는 과정에서 불필요한 리스트 생성과 반복문이 중복되어 코드가 다소 길어졌습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 다만, 리스트를 역순으로 출력할 때 리스트를 새로 만들지 않고도 인덱스 조절이나 파이썬의 슬라이싱 기능을 활용하면 훨씬 간결하게 코드를 작성할 수 있습니다. 다음에는 더 효율적인 반복문 구조를 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-2",
+    "variant": "V3",
+    "desc": "앞뒤 맞바꾸기를 전체 범위로 돌려 두 번 뒤집혀 원래 순서로 되돌아옴",
+    "grading": "1/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 80,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "리스트의 모든 요소를 교환하는 과정에서 반복 횟수가 절반이 아닌 전체로 설정되어 결과적으로 원래 순서로 되돌아갔습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "역순 출력을 의도했으나 로직 오류로 인해 입력받은 순서 그대로 출력되고 있습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드는 리스트의 요소를 교환하는 로직을 사용하셨군요. 다만 반복문이 전체 길이를 순회하면서 교환을 두 번씩 수행해 원래 순서로 돌아온 것 같습니다. 리스트의 절반만 순회하거나, 인덱스를 활용해 뒤에서부터 접근하는 방법을 다시 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-3",
+    "variant": "V2",
+    "desc": "최댓값을 구한 뒤 위치를 찾으러 또 한 번 순회하고 found 플래그로 첫 위치를 걸러냄",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 85,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "최댓값을 찾는 과정과 위치를 찾는 과정을 두 번의 반복문으로 나누어 수행하여 불필요한 연산이 발생합니다.",
+          "points": 15
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 최댓값을 찾는 과정에서 리스트를 한 번만 순회하면서 값과 위치를 동시에 갱신하도록 코드를 다듬으면 더욱 효율적인 프로그램이 될 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-3",
+    "variant": "V3",
+    "desc": "비교를 >= 로 해서 동점일 때 마지막 위치를 답함 (첫 위치 규칙 어김)",
+    "grading": "5/6",
+    "ai": {
+      "concept": 80,
+      "efficiency": 100,
+      "interpretation": 80,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "최댓값이 중복될 경우 가장 먼저 나오는 위치를 저장해야 하는데, 조건문에서 등호(=)를 사용하여 마지막 위치가 저장되고 있습니다.",
+          "points": 20
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구한 '가장 먼저 나오는 위치'라는 조건을 충족하지 못해 일부 테스트 케이스에서 실패가 발생했습니다.",
+          "points": 20
+        }
+      ],
+      "feedback": "작성하신 코드는 리스트를 활용해 최댓값을 잘 찾고 있습니다. 다만, 최댓값이 여러 번 등장할 때 가장 먼저 나오는 위치를 유지하려면 조건문의 비교 연산자를 다시 고민해 보세요. 등호가 포함되면 최댓값이 갱신될 때마다 위치도 함께 바뀌게 된다는 점을 고려하면 해결책을 찾으실 수 있을 거예요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-4",
+    "variant": "V2",
+    "desc": "비교할 때마다 전체 합과 평균을 처음부터 다시 계산 (평균은 한 번만 구하면 됨)",
+    "grading": "6/6",
+    "ai": {
+      "concept": 70,
+      "efficiency": 60,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "평균을 구하는 연산이 반복문 내부에서 매번 수행되어 불필요한 중복 계산이 발생하고 있습니다.",
+          "points": 30
+        },
+        {
+          "axis": "efficiency",
+          "reason": "평균 계산을 반복문 밖으로 꺼내어 전체 합계를 한 번만 구하도록 구조를 개선하면 훨씬 효율적입니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "모든 테스트를 통과하셨네요! 다만 현재 코드는 평균을 구하는 계산이 반복문 안에서 매번 수행되고 있어 비효율적입니다. 평균은 전체 합계를 구한 뒤 한 번만 계산하고, 그 값을 활용해 개수를 세는 방식으로 코드를 다듬어 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-4",
+    "variant": "V3",
+    "desc": "평균보다 큰 값을 >= 로 세어 평균과 같은 값까지 포함",
+    "grading": "3/6",
+    "ai": {
+      "concept": 80,
+      "efficiency": 100,
+      "interpretation": 70,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "평균과 정확히 같은 점수는 제외해야 한다는 조건을 만족하지 못했습니다.",
+          "points": 20
+        },
+        {
+          "axis": "interpretation",
+          "reason": "평균보다 큰 수만 세어야 하는데, 평균과 같은 값까지 포함하여 계산하고 있습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "제출하신 코드는 리스트를 두 번 순회하며 합계와 평균을 구하는 구조를 잘 구현했습니다. 다만 문제에서 평균과 정확히 같은 점수는 세지 않기로 했으므로, 조건문에서 비교 연산자를 어떻게 수정해야 할지 다시 한번 고민해 보세요. 조금만 다듬으면 정확한 결과를 얻을 수 있을 거예요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-5",
+    "variant": "V2",
+    "desc": "짝수 여부를 굳이 flag 변수에 담고, 모은 리스트를 또 다른 리스트로 복사해 출력",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 70,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "짝수를 판별한 후 리스트에 담는 과정에서 불필요하게 리스트를 여러 번 복사하고 순회하는 과정이 포함되어 있습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 다만, 짝수를 리스트에 담은 뒤 다시 final 리스트로 옮기거나 반복문을 여러 번 사용하는 대신, 처음 짝수를 찾았을 때 바로 리스트에 추가하고 출력하는 방식을 고민해보면 코드가 훨씬 간결해질 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-5",
+    "variant": "V3",
+    "desc": "'짝수인 값'을 '짝수 번째 자리의 값'으로 오독해 인덱스가 짝수인 항목을 모음",
+    "grading": "3/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "짝수 판별을 위해 입력된 숫자의 값이 아닌 인덱스(i)를 기준으로 연산하고 있습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구한 '짝수'를 찾는 로직이 아닌, '짝수 번째 인덱스'를 찾는 로직으로 구현되어 테스트 케이스를 통과하지 못했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드는 리스트를 활용하는 흐름은 좋지만, 짝수를 판별하는 조건문에서 숫자의 값 대신 인덱스를 사용하고 있습니다. 입력받은 각 숫자가 짝수인지 확인하려면 어떤 연산자를 사용해야 할지 다시 한번 고민해 보세요. 문제의 의도대로 입력된 값 자체를 검사하면 모든 테스트를 통과할 수 있을 거예요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-6",
+    "variant": "V2",
+    "desc": "원본을 복사하고 최댓값과 같은 값을 걸러낸 리스트를 또 만들어 세 번 순회",
+    "grading": "6/6",
+    "ai": {
+      "concept": 100,
+      "efficiency": 90,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "리스트를 복사하거나 새로운 리스트를 생성하는 과정에서 불필요한 메모리 사용이 발생합니다.",
+          "points": 10
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 정렬 함수를 사용하지 않고 최댓값을 제외한 리스트를 만들어 두 번째로 큰 수를 찾는 논리가 매우 명확합니다. 다만, 리스트를 여러 번 복사하지 않고도 변수만 활용하여 더 간결하게 구현할 수 있으니 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-6",
+    "variant": "V3",
+    "desc": "최댓값을 '한 자리'만 빼고 다시 최댓값을 찾아 최댓값이 중복이면 또 최댓값이 나옴",
+    "grading": "4/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 80,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "최댓값이 여러 번 등장할 경우, 인덱스 하나만 제외해서는 중복된 최댓값이 여전히 리스트에 남아 두 번째로 큰 값을 올바르게 찾지 못합니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "중복된 최댓값을 모두 고려해야 한다는 문제의 요구사항을 완전히 반영하지 못했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드는 최댓값의 인덱스 하나만 제외하고 있어, 최댓값이 리스트에 여러 번 포함된 경우 올바른 결과를 내지 못합니다. 리스트를 순회하며 최댓값과 그보다 작은 두 번째 최댓값을 동시에 갱신하는 방식을 고민해 보세요. 모든 중복된 최댓값을 걸러내거나 무시할 수 있는 논리를 추가하면 해결될 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-1",
+    "variant": "V2",
+    "desc": "딕셔너리 대신 키 리스트/뜻 리스트를 나란히 두고 flag 로 훑어 찾음",
+    "grading": "6/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 70,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "딕셔너리 자료구조를 활용하라는 문제의 핵심 개념을 사용하지 않고 리스트 두 개를 병렬로 사용했습니다.",
+          "points": 40
+        },
+        {
+          "axis": "efficiency",
+          "reason": "딕셔너리를 사용하면 훨씬 간결하게 구현할 수 있는 로직을 반복문과 인덱스 탐색으로 길게 작성했습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "테스트를 모두 통과하셨네요! 다만 이번 문제는 딕셔너리의 키와 값을 활용하는 방법을 익히는 것이 목표였습니다. 리스트를 두 개 사용하는 대신, 단어와 뜻을 하나의 딕셔너리로 묶어보세요. 딕셔너리의 in 연산자를 사용하면 훨씬 효율적으로 단어를 찾을 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-1",
+    "variant": "V3",
+    "desc": "키와 값을 뒤집어 저장해 찾는 단어(영어)가 키에 없어 늘 '없는 단어'",
+    "grading": "2/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "딕셔너리의 키와 값을 반대로 설정하여 입력값과 조회 대상이 일치하지 않습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구한 단어장 구성(영어 단어: 뜻)과 반대로 구현되어 테스트를 통과하지 못했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드는 딕셔너리의 기본 구조를 잘 활용하고 있습니다. 다만 문제에서 제시한 단어장의 키와 값의 관계를 다시 한번 확인해 보세요. 입력받은 영어 단어를 키로 사용하여 뜻을 찾아낼 수 있도록 딕셔너리를 수정하면 해결될 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-2",
+    "variant": "V2",
+    "desc": "셋을 쓰지 않고 이중 순회로 중복을 걸러낸 뒤 개수도 len 없이 세어 올림",
+    "grading": "6/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 70,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "문제에서 의도한 셋(set) 자료구조를 사용하지 않고 반복문을 통해 중복을 직접 확인했습니다.",
+          "points": 40
+        },
+        {
+          "axis": "efficiency",
+          "reason": "이중 반복문을 사용하여 중복을 제거하는 방식은 데이터가 많아질 경우 비효율적입니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 통과하셨네요! 다만 이번 문제는 셋(set) 자료구조의 중복 제거 기능을 활용하는 것이 핵심입니다. 셋을 사용하면 훨씬 간결하고 효율적으로 같은 문제를 해결할 수 있으니, 8강에서 배운 셋의 성질을 다시 한번 복습해보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-2",
+    "variant": "V3",
+    "desc": "'서로 다른 수의 종류'를 '딱 한 번만 나온 수'로 오독해 중복된 값을 아예 뺌",
+    "grading": "2/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 70,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "셋(set) 자료형의 중복 제거 기능을 활용하지 않고 반복문을 중첩하여 개수를 세는 방식을 사용했습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "서로 다른 수의 종류를 세는 것이 아니라, 한 번만 등장하는 수의 개수를 세는 로직으로 문제를 잘못 해석했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "제출하신 코드는 중복되지 않고 딱 한 번만 등장하는 수의 개수를 세고 있습니다. 문제에서 요구하는 '서로 다른 수의 종류'를 구하려면 셋(set) 자료형의 중복 제거 성질을 활용해 보세요. 리스트를 셋으로 변환하면 중복이 자동으로 사라져 훨씬 간단하게 해결할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-3",
+    "variant": "V2",
+    "desc": "딕셔너리 대신 단어 리스트/횟수 리스트를 나란히 두고 매번 이중 순회로 조회",
+    "grading": "6/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 70,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "딕셔너리를 활용하여 빈도를 세는 것이 문제의 핵심 의도였으나, 리스트 두 개를 사용하여 구현하였습니다.",
+          "points": 40
+        },
+        {
+          "axis": "efficiency",
+          "reason": "매번 리스트를 순회하며 단어를 찾는 방식은 단어 수가 많아질 경우 비효율적입니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 통과하셨네요! 다만 이번 문제는 딕셔너리를 활용해 단어와 빈도를 관리하는 것이 핵심이었습니다. 리스트를 매번 순회하는 대신 딕셔너리의 키와 값을 활용하면 훨씬 간결하고 빠르게 코드를 작성할 수 있습니다. 딕셔너리의 특징을 다시 한번 복습해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-3",
+    "variant": "V3",
+    "desc": "누적(+1) 대신 매번 1을 대입해 모든 단어 횟수가 1로 덮어써짐",
+    "grading": "2/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "단어의 빈도를 누적하지 않고 매번 1로 초기화하여 횟수를 제대로 계산하지 못하고 있습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "딕셔너리에 단어의 빈도를 저장할 때, 이미 존재하는 단어라면 기존 값에 1을 더하는 방식으로 누적해야 합니다. 현재 코드는 단어를 만날 때마다 1로 덮어쓰고 있어 정확한 횟수를 세지 못하고 있습니다. 딕셔너리에 값이 이미 있는지 확인하는 조건문을 활용해 횟수를 업데이트하는 로직을 다시 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-4",
+    "variant": "V2",
+    "desc": "in 대신 이중 순회로 공통값을 모으고, 중복 제거를 위해 결과를 또 한 번 훑음",
+    "grading": "7/7",
+    "ai": {
+      "concept": 80,
+      "efficiency": 70,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "문제에서 요구한 in 연산자를 활용하여 두 번째 모둠에 포함되는지 확인하는 대신 이중 반복문을 사용하여 비효율적으로 구현했습니다.",
+          "points": 20
+        },
+        {
+          "axis": "efficiency",
+          "reason": "이중 반복문을 사용하여 시간 복잡도가 불필요하게 증가했습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "모든 테스트를 통과하셨습니다! 다만, 문제에서 제안한 in 연산자를 활용하면 이중 반복문 없이도 훨씬 간결하고 빠르게 공통 원소를 찾을 수 있습니다. 리스트의 포함 여부를 확인하는 기능을 다시 한번 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-4",
+    "variant": "V3",
+    "desc": "두 리스트를 같은 자리끼리만 비교해 위치가 다른 공통값을 놓침",
+    "grading": "2/7",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "두 모둠의 공통 원소를 찾기 위해 in 연산자를 활용해야 하지만, 단순히 인덱스를 비교하는 방식을 사용하여 논리 오류가 발생했습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "첫 번째 모둠의 순서를 유지하면서 중복을 제거하고 공통 원소를 출력해야 하는 요구사항을 충족하지 못했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드는 두 리스트의 같은 위치에 있는 값만 비교하고 있어 공통 원소를 모두 찾지 못합니다. 첫 번째 모둠의 각 원소가 두 번째 모둠에 포함되어 있는지 in 연산자를 사용하여 확인해 보세요. 또한, 이미 출력한 값은 다시 출력되지 않도록 중복을 관리하는 방법을 고민해 보시기 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-5",
+    "variant": "V2",
+    "desc": "딕셔너리 대신 후보마다 변수를 따로 두고 if/elif 로 세어 올림",
+    "grading": "6/6",
+    "ai": {
+      "concept": 70,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "문제에서 요구한 딕셔너리를 활용하지 않고 변수를 개별적으로 선언하여 득표수를 계산했습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 통과하셨습니다. 다만 이번 문제의 핵심 학습 목표는 딕셔너리를 활용해 데이터를 구조적으로 관리하는 것이었습니다. 개별 변수 대신 딕셔너리를 사용하면 후보자가 늘어나더라도 코드를 수정하지 않고 유연하게 대응할 수 있으니 다시 한번 시도해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-5",
+    "variant": "V3",
+    "desc": "최다 득표를 갱신하지 않고 늘 첫 후보(김파이)와만 견주어 마지막 비교가 덮어씀",
+    "grading": "5/6",
+    "ai": {
+      "concept": 80,
+      "efficiency": 100,
+      "interpretation": 70,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "최다 득표자를 비교하는 로직에서 모든 후보 간의 상대적 크기를 고려하지 않아 일부 케이스에서 오류가 발생합니다.",
+          "points": 20
+        },
+        {
+          "axis": "interpretation",
+          "reason": "특정 후보가 다른 후보보다 득표수가 많을 때만 best를 갱신하는 방식은 모든 후보의 득표수를 공정하게 비교하지 못합니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "제출해주신 코드는 딕셔너리를 활용해 득표수를 잘 집계하셨습니다. 다만 최다 득표자를 찾는 과정에서 김파이와 이코드, 박몽을 비교하는 조건문이 서로 독립적이라 일부 상황에서 올바른 결과를 내지 못하고 있습니다. 모든 후보의 득표수를 한 번에 비교하거나, 현재까지의 최댓값과 비교하는 방식을 고민해보면 좋겠습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-1",
+    "variant": "V2",
+    "desc": "함수(def) 없이 본문에서 바로 인사말을 만들어 출력",
+    "grading": "5/5",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "함수를 정의하고 값을 반환하는 구조를 사용하지 않고 직접 출력문을 작성했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "테스트는 모두 통과했지만, 이번 문제는 함수를 정의하고 값을 반환하는 연습이 핵심입니다. def 키워드를 사용하여 인사말을 만드는 함수를 직접 만들어보세요. 함수 내부에서 return을 사용하고, 함수 밖에서 그 결과를 출력하는 구조로 다시 작성해보길 권장합니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-1",
+    "variant": "V3",
+    "desc": "변수 name 을 문자열 안에 그대로 적어 이름이 늘 'name' 으로 나감",
+    "grading": "0/5",
+    "ai": {
+      "concept": 70,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "문자열 내에서 변수 값을 활용하기 위해 f-string이나 문자열 연결 방식을 사용해야 합니다.",
+          "points": 30
+        },
+        {
+          "axis": "interpretation",
+          "reason": "요구사항에 명시된 출력 형식과 달리 변수명이 그대로 문자열에 포함되어 출력되고 있습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "함수를 정의하고 값을 반환하는 구조는 잘 작성하셨습니다. 다만, 문자열 안에서 변수 name의 값을 사용하려면 문자열 연결이나 f-string 기능을 활용해야 합니다. 문자열 안에 변수 이름을 직접 적으면 파이썬은 이를 변수가 아닌 일반 글자로 인식하니 이 부분을 수정해보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-2",
+    "variant": "V2",
+    "desc": "함수(def) 없이 본문 조건문으로 바로 큰 값을 출력",
+    "grading": "6/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "문제에서 요구한 함수 정의(def)와 반환(return) 구조를 사용하지 않고 직접 출력하는 방식으로 구현했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "테스트 케이스를 모두 통과하셨네요! 다만 이번 문제는 함수를 정의하고 값을 반환하는 연습이 목적이었습니다. print()를 직접 호출하는 대신, def 키워드를 사용하여 두 수를 비교하고 결과를 return하는 함수 구조로 다시 작성해보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-2",
+    "variant": "V3",
+    "desc": "부등호 방향을 반대로 잡아 더 작은 값을 return",
+    "grading": "1/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "함수 내 조건문에서 두 수의 크기를 비교하는 논리가 반대로 작성되어 최댓값이 아닌 최솟값을 반환하고 있습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 최댓값 반환 기능을 수행하지 못해 테스트 케이스를 대부분 통과하지 못했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 함수가 두 수 중 더 큰 값을 반환하도록 조건문의 비교 연산자를 다시 확인해 보세요. 현재 코드는 더 작은 값을 반환하고 있어 의도한 결과가 나오지 않습니다. 조건문이 참일 때와 거짓일 때 각각 어떤 값을 반환해야 할지 논리 흐름을 점검해 보시기 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-3",
+    "variant": "V2",
+    "desc": "함수(def) 없이 본문에서 공식을 바로 계산해 출력",
+    "grading": "6/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "문제에서 요구한 함수 정의(def)와 반환(return)을 사용하지 않고 직접 계산하여 출력했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "테스트 케이스를 모두 통과하셨지만, 이번 문제의 핵심인 함수 정의와 return 문을 활용하지 않았습니다. def 키워드를 사용하여 계산 로직을 함수로 감싸고, 결과값을 return 하도록 코드를 다시 작성해 보세요. 함수를 사용하면 나중에 같은 계산이 필요할 때 훨씬 편리하게 재사용할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-3",
+    "variant": "V3",
+    "desc": "나눗셈을 몫(//)으로 계산해 소수점이 잘려 나감",
+    "grading": "4/6",
+    "ai": {
+      "concept": 70,
+      "efficiency": 100,
+      "interpretation": 70,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "정수 나눗셈 연산자(//)를 사용하여 소수점 이하의 결과가 잘리는 문제가 발생했습니다.",
+          "points": 30
+        },
+        {
+          "axis": "interpretation",
+          "reason": "변환 공식의 결과가 소수일 수 있음을 고려하지 않아 일부 테스트 케이스에서 오답이 발생합니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "함수를 사용하여 온도를 변환하려는 시도는 아주 좋습니다. 다만 파이썬에서 나눗셈을 할 때 사용하는 연산자를 다시 확인해 보세요. 정수 나눗셈 연산자를 사용하면 소수점 아래 값이 사라져 정확한 화씨 온도를 구할 수 없습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-4",
+    "variant": "V2",
+    "desc": "함수(def) 없이 flag 로 판별하고, 나눠떨어져도 멈추지 않고 끝까지 돎",
+    "grading": "7/7",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "문제에서 요구한 함수(def)를 정의하여 사용하지 않고 메인 코드에서 직접 로직을 구현했습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "테스트 케이스를 모두 통과하셨네요! 다만 이번 문제는 재사용 가능한 코드를 만들기 위해 함수(def)를 활용하는 것이 핵심이었습니다. 다음에는 소수 판별 로직을 함수 안에 작성하고, 그 함수를 호출하여 결과를 출력하는 방식으로 다시 시도해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-4",
+    "variant": "V3",
+    "desc": "n < 2 경계 처리를 빠뜨려 1을 소수로 판정",
+    "grading": "6/7",
+    "ai": {
+      "concept": 80,
+      "efficiency": 100,
+      "interpretation": 80,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "1은 소수가 아니지만 작성하신 함수는 1을 입력받았을 때 True를 반환합니다.",
+          "points": 20
+        },
+        {
+          "axis": "interpretation",
+          "reason": "소수의 정의에 따라 1에 대한 예외 처리가 누락되어 테스트 케이스를 모두 통과하지 못했습니다.",
+          "points": 20
+        }
+      ],
+      "feedback": "함수를 사용하여 소수를 판별하는 로직을 잘 구현하셨습니다. 다만 소수의 정의상 1은 소수가 아니므로, 함수 내부에서 1이 들어왔을 때 어떻게 처리할지 고민해 보세요. 경계 조건을 조금 더 세밀하게 다듬으면 완벽한 코드가 될 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-5",
+    "variant": "V2",
+    "desc": "함수(def) 없이 1..N 을 리스트에 담았다가 다시 훑어 곱함",
+    "grading": "6/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 80,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "문제에서 요구한 함수(def)를 정의하여 사용하지 않았습니다.",
+          "points": 40
+        },
+        {
+          "axis": "efficiency",
+          "reason": "리스트를 생성하여 숫자를 저장한 뒤 다시 반복하는 과정은 불필요한 메모리 사용을 유발합니다.",
+          "points": 20
+        }
+      ],
+      "feedback": "모든 테스트를 통과하셨지만, 이번 문제의 핵심인 함수 정의가 빠져 있어 아쉽습니다. def 키워드를 사용하여 팩토리얼 계산 로직을 함수로 분리해 보세요. 또한 리스트를 만들지 않고 반복문 안에서 바로 누적 곱을 구하면 코드가 훨씬 간결해집니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-5",
+    "variant": "V3",
+    "desc": "range 상한을 n 으로 잡아 마지막 수 N 을 곱하지 않음",
+    "grading": "2/6",
+    "ai": {
+      "concept": 60,
+      "efficiency": 100,
+      "interpretation": 60,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "반복문의 범위 설정이 잘못되어 N까지의 곱셈이 이루어지지 않고 있습니다.",
+          "points": 40
+        },
+        {
+          "axis": "interpretation",
+          "reason": "N이 0일 때의 예외 처리는 의도대로 작동하나, 일반적인 N에 대해 결과값이 올바르게 계산되지 않습니다.",
+          "points": 40
+        }
+      ],
+      "feedback": "작성하신 코드에서 반복문의 범위가 N까지 포함하도록 설정되었는지 다시 확인해보세요. range 함수는 마지막 숫자를 포함하지 않는다는 점을 고려하면 문제를 해결할 수 있을 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-1",
+    "variant": "V4",
+    "desc": "입력을 읽기만 하고 첫 번째 공개 예시 답 7 을 고정 출력",
+    "grading": "1/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력받은 값을 활용하지 않고 고정된 값을 출력하는 하드코딩 방식은 문제의 핵심 개념을 학습하는 데 도움이 되지 않습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값에 따라 결과가 달라져야 한다는 요구사항을 충족하지 못했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 정답을 출력하고 있습니다. 입력받은 변수 a와 b를 사용하여 계산 결과를 출력하도록 코드를 수정해 보세요. 변수를 활용하면 어떤 숫자가 들어와도 올바른 합을 구할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-2",
+    "variant": "V4",
+    "desc": "입력을 읽기만 하고 첫 번째 공개 예시(7,3)의 결과 다섯 줄을 고정 출력",
+    "grading": "1/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력받은 변수를 활용하지 않고 고정된 값을 출력하는 하드코딩 방식은 문제의 핵심 개념을 학습하는 데 도움이 되지 않습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값에 따라 결과가 달라져야 함에도 불구하고 특정 예시의 결과값만 출력하고 있어 문제의 요구사항을 충족하지 못했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 입력값을 사용하지 않고 특정 숫자만 출력하고 있습니다. 입력받은 두 변수 a와 b를 사용하여 산술 연산을 수행하고 그 결과를 출력하도록 코드를 다시 작성해 보세요. 연산자 기호를 활용하면 다양한 입력값에 대응하는 프로그램을 만들 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-3",
+    "variant": "V4",
+    "desc": "입력을 읽기만 하고 첫 번째 공개 예시 답 2 / 30 을 고정 출력",
+    "grading": "1/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력받은 변수를 활용하지 않고 고정된 값을 출력하여 문제에서 요구하는 연산자 활용 능력을 보여주지 못했습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값에 따라 결과가 달라져야 함에도 불구하고 특정 예시값에만 맞춘 하드코딩을 수행했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 입력값을 사용하지 않고 고정된 결과만 출력하고 있습니다. 입력받은 변수를 60으로 나눈 몫과 나머지를 구하는 연산자를 사용하여 코드를 다시 작성해 보세요. 변수를 활용하면 다양한 입력값에 대응할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-4",
+    "variant": "V4",
+    "desc": "입력을 읽기만 하고 첫 번째 공개 예시 답 2 / 3 을 고정 출력",
+    "grading": "1/7",
+    "ai": {
+      "concept": 20,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력값에 따라 동전 개수를 계산하는 로직 없이 고정된 값을 출력하는 하드코딩 방식입니다.",
+          "points": 80
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값에 관계없이 항상 동일한 결과가 출력되어 문제의 요구사항을 충족하지 못합니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 입력값과 상관없이 항상 같은 결과만 출력하고 있습니다. 입력받은 금액을 500으로 나눈 몫과 나머지를 활용하여 동전 개수를 계산하는 로직을 고민해 보세요. 산술 연산자를 사용하면 입력값에 따라 유연하게 동작하는 프로그램을 만들 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-5",
+    "variant": "V4",
+    "desc": "입력을 읽기만 하고 첫 번째 공개 예시 답 80.0 을 고정 출력",
+    "grading": "1/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력받은 변수를 활용하지 않고 고정된 값을 출력하는 하드코딩 방식입니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 세 과목의 평균 계산 로직을 구현하지 않고 특정 입력값에 대해서만 결과가 맞도록 작성되었습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 결과가 나오도록 고정되어 있습니다. 입력받은 세 변수를 사용하여 합계를 구하고, 이를 3으로 나누어 평균을 계산하는 로직을 다시 고민해 보세요. 나눗셈 연산자 /를 사용하면 소수점까지 정확하게 구할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-4/prob-6",
+    "variant": "V4",
+    "desc": "입력을 읽기만 하고 첫 번째 공개 예시(123×456)의 네 줄을 고정 출력",
+    "grading": "1/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력값에 따라 계산하지 않고 특정 결과값을 출력하는 하드코딩 방식은 문제의 핵심 개념인 자리수 추출을 학습하는 데 도움이 되지 않습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값과 관계없이 고정된 값을 출력하여 다양한 테스트 케이스를 통과하지 못했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 결과가 나오도록 작성되었습니다. 문제에서 요구하는 것처럼 몫(//)과 나머지(%) 연산자를 활용하여 세 자리 정수의 각 자릿수를 직접 추출하고, 그 값을 변수에 담아 계산하는 방식으로 다시 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-1",
+    "variant": "V4",
+    "desc": "공개 예시 입력값 3 인지만 확인해 < 를 출력하고 나머지는 전부 > 로 처리",
+    "grading": "3/6",
+    "ai": {
+      "concept": 30,
+      "efficiency": 100,
+      "interpretation": 30,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "특정 입력값에만 반응하는 하드코딩 방식은 문제에서 요구하는 조건문 활용 능력을 보여주지 못합니다.",
+          "points": 70
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력된 두 수의 관계를 비교하지 않고 특정 숫자와 비교하여 모든 경우의 수를 처리하지 못했습니다.",
+          "points": 70
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 숫자와 비교하고 있어 다양한 입력값에 대응하지 못하고 있습니다. 두 변수 A와 B를 직접 비교하는 비교 연산자를 사용해 보세요. if, elif, else 문을 활용하여 세 가지 경우를 모두 고려하면 문제를 해결할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-2",
+    "variant": "V4",
+    "desc": "공개 예시 입력값 8 인지만 확인해 짝수를 출력하고 나머지는 전부 홀수로 처리",
+    "grading": "3/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "특정 입력값에 대해서만 결과를 반환하는 하드코딩 방식은 문제에서 요구하는 나머지 연산 개념을 활용하지 않았습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력된 모든 정수에 대해 짝수와 홀수를 판별해야 하지만, 예시 값인 8에 대해서만 올바르게 동작하도록 작성되었습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 숫자 8에 대해서만 결과를 출력하고 있어 다른 숫자들을 올바르게 판별하지 못합니다. 2로 나눈 나머지를 구하는 연산자를 사용하여 어떤 정수가 입력되더라도 짝수와 홀수를 구분할 수 있도록 조건문을 수정해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-3",
+    "variant": "V4",
+    "desc": "공개 예시 입력값 85 인지만 확인해 B 를 출력하고 나머지는 전부 F 로 처리",
+    "grading": "3/7",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "특정 입력값에만 반응하는 하드코딩 방식은 문제에서 요구하는 조건문 활용 능력을 보여주지 못합니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "모든 점수 범위에 대해 올바른 학점을 출력하도록 로직을 확장해야 합니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 점수에서만 올바르게 작동하고 있습니다. 모든 점수 구간을 처리하기 위해 if와 elif를 사용하여 점수 범위를 단계별로 나누어 보세요. 위에서부터 차례대로 조건을 검사하면 더 깔끔하게 문제를 해결할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-4",
+    "variant": "V2",
+    "desc": "elif 없이 독립 if 세 개를 나열 (각각 완전한 and 조건 — 통과하지만 elif 개념 미사용 + 중복 비교)",
+    "grading": "7/7",
+    "ai": {
+      "concept": 100,
+      "efficiency": 85,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "if문을 독립적으로 나열하기보다 elif를 사용하면 조건이 만족되었을 때 불필요한 추가 검사를 생략할 수 있습니다.",
+          "points": 15
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 현재는 각 조건문을 독립적으로 작성하셨는데, elif를 활용하면 첫 번째 조건이 참일 때 나머지 조건을 확인하지 않아도 되어 코드가 더 효율적입니다. 논리 구조를 잘 설계하셨습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-4",
+    "variant": "V4",
+    "desc": "공개 예시 입력값 3 인지만 확인해 7 을 출력하고 나머지는 전부 10 으로 처리",
+    "grading": "2/7",
+    "ai": {
+      "concept": 20,
+      "efficiency": 100,
+      "interpretation": 20,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력값에 따른 일반적인 비교 로직을 구현하지 않고 특정 입력값에만 반응하는 하드코딩을 사용했습니다.",
+          "points": 80
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 세 수의 크기 비교 로직을 구현하지 않아 대부분의 테스트 케이스를 통과하지 못했습니다.",
+          "points": 80
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 결과가 나오도록 작성되어 있습니다. 문제의 핵심인 세 수의 크기를 비교하기 위해 if와 논리 연산자(and)를 사용하여 모든 경우의 수를 처리하는 로직을 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-5",
+    "variant": "V4",
+    "desc": "공개 예시 입력값 2020 인지만 확인해 윤년을 출력하고 나머지는 전부 평년으로 처리",
+    "grading": "4/7",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "특정 입력값에만 반응하는 하드코딩 방식은 문제에서 요구하는 논리적 해결 방법이 아닙니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 윤년 판단 규칙을 구현하지 않고 특정 예시 값에 대해서만 결과를 출력하고 있습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 연도에 대해서만 결과를 출력하고 있어 일반적인 윤년 판단 로직이 구현되지 않았습니다. 4로 나누어떨어지는지, 100과 400으로 나누어떨어지는지를 확인하는 나머지 연산자와 논리 연산자를 활용해 보세요. 조건문 안에서 여러 조건을 조합하여 문제를 해결하는 방향으로 다시 고민해 보길 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-5/prob-6",
+    "variant": "V4",
+    "desc": "공개 예시 입력값 x 가 3 인지만 확인해 1 을 출력하고 나머지는 전부 2 로 처리",
+    "grading": "2/7",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "특정 입력값에만 반응하는 하드코딩 방식은 문제의 핵심인 논리 연산자 활용을 충족하지 못합니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "모든 사분면의 조건을 고려하지 않고 일부 케이스만 처리하여 문제의 요구사항을 완벽히 반영하지 못했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에만 맞춘 방식이라 다른 사분면을 제대로 판별하지 못합니다. x와 y의 부호를 각각 확인하여 1사분면부터 4사분면까지의 조건을 논리 연산자(and)를 사용해 나누어 보세요. 모든 경우의 수를 고려하는 구조로 다시 작성해 보길 권장합니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-1",
+    "variant": "V4",
+    "desc": "입력을 읽기만 하고 첫 번째 공개 예시 답 55 를 total 에 넣어 고정 출력",
+    "grading": "1/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "반복문을 사용하지 않고 특정 입력값에 대한 결과만 하드코딩하여 문제의 핵심 개념을 구현하지 않았습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값 N에 따라 합을 구해야 하지만, 고정된 값을 출력하여 문제의 요구사항을 충족하지 못했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 올바른 결과를 보여주고 있습니다. 1부터 N까지의 합을 구하기 위해 반복문과 누적 변수를 활용하는 방법을 다시 고민해 보세요. 반복문을 사용하여 N이 변하더라도 항상 올바른 합이 계산되도록 코드를 수정해 보길 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-2",
+    "variant": "V4",
+    "desc": "공개 예시 입력값 2 인지만 확인해 2단을 출력하고 나머지는 전부 5단을 출력",
+    "grading": "2/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 40,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력값 N을 활용하지 않고 특정 값에 대해서만 하드코딩하여 일반적인 구구단 로직을 구현하지 않았습니다.",
+          "points": 60
+        },
+        {
+          "axis": "efficiency",
+          "reason": "불필요한 조건문 분기로 인해 코드가 비효율적이며 확장성이 없습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력받은 N을 사용하여 N단을 출력해야 한다는 문제의 요구사항을 충족하지 못했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 입력값 N을 사용하지 않고 특정 숫자만 출력하도록 작성되었습니다. 입력받은 변수 N을 곱셈식에 직접 활용하는 방식으로 코드를 수정해 보세요. 반복문 안에서 N과 반복 변수를 조합하면 모든 단을 출력할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-3",
+    "variant": "V4",
+    "desc": "개수 N 이 공개 예시의 3 인지만 확인해 60 을 출력하고 나머지는 전부 20 으로 처리",
+    "grading": "2/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력받은 개수만큼 반복문을 사용하여 값을 누적하는 대신 특정 입력값에만 반응하는 하드코딩 방식을 사용했습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 일반적인 합계 계산 로직을 구현하지 않고 예시 입력에 맞춘 고정된 출력값만 반환하고 있습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 정답을 출력하도록 작성되었습니다. 문제에서 요구하는 것처럼 입력받은 개수만큼 반복문을 사용하여 값을 하나씩 더해가는 방식으로 코드를 다시 설계해 보세요. 누적 변수를 활용하면 어떤 개수의 입력이 들어와도 합계를 구할 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-4",
+    "variant": "V4",
+    "desc": "공개 예시 입력값 6 인지만 확인해 1/2/3/6 을 출력하고 나머지는 전부 1/7 을 출력",
+    "grading": "3/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "특정 입력값에 대해서만 결과를 출력하는 하드코딩 방식은 문제에서 요구하는 반복문과 조건문을 활용한 일반적인 풀이가 아닙니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값 N에 관계없이 모든 약수를 찾아 출력해야 하지만, 일부 예시 값에만 대응하도록 작성되어 문제의 요구사항을 충족하지 못했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 작동하도록 작성되었습니다. 1부터 N까지의 모든 숫자를 확인하며 나머지가 0이 되는지 판별하는 반복문을 사용해 보세요. 모든 입력값에 대해 올바르게 동작하는 일반적인 코드를 고민해 보시기 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-5",
+    "variant": "V4",
+    "desc": "공개 예시 입력값 3 인지만 확인해 세 줄을 출력하고 나머지는 전부 별 한 줄만 출력",
+    "grading": "2/6",
+    "ai": {
+      "concept": 30,
+      "efficiency": 100,
+      "interpretation": 30,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "중첩 반복문을 사용하여 별을 누적하는 핵심 개념을 활용하지 않고 하드코딩을 사용했습니다.",
+          "points": 70
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값 N에 따라 유연하게 동작하지 않고 특정 값에만 반응하는 하드코딩 방식으로 문제를 해결했습니다.",
+          "points": 70
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 동작하는 하드코딩 방식입니다. 문제에서 요구하는 중첩 반복문 구조를 사용하여 N의 값과 상관없이 별이 늘어나도록 코드를 다시 설계해 보세요. 바깥쪽 반복문으로 줄을 제어하고, 안쪽 반복문으로 별을 하나씩 이어 붙이는 흐름을 고민해 보시기 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-6",
+    "variant": "V2",
+    "desc": "유클리드 while 안에서 같은 나머지를 세 번 중복 계산 + 쓰지 않는 카운터 변수 유지",
+    "grading": "7/7",
+    "ai": {
+      "concept": 100,
+      "efficiency": 70,
+      "interpretation": 100,
+      "deductions": [
+        {
+          "axis": "efficiency",
+          "reason": "불필요하게 동일한 나머지 연산을 세 번 반복하여 변수에 할당하고 있습니다.",
+          "points": 30
+        }
+      ],
+      "feedback": "모든 테스트 케이스를 정확하게 통과하셨습니다. 다만 코드 내에서 나머지 연산을 세 번 반복하는 부분은 불필요한 연산이므로, 한 번만 수행하도록 수정하면 더욱 깔끔한 코드가 될 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-6/prob-6",
+    "variant": "V4",
+    "desc": "공개 예시 입력값 12 인지만 확인해 6 을 출력하고 나머지는 전부 4 로 처리",
+    "grading": "2/7",
+    "ai": {
+      "concept": 20,
+      "efficiency": 100,
+      "interpretation": 20,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "특정 입력값에 대해서만 결과를 출력하는 하드코딩 방식은 문제에서 요구하는 알고리즘 학습 목적에 부합하지 않습니다.",
+          "points": 80
+        },
+        {
+          "axis": "interpretation",
+          "reason": "모든 입력 케이스에 대해 올바른 최대공약수를 출력하지 못하고 예시 값에만 의존하고 있습니다.",
+          "points": 80
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 결과를 출력하는 하드코딩 방식입니다. 문제에서 제시한 유클리드 호제법이나 반복문을 사용하여 두 수의 관계를 일반적인 논리로 풀어내 보세요. 입력값이 바뀌어도 항상 올바른 최대공약수를 찾을 수 있도록 코드를 다시 설계해 보시기 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-1",
+    "variant": "V4",
+    "desc": "입력 개수 N만 보고 예시 정답 7/10을 고정 출력",
+    "grading": "2/6",
+    "ai": {
+      "concept": 20,
+      "efficiency": 100,
+      "interpretation": 20,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "리스트를 순회하며 값을 비교하는 로직을 구현하지 않고 특정 입력값에 대해서만 결과를 출력하는 하드코딩 방식을 사용했습니다.",
+          "points": 80
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 일반적인 최댓값 탐색 알고리즘을 구현하지 않고 예시 입력값에만 맞춘 고정 출력을 작성했습니다.",
+          "points": 80
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 정답을 출력하도록 작성되어 있습니다. 리스트에 담긴 모든 숫자를 하나씩 확인하며 현재까지의 최댓값을 갱신하는 반복문과 조건문을 활용해 보세요. 입력되는 숫자의 개수와 상관없이 동작하는 코드를 고민해 보시기 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-2",
+    "variant": "V4",
+    "desc": "N만 보고 예시 출력(3,2,1 / 40,30,20,10)을 그대로 찍음",
+    "grading": "2/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력받은 데이터를 리스트에 저장하여 활용하지 않고 특정 입력값에 대해서만 결과를 출력하는 하드코딩 방식을 사용했습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "모든 입력값에 대해 대응하지 못하고 예시로 주어진 특정 케이스만 처리하고 있습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출해주신 코드는 특정 입력값에 대해서만 정답을 출력하고 있습니다. 입력받은 수들을 리스트에 순서대로 저장한 뒤, 리스트의 인덱스를 활용하거나 반복문을 사용하여 역순으로 출력하는 방법을 고민해보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-3",
+    "variant": "V4",
+    "desc": "N과 첫 값이 예시와 같은지만 보고 예시 정답 두 줄을 고정 출력",
+    "grading": "2/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력값에 따라 로직을 수행하지 않고 특정 예시 값에 대해서만 결과를 출력하는 하드코딩 방식은 올바른 풀이가 아닙니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 일반적인 최댓값 탐색 로직을 구현하지 않고 예시 케이스에만 맞춘 고정 출력을 사용했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 정답을 출력하도록 작성되었습니다. 리스트나 반복문을 활용하여 입력받은 모든 수 중에서 최댓값과 그 위치를 찾는 일반적인 로직을 고민해 보세요. 입력된 수들을 순회하며 현재까지의 최댓값과 그 위치를 갱신하는 방식으로 다시 시도해 보길 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-4",
+    "variant": "V4",
+    "desc": "첫 점수가 예시(50)인지만 보고 2 또는 1을 고정 출력",
+    "grading": "3/6",
+    "ai": {
+      "concept": 20,
+      "efficiency": 100,
+      "interpretation": 20,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력값에 따라 고정된 값을 출력하는 하드코딩 방식은 문제에서 요구하는 리스트 순회 및 평균 계산 개념을 전혀 활용하지 않았습니다.",
+          "points": 80
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 일반적인 알고리즘을 구현하지 않고 특정 입력값에만 맞춘 결과를 출력하고 있습니다.",
+          "points": 80
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 동작하도록 작성되어 있어, 다양한 입력에 대응할 수 없습니다. 문제에서 요구한 대로 먼저 전체 점수의 합과 평균을 구한 뒤, 다시 리스트를 순회하며 평균보다 큰 값을 세는 방식으로 코드를 다시 작성해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-5",
+    "variant": "V4",
+    "desc": "첫 값이 예시(1)인지만 보고 예시 출력(2,4 / 10,20)을 고정 출력",
+    "grading": "2/6",
+    "ai": {
+      "concept": 20,
+      "efficiency": 40,
+      "interpretation": 20,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "리스트와 반복문을 활용하지 않고 특정 입력값에만 반응하는 하드코딩을 사용했습니다.",
+          "points": 80
+        },
+        {
+          "axis": "efficiency",
+          "reason": "입력값에 따라 고정된 값을 출력하는 방식은 일반적인 문제 해결 방법이 아닙니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력된 모든 수에 대해 짝수를 판별하여 출력해야 한다는 요구사항을 충족하지 못했습니다.",
+          "points": 80
+        }
+      ],
+      "feedback": "작성하신 코드는 특정 예시 입력에만 작동하는 하드코딩 방식입니다. 입력받은 수들을 리스트에 저장하고, 반복문을 사용하여 각 수가 짝수인지 확인한 뒤 append 메서드로 리스트에 추가하는 방식으로 다시 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-7/prob-6",
+    "variant": "V4",
+    "desc": "첫 값이 예시(3)인지만 보고 예시 정답 5 또는 9를 고정 출력",
+    "grading": "2/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력값에 따라 고정된 값을 출력하는 하드코딩 방식은 문제에서 요구하는 리스트 순회 및 비교 로직을 구현하지 않았습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 일반적인 알고리즘 풀이가 아닌 특정 입력값에만 맞춘 하드코딩을 수행하여 문제 해석력 점수를 제한합니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에만 대응하는 하드코딩 방식입니다. 리스트의 모든 요소를 순회하며 가장 큰 값과 그 다음으로 큰 값을 직접 비교하는 로직을 고민해 보세요. 정렬 함수를 사용하지 않고 반복문과 조건문을 활용하여 문제를 해결해 보길 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-1",
+    "variant": "V4",
+    "desc": "예시에 나온 dog 만 '없는 단어'로 치고 나머지는 전부 '사과'",
+    "grading": "3/6",
+    "ai": {
+      "concept": 30,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "딕셔너리를 사용하지 않고 특정 입력값에만 반응하도록 하드코딩되어 있습니다.",
+          "points": 70
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구한 모든 단어에 대응하지 못하고 일부 입력값에만 고정된 결과를 출력합니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "작성하신 코드는 특정 입력값에만 반응하는 하드코딩 방식입니다. 딕셔너리 자료구조를 활용하여 단어와 뜻을 저장하고, in 연산자를 사용해 입력받은 단어가 딕셔너리에 존재하는지 확인하는 방식으로 다시 고민해 보세요."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-2",
+    "variant": "V4",
+    "desc": "첫 값이 예시(7)인지만 보고 1 또는 3을 고정 출력",
+    "grading": "3/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "문제에서 요구한 셋(set) 자료구조를 활용하지 않고 특정 입력값에 대해서만 결과를 출력하는 하드코딩 방식을 사용했습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값에 따라 일반적인 로직을 수행하지 않고 예시 케이스에만 맞춘 분기 처리를 하여 문제의 요구사항을 충족하지 못했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 결과를 출력하고 있어 일반적인 문제 해결 방식이 아닙니다. 입력받은 여러 개의 수를 리스트에 담고, 이를 셋(set)으로 변환하여 중복을 제거하는 방법을 다시 고민해 보세요. 셋의 길이를 구하면 서로 다른 수의 개수를 쉽게 찾을 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-3",
+    "variant": "V4",
+    "desc": "단어를 읽지도 않고 N만 보고 예시 출력 두 줄을 그대로 찍음",
+    "grading": "2/6",
+    "ai": {
+      "concept": 20,
+      "efficiency": 100,
+      "interpretation": 20,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "문제에서 요구한 딕셔너리와 리스트를 활용한 로직 대신 특정 입력값에만 반응하는 하드코딩을 사용했습니다.",
+          "points": 80
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값에 따라 동적으로 결과를 계산하지 않고 예시 케이스에만 맞춘 고정 출력을 작성하여 문제의 요구사항을 충족하지 못했습니다.",
+          "points": 80
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 결과를 출력하도록 작성되어 있습니다. 입력받은 단어들을 딕셔너리에 저장하여 빈도를 세고, 처음 등장한 순서를 리스트에 기록하여 출력하는 방식으로 다시 고민해 보세요. 파이썬의 딕셔너리 기능을 활용하면 훨씬 유연한 코드를 만들 수 있습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-4",
+    "variant": "V4",
+    "desc": "첫 모둠 개수 N만 보고 예시 정답(3,4 / 20)을 고정 출력",
+    "grading": "2/7",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력값을 활용한 로직 구현 대신 특정 입력값에 맞춘 하드코딩을 사용하여 문제의 핵심 개념을 적용하지 않았습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 일반적인 입력 처리 방식이 아닌 예시 출력값만을 분기 처리하여 문제 해석력 점수를 제한하였습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 결과를 출력하는 하드코딩 방식입니다. 입력받은 수들을 리스트에 저장하고, 반복문과 in 연산자를 사용하여 두 모둠의 공통 원소를 찾는 일반적인 로직을 고민해 보세요. 중복된 값을 어떻게 처리할지도 함께 생각하면 좋은 결과가 있을 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-8/prob-5",
+    "variant": "V4",
+    "desc": "표를 세지 않고 표의 개수 N만 보고 예시 정답 이름을 고정 출력",
+    "grading": "3/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "딕셔너리를 활용하여 득표수를 집계하는 문제의 핵심 개념을 구현하지 않았습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "특정 입력값에만 반응하는 하드코딩 방식으로 작성되어 일반적인 문제 해결이 불가능합니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 입력값에 따라 고정된 결과를 출력하고 있어, 실제 투표 데이터를 처리하는 로직이 부족합니다. 딕셔너리를 사용하여 각 후보의 이름을 키로, 득표수를 값으로 저장하는 방식을 고민해 보세요. 반복문을 통해 입력받은 표를 하나씩 확인하며 딕셔너리의 값을 갱신하는 구조를 만들어 보길 권장합니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-1",
+    "variant": "V4",
+    "desc": "예시에 나온 코드몽만 처리하고 나머지는 전부 지윤으로 인사",
+    "grading": "2/5",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "특정 입력값에 대해서만 결과를 반환하도록 하드코딩되어 있어 일반적인 함수로 동작하지 않습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력받은 모든 이름에 대해 인사말을 생성해야 하지만, 일부 이름에 대해서만 고정된 결과를 출력하고 있습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "작성하신 코드는 특정 이름에 대해서만 올바르게 동작하고 있습니다. 함수 내부에서 매개변수로 받은 이름을 활용해 문자열을 조합하는 방식을 다시 고민해 보세요. 입력받은 이름이 무엇이든 그 이름이 포함된 인사말이 반환되어야 합니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-2",
+    "variant": "V4",
+    "desc": "첫 수가 예시(3)인지만 보고 7 또는 10을 return",
+    "grading": "2/6",
+    "ai": {
+      "concept": 30,
+      "efficiency": 100,
+      "interpretation": 30,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "입력값과 관계없이 특정 결과만 반환하는 하드코딩 방식은 문제에서 요구하는 조건문 활용 개념을 충족하지 못합니다.",
+          "points": 70
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값에 따라 올바른 최댓값을 반환해야 하는 요구사항을 지키지 않고 예시 케이스에만 맞춘 고정 출력을 사용했습니다.",
+          "points": 70
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에만 반응하도록 작성되어 있어 다른 숫자들을 처리하지 못하고 있습니다. 함수 내부에서 입력받은 두 매개변수를 직접 비교하여 더 큰 값을 반환하도록 로직을 다시 설계해 보세요. 조건문을 활용해 두 수를 비교하는 과정을 고민해 보시기 바랍니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-3",
+    "variant": "V4",
+    "desc": "예시 입력 100만 처리하고 나머지는 전부 32.0 을 return",
+    "grading": "2/6",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "함수 내에서 공식을 사용하여 계산하지 않고 특정 입력값에 대해서만 결과를 반환하는 하드코딩 방식을 사용했습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "입력값에 따른 일반적인 온도 변환 로직을 구현하지 않아 대부분의 테스트 케이스를 통과하지 못했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 정해진 값을 반환하고 있어 일반적인 온도 변환 함수로 보기 어렵습니다. 함수 내부에서 입력받은 매개변수를 활용해 문제에서 제시한 공식을 직접 계산하고 그 결과를 반환하도록 수정해 보세요. 그러면 어떤 온도 값이 들어와도 정확한 화씨 온도를 구할 수 있을 것입니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-4",
+    "variant": "V4",
+    "desc": "예시 입력 7만 소수로 치고 나머지는 전부 소수가 아니라고 답함",
+    "grading": "4/7",
+    "ai": {
+      "concept": 40,
+      "efficiency": 100,
+      "interpretation": 40,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "특정 입력값에 대해서만 결과를 반환하는 하드코딩 방식은 소수 판별의 핵심 개념을 구현한 것으로 볼 수 없습니다.",
+          "points": 60
+        },
+        {
+          "axis": "interpretation",
+          "reason": "모든 입력값에 대해 올바른 판별 결과를 출력해야 하는 요구사항을 충족하지 못했습니다.",
+          "points": 60
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 숫자 7에 대해서만 소수라고 판단하고 있어, 다른 숫자들에 대해서는 올바른 결과를 얻을 수 없습니다. 소수의 정의를 다시 떠올려 보시고, 2부터 n-1까지의 숫자로 나누어떨어지는지 확인하는 반복문을 함수 내부에 작성해 보세요. 1과 2와 같은 경계값 처리도 함께 고민해 보시면 좋겠습니다."
+    },
+    "error": null
+  },
+  {
+    "ref": "lesson-9/prob-5",
+    "variant": "V4",
+    "desc": "예시 입력 5만 처리하고 나머지는 전부 6 을 return",
+    "grading": "2/6",
+    "ai": {
+      "concept": 20,
+      "efficiency": 100,
+      "interpretation": 20,
+      "deductions": [
+        {
+          "axis": "concept",
+          "reason": "반복문과 누적 곱 변수를 사용하지 않고 특정 입력값에 대해서만 결과를 반환하는 하드코딩 방식을 사용했습니다.",
+          "points": 80
+        },
+        {
+          "axis": "interpretation",
+          "reason": "문제에서 요구하는 일반적인 팩토리얼 계산 로직을 구현하지 않고 일부 예시 값에만 대응하도록 작성했습니다.",
+          "points": 80
+        }
+      ],
+      "feedback": "제출하신 코드는 특정 입력값에 대해서만 결과가 나오도록 작성되어 있어, 다른 숫자들을 입력했을 때 올바른 계산이 이루어지지 않습니다. 1부터 N까지의 숫자를 차례대로 곱해 나가는 반복문을 함수 내부에 작성해 보세요. N이 0일 때의 결과값도 함께 고려해 보시면 좋겠습니다."
+    },
+    "error": null
+  }
+]

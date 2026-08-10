@@ -1,0 +1,78 @@
+=== lesson-9/prob-1 V2 피드백 ===
+테스트는 모두 통과했지만, 이번 문제는 함수를 정의하고 값을 반환하는 연습이 핵심입니다. def 키워드를 사용하여 인사말을 만드는 함수를 직접 만들어보세요. 함수 내부에서 return을 사용하고, 함수 밖에서 그 결과를 출력하는 구조로 다시 작성해보길 권장합니다.
+
+=== lesson-9/prob-2 V2 피드백 ===
+테스트 케이스를 모두 통과하셨네요! 다만 이번 문제는 함수를 정의하고 값을 반환하는 연습이 목적이었습니다. print()를 직접 호출하는 대신, def 키워드를 사용하여 두 수를 비교하고 결과를 return하는 함수 구조로 다시 작성해보세요.
+
+=== lesson-9/prob-3 V2 피드백 ===
+테스트 케이스를 모두 통과하셨지만, 이번 문제의 핵심인 함수 정의와 return 문을 활용하지 않았습니다. def 키워드를 사용하여 계산 로직을 함수로 감싸고, 결과값을 return 하도록 코드를 다시 작성해 보세요. 함수를 사용하면 나중에 같은 계산이 필요할 때 훨씬 편리하게 재사용할 수 있습니다.
+
+=== lesson-9/prob-5 V2 피드백 ===
+모든 테스트를 통과하셨지만, 이번 문제의 핵심인 함수 정의가 빠져 있어 아쉽습니다. def 키워드를 사용하여 팩토리얼 계산 로직을 함수로 분리해 보세요. 또한 리스트를 만들지 않고 반복문 안에서 바로 누적 곱을 구하면 코드가 훨씬 간결해집니다.
+
+=== lesson-5/prob-4 V2 [if 를 두 겹으로 중첩해 네 갈래를 만들고 print(c) 를 두 번 중복 작성] ===
+a = int(input())
+b = int(input())
+c = int(input())
+if a >= b:
+    if a >= c:
+        print(a)
+    else:
+        print(c)
+else:
+    if b >= c:
+        print(b)
+    else:
+        print(c)
+
+감점근거: []
+
+=== lesson-6/prob-6 V2 [a, b 를 x, y 로 복사한 뒤 temp1/temp2 두 임시 변수를 거쳐 값을 넘기는 우회 구조] ===
+a = int(input())
+b = int(input())
+x = a
+y = b
+while y != 0:
+    temp1 = y
+    temp2 = x % y
+    x = temp1
+    y = temp2
+print(x)
+
+감점근거: []
+
+=== lesson-5/prob-2 V4 [공개 예시 입력값 8 인지만 확인해 짝수를 출력하고 나머지는 전부 홀수로 처리] ===
+n = int(input())
+if n == 8:
+    print("짝수")
+else:
+    print("홀수")
+
+감점근거: [{"axis": "concept", "reason": "나머지 연산자(%)를 사용하지 않고 특정 값에 대해서만 분기 처리하여 일반적인 짝수/홀수 판별 로직을 구현하지 않았습니다.", "points": 60}, {"axis": "interpretation", "reason": "입력값 8 이외의 모든 정수를 홀수로 처리하여 문제에서 요구하는 모든 경우를 올바르게 판별하지 못했습니다.", "points": 40}]
+
+=== lesson-6/prob-2 V4 [공개 예시 입력값 2 인지만 확인해 2단을 출력하고 나머지는 전부 5단을 출력] ===
+n = int(input())
+if n == 2:
+    for i in range(1, 10):
+        print(2, "x", i, "=", 2 * i)
+else:
+    for i in range(1, 10):
+        print(5, "x", i, "=", 5 * i)
+
+감점근거: [{"axis": "concept", "reason": "특정 입력값에 대해서만 분기 처리하는 하드코딩 방식은 일반적인 해결책이 아닙니다.", "points": 40}, {"axis": "interpretation", "reason": "입력받은 N을 활용하지 않고 고정된 값만 출력하여 문제의 요구사항을 충족하지 못했습니다.", "points": 40}, {"axis": "efficiency", "reason": "불필요한 조건문 분기로 인해 코드가 복잡해졌습니다.", "points": 40}]
+
+=== lesson-9/prob-4 V4 [예시 입력 7만 소수로 치고 나머지는 전부 소수가 아니라고 답함] ===
+def is_prime(n):
+    if n == 7:
+        return True
+    else:
+        return False
+
+n = int(input())
+if is_prime(n):
+    print("소수입니다")
+else:
+    print("소수가 아닙니다")
+
+감점근거: [{"axis": "concept", "reason": "특정 입력값에만 반응하도록 하드코딩되어 있어 소수 판별의 일반적인 논리를 구현하지 않았습니다.", "points": 40}, {"axis": "interpretation", "reason": "문제에서 요구하는 소수의 정의를 코드로 구현하지 않아 테스트 케이스를 모두 통과하지 못했습니다.", "points": 40}]
+

@@ -1,0 +1,125 @@
+{
+  "lesson": "lesson-8",
+  "variants": [
+    {
+      "problemId": "prob-1",
+      "variant": "V2",
+      "desc": "딕셔너리 대신 키 리스트/뜻 리스트를 나란히 두고 flag 로 훑어 찾음",
+      "code": "키목록 = [\"apple\", \"banana\", \"cat\"]\n뜻목록 = [\"사과\", \"바나나\", \"고양이\"]\nword = input()\n찾음 = False\n답 = \"\"\nfor i in range(len(키목록)):\n    if 키목록[i] == word:\n        찾음 = True\n        답 = 뜻목록[i]\nif 찾음 == True:\n    print(답)\nelse:\n    print(\"없는 단어\")\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-1",
+      "variant": "V3",
+      "desc": "키와 값을 뒤집어 저장해 찾는 단어(영어)가 키에 없어 늘 '없는 단어'",
+      "code": "사전 = {\"사과\": \"apple\", \"바나나\": \"banana\", \"고양이\": \"cat\"}\nword = input()\nif word in 사전:\n    print(사전[word])\nelse:\n    print(\"없는 단어\")\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-1",
+      "variant": "V4",
+      "desc": "예시에 나온 dog 만 '없는 단어'로 치고 나머지는 전부 '사과'",
+      "code": "word = input()\nif word == \"dog\":\n    print(\"없는 단어\")\nelse:\n    print(\"사과\")\n",
+      "measuredCasesPassed": 3,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V2",
+      "desc": "셋을 쓰지 않고 이중 순회로 중복을 걸러낸 뒤 개수도 len 없이 세어 올림",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nunique = []\nfor x in nums:\n    already = False\n    for y in unique:\n        if x == y:\n            already = True\n    if already == False:\n        unique.append(x)\ncount = 0\nfor z in unique:\n    count = count + 1\nprint(count)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V3",
+      "desc": "'서로 다른 수의 종류'를 '딱 한 번만 나온 수'로 오독해 중복된 값을 아예 뺌",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\ncount = 0\nfor x in nums:\n    appear = 0\n    for y in nums:\n        if x == y:\n            appear = appear + 1\n    if appear == 1:\n        count = count + 1\nprint(count)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V4",
+      "desc": "첫 값이 예시(7)인지만 보고 1 또는 3을 고정 출력",
+      "code": "n = int(input())\nfirst = int(input())\nif first == 7:\n    print(1)\nelse:\n    print(3)\n",
+      "measuredCasesPassed": 3,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V2",
+      "desc": "딕셔너리 대신 단어 리스트/횟수 리스트를 나란히 두고 매번 이중 순회로 조회",
+      "code": "n = int(input())\nwords = []\ncounts = []\nfor i in range(n):\n    word = input()\n    found = False\n    for j in range(len(words)):\n        if words[j] == word:\n            counts[j] = counts[j] + 1\n            found = True\n    if found == False:\n        words.append(word)\n        counts.append(1)\nfor i in range(len(words)):\n    print(words[i], counts[i])\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V3",
+      "desc": "누적(+1) 대신 매번 1을 대입해 모든 단어 횟수가 1로 덮어써짐",
+      "code": "n = int(input())\norder = []\ncount = {}\nfor i in range(n):\n    word = input()\n    count[word] = 1\n    if word not in order:\n        order.append(word)\nfor w in order:\n    print(w, count[w])\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V4",
+      "desc": "단어를 읽지도 않고 N만 보고 예시 출력 두 줄을 그대로 찍음",
+      "code": "n = int(input())\nif n == 5:\n    print(\"사과 3\")\n    print(\"바나나 2\")\nelse:\n    print(\"귤 2\")\n    print(\"사과 1\")\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V2",
+      "desc": "in 대신 이중 순회로 공통값을 모으고, 중복 제거를 위해 결과를 또 한 번 훑음",
+      "code": "n = int(input())\na = []\nfor i in range(n):\n    a.append(int(input()))\nm = int(input())\nb = []\nfor i in range(m):\n    b.append(int(input()))\ncommon = []\nfor i in range(len(a)):\n    for j in range(len(b)):\n        if a[i] == b[j]:\n            common.append(a[i])\nresult = []\nfor x in common:\n    if x not in result:\n        result.append(x)\nfor x in result:\n    print(x)\n",
+      "measuredCasesPassed": 7,
+      "measuredCasesTotal": 7
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V3",
+      "desc": "두 리스트를 같은 자리끼리만 비교해 위치가 다른 공통값을 놓침",
+      "code": "n = int(input())\na = []\nfor i in range(n):\n    a.append(int(input()))\nm = int(input())\nb = []\nfor i in range(m):\n    b.append(int(input()))\nfor i in range(n):\n    if i < m and a[i] == b[i]:\n        print(a[i])\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 7
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V4",
+      "desc": "첫 모둠 개수 N만 보고 예시 정답(3,4 / 20)을 고정 출력",
+      "code": "n = int(input())\nif n == 4:\n    print(3)\n    print(4)\nelse:\n    print(20)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 7
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V2",
+      "desc": "딕셔너리 대신 후보마다 변수를 따로 두고 if/elif 로 세어 올림",
+      "code": "n = int(input())\na = 0\nb = 0\nc = 0\nfor i in range(n):\n    name = input()\n    if name == \"김파이\":\n        a = a + 1\n    elif name == \"이코드\":\n        b = b + 1\n    else:\n        c = c + 1\nif a > b and a > c:\n    print(\"김파이\")\nelif b > c:\n    print(\"이코드\")\nelse:\n    print(\"박몽\")\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V3",
+      "desc": "최다 득표를 갱신하지 않고 늘 첫 후보(김파이)와만 견주어 마지막 비교가 덮어씀",
+      "code": "votes = {\"김파이\": 0, \"이코드\": 0, \"박몽\": 0}\nn = int(input())\nfor i in range(n):\n    name = input()\n    votes[name] = votes[name] + 1\nbest = \"김파이\"\nif votes[\"이코드\"] > votes[\"김파이\"]:\n    best = \"이코드\"\nif votes[\"박몽\"] > votes[\"김파이\"]:\n    best = \"박몽\"\nprint(best)\n",
+      "measuredCasesPassed": 5,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V4",
+      "desc": "표를 세지 않고 표의 개수 N만 보고 예시 정답 이름을 고정 출력",
+      "code": "n = int(input())\nif n == 5:\n    print(\"김파이\")\nelse:\n    print(\"이코드\")\n",
+      "measuredCasesPassed": 3,
+      "measuredCasesTotal": 6
+    }
+  ]
+}

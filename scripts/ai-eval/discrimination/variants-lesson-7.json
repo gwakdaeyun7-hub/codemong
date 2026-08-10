@@ -1,0 +1,149 @@
+{
+  "lesson": "lesson-7",
+  "variants": [
+    {
+      "problemId": "prob-1",
+      "variant": "V2",
+      "desc": "리스트를 통째로 복사하고 이중 순회로 최댓값을 찾음 (한 번 순회면 충분)",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\ncopy = []\nfor x in nums:\n    copy.append(x)\nbiggest = copy[0]\nfor i in range(len(copy)):\n    for j in range(len(copy)):\n        if copy[j] > biggest:\n            biggest = copy[j]\nprint(biggest)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-1",
+      "variant": "V3",
+      "desc": "최댓값 초기값을 0으로 둬서 전부 음수인 입력에서 0이 남음",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nbiggest = 0\nfor x in nums:\n    if x > biggest:\n        biggest = x\nprint(biggest)\n",
+      "measuredCasesPassed": 5,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-1",
+      "variant": "V4",
+      "desc": "입력 개수 N만 보고 예시 정답 7/10을 고정 출력",
+      "code": "n = int(input())\nif n == 3:\n    print(7)\nelse:\n    print(10)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V2",
+      "desc": "역순 리스트를 만든 뒤 다시 임시 리스트로 복사해 출력 (복사 두 번)",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nreversed_nums = []\nidx = n - 1\nwhile idx >= 0:\n    reversed_nums.append(nums[idx])\n    idx = idx - 1\ntemp = []\nfor x in reversed_nums:\n    temp.append(x)\nfor i in range(len(temp)):\n    print(temp[i])\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V3",
+      "desc": "앞뒤 맞바꾸기를 전체 범위로 돌려 두 번 뒤집혀 원래 순서로 되돌아옴",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nfor i in range(n):\n    temp = nums[i]\n    nums[i] = nums[n - 1 - i]\n    nums[n - 1 - i] = temp\nfor x in nums:\n    print(x)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V4",
+      "desc": "N만 보고 예시 출력(3,2,1 / 40,30,20,10)을 그대로 찍음",
+      "code": "n = int(input())\nif n == 3:\n    print(3)\n    print(2)\n    print(1)\nelse:\n    print(40)\n    print(30)\n    print(20)\n    print(10)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V2",
+      "desc": "최댓값을 구한 뒤 위치를 찾으러 또 한 번 순회하고 found 플래그로 첫 위치를 걸러냄",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nbiggest = nums[0]\nfor x in nums:\n    if x > biggest:\n        biggest = x\npos = 0\nfound = False\nfor i in range(n):\n    if nums[i] == biggest:\n        if found == False:\n            pos = i + 1\n            found = True\nprint(biggest)\nprint(pos)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V3",
+      "desc": "비교를 >= 로 해서 동점일 때 마지막 위치를 답함 (첫 위치 규칙 어김)",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nbiggest = nums[0]\npos = 0\nfor i in range(n):\n    if nums[i] >= biggest:\n        biggest = nums[i]\n        pos = i\nprint(biggest)\nprint(pos + 1)\n",
+      "measuredCasesPassed": 5,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V4",
+      "desc": "N과 첫 값이 예시와 같은지만 보고 예시 정답 두 줄을 고정 출력",
+      "code": "n = int(input())\nfirst = int(input())\nif n == 3 and first == 3:\n    print(7)\n    print(2)\nelse:\n    print(10)\n    print(1)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V2",
+      "desc": "비교할 때마다 전체 합과 평균을 처음부터 다시 계산 (평균은 한 번만 구하면 됨)",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\ncount = 0\nfor i in range(n):\n    total = 0\n    for j in range(n):\n        total = total + nums[j]\n    avg = total / n\n    if nums[i] > avg:\n        count = count + 1\nprint(count)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V3",
+      "desc": "평균보다 큰 값을 >= 로 세어 평균과 같은 값까지 포함",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\ntotal = 0\nfor x in nums:\n    total = total + x\navg = total / n\ncount = 0\nfor x in nums:\n    if x >= avg:\n        count = count + 1\nprint(count)\n",
+      "measuredCasesPassed": 3,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V4",
+      "desc": "첫 점수가 예시(50)인지만 보고 2 또는 1을 고정 출력",
+      "code": "n = int(input())\nfirst = int(input())\nif first == 50:\n    print(2)\nelse:\n    print(1)\n",
+      "measuredCasesPassed": 3,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V2",
+      "desc": "짝수 여부를 굳이 flag 변수에 담고, 모은 리스트를 또 다른 리스트로 복사해 출력",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nevens = []\nfor i in range(len(nums)):\n    is_even = False\n    if nums[i] % 2 == 0:\n        is_even = True\n    if is_even == True:\n        evens.append(nums[i])\nfinal = []\nfor x in evens:\n    final.append(x)\nfor i in range(len(final)):\n    print(final[i])\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V3",
+      "desc": "'짝수인 값'을 '짝수 번째 자리의 값'으로 오독해 인덱스가 짝수인 항목을 모음",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nevens = []\nfor i in range(n):\n    if i % 2 == 0:\n        evens.append(nums[i])\nfor e in evens:\n    print(e)\n",
+      "measuredCasesPassed": 3,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V4",
+      "desc": "첫 값이 예시(1)인지만 보고 예시 출력(2,4 / 10,20)을 고정 출력",
+      "code": "n = int(input())\nfirst = int(input())\nif first == 1:\n    print(2)\n    print(4)\nelse:\n    print(10)\n    print(20)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-6",
+      "variant": "V2",
+      "desc": "원본을 복사하고 최댓값과 같은 값을 걸러낸 리스트를 또 만들어 세 번 순회",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\ncopy = []\nfor x in nums:\n    copy.append(x)\nfirst = copy[0]\nfor x in copy:\n    if x > first:\n        first = x\nrest = []\nfor x in copy:\n    if x != first:\n        rest.append(x)\nsecond = rest[0]\nfor x in rest:\n    if x > second:\n        second = x\nprint(second)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-6",
+      "variant": "V3",
+      "desc": "최댓값을 '한 자리'만 빼고 다시 최댓값을 찾아 최댓값이 중복이면 또 최댓값이 나옴",
+      "code": "n = int(input())\nnums = []\nfor i in range(n):\n    nums.append(int(input()))\nfirst = nums[0]\npos = 0\nfor i in range(n):\n    if nums[i] > first:\n        first = nums[i]\n        pos = i\nrest = []\nfor i in range(n):\n    if i != pos:\n        rest.append(nums[i])\nsecond = rest[0]\nfor x in rest:\n    if x > second:\n        second = x\nprint(second)\n",
+      "measuredCasesPassed": 4,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-6",
+      "variant": "V4",
+      "desc": "첫 값이 예시(3)인지만 보고 예시 정답 5 또는 9를 고정 출력",
+      "code": "n = int(input())\nfirst = int(input())\nif first == 3:\n    print(5)\nelse:\n    print(9)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    }
+  ]
+}

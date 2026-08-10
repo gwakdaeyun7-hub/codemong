@@ -1,0 +1,41 @@
+(node:5060) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/82105/Think%20AI/codemong/lib/ai/rubric.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\Users\82105\Think AI\codemong\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[101/136] lesson-4/prob-1 V4: 40/100/40
+[102/136] lesson-4/prob-2 V4: 40/100/40
+[103/136] lesson-4/prob-3 V4: 40/100/40
+[104/136] lesson-4/prob-4 V4: 20/100/40
+[105/136] lesson-4/prob-5 V4: 40/100/40
+[106/136] lesson-4/prob-6 V4: 40/100/40
+[107/136] lesson-5/prob-1 V4: 30/100/30
+[108/136] lesson-5/prob-2 V4: 40/100/40
+[109/136] lesson-5/prob-3 V4: 40/100/40
+[110/136] lesson-5/prob-4 V2: 100/85/100
+[111/136] lesson-5/prob-4 V4: 20/100/20
+[112/136] lesson-5/prob-5 V4: 40/100/40
+[113/136] lesson-5/prob-6 V4: 40/100/40
+[114/136] lesson-6/prob-1 V4: 40/100/40
+[115/136] lesson-6/prob-2 V4: 40/40/40
+[116/136] lesson-6/prob-3 V4: 40/100/40
+[117/136] lesson-6/prob-4 V4: 40/100/40
+[118/136] lesson-6/prob-5 V4: 30/100/30
+[119/136] lesson-6/prob-6 V2: 100/70/100
+[120/136] lesson-6/prob-6 V4: 20/100/20
+[121/136] lesson-7/prob-1 V4: 20/100/20
+[122/136] lesson-7/prob-2 V4: 40/100/40
+[123/136] lesson-7/prob-3 V4: 40/100/40
+[124/136] lesson-7/prob-4 V4: 20/100/20
+[125/136] lesson-7/prob-5 V4: 20/40/20
+[126/136] lesson-7/prob-6 V4: 40/100/40
+[127/136] lesson-8/prob-1 V4: 30/100/40
+[128/136] lesson-8/prob-2 V4: 40/100/40
+[129/136] lesson-8/prob-3 V4: 20/100/20
+[130/136] lesson-8/prob-4 V4: 40/100/40
+[131/136] lesson-8/prob-5 V4: 40/100/40
+[132/136] lesson-9/prob-1 V4: 40/100/40
+[133/136] lesson-9/prob-2 V4: 30/100/30
+[134/136] lesson-9/prob-3 V4: 40/100/40
+[135/136] lesson-9/prob-4 V4: 40/100/40
+[136/136] lesson-9/prob-5 V4: 20/100/20
+완료: 136건 (이번 실행 36건), 실패 0건

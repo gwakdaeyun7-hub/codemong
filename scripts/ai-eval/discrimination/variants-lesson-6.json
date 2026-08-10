@@ -1,0 +1,149 @@
+{
+  "lesson": "lesson-6",
+  "variants": [
+    {
+      "problemId": "prob-1",
+      "variant": "V2",
+      "desc": "for 가 주는 반복 변수를 쓰지 않고 i 를 손으로 증가시키며 temp 임시 변수까지 거쳐 누적",
+      "code": "n = int(input())\ntotal = 0\ni = 1\nfor x in range(1, n + 1):\n    temp = total\n    total = temp + i\n    i = i + 1\nprint(total)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-1",
+      "variant": "V3",
+      "desc": "누적 변수 초기화를 반복문 안에 두어 매번 0 으로 되돌아가 마지막 값만 남음",
+      "code": "n = int(input())\nfor i in range(1, n + 1):\n    total = 0\n    total = total + i\nprint(total)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-1",
+      "variant": "V4",
+      "desc": "입력을 읽기만 하고 첫 번째 공개 예시 답 55 를 total 에 넣어 고정 출력",
+      "code": "n = int(input())\ntotal = 55\nprint(total)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V2",
+      "desc": "range 가 주는 k 를 버리고 i 를 손으로 증가시키며 출력도 str() 로 일일이 이어 붙여 만듦",
+      "code": "n = int(input())\ni = 1\nfor k in range(9):\n    result = n * i\n    line = str(n) + \" x \" + str(i) + \" = \" + str(result)\n    print(line)\n    i = i + 1\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V3",
+      "desc": "반복 횟수를 9 가 아니라 입력 N 으로 착각해 range(1, n + 1) 로 돌림",
+      "code": "n = int(input())\nfor i in range(1, n + 1):\n    print(n, \"x\", i, \"=\", n * i)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V4",
+      "desc": "공개 예시 입력값 2 인지만 확인해 2단을 출력하고 나머지는 전부 5단을 출력",
+      "code": "n = int(input())\nif n == 2:\n    for i in range(1, 10):\n        print(2, \"x\", i, \"=\", 2 * i)\nelse:\n    for i in range(1, 10):\n        print(5, \"x\", i, \"=\", 5 * i)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V2",
+      "desc": "누적할 때 temp 임시 변수를 한 번 거치고, 끝까지 쓰이지 않는 count 카운터를 함께 굴림",
+      "code": "n = int(input())\ntotal = 0\ncount = 0\nfor i in range(n):\n    x = int(input())\n    temp = total + x\n    total = temp\n    count = count + 1\nprint(total)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V3",
+      "desc": "반복 범위를 range(n) 대신 range(1, n) 으로 잡아 마지막 수를 한 개 덜 읽음",
+      "code": "n = int(input())\ntotal = 0\nfor i in range(1, n):\n    x = int(input())\n    total = total + x\nprint(total)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V4",
+      "desc": "개수 N 이 공개 예시의 3 인지만 확인해 60 을 출력하고 나머지는 전부 20 으로 처리",
+      "code": "n = int(input())\nif n == 3:\n    print(60)\nelse:\n    print(20)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V2",
+      "desc": "약수를 찾은 뒤 항상 참인 answer > 0 조건을 한 겹 더 씌운 불필요한 중첩과 임시 변수",
+      "code": "n = int(input())\nfor i in range(1, n + 1):\n    rest = n % i\n    if rest == 0:\n        answer = i\n        if answer > 0:\n            print(answer)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V3",
+      "desc": "나머지 연산의 순서를 뒤집어 n % i 대신 i % n 으로 판정",
+      "code": "n = int(input())\nfor i in range(1, n + 1):\n    if i % n == 0:\n        print(i)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V4",
+      "desc": "공개 예시 입력값 6 인지만 확인해 1/2/3/6 을 출력하고 나머지는 전부 1/7 을 출력",
+      "code": "n = int(input())\nif n == 6:\n    print(1)\n    print(2)\n    print(3)\n    print(6)\nelse:\n    print(1)\n    print(7)\n",
+      "measuredCasesPassed": 3,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V2",
+      "desc": "안쪽 반복에서 별 한 개를 star 변수에 담아 붙이고, 끝까지 쓰이지 않는 count 카운터를 함께 굴림",
+      "code": "n = int(input())\nfor i in range(1, n + 1):\n    line = \"\"\n    count = 0\n    for j in range(1, i + 1):\n        star = \"*\"\n        line = line + star\n        count = count + 1\n    print(line)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V3",
+      "desc": "안쪽 반복 횟수를 줄 번호 i 가 아니라 N 으로 고정해 모든 줄에 별 N 개를 찍음",
+      "code": "n = int(input())\nfor i in range(1, n + 1):\n    line = \"\"\n    for j in range(n):\n        line = line + \"*\"\n    print(line)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V4",
+      "desc": "공개 예시 입력값 3 인지만 확인해 세 줄을 출력하고 나머지는 전부 별 한 줄만 출력",
+      "code": "n = int(input())\nif n == 3:\n    print(\"*\")\n    print(\"**\")\n    print(\"***\")\nelse:\n    print(\"*\")\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-6",
+      "variant": "V2",
+      "desc": "유클리드 while 안에서 같은 나머지를 세 번 중복 계산 + 쓰지 않는 카운터 변수 유지",
+      "code": "a = int(input())\nb = int(input())\n횟수 = 0\nwhile b != 0:\n    r1 = a % b\n    r2 = a % b\n    r3 = a % b\n    횟수 = 횟수 + 1\n    a = b\n    b = r3\nprint(a)\n",
+      "measuredCasesPassed": 7,
+      "measuredCasesTotal": 7
+    },
+    {
+      "problemId": "prob-6",
+      "variant": "V3",
+      "desc": "공약수를 1부터 훑되 범위를 range(1, a) 로 잡아 a 자신을 후보에서 빠뜨림",
+      "code": "a = int(input())\nb = int(input())\nanswer = 1\nfor i in range(1, a):\n    if a % i == 0 and b % i == 0:\n        answer = i\nprint(answer)\n",
+      "measuredCasesPassed": 5,
+      "measuredCasesTotal": 7
+    },
+    {
+      "problemId": "prob-6",
+      "variant": "V4",
+      "desc": "공개 예시 입력값 12 인지만 확인해 6 을 출력하고 나머지는 전부 4 로 처리",
+      "code": "a = int(input())\nb = int(input())\nif a == 12:\n    print(6)\nelse:\n    print(4)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 7
+    }
+  ]
+}

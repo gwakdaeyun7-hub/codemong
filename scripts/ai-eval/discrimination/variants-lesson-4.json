@@ -1,0 +1,149 @@
+{
+  "lesson": "lesson-4",
+  "variants": [
+    {
+      "problemId": "prob-1",
+      "variant": "V2",
+      "desc": "정답이지만 input 문자열을 int 로 바꿨다가 다시 str, 또 int 로 되돌리는 불필요한 왕복 변환과 중복 변수",
+      "code": "a = input()\nb = input()\na_num = int(a)\nb_num = int(b)\ntotal = a_num + b_num\ntotal_str = str(total)\nprint(int(total_str))\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-1",
+      "variant": "V3",
+      "desc": "int() 형변환을 빠뜨려 문자열끼리 이어 붙임 (+ 가 덧셈이 아니라 연결로 동작)",
+      "code": "a = input()\nb = input()\nprint(a + b)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-1",
+      "variant": "V4",
+      "desc": "입력을 읽기만 하고 첫 번째 공개 예시 답 7 을 고정 출력",
+      "code": "a = int(input())\nb = int(input())\nprint(7)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V2",
+      "desc": "다섯 연산을 변수에 담아 놓고 하나도 쓰지 않은 채 print 안에서 전부 다시 계산",
+      "code": "a = int(input())\nb = int(input())\nplus = a + b\nminus = a - b\ntimes = a * b\nshare = a // b\nrest = a % b\nprint(a + b)\nprint(a - b)\nprint(a * b)\nprint(a // b)\nprint(a % b)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V3",
+      "desc": "몫 // 자리에 나눗셈 / 를 써서 나눠떨어지지 않을 때 소수가 그대로 출력됨",
+      "code": "a = int(input())\nb = int(input())\nprint(a + b)\nprint(a - b)\nprint(a * b)\nprint(a / b)\nprint(a % b)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-2",
+      "variant": "V4",
+      "desc": "입력을 읽기만 하고 첫 번째 공개 예시(7,3)의 결과 다섯 줄을 고정 출력",
+      "code": "a = int(input())\nb = int(input())\nprint(10)\nprint(4)\nprint(21)\nprint(2)\nprint(1)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V2",
+      "desc": "나머지를 % 대신 뺄셈으로 우회하고 같은 값을 total/rest/minute 세 변수에 거듭 복사",
+      "code": "m = int(input())\ntotal = m\nhour = total // 60\nrest = total - hour * 60\nminute = rest\nprint(hour)\nprint(minute)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V3",
+      "desc": "몫 // 와 나머지 % 의 역할을 뒤바꿔 시간과 분을 반대로 출력",
+      "code": "m = int(input())\nprint(m % 60)\nprint(m // 60)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-3",
+      "variant": "V4",
+      "desc": "입력을 읽기만 하고 첫 번째 공개 예시 답 2 / 30 을 고정 출력",
+      "code": "m = int(input())\nprint(2)\nprint(30)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V2",
+      "desc": "남은 금액을 rest1, rest2 로 두 번 복사하고 500원 개수는 변수에 담아 놓고 print 에서 다시 계산",
+      "code": "money = int(input())\nc500 = money // 500\nrest1 = money - c500 * 500\nrest2 = rest1\nc100 = rest2 // 100\nprint(money // 500)\nprint(c100)\n",
+      "measuredCasesPassed": 7,
+      "measuredCasesTotal": 7
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V3",
+      "desc": "500원을 쓰고 남은 금액을 넘기지 않고 전체 금액을 그대로 100 으로 나눠 100원 개수를 셈",
+      "code": "money = int(input())\nprint(money // 500)\nprint(money // 100)\n",
+      "measuredCasesPassed": 2,
+      "measuredCasesTotal": 7
+    },
+    {
+      "problemId": "prob-4",
+      "variant": "V4",
+      "desc": "입력을 읽기만 하고 첫 번째 공개 예시 답 2 / 3 을 고정 출력",
+      "code": "money = int(input())\nprint(2)\nprint(3)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 7
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V2",
+      "desc": "평균을 average, answer 두 변수에 담아 두고 정작 print 에서는 합을 처음부터 다시 계산",
+      "code": "a = int(input())\nb = int(input())\nc = int(input())\ntotal = a + b + c\ncount = 3\naverage = total / count\nanswer = average\nprint((a + b + c) / count)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V3",
+      "desc": "평균에 / 대신 몫 // 를 써서 소수점이 잘림",
+      "code": "a = int(input())\nb = int(input())\nc = int(input())\nprint((a + b + c) // 3)\n",
+      "measuredCasesPassed": 4,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-5",
+      "variant": "V4",
+      "desc": "입력을 읽기만 하고 첫 번째 공개 예시 답 80.0 을 고정 출력",
+      "code": "a = int(input())\nb = int(input())\nc = int(input())\nprint(80.0)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-6",
+      "variant": "V2",
+      "desc": "자리 숫자를 % 10 대신 뺄셈으로 걷어내고 마지막 A×B 도 앞서 구한 자리별 결과를 재조합해 우회 계산",
+      "code": "a = int(input())\nb = int(input())\nones = a % 10\ntens = (a % 100 - ones) // 10\nhundreds = (a - tens * 10 - ones) // 100\nprint(ones * b)\nprint(tens * b)\nprint(hundreds * b)\nprint(ones * b + tens * b * 10 + hundreds * b * 100)\n",
+      "measuredCasesPassed": 6,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-6",
+      "variant": "V3",
+      "desc": "출력 순서를 문제와 반대로 읽어 백의 자리부터 일의 자리 순으로 출력",
+      "code": "a = int(input())\nb = int(input())\nhundreds = a // 100\ntens = (a // 10) % 10\nones = a % 10\nprint(hundreds * b)\nprint(tens * b)\nprint(ones * b)\nprint(a * b)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    },
+    {
+      "problemId": "prob-6",
+      "variant": "V4",
+      "desc": "입력을 읽기만 하고 첫 번째 공개 예시(123×456)의 네 줄을 고정 출력",
+      "code": "a = int(input())\nb = int(input())\nprint(1368)\nprint(912)\nprint(456)\nprint(56088)\n",
+      "measuredCasesPassed": 1,
+      "measuredCasesTotal": 6
+    }
+  ]
+}
