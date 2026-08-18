@@ -262,6 +262,20 @@ model WeeklyReport {
   @@map("weekly_reports")
 }
 
+// 시험 일정 — 학습 캘린더의 D-Day 배너·보강 추천용. 사용자가 직접 등록/삭제한다.
+// examDate 는 시간 없는 날짜(@db.Date) — KST 기준 날짜를 UTC 자정으로 저장한다(WeeklyReport.weekStart 규약과 동일).
+// 지난 시험도 행은 남기되 화면에서는 다가오는 시험만 노출한다.
+model ExamSchedule {
+  id        String   @id @default(cuid())
+  userId    String   @db.Uuid
+  title     String // "중간고사" 등 사용자 입력 (40자 컷)
+  examDate  DateTime @db.Date
+  createdAt DateTime @default(now())
+
+  @@index([userId, examDate])
+  @@map("exam_schedules")
+}
+
 model CommentLike {
   commentId String
   userId    String   @db.Uuid

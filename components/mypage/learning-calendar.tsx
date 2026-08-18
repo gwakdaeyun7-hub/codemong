@@ -14,6 +14,7 @@ import type {
   CalendarDay,
   LearningCalendar as CalendarData,
 } from "@/lib/learning/calendar-queries";
+import type { ExamItem } from "@/lib/learning/exam-queries";
 import { cn } from "@/lib/utils";
 
 const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
@@ -32,12 +33,18 @@ function formatKoreanDate(key: string): string {
 export function LearningCalendar({
   calendar,
   todayKey,
+  exams = [],
 }: {
   calendar: CalendarData;
   /** 서버가 계산한 KST 오늘 날짜 "YYYY-MM-DD" */
   todayKey: string;
+  /** 다가오는 시험 — 해당 날짜 칸에 마커로 표시 */
+  exams?: ExamItem[];
 }) {
   // 계산은 전부 렌더 중 직접 수행한다 (React Compiler 자동 메모이제이션 — 수동 useMemo 불필요).
+  const examsByDate: Record<string, ExamItem[]> = {};
+  for (const e of exams) (examsByDate[e.date] ??= []).push(e);
+
   const [todayYearNum, todayMonthNum] = todayKey.split("-").map(Number);
   const todayYear = todayYearNum;
   const todayMonth = todayMonthNum - 1;
@@ -58,6 +65,7 @@ export function LearningCalendar({
   const ChevronRight = mypageIcons.chevronRight;
 
   const selectedDay: CalendarDay | null = selected ? (calendar.days[selected] ?? null) : null;
+  const selectedExams: ExamItem[] = selected ? (examsByDate[selected] ?? []) : [];
 
   // 이번 달 학습 일수 (헤더 보조 정보)
   const monthPrefix = `${year}-${String(month + 1).padStart(2, "0")}-`;
@@ -157,6 +165,7 @@ export function LearningCalendar({
             const theme = getTheme(entry?.themeKey);
             const isToday = key === todayKey;
             const isSelected = key === selected;
+            const examsOn = examsByDate[key] ?? [];
 
             // 색상 = 테마, 진하기 = 깊이. 테마를 못 정한 날은 회색 톤으로 폴백.
             const filled = entry
@@ -174,17 +183,28 @@ export function LearningCalendar({
                 key={key}
                 type="button"
                 onClick={() => setSelected(isSelected ? null : key)}
-                aria-label={`${formatKoreanDate(key)}${entry ? " 학습 기록 있음" : " 학습 기록 없음"}`}
+                aria-label={`${formatKoreanDate(key)}${entry ? " 학습 기록 있음" : " 학습 기록 없음"}${
+                  examsOn.length > 0 ? ` 시험: ${examsOn.map((e) => e.title).join(", ")}` : ""
+                }`}
                 aria-pressed={isSelected}
                 className={cn(
                   "relative flex aspect-square items-center justify-center rounded-lg text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500",
                   filled,
                   entry && "hover:opacity-80",
+                  // 링 우선순위: 선택 > 오늘 > 시험일
+                  examsOn.length > 0 && "ring-2 ring-rose-400 ring-offset-1",
                   isToday && "ring-2 ring-violet-500 ring-offset-1",
                   isSelected && "ring-2 ring-zinc-900 ring-offset-1",
                 )}
               >
                 {day}
+                {examsOn.length > 0 && (
+                  <span
+                    className="absolute bottom-1 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-rose-500"
+                    title={examsOn.map((e) => e.title).join(", ")}
+                    aria-hidden
+                  />
+                )}
                 {entry && entry.revisitSolved > 0 && (
                   <span
                     className="absolute -top-1 -right-1 inline-flex size-4 items-center justify-center rounded-full bg-emerald-600 ring-2 ring-white"
@@ -226,6 +246,10 @@ export function LearningCalendar({
               </span>
               오답 복습 해결
             </span>
+            <span className="inline-flex items-center gap-1.5">
+              <span className="inline-block size-2.5 rounded-full bg-rose-500" />
+              시험일
+            </span>
           </div>
         </div>
       </section>
@@ -244,7 +268,18 @@ export function LearningCalendar({
 
         {selected && !selectedDay && (
           <>
-            <h2 className="text-sm font-bold text-zinc-900">{formatKoreanDate(selected)}</h2>
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-sm font-bold text-zinc-900">{formatKoreanDate(selected)}</h2>
+              {selectedExams.map((e) => (
+                <span
+                  key={e.id}
+                  className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2 py-0.5 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-200"
+                >
+                  <span className="inline-block size-1.5 rounded-full bg-rose-500" />
+                  {e.title}
+                </span>
+              ))}
+            </div>
             <p className="mt-2 text-[13px] text-zinc-500">이 날은 학습 기록이 없어요.</p>
           </>
         )}
@@ -268,6 +303,15 @@ export function LearningCalendar({
                   </span>
                 );
               })}
+              {selectedExams.map((e) => (
+                <span
+                  key={e.id}
+                  className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2 py-0.5 text-[11px] font-semibold text-rose-700 ring-1 ring-rose-200"
+                >
+                  <span className="inline-block size-1.5 rounded-full bg-rose-500" />
+                  {e.title}
+                </span>
+              ))}
               {selectedDay.revisitSolved > 0 && (
                 <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700 ring-1 ring-emerald-200">
                   <Check className="size-3" strokeWidth={3} aria-hidden />

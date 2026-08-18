@@ -3,7 +3,9 @@ import { redirect } from "next/navigation";
 import { mypageIcons } from "@/components/mypage/icon-map";
 import { LearningCalendar } from "@/components/mypage/learning-calendar";
 import { getCurrentUser } from "@/lib/auth/get-user";
+import { ExamDdayCard } from "@/components/mypage/exam-dday-card";
 import { getLearningCalendar, kstDateKey } from "@/lib/learning/calendar-queries";
+import { getWeakestLesson, listUpcomingExams } from "@/lib/learning/exam-queries";
 
 export const metadata = { title: "학습 캘린더 · CodeMong" };
 
@@ -15,7 +17,11 @@ export default async function CalendarPage() {
   const user = await getCurrentUser();
   if (!user) redirect("/login?next=/mypage/calendar");
 
-  const calendar = await getLearningCalendar(user.id);
+  const [calendar, exams, weakest] = await Promise.all([
+    getLearningCalendar(user.id),
+    listUpcomingExams(user.id),
+    getWeakestLesson(user.id),
+  ]);
   const todayKey = kstDateKey(new Date());
 
   const Award = mypageIcons.award;
@@ -30,7 +36,9 @@ export default async function CalendarPage() {
         </p>
       </header>
 
-      <LearningCalendar calendar={calendar} todayKey={todayKey} />
+      <LearningCalendar calendar={calendar} todayKey={todayKey} exams={exams} />
+
+      <ExamDdayCard exams={exams} weakest={weakest} todayKey={todayKey} />
 
       {/* 배지 컬렉션 (mock — 획득 조건/저장 모델 미구현) */}
       <section className="rounded-2xl border border-zinc-200 bg-white p-5">
