@@ -63,10 +63,9 @@ export default async function SkillPage() {
                 전체 평균
               </span>
             </div>
-            {(!radar.meta.aiLive || !radar.meta.averageLive) && (
+            {!radar.meta.aiLive && (
               <p className="mt-2 text-center text-[11px] text-zinc-400">
-                {!radar.meta.aiLive && "개념·효율·해석 축은 문제를 제출하면 AI 진단으로 측정돼요. "}
-                {!radar.meta.averageLive && "전체 평균은 아직 예시값이에요."}
+                개념·효율·해석 축은 문제를 제출하면 AI 진단으로 측정돼요.
               </p>
             )}
           </section>

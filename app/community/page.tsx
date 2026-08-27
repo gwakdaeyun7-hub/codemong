@@ -41,7 +41,7 @@ export default async function CommunityPage({
               커뮤니티
             </h1>
             <p className="mt-1 text-sm text-zinc-500">
-              막힌 부분을 질문하고, 학습기를 나눠보세요.
+              막힌 부분을 질문하고, 학습 후기를 나눠보세요.
             </p>
           </div>
           <Link

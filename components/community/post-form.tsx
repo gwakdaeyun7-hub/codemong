@@ -42,7 +42,7 @@ export function PostForm(props: Props) {
           <div className="grid grid-cols-2 gap-2">
             {[
               { value: "question", label: "Q&A — 학습 질문" },
-              { value: "free", label: "자유 — 학습기 · 잡담" },
+              { value: "free", label: "자유 — 학습 후기 · 잡담" },
             ].map((c, i) => (
               <label
                 key={c.value}

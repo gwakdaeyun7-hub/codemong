@@ -6,7 +6,7 @@
 // 데이터 소스 (D단계 실측 승급 완료):
 //  · 결정적 2축 (구문 정확도 / 로직 구현도) — ExerciseAttempt(연습) + ProblemSubmission(시험) 실집계.
 //  · AI 3축 (개념 이해도 / 코드 효율성 / 문제 해석력) — ProblemSubmission 의 Gemini 3축 점수 실집계.
-//  · 코호트 평균(averageValue) — 전 유저 실집계 + unstable_cache(1h). 표본 부족 시 데모 평균 유지.
+//  · 코호트 평균(averageValue) — 전 유저 실집계 + unstable_cache(5m). 표본 부족 시 데모 평균 유지.
 //
 // ⚠️ 집계 규칙 (사용자 확정 — 반복 제출로 평균을 부풀릴 수 없게):
 //  · 같은 문제/연습에 여러 번 제출해도 **문제당 최신 1건만** 반영한다 (다시 풀면 최신 기준 갱신).
@@ -93,8 +93,9 @@ const DEMO_VALUES: Record<string, { user: number; average: number }> = {
 };
 
 // 코호트 평균을 실집계로 노출할 최소 표본 (미만이면 데모 평균 — 소수 인원 노이즈 방지).
-const MIN_COHORT_USERS = 5;
-const MIN_COHORT_SAMPLES = 30;
+// 유저 1명뿐이면 평균=본인 점수라 두 곡선이 겹치므로 최소 2명은 유지한다.
+const MIN_COHORT_USERS = 2;
+const MIN_COHORT_SAMPLES = 5;
 
 function clampPct(n: number): number {
   if (!Number.isFinite(n)) return 0;
@@ -238,7 +239,7 @@ async function collectSamples(
   };
 }
 
-// 코호트(전 유저) 통계 — 1시간 캐시. lessonRef=null 이면 전체.
+// 코호트(전 유저) 통계 — 5분 캐시. lessonRef=null 이면 전체.
 const getCohortStats = unstable_cache(
   async (lessonRef: string | null) => {
     const { det, ai, users } = await collectSamples(null, lessonRef);
@@ -246,7 +247,7 @@ const getCohortStats = unstable_cache(
     return { stats, userCount: users.size };
   },
   ["skill-radar-cohort-v1"],
-  { revalidate: 3600 },
+  { revalidate: 300 },
 );
 
 function buildPoints(

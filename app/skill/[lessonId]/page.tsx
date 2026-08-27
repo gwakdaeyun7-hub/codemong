@@ -87,11 +87,6 @@ export default async function SkillLessonPage({
                 전체 평균
               </span>
             </div>
-            {!lessonRadar.meta.averageLive && (
-              <p className="mt-2 text-center text-[11px] text-zinc-400">
-                전체 평균은 아직 예시값이에요.
-              </p>
-            )}
           </section>
         )}
 
