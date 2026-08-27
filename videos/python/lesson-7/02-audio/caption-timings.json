@@ -1,0 +1,2016 @@
+{
+ "scene-01": {
+  "hash": "fdb382ca734e31e0",
+  "resynthMs": 13320.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "안녕하세요"
+   },
+   {
+    "offsetMs": 1447.708,
+    "text": "파이썬"
+   },
+   {
+    "offsetMs": 2061.375,
+    "text": "기초"
+   },
+   {
+    "offsetMs": 2515.916,
+    "text": "7강을"
+   },
+   {
+    "offsetMs": 3038.625,
+    "text": "시작합니다"
+   },
+   {
+    "offsetMs": 4409.083,
+    "text": "6강에서는"
+   },
+   {
+    "offsetMs": 5420.458,
+    "text": "같은"
+   },
+   {
+    "offsetMs": 5840.916,
+    "text": "줄을"
+   },
+   {
+    "offsetMs": 6284.083,
+    "text": "여러"
+   },
+   {
+    "offsetMs": 6534.083,
+    "text": "번"
+   },
+   {
+    "offsetMs": 6693.166,
+    "text": "실행하는"
+   },
+   {
+    "offsetMs": 7238.625,
+    "text": "반복문을"
+   },
+   {
+    "offsetMs": 7875.0,
+    "text": "배웠습니다"
+   },
+   {
+    "offsetMs": 9250.0,
+    "text": "오늘은"
+   },
+   {
+    "offsetMs": 10056.833,
+    "text": "여러"
+   },
+   {
+    "offsetMs": 10284.083,
+    "text": "값을"
+   },
+   {
+    "offsetMs": 10613.625,
+    "text": "하나로"
+   },
+   {
+    "offsetMs": 10977.291,
+    "text": "다루는"
+   },
+   {
+    "offsetMs": 11431.833,
+    "text": "리스트를"
+   },
+   {
+    "offsetMs": 11909.083,
+    "text": "보겠습니다"
+   }
+  ]
+ },
+ "scene-02": {
+  "hash": "c312d01ea30ac9d3",
+  "resynthMs": 10824.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "예를"
+   },
+   {
+    "offsetMs": 413.625,
+    "text": "들어"
+   },
+   {
+    "offsetMs": 1027.291,
+    "text": "한"
+   },
+   {
+    "offsetMs": 1265.916,
+    "text": "반"
+   },
+   {
+    "offsetMs": 1436.375,
+    "text": "학생"
+   },
+   {
+    "offsetMs": 1754.541,
+    "text": "서른"
+   },
+   {
+    "offsetMs": 1993.166,
+    "text": "명의"
+   },
+   {
+    "offsetMs": 2220.458,
+    "text": "점수를"
+   },
+   {
+    "offsetMs": 2640.916,
+    "text": "다루려면"
+   },
+   {
+    "offsetMs": 3561.375,
+    "text": "변수를"
+   },
+   {
+    "offsetMs": 4027.291,
+    "text": "서른"
+   },
+   {
+    "offsetMs": 4413.625,
+    "text": "개"
+   },
+   {
+    "offsetMs": 4595.458,
+    "text": "따로"
+   },
+   {
+    "offsetMs": 4845.458,
+    "text": "만들어야"
+   },
+   {
+    "offsetMs": 5265.916,
+    "text": "할까요"
+   },
+   {
+    "offsetMs": 6300.0,
+    "text": "이"
+   },
+   {
+    "offsetMs": 6663.625,
+    "text": "점수들을"
+   },
+   {
+    "offsetMs": 7334.083,
+    "text": "하나의"
+   },
+   {
+    "offsetMs": 7709.083,
+    "text": "묶음에"
+   },
+   {
+    "offsetMs": 8072.708,
+    "text": "담는"
+   },
+   {
+    "offsetMs": 8390.916,
+    "text": "게"
+   },
+   {
+    "offsetMs": 8675.0,
+    "text": "오늘"
+   },
+   {
+    "offsetMs": 9129.541,
+    "text": "다룰"
+   },
+   {
+    "offsetMs": 9436.375,
+    "text": "리스트입니다"
+   }
+  ]
+ },
+ "scene-03": {
+  "hash": "914a11f7fd9fd3ef",
+  "resynthMs": 22488.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "리스트는"
+   },
+   {
+    "offsetMs": 800.0,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 1277.291,
+    "text": "안에"
+   },
+   {
+    "offsetMs": 1527.291,
+    "text": "값들을"
+   },
+   {
+    "offsetMs": 2027.291,
+    "text": "쉼표로"
+   },
+   {
+    "offsetMs": 2481.833,
+    "text": "나열해서"
+   },
+   {
+    "offsetMs": 2913.625,
+    "text": "만듭니다"
+   },
+   {
+    "offsetMs": 4175.0,
+    "text": "예를"
+   },
+   {
+    "offsetMs": 4538.625,
+    "text": "들어"
+   },
+   {
+    "offsetMs": 5118.166,
+    "text": "점수"
+   },
+   {
+    "offsetMs": 5470.458,
+    "text": "세"
+   },
+   {
+    "offsetMs": 5606.833,
+    "text": "개를"
+   },
+   {
+    "offsetMs": 5811.375,
+    "text": "담는다고"
+   },
+   {
+    "offsetMs": 6265.916,
+    "text": "하면"
+   },
+   {
+    "offsetMs": 6970.458,
+    "text": "변수"
+   },
+   {
+    "offsetMs": 7379.541,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 8311.375,
+    "text": "등호"
+   },
+   {
+    "offsetMs": 9050.0,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 9447.708,
+    "text": "열고"
+   },
+   {
+    "offsetMs": 9856.833,
+    "text": "88"
+   },
+   {
+    "offsetMs": 10788.625,
+    "text": "92"
+   },
+   {
+    "offsetMs": 11618.166,
+    "text": "76"
+   },
+   {
+    "offsetMs": 12436.375,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 12788.625,
+    "text": "닫고"
+   },
+   {
+    "offsetMs": 13640.916,
+    "text": "이렇게"
+   },
+   {
+    "offsetMs": 14277.291,
+    "text": "한"
+   },
+   {
+    "offsetMs": 14515.916,
+    "text": "줄로"
+   },
+   {
+    "offsetMs": 14834.083,
+    "text": "묶음이"
+   },
+   {
+    "offsetMs": 15334.083,
+    "text": "만들어집니다"
+   },
+   {
+    "offsetMs": 16834.083,
+    "text": "이"
+   },
+   {
+    "offsetMs": 17106.833,
+    "text": "묶음"
+   },
+   {
+    "offsetMs": 17425.0,
+    "text": "안에는"
+   },
+   {
+    "offsetMs": 17856.833,
+    "text": "값이"
+   },
+   {
+    "offsetMs": 18322.708,
+    "text": "세"
+   },
+   {
+    "offsetMs": 18504.541,
+    "text": "개"
+   },
+   {
+    "offsetMs": 18618.166,
+    "text": "들어있고요"
+   },
+   {
+    "offsetMs": 19595.458,
+    "text": "각"
+   },
+   {
+    "offsetMs": 19800.0,
+    "text": "값에는"
+   },
+   {
+    "offsetMs": 20368.166,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 20663.625,
+    "text": "번호가"
+   },
+   {
+    "offsetMs": 21004.541,
+    "text": "붙어있습니다"
+   }
+  ]
+ },
+ "scene-04": {
+  "hash": "c00aac7d28c46e5a",
+  "resynthMs": 19680.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "중요한"
+   },
+   {
+    "offsetMs": 595.458,
+    "text": "점"
+   },
+   {
+    "offsetMs": 845.458,
+    "text": "하나"
+   },
+   {
+    "offsetMs": 1629.541,
+    "text": "일상에서"
+   },
+   {
+    "offsetMs": 2390.916,
+    "text": "첫"
+   },
+   {
+    "offsetMs": 2584.083,
+    "text": "번째라고"
+   },
+   {
+    "offsetMs": 3061.375,
+    "text": "부르는"
+   },
+   {
+    "offsetMs": 3379.541,
+    "text": "값은"
+   },
+   {
+    "offsetMs": 4209.083,
+    "text": "코드에서는"
+   },
+   {
+    "offsetMs": 5027.291,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 5345.458,
+    "text": "번호"
+   },
+   {
+    "offsetMs": 5606.833,
+    "text": "0입니다"
+   },
+   {
+    "offsetMs": 6840.916,
+    "text": "그래서"
+   },
+   {
+    "offsetMs": 7340.916,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 7806.833,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 8204.541,
+    "text": "0은"
+   },
+   {
+    "offsetMs": 8613.625,
+    "text": "88"
+   },
+   {
+    "offsetMs": 9522.708,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 10022.708,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 10375.0,
+    "text": "1은"
+   },
+   {
+    "offsetMs": 10727.291,
+    "text": "92"
+   },
+   {
+    "offsetMs": 11579.541,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 12090.916,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 12420.458,
+    "text": "2는"
+   },
+   {
+    "offsetMs": 12772.708,
+    "text": "76이"
+   },
+   {
+    "offsetMs": 13295.458,
+    "text": "됩니다"
+   },
+   {
+    "offsetMs": 14431.833,
+    "text": "그러면"
+   },
+   {
+    "offsetMs": 14965.916,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 15522.708,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 15977.291,
+    "text": "3은"
+   },
+   {
+    "offsetMs": 16363.625,
+    "text": "어떻게"
+   },
+   {
+    "offsetMs": 16761.375,
+    "text": "될까요"
+   },
+   {
+    "offsetMs": 17834.083,
+    "text": "자리가"
+   },
+   {
+    "offsetMs": 18390.916,
+    "text": "없습니다"
+   }
+  ]
+ },
+ "scene-05": {
+  "hash": "43f172961a88863e",
+  "resynthMs": 19584.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "이번엔"
+   },
+   {
+    "offsetMs": 845.458,
+    "text": "리스트에"
+   },
+   {
+    "offsetMs": 1345.458,
+    "text": "값을"
+   },
+   {
+    "offsetMs": 1754.541,
+    "text": "더하고"
+   },
+   {
+    "offsetMs": 2095.458,
+    "text": "빼는"
+   },
+   {
+    "offsetMs": 2470.458,
+    "text": "동작을"
+   },
+   {
+    "offsetMs": 2902.291,
+    "text": "봅니다"
+   },
+   {
+    "offsetMs": 4027.291,
+    "text": "먼저"
+   },
+   {
+    "offsetMs": 4959.083,
+    "text": "끝에"
+   },
+   {
+    "offsetMs": 5425.0,
+    "text": "새"
+   },
+   {
+    "offsetMs": 5572.708,
+    "text": "값을"
+   },
+   {
+    "offsetMs": 5890.916,
+    "text": "더할"
+   },
+   {
+    "offsetMs": 6095.458,
+    "text": "때는"
+   },
+   {
+    "offsetMs": 6561.375,
+    "text": "어펜드를"
+   },
+   {
+    "offsetMs": 7140.916,
+    "text": "씁니다"
+   },
+   {
+    "offsetMs": 8231.833,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 8925.0,
+    "text": "점"
+   },
+   {
+    "offsetMs": 9345.458,
+    "text": "어펜드"
+   },
+   {
+    "offsetMs": 9936.375,
+    "text": "괄호"
+   },
+   {
+    "offsetMs": 10311.375,
+    "text": "100"
+   },
+   {
+    "offsetMs": 10970.458,
+    "text": "이"
+   },
+   {
+    "offsetMs": 11220.458,
+    "text": "한"
+   },
+   {
+    "offsetMs": 11402.291,
+    "text": "줄을"
+   },
+   {
+    "offsetMs": 11606.833,
+    "text": "실행하면"
+   },
+   {
+    "offsetMs": 12550.0,
+    "text": "묶음"
+   },
+   {
+    "offsetMs": 12936.375,
+    "text": "끝에"
+   },
+   {
+    "offsetMs": 13390.916,
+    "text": "새"
+   },
+   {
+    "offsetMs": 13584.083,
+    "text": "자리가"
+   },
+   {
+    "offsetMs": 13856.833,
+    "text": "생기면서"
+   },
+   {
+    "offsetMs": 14572.708,
+    "text": "100이"
+   },
+   {
+    "offsetMs": 14947.708,
+    "text": "들어갑니다"
+   },
+   {
+    "offsetMs": 16300.0,
+    "text": "묶음"
+   },
+   {
+    "offsetMs": 16800.0,
+    "text": "길이는"
+   },
+   {
+    "offsetMs": 17311.375,
+    "text": "삼에서"
+   },
+   {
+    "offsetMs": 17902.291,
+    "text": "사로"
+   },
+   {
+    "offsetMs": 18243.166,
+    "text": "늘어납니다"
+   }
+  ]
+ },
+ "scene-06": {
+  "hash": "7c05b938be2f886f",
+  "resynthMs": 17784.0,
+  "words": [
+   {
+    "offsetMs": 48.875,
+    "text": "다음"
+   },
+   {
+    "offsetMs": 798.875,
+    "text": "이미"
+   },
+   {
+    "offsetMs": 1094.333,
+    "text": "있는"
+   },
+   {
+    "offsetMs": 1389.791,
+    "text": "자리의"
+   },
+   {
+    "offsetMs": 1696.583,
+    "text": "값을"
+   },
+   {
+    "offsetMs": 2026.125,
+    "text": "바꿀"
+   },
+   {
+    "offsetMs": 2276.125,
+    "text": "때는"
+   },
+   {
+    "offsetMs": 2639.791,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 3378.416,
+    "text": "안에"
+   },
+   {
+    "offsetMs": 3719.333,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 4026.125,
+    "text": "번호를"
+   },
+   {
+    "offsetMs": 4344.333,
+    "text": "넣고"
+   },
+   {
+    "offsetMs": 4605.666,
+    "text": "등호로"
+   },
+   {
+    "offsetMs": 5048.875,
+    "text": "새"
+   },
+   {
+    "offsetMs": 5219.333,
+    "text": "값을"
+   },
+   {
+    "offsetMs": 5480.666,
+    "text": "줍니다"
+   },
+   {
+    "offsetMs": 6629.541,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 7277.291,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 7959.083,
+    "text": "0"
+   },
+   {
+    "offsetMs": 8277.291,
+    "text": "등호"
+   },
+   {
+    "offsetMs": 8606.833,
+    "text": "95"
+   },
+   {
+    "offsetMs": 9561.375,
+    "text": "이"
+   },
+   {
+    "offsetMs": 9811.375,
+    "text": "한"
+   },
+   {
+    "offsetMs": 9993.166,
+    "text": "줄을"
+   },
+   {
+    "offsetMs": 10197.708,
+    "text": "실행하면"
+   },
+   {
+    "offsetMs": 11152.291,
+    "text": "0번 자리의"
+   },
+   {
+    "offsetMs": 11959.083,
+    "text": "값만"
+   },
+   {
+    "offsetMs": 12390.916,
+    "text": "88에서"
+   },
+   {
+    "offsetMs": 13197.708,
+    "text": "95로"
+   },
+   {
+    "offsetMs": 13720.458,
+    "text": "바뀝니다"
+   },
+   {
+    "offsetMs": 15061.375,
+    "text": "묶음"
+   },
+   {
+    "offsetMs": 15538.625,
+    "text": "길이는"
+   },
+   {
+    "offsetMs": 16061.375,
+    "text": "그대로"
+   },
+   {
+    "offsetMs": 16515.916,
+    "text": "사입니다"
+   }
+  ]
+ },
+ "scene-07": {
+  "hash": "6733dd29d658b1af",
+  "resynthMs": 15480.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "마지막"
+   },
+   {
+    "offsetMs": 686.375,
+    "text": "동작"
+   },
+   {
+    "offsetMs": 1572.708,
+    "text": "자리째"
+   },
+   {
+    "offsetMs": 2209.083,
+    "text": "통째로"
+   },
+   {
+    "offsetMs": 2675.0,
+    "text": "빼려면"
+   },
+   {
+    "offsetMs": 3209.083,
+    "text": "델을"
+   },
+   {
+    "offsetMs": 3504.541,
+    "text": "씁니다"
+   },
+   {
+    "offsetMs": 4647.708,
+    "text": "델"
+   },
+   {
+    "offsetMs": 4875.0,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 5306.833,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 5818.166,
+    "text": "1"
+   },
+   {
+    "offsetMs": 6136.375,
+    "text": "이"
+   },
+   {
+    "offsetMs": 6340.916,
+    "text": "한"
+   },
+   {
+    "offsetMs": 6522.708,
+    "text": "줄을"
+   },
+   {
+    "offsetMs": 6704.541,
+    "text": "실행하면"
+   },
+   {
+    "offsetMs": 7602.291,
+    "text": "1번 자리가"
+   },
+   {
+    "offsetMs": 8272.708,
+    "text": "빠지고"
+   },
+   {
+    "offsetMs": 9102.291,
+    "text": "뒤에"
+   },
+   {
+    "offsetMs": 9375.0,
+    "text": "있던"
+   },
+   {
+    "offsetMs": 9602.291,
+    "text": "값들이"
+   },
+   {
+    "offsetMs": 10068.166,
+    "text": "한"
+   },
+   {
+    "offsetMs": 10340.916,
+    "text": "칸씩"
+   },
+   {
+    "offsetMs": 10670.458,
+    "text": "앞으로"
+   },
+   {
+    "offsetMs": 10965.916,
+    "text": "당겨집니다"
+   },
+   {
+    "offsetMs": 12368.166,
+    "text": "길이는"
+   },
+   {
+    "offsetMs": 12981.833,
+    "text": "사에서"
+   },
+   {
+    "offsetMs": 13618.166,
+    "text": "삼으로"
+   },
+   {
+    "offsetMs": 14106.833,
+    "text": "줄어듭니다"
+   }
+  ]
+ },
+ "scene-08": {
+  "hash": "83f750a6c980293a",
+  "resynthMs": 21240.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "여기서"
+   },
+   {
+    "offsetMs": 618.166,
+    "text": "잠깐"
+   },
+   {
+    "offsetMs": 1670.458,
+    "text": "출발"
+   },
+   {
+    "offsetMs": 2022.708,
+    "text": "묶음이"
+   },
+   {
+    "offsetMs": 2534.083,
+    "text": "88"
+   },
+   {
+    "offsetMs": 3568.166,
+    "text": "92"
+   },
+   {
+    "offsetMs": 4477.291,
+    "text": "76"
+   },
+   {
+    "offsetMs": 5034.083,
+    "text": "이라고"
+   },
+   {
+    "offsetMs": 5318.166,
+    "text": "합시다"
+   },
+   {
+    "offsetMs": 6447.708,
+    "text": "어펜드"
+   },
+   {
+    "offsetMs": 6936.375,
+    "text": "100"
+   },
+   {
+    "offsetMs": 7425.0,
+    "text": "그"
+   },
+   {
+    "offsetMs": 7686.375,
+    "text": "다음"
+   },
+   {
+    "offsetMs": 7981.833,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 8379.541,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 8890.916,
+    "text": "0"
+   },
+   {
+    "offsetMs": 9163.625,
+    "text": "등호"
+   },
+   {
+    "offsetMs": 9345.458,
+    "text": "95"
+   },
+   {
+    "offsetMs": 10163.625,
+    "text": "그"
+   },
+   {
+    "offsetMs": 10402.291,
+    "text": "다음"
+   },
+   {
+    "offsetMs": 10720.458,
+    "text": "델"
+   },
+   {
+    "offsetMs": 10890.916,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 11311.375,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 11800.0,
+    "text": "1"
+   },
+   {
+    "offsetMs": 12118.166,
+    "text": "이"
+   },
+   {
+    "offsetMs": 12322.708,
+    "text": "세"
+   },
+   {
+    "offsetMs": 12493.166,
+    "text": "줄을"
+   },
+   {
+    "offsetMs": 12686.375,
+    "text": "차례로"
+   },
+   {
+    "offsetMs": 12959.083,
+    "text": "실행하면"
+   },
+   {
+    "offsetMs": 13788.625,
+    "text": "묶음은"
+   },
+   {
+    "offsetMs": 14311.375,
+    "text": "어떤"
+   },
+   {
+    "offsetMs": 14629.541,
+    "text": "모습이"
+   },
+   {
+    "offsetMs": 14913.625,
+    "text": "될까요"
+   },
+   {
+    "offsetMs": 15947.708,
+    "text": "정답은"
+   },
+   {
+    "offsetMs": 16618.166,
+    "text": "95"
+   },
+   {
+    "offsetMs": 17640.916,
+    "text": "76"
+   },
+   {
+    "offsetMs": 18675.0,
+    "text": "100"
+   },
+   {
+    "offsetMs": 19300.0,
+    "text": "길이는"
+   },
+   {
+    "offsetMs": 19890.916,
+    "text": "3입니다"
+   }
+  ]
+ },
+ "scene-09": {
+  "hash": "0b3371ba997d3c03",
+  "resynthMs": 26040.0,
+  "words": [
+   {
+    "offsetMs": 45.458,
+    "text": "이번엔"
+   },
+   {
+    "offsetMs": 750.0,
+    "text": "묶음"
+   },
+   {
+    "offsetMs": 1090.916,
+    "text": "안의"
+   },
+   {
+    "offsetMs": 1261.375,
+    "text": "값들을"
+   },
+   {
+    "offsetMs": 1772.708,
+    "text": "하나씩"
+   },
+   {
+    "offsetMs": 2352.291,
+    "text": "차례로"
+   },
+   {
+    "offsetMs": 2772.708,
+    "text": "다루는"
+   },
+   {
+    "offsetMs": 3215.916,
+    "text": "방법입니다"
+   },
+   {
+    "offsetMs": 4629.541,
+    "text": "포"
+   },
+   {
+    "offsetMs": 4834.083,
+    "text": "다음에"
+   },
+   {
+    "offsetMs": 5311.375,
+    "text": "변수"
+   },
+   {
+    "offsetMs": 5731.833,
+    "text": "이름"
+   },
+   {
+    "offsetMs": 6413.625,
+    "text": "인"
+   },
+   {
+    "offsetMs": 6686.375,
+    "text": "키워드"
+   },
+   {
+    "offsetMs": 7584.083,
+    "text": "그리고"
+   },
+   {
+    "offsetMs": 8095.458,
+    "text": "리스트를"
+   },
+   {
+    "offsetMs": 8572.708,
+    "text": "적습니다"
+   },
+   {
+    "offsetMs": 9754.541,
+    "text": "이"
+   },
+   {
+    "offsetMs": 9993.166,
+    "text": "코드를"
+   },
+   {
+    "offsetMs": 10356.833,
+    "text": "실행하면"
+   },
+   {
+    "offsetMs": 11265.916,
+    "text": "매"
+   },
+   {
+    "offsetMs": 11493.166,
+    "text": "바퀴마다"
+   },
+   {
+    "offsetMs": 12095.458,
+    "text": "변수"
+   },
+   {
+    "offsetMs": 12481.833,
+    "text": "에스에"
+   },
+   {
+    "offsetMs": 12993.166,
+    "text": "리스트의"
+   },
+   {
+    "offsetMs": 13470.458,
+    "text": "값이"
+   },
+   {
+    "offsetMs": 13947.708,
+    "text": "하나씩"
+   },
+   {
+    "offsetMs": 14379.541,
+    "text": "차례로"
+   },
+   {
+    "offsetMs": 14697.708,
+    "text": "들어갑니다"
+   },
+   {
+    "offsetMs": 16060.208,
+    "text": "1바퀴엔"
+   },
+   {
+    "offsetMs": 16707.958,
+    "text": "88"
+   },
+   {
+    "offsetMs": 17651.125,
+    "text": "2바퀴엔"
+   },
+   {
+    "offsetMs": 18253.416,
+    "text": "92"
+   },
+   {
+    "offsetMs": 19117.041,
+    "text": "3바퀴엔"
+   },
+   {
+    "offsetMs": 19810.208,
+    "text": "76"
+   },
+   {
+    "offsetMs": 20751.125,
+    "text": "그래서"
+   },
+   {
+    "offsetMs": 21251.125,
+    "text": "화면에"
+   },
+   {
+    "offsetMs": 21705.666,
+    "text": "88"
+   },
+   {
+    "offsetMs": 22660.208,
+    "text": "92"
+   },
+   {
+    "offsetMs": 23535.208,
+    "text": "76이"
+   },
+   {
+    "offsetMs": 24262.5,
+    "text": "한"
+   },
+   {
+    "offsetMs": 24512.5,
+    "text": "줄씩"
+   },
+   {
+    "offsetMs": 24864.791,
+    "text": "나옵니다"
+   }
+  ]
+ },
+ "scene-10": {
+  "hash": "a8124dcf67ff1e3f",
+  "resynthMs": 23472.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "6강에서"
+   },
+   {
+    "offsetMs": 686.375,
+    "text": "본"
+   },
+   {
+    "offsetMs": 879.541,
+    "text": "포가"
+   },
+   {
+    "offsetMs": 1220.458,
+    "text": "헷갈리지"
+   },
+   {
+    "offsetMs": 1686.375,
+    "text": "않게"
+   },
+   {
+    "offsetMs": 1925.0,
+    "text": "한"
+   },
+   {
+    "offsetMs": 2061.375,
+    "text": "컷만"
+   },
+   {
+    "offsetMs": 2368.166,
+    "text": "더"
+   },
+   {
+    "offsetMs": 2538.625,
+    "text": "왼쪽은"
+   },
+   {
+    "offsetMs": 3913.625,
+    "text": "6강의"
+   },
+   {
+    "offsetMs": 4322.708,
+    "text": "포"
+   },
+   {
+    "offsetMs": 4527.291,
+    "text": "이"
+   },
+   {
+    "offsetMs": 4629.541,
+    "text": "인"
+   },
+   {
+    "offsetMs": 4788.625,
+    "text": "레인지"
+   },
+   {
+    "offsetMs": 5140.916,
+    "text": "괄호"
+   },
+   {
+    "offsetMs": 5425.0,
+    "text": "3"
+   },
+   {
+    "offsetMs": 5686.375,
+    "text": "결과는"
+   },
+   {
+    "offsetMs": 6334.083,
+    "text": "0"
+   },
+   {
+    "offsetMs": 6970.458,
+    "text": "1"
+   },
+   {
+    "offsetMs": 7595.458,
+    "text": "2"
+   },
+   {
+    "offsetMs": 7902.291,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 8175.0,
+    "text": "번호가"
+   },
+   {
+    "offsetMs": 8481.833,
+    "text": "나옵니다"
+   },
+   {
+    "offsetMs": 9652.291,
+    "text": "오른쪽은"
+   },
+   {
+    "offsetMs": 10515.916,
+    "text": "7강의"
+   },
+   {
+    "offsetMs": 10993.166,
+    "text": "포"
+   },
+   {
+    "offsetMs": 11209.083,
+    "text": "에스"
+   },
+   {
+    "offsetMs": 11447.708,
+    "text": "인"
+   },
+   {
+    "offsetMs": 11686.375,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 12776.125,
+    "text": "결과는"
+   },
+   {
+    "offsetMs": 13412.5,
+    "text": "88"
+   },
+   {
+    "offsetMs": 14469.333,
+    "text": "92"
+   },
+   {
+    "offsetMs": 15469.333,
+    "text": "76"
+   },
+   {
+    "offsetMs": 16504.541,
+    "text": "값"
+   },
+   {
+    "offsetMs": 16800.0,
+    "text": "자체가"
+   },
+   {
+    "offsetMs": 17334.083,
+    "text": "나옵니다"
+   },
+   {
+    "offsetMs": 18572.708,
+    "text": "레인지를"
+   },
+   {
+    "offsetMs": 19175.0,
+    "text": "따라가면"
+   },
+   {
+    "offsetMs": 19800.0,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 20106.833,
+    "text": "번호"
+   },
+   {
+    "offsetMs": 20777.291,
+    "text": "리스트를"
+   },
+   {
+    "offsetMs": 21265.916,
+    "text": "따라가면"
+   },
+   {
+    "offsetMs": 21856.833,
+    "text": "값"
+   },
+   {
+    "offsetMs": 22118.166,
+    "text": "자체입니다"
+   }
+  ]
+ },
+ "scene-11": {
+  "hash": "76b2230cc8e83987",
+  "resynthMs": 28872.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "마지막으로"
+   },
+   {
+    "offsetMs": 754.541,
+    "text": "한"
+   },
+   {
+    "offsetMs": 890.916,
+    "text": "가지"
+   },
+   {
+    "offsetMs": 1095.458,
+    "text": "더"
+   },
+   {
+    "offsetMs": 1413.625,
+    "text": "리스트"
+   },
+   {
+    "offsetMs": 2436.375,
+    "text": "안에"
+   },
+   {
+    "offsetMs": 2800.0,
+    "text": "리스트를"
+   },
+   {
+    "offsetMs": 3277.291,
+    "text": "넣을"
+   },
+   {
+    "offsetMs": 3504.541,
+    "text": "수도"
+   },
+   {
+    "offsetMs": 3686.375,
+    "text": "있습니다"
+   },
+   {
+    "offsetMs": 4830.666,
+    "text": "그리드"
+   },
+   {
+    "offsetMs": 5148.875,
+    "text": "등호"
+   },
+   {
+    "offsetMs": 5387.5,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 5717.041,
+    "text": "안에"
+   },
+   {
+    "offsetMs": 5978.416,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 6467.041,
+    "text": "1"
+   },
+   {
+    "offsetMs": 7148.875,
+    "text": "2"
+   },
+   {
+    "offsetMs": 7751.125,
+    "text": "3"
+   },
+   {
+    "offsetMs": 8478.416,
+    "text": "닫고"
+   },
+   {
+    "offsetMs": 8853.416,
+    "text": "쉼표"
+   },
+   {
+    "offsetMs": 9671.583,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 10080.666,
+    "text": "4"
+   },
+   {
+    "offsetMs": 10739.791,
+    "text": "5"
+   },
+   {
+    "offsetMs": 11364.791,
+    "text": "6"
+   },
+   {
+    "offsetMs": 11898.875,
+    "text": "닫고"
+   },
+   {
+    "offsetMs": 12765.916,
+    "text": "두"
+   },
+   {
+    "offsetMs": 13038.625,
+    "text": "줄짜리"
+   },
+   {
+    "offsetMs": 13618.166,
+    "text": "표"
+   },
+   {
+    "offsetMs": 13845.458,
+    "text": "모양입니다"
+   },
+   {
+    "offsetMs": 15140.916,
+    "text": "한"
+   },
+   {
+    "offsetMs": 15390.916,
+    "text": "칸을"
+   },
+   {
+    "offsetMs": 15663.625,
+    "text": "짚으려면"
+   },
+   {
+    "offsetMs": 16334.083,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 17004.541,
+    "text": "두"
+   },
+   {
+    "offsetMs": 17220.458,
+    "text": "개를"
+   },
+   {
+    "offsetMs": 17459.083,
+    "text": "씁니다"
+   },
+   {
+    "offsetMs": 18590.916,
+    "text": "그리드"
+   },
+   {
+    "offsetMs": 18886.375,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 19420.458,
+    "text": "1"
+   },
+   {
+    "offsetMs": 19659.083,
+    "text": "대괄호"
+   },
+   {
+    "offsetMs": 20147.708,
+    "text": "0"
+   },
+   {
+    "offsetMs": 20522.708,
+    "text": "바깥"
+   },
+   {
+    "offsetMs": 20977.291,
+    "text": "대괄호가"
+   },
+   {
+    "offsetMs": 21420.458,
+    "text": "줄"
+   },
+   {
+    "offsetMs": 22034.083,
+    "text": "안쪽"
+   },
+   {
+    "offsetMs": 22420.458,
+    "text": "대괄호가"
+   },
+   {
+    "offsetMs": 23022.708,
+    "text": "그"
+   },
+   {
+    "offsetMs": 23261.375,
+    "text": "줄의"
+   },
+   {
+    "offsetMs": 23500.0,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 24217.041,
+    "text": "그래서"
+   },
+   {
+    "offsetMs": 24751.125,
+    "text": "1번 줄"
+   },
+   {
+    "offsetMs": 25932.958,
+    "text": "0번 자리"
+   },
+   {
+    "offsetMs": 27186.375,
+    "text": "답은"
+   },
+   {
+    "offsetMs": 27629.541,
+    "text": "4입니다"
+   }
+  ]
+ },
+ "scene-12": {
+  "hash": "e12c44d444cf5c8d",
+  "resynthMs": 21168.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "정리"
+   },
+   {
+    "offsetMs": 413.625,
+    "text": "들어가기"
+   },
+   {
+    "offsetMs": 777.291,
+    "text": "전에"
+   },
+   {
+    "offsetMs": 1106.833,
+    "text": "한"
+   },
+   {
+    "offsetMs": 1300.0,
+    "text": "컷만"
+   },
+   {
+    "offsetMs": 1618.166,
+    "text": "더"
+   },
+   {
+    "offsetMs": 1845.458,
+    "text": "스코어즈"
+   },
+   {
+    "offsetMs": 3050.0,
+    "text": "안에"
+   },
+   {
+    "offsetMs": 3368.166,
+    "text": "값이"
+   },
+   {
+    "offsetMs": 3765.916,
+    "text": "세"
+   },
+   {
+    "offsetMs": 3925.0,
+    "text": "개"
+   },
+   {
+    "offsetMs": 4027.291,
+    "text": "있다면"
+   },
+   {
+    "offsetMs": 4777.291,
+    "text": "렌"
+   },
+   {
+    "offsetMs": 5038.625,
+    "text": "괄호"
+   },
+   {
+    "offsetMs": 5277.291,
+    "text": "스코어즈는"
+   },
+   {
+    "offsetMs": 5856.833,
+    "text": "3입니다"
+   },
+   {
+    "offsetMs": 7106.833,
+    "text": "묶음"
+   },
+   {
+    "offsetMs": 7572.708,
+    "text": "안의"
+   },
+   {
+    "offsetMs": 7868.166,
+    "text": "개수죠"
+   },
+   {
+    "offsetMs": 8913.625,
+    "text": "그런데"
+   },
+   {
+    "offsetMs": 9550.0,
+    "text": "마지막"
+   },
+   {
+    "offsetMs": 10243.166,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 10459.083,
+    "text": "번호는"
+   },
+   {
+    "offsetMs": 10959.083,
+    "text": "3이"
+   },
+   {
+    "offsetMs": 11322.708,
+    "text": "아니라"
+   },
+   {
+    "offsetMs": 11697.708,
+    "text": "2입니다"
+   },
+   {
+    "offsetMs": 12913.625,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 13277.291,
+    "text": "번호가"
+   },
+   {
+    "offsetMs": 13822.708,
+    "text": "0부터"
+   },
+   {
+    "offsetMs": 14425.0,
+    "text": "시작하니까요"
+   },
+   {
+    "offsetMs": 15856.833,
+    "text": "렌은"
+   },
+   {
+    "offsetMs": 16288.625,
+    "text": "개수"
+   },
+   {
+    "offsetMs": 17095.458,
+    "text": "마지막"
+   },
+   {
+    "offsetMs": 17504.541,
+    "text": "자리는"
+   },
+   {
+    "offsetMs": 18027.291,
+    "text": "렌"
+   },
+   {
+    "offsetMs": 18311.375,
+    "text": "빼기"
+   },
+   {
+    "offsetMs": 18640.916,
+    "text": "1"
+   },
+   {
+    "offsetMs": 18902.291,
+    "text": "이"
+   },
+   {
+    "offsetMs": 19118.166,
+    "text": "한"
+   },
+   {
+    "offsetMs": 19300.0,
+    "text": "가지만"
+   },
+   {
+    "offsetMs": 19709.083,
+    "text": "기억해"
+   },
+   {
+    "offsetMs": 20095.458,
+    "text": "두세요"
+   }
+  ]
+ },
+ "scene-13": {
+  "hash": "1dfce3b8b7546f7f",
+  "resynthMs": 24240.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "오늘"
+   },
+   {
+    "offsetMs": 470.458,
+    "text": "정리할게요"
+   },
+   {
+    "offsetMs": 1821.583,
+    "text": "대괄호로"
+   },
+   {
+    "offsetMs": 2401.125,
+    "text": "값을"
+   },
+   {
+    "offsetMs": 2742.041,
+    "text": "묶으면"
+   },
+   {
+    "offsetMs": 3332.958,
+    "text": "리스트"
+   },
+   {
+    "offsetMs": 4298.875,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 4594.333,
+    "text": "번호는"
+   },
+   {
+    "offsetMs": 5105.666,
+    "text": "0부터"
+   },
+   {
+    "offsetMs": 6128.416,
+    "text": "끝에"
+   },
+   {
+    "offsetMs": 6457.958,
+    "text": "더할"
+   },
+   {
+    "offsetMs": 6685.208,
+    "text": "땐"
+   },
+   {
+    "offsetMs": 6901.125,
+    "text": "어펜드"
+   },
+   {
+    "offsetMs": 7764.791,
+    "text": "자리째"
+   },
+   {
+    "offsetMs": 8185.208,
+    "text": "빼려면"
+   },
+   {
+    "offsetMs": 8605.666,
+    "text": "델"
+   },
+   {
+    "offsetMs": 9196.583,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 9492.041,
+    "text": "값만"
+   },
+   {
+    "offsetMs": 9821.583,
+    "text": "바꿀"
+   },
+   {
+    "offsetMs": 10071.583,
+    "text": "땐"
+   },
+   {
+    "offsetMs": 10276.125,
+    "text": "대괄호로"
+   },
+   {
+    "offsetMs": 10867.041,
+    "text": "자리"
+   },
+   {
+    "offsetMs": 11207.958,
+    "text": "번호"
+   },
+   {
+    "offsetMs": 11457.958,
+    "text": "지정"
+   },
+   {
+    "offsetMs": 12254.541,
+    "text": "포"
+   },
+   {
+    "offsetMs": 12561.375,
+    "text": "변수"
+   },
+   {
+    "offsetMs": 12879.541,
+    "text": "인"
+   },
+   {
+    "offsetMs": 13084.083,
+    "text": "리스트로"
+   },
+   {
+    "offsetMs": 13640.916,
+    "text": "값을"
+   },
+   {
+    "offsetMs": 14265.916,
+    "text": "하나씩"
+   },
+   {
+    "offsetMs": 14686.375,
+    "text": "따라갑니다"
+   },
+   {
+    "offsetMs": 16015.916,
+    "text": "다음"
+   },
+   {
+    "offsetMs": 16459.083,
+    "text": "강의는"
+   },
+   {
+    "offsetMs": 17027.291,
+    "text": "딕셔너리"
+   },
+   {
+    "offsetMs": 18197.708,
+    "text": "오늘처럼"
+   },
+   {
+    "offsetMs": 18913.625,
+    "text": "순서대로"
+   },
+   {
+    "offsetMs": 19538.625,
+    "text": "줄"
+   },
+   {
+    "offsetMs": 19765.916,
+    "text": "세운"
+   },
+   {
+    "offsetMs": 20027.291,
+    "text": "묶음이"
+   },
+   {
+    "offsetMs": 20379.541,
+    "text": "아니라"
+   },
+   {
+    "offsetMs": 21152.291,
+    "text": "이름표로"
+   },
+   {
+    "offsetMs": 21754.541,
+    "text": "값을"
+   },
+   {
+    "offsetMs": 22118.166,
+    "text": "찾는"
+   },
+   {
+    "offsetMs": 22402.291,
+    "text": "묶음을"
+   },
+   {
+    "offsetMs": 22822.708,
+    "text": "만나봅니다"
+   }
+  ]
+ }
+}

@@ -2,7 +2,7 @@
 
 // 강의 상세 — 강의 영상 카드 + 학습 완료 버튼 (Client Component).
 // videoSrc가 있으면 native <video controls> 16:9 렌더 + 영상 90% 도달 시 시청 기록(markVideoWatchedAction),
-// 없으면 다크 placeholder. 완료 버튼은 영상 시청(90%) 후 활성화되며 toggleLessonCompleteAction → 이수율 집계.
+// 없으면 다크 placeholder. captionsSrc 가 있으면 <track> 자막 연결 (기본 꺼짐, CC 버튼 토글). 완료 버튼은 영상 시청(90%) 후 활성화되며 toggleLessonCompleteAction → 이수율 집계.
 // 트랜스크립트 요약은 두 모드 모두 노출.
 // (lesson-content 폴더는 사용 아이콘이 적어 lucide 직접 import — CLAUDE.md 예외 케이스.)
 
@@ -83,6 +83,15 @@ export function LessonVideoCard({
           aria-label={`${video.posterDescription} 영상`}
         >
           <source src={video.videoSrc} type="video/mp4" />
+          {video.captionsSrc && (
+            // 자막은 기본 꺼짐 — 브라우저 컨트롤의 CC 버튼으로 켠다 (default 미지정).
+            <track
+              kind="subtitles"
+              src={video.captionsSrc}
+              srcLang="ko"
+              label="한국어"
+            />
+          )}
           이 브라우저는 영상 재생을 지원하지 않습니다.
         </video>
       ) : (

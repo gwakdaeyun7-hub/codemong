@@ -1,0 +1,1440 @@
+{
+ "scene-01": {
+  "hash": "d21243bbe7589255",
+  "resynthMs": 13752.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "안녕하세요"
+   },
+   {
+    "offsetMs": 1447.708,
+    "text": "파이썬"
+   },
+   {
+    "offsetMs": 2015.916,
+    "text": "기초"
+   },
+   {
+    "offsetMs": 2447.708,
+    "text": "2강을"
+   },
+   {
+    "offsetMs": 2925.0,
+    "text": "시작합니다"
+   },
+   {
+    "offsetMs": 4321.583,
+    "text": "지난"
+   },
+   {
+    "offsetMs": 4685.208,
+    "text": "시간엔"
+   },
+   {
+    "offsetMs": 5230.666,
+    "text": "파이썬을"
+   },
+   {
+    "offsetMs": 5787.5,
+    "text": "깔고"
+   },
+   {
+    "offsetMs": 6264.791,
+    "text": "한"
+   },
+   {
+    "offsetMs": 6503.416,
+    "text": "줄을"
+   },
+   {
+    "offsetMs": 6810.208,
+    "text": "실행해"
+   },
+   {
+    "offsetMs": 7139.791,
+    "text": "봤죠"
+   },
+   {
+    "offsetMs": 8072.708,
+    "text": "오늘은"
+   },
+   {
+    "offsetMs": 8640.916,
+    "text": "코드를"
+   },
+   {
+    "offsetMs": 9004.541,
+    "text": "쓰기"
+   },
+   {
+    "offsetMs": 9243.166,
+    "text": "전에"
+   },
+   {
+    "offsetMs": 9947.708,
+    "text": "절차를"
+   },
+   {
+    "offsetMs": 10504.541,
+    "text": "머리"
+   },
+   {
+    "offsetMs": 10765.916,
+    "text": "밖으로"
+   },
+   {
+    "offsetMs": 11254.541,
+    "text": "꺼내"
+   },
+   {
+    "offsetMs": 11584.083,
+    "text": "정리하는"
+   },
+   {
+    "offsetMs": 12095.458,
+    "text": "방법을"
+   },
+   {
+    "offsetMs": 12504.541,
+    "text": "배웁니다"
+   }
+  ]
+ },
+ "scene-02": {
+  "hash": "4874ccd697ce0bc3",
+  "resynthMs": 8544.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "이"
+   },
+   {
+    "offsetMs": 322.708,
+    "text": "영상이"
+   },
+   {
+    "offsetMs": 709.083,
+    "text": "끝나면"
+   },
+   {
+    "offsetMs": 1595.458,
+    "text": "일상의"
+   },
+   {
+    "offsetMs": 2084.083,
+    "text": "절차"
+   },
+   {
+    "offsetMs": 2459.083,
+    "text": "한"
+   },
+   {
+    "offsetMs": 2618.166,
+    "text": "가지를"
+   },
+   {
+    "offsetMs": 2925.0,
+    "text": "자연어"
+   },
+   {
+    "offsetMs": 3731.833,
+    "text": "의사코드"
+   },
+   {
+    "offsetMs": 4743.166,
+    "text": "순서도"
+   },
+   {
+    "offsetMs": 5334.083,
+    "text": "세"
+   },
+   {
+    "offsetMs": 5504.541,
+    "text": "형태로"
+   },
+   {
+    "offsetMs": 5868.166,
+    "text": "옮기는"
+   },
+   {
+    "offsetMs": 6356.833,
+    "text": "흐름을"
+   },
+   {
+    "offsetMs": 6777.291,
+    "text": "따라갈"
+   },
+   {
+    "offsetMs": 7095.458,
+    "text": "수"
+   },
+   {
+    "offsetMs": 7209.083,
+    "text": "있게"
+   },
+   {
+    "offsetMs": 7379.541,
+    "text": "됩니다"
+   }
+  ]
+ },
+ "scene-03": {
+  "hash": "db5f99b875c0cc3d",
+  "resynthMs": 14880.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "먼저"
+   },
+   {
+    "offsetMs": 1015.916,
+    "text": "왜"
+   },
+   {
+    "offsetMs": 1356.833,
+    "text": "이런"
+   },
+   {
+    "offsetMs": 1675.0,
+    "text": "단계가"
+   },
+   {
+    "offsetMs": 2175.0,
+    "text": "필요한지부터"
+   },
+   {
+    "offsetMs": 2970.458,
+    "text": "보겠습니다"
+   },
+   {
+    "offsetMs": 4288.625,
+    "text": "문제를"
+   },
+   {
+    "offsetMs": 4788.625,
+    "text": "받자마자"
+   },
+   {
+    "offsetMs": 5493.166,
+    "text": "바로"
+   },
+   {
+    "offsetMs": 5845.458,
+    "text": "코드를"
+   },
+   {
+    "offsetMs": 6197.708,
+    "text": "쓰면"
+   },
+   {
+    "offsetMs": 7038.625,
+    "text": "빠뜨린"
+   },
+   {
+    "offsetMs": 7527.291,
+    "text": "단계가"
+   },
+   {
+    "offsetMs": 7959.083,
+    "text": "생깁니다"
+   },
+   {
+    "offsetMs": 9163.625,
+    "text": "사람은"
+   },
+   {
+    "offsetMs": 9640.916,
+    "text": "머릿속으로"
+   },
+   {
+    "offsetMs": 10254.541,
+    "text": "채워"
+   },
+   {
+    "offsetMs": 10527.291,
+    "text": "읽지만"
+   },
+   {
+    "offsetMs": 11413.625,
+    "text": "컴퓨터는"
+   },
+   {
+    "offsetMs": 12106.833,
+    "text": "빠진"
+   },
+   {
+    "offsetMs": 12481.833,
+    "text": "단계를"
+   },
+   {
+    "offsetMs": 12913.625,
+    "text": "알아서"
+   },
+   {
+    "offsetMs": 13368.166,
+    "text": "추론하지"
+   },
+   {
+    "offsetMs": 13856.833,
+    "text": "않거든요"
+   }
+  ]
+ },
+ "scene-04": {
+  "hash": "51df15b4349a22a9",
+  "resynthMs": 12480.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "그래서"
+   },
+   {
+    "offsetMs": 572.708,
+    "text": "문제와"
+   },
+   {
+    "offsetMs": 1084.083,
+    "text": "코드"
+   },
+   {
+    "offsetMs": 1345.458,
+    "text": "사이에"
+   },
+   {
+    "offsetMs": 1811.375,
+    "text": "보통"
+   },
+   {
+    "offsetMs": 2697.708,
+    "text": "세"
+   },
+   {
+    "offsetMs": 2890.916,
+    "text": "가지"
+   },
+   {
+    "offsetMs": 3152.291,
+    "text": "표현"
+   },
+   {
+    "offsetMs": 3481.833,
+    "text": "단계가"
+   },
+   {
+    "offsetMs": 3868.166,
+    "text": "들어갑니다"
+   },
+   {
+    "offsetMs": 5140.916,
+    "text": "먼저"
+   },
+   {
+    "offsetMs": 5640.916,
+    "text": "자연어로"
+   },
+   {
+    "offsetMs": 6129.541,
+    "text": "풀어"
+   },
+   {
+    "offsetMs": 6345.458,
+    "text": "쓰고"
+   },
+   {
+    "offsetMs": 7152.291,
+    "text": "의사코드로"
+   },
+   {
+    "offsetMs": 7879.541,
+    "text": "형식을"
+   },
+   {
+    "offsetMs": 8345.458,
+    "text": "정돈한"
+   },
+   {
+    "offsetMs": 8765.916,
+    "text": "다음"
+   },
+   {
+    "offsetMs": 9436.375,
+    "text": "필요하면"
+   },
+   {
+    "offsetMs": 10061.375,
+    "text": "순서도로"
+   },
+   {
+    "offsetMs": 10709.083,
+    "text": "흐름을"
+   },
+   {
+    "offsetMs": 11095.458,
+    "text": "그려"
+   },
+   {
+    "offsetMs": 11311.375,
+    "text": "봅니다"
+   }
+  ]
+ },
+ "scene-05": {
+  "hash": "a4e0030b3b40c24d",
+  "resynthMs": 15384.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "셋이"
+   },
+   {
+    "offsetMs": 515.916,
+    "text": "각각"
+   },
+   {
+    "offsetMs": 947.708,
+    "text": "무엇인지"
+   },
+   {
+    "offsetMs": 1709.083,
+    "text": "한"
+   },
+   {
+    "offsetMs": 1981.833,
+    "text": "줄씩"
+   },
+   {
+    "offsetMs": 2334.083,
+    "text": "정리해"
+   },
+   {
+    "offsetMs": 2697.708,
+    "text": "볼게요"
+   },
+   {
+    "offsetMs": 3777.291,
+    "text": "자연어는"
+   },
+   {
+    "offsetMs": 4470.458,
+    "text": "문제를"
+   },
+   {
+    "offsetMs": 4993.166,
+    "text": "사람"
+   },
+   {
+    "offsetMs": 5288.625,
+    "text": "말로"
+   },
+   {
+    "offsetMs": 5686.375,
+    "text": "풀어"
+   },
+   {
+    "offsetMs": 5947.708,
+    "text": "쓰는"
+   },
+   {
+    "offsetMs": 6277.291,
+    "text": "단계"
+   },
+   {
+    "offsetMs": 7152.291,
+    "text": "의사코드는"
+   },
+   {
+    "offsetMs": 8084.083,
+    "text": "코드"
+   },
+   {
+    "offsetMs": 8379.541,
+    "text": "형식에"
+   },
+   {
+    "offsetMs": 8959.083,
+    "text": "가깝게"
+   },
+   {
+    "offsetMs": 9606.833,
+    "text": "정돈한"
+   },
+   {
+    "offsetMs": 10106.833,
+    "text": "절차"
+   },
+   {
+    "offsetMs": 10970.458,
+    "text": "순서도는"
+   },
+   {
+    "offsetMs": 11788.625,
+    "text": "그"
+   },
+   {
+    "offsetMs": 12038.625,
+    "text": "절차의"
+   },
+   {
+    "offsetMs": 12550.0,
+    "text": "흐름을"
+   },
+   {
+    "offsetMs": 12913.625,
+    "text": "도형으로"
+   },
+   {
+    "offsetMs": 13493.166,
+    "text": "시각화한"
+   },
+   {
+    "offsetMs": 14084.083,
+    "text": "그림입니다"
+   }
+  ]
+ },
+ "scene-06": {
+  "hash": "3535ef606b42d096",
+  "resynthMs": 10680.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "여기서"
+   },
+   {
+    "offsetMs": 618.166,
+    "text": "잠깐"
+   },
+   {
+    "offsetMs": 1675.0,
+    "text": "셋"
+   },
+   {
+    "offsetMs": 1959.083,
+    "text": "중"
+   },
+   {
+    "offsetMs": 2197.708,
+    "text": "어느"
+   },
+   {
+    "offsetMs": 2402.291,
+    "text": "걸"
+   },
+   {
+    "offsetMs": 2686.375,
+    "text": "가장"
+   },
+   {
+    "offsetMs": 3095.458,
+    "text": "먼저"
+   },
+   {
+    "offsetMs": 3413.625,
+    "text": "쓸까요"
+   },
+   {
+    "offsetMs": 4493.166,
+    "text": "자연어입니다"
+   },
+   {
+    "offsetMs": 6152.291,
+    "text": "문제를"
+   },
+   {
+    "offsetMs": 6675.0,
+    "text": "처음"
+   },
+   {
+    "offsetMs": 6936.375,
+    "text": "받았을"
+   },
+   {
+    "offsetMs": 7322.708,
+    "text": "때"
+   },
+   {
+    "offsetMs": 8027.291,
+    "text": "사람"
+   },
+   {
+    "offsetMs": 8356.833,
+    "text": "말로"
+   },
+   {
+    "offsetMs": 8663.625,
+    "text": "풀어"
+   },
+   {
+    "offsetMs": 8890.916,
+    "text": "보는"
+   },
+   {
+    "offsetMs": 9118.166,
+    "text": "게"
+   },
+   {
+    "offsetMs": 9322.708,
+    "text": "출발점이에요"
+   }
+  ]
+ },
+ "scene-07": {
+  "hash": "62b6e56df061c164",
+  "resynthMs": 13392.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "이제"
+   },
+   {
+    "offsetMs": 459.083,
+    "text": "한"
+   },
+   {
+    "offsetMs": 652.291,
+    "text": "가지"
+   },
+   {
+    "offsetMs": 970.458,
+    "text": "일상"
+   },
+   {
+    "offsetMs": 1368.166,
+    "text": "상황을"
+   },
+   {
+    "offsetMs": 1697.708,
+    "text": "잡아서"
+   },
+   {
+    "offsetMs": 2584.083,
+    "text": "세"
+   },
+   {
+    "offsetMs": 2788.625,
+    "text": "형태로"
+   },
+   {
+    "offsetMs": 3334.083,
+    "text": "옮겨"
+   },
+   {
+    "offsetMs": 3675.0,
+    "text": "보겠습니다"
+   },
+   {
+    "offsetMs": 5027.291,
+    "text": "오늘"
+   },
+   {
+    "offsetMs": 5459.083,
+    "text": "시나리오는"
+   },
+   {
+    "offsetMs": 6140.916,
+    "text": "이거예요"
+   },
+   {
+    "offsetMs": 7230.666,
+    "text": "편의점에서"
+   },
+   {
+    "offsetMs": 7912.5,
+    "text": "음료를"
+   },
+   {
+    "offsetMs": 8298.875,
+    "text": "사는데"
+   },
+   {
+    "offsetMs": 9139.791,
+    "text": "가격이"
+   },
+   {
+    "offsetMs": 9628.416,
+    "text": "오천"
+   },
+   {
+    "offsetMs": 9980.666,
+    "text": "원이"
+   },
+   {
+    "offsetMs": 10139.791,
+    "text": "넘으면"
+   },
+   {
+    "offsetMs": 10526.125,
+    "text": "카드로"
+   },
+   {
+    "offsetMs": 11332.958,
+    "text": "아니면"
+   },
+   {
+    "offsetMs": 11867.041,
+    "text": "현금으로"
+   },
+   {
+    "offsetMs": 12367.041,
+    "text": "낸다"
+   }
+  ]
+ },
+ "scene-08": {
+  "hash": "14178772e424ade6",
+  "resynthMs": 19104.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "먼저"
+   },
+   {
+    "offsetMs": 629.541,
+    "text": "자연어"
+   },
+   {
+    "offsetMs": 1652.291,
+    "text": "사람"
+   },
+   {
+    "offsetMs": 2050.0,
+    "text": "말로"
+   },
+   {
+    "offsetMs": 2425.0,
+    "text": "풀어"
+   },
+   {
+    "offsetMs": 2652.291,
+    "text": "써"
+   },
+   {
+    "offsetMs": 2811.375,
+    "text": "보면"
+   },
+   {
+    "offsetMs": 3220.458,
+    "text": "이렇게"
+   },
+   {
+    "offsetMs": 3572.708,
+    "text": "됩니다"
+   },
+   {
+    "offsetMs": 4675.0,
+    "text": "음료를"
+   },
+   {
+    "offsetMs": 5186.375,
+    "text": "골라서"
+   },
+   {
+    "offsetMs": 6175.0,
+    "text": "가격을"
+   },
+   {
+    "offsetMs": 6640.916,
+    "text": "본다"
+   },
+   {
+    "offsetMs": 7493.166,
+    "text": "오천"
+   },
+   {
+    "offsetMs": 7947.708,
+    "text": "원이"
+   },
+   {
+    "offsetMs": 8152.291,
+    "text": "넘으면"
+   },
+   {
+    "offsetMs": 8731.833,
+    "text": "카드를"
+   },
+   {
+    "offsetMs": 9152.291,
+    "text": "낸다"
+   },
+   {
+    "offsetMs": 10152.291,
+    "text": "아니면"
+   },
+   {
+    "offsetMs": 10800.0,
+    "text": "현금을"
+   },
+   {
+    "offsetMs": 11277.291,
+    "text": "낸다"
+   },
+   {
+    "offsetMs": 12265.916,
+    "text": "여기까지는"
+   },
+   {
+    "offsetMs": 13106.833,
+    "text": "누구나"
+   },
+   {
+    "offsetMs": 13527.291,
+    "text": "쓸"
+   },
+   {
+    "offsetMs": 13709.083,
+    "text": "수"
+   },
+   {
+    "offsetMs": 13845.458,
+    "text": "있죠"
+   },
+   {
+    "offsetMs": 14743.166,
+    "text": "다만"
+   },
+   {
+    "offsetMs": 15584.083,
+    "text": "사람한테는"
+   },
+   {
+    "offsetMs": 16425.0,
+    "text": "자연스러워"
+   },
+   {
+    "offsetMs": 17084.083,
+    "text": "보여도"
+   },
+   {
+    "offsetMs": 17538.625,
+    "text": "빠진"
+   },
+   {
+    "offsetMs": 17868.166,
+    "text": "게"
+   },
+   {
+    "offsetMs": 17959.083,
+    "text": "있습니다"
+   }
+  ]
+ },
+ "scene-09": {
+  "hash": "c3d3b7f5170058aa",
+  "resynthMs": 14856.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "예를"
+   },
+   {
+    "offsetMs": 425.0,
+    "text": "들어"
+   },
+   {
+    "offsetMs": 1163.625,
+    "text": "카드를"
+   },
+   {
+    "offsetMs": 1561.375,
+    "text": "내고"
+   },
+   {
+    "offsetMs": 1947.708,
+    "text": "사인을"
+   },
+   {
+    "offsetMs": 2356.833,
+    "text": "하는"
+   },
+   {
+    "offsetMs": 2640.916,
+    "text": "단계가"
+   },
+   {
+    "offsetMs": 3095.458,
+    "text": "빠졌어요"
+   },
+   {
+    "offsetMs": 4265.916,
+    "text": "사람은"
+   },
+   {
+    "offsetMs": 4879.541,
+    "text": "당연히"
+   },
+   {
+    "offsetMs": 5356.833,
+    "text": "사인한다고"
+   },
+   {
+    "offsetMs": 5993.166,
+    "text": "채워"
+   },
+   {
+    "offsetMs": 6277.291,
+    "text": "읽지만"
+   },
+   {
+    "offsetMs": 7152.291,
+    "text": "컴퓨터는"
+   },
+   {
+    "offsetMs": 7822.708,
+    "text": "그렇게"
+   },
+   {
+    "offsetMs": 8288.625,
+    "text": "추론하지"
+   },
+   {
+    "offsetMs": 8754.541,
+    "text": "않습니다"
+   },
+   {
+    "offsetMs": 9988.625,
+    "text": "빠진"
+   },
+   {
+    "offsetMs": 10261.375,
+    "text": "단계도"
+   },
+   {
+    "offsetMs": 10670.458,
+    "text": "명시해"
+   },
+   {
+    "offsetMs": 11056.833,
+    "text": "줘야"
+   },
+   {
+    "offsetMs": 11806.833,
+    "text": "다음"
+   },
+   {
+    "offsetMs": 12136.375,
+    "text": "단계인"
+   },
+   {
+    "offsetMs": 12636.375,
+    "text": "의사코드로"
+   },
+   {
+    "offsetMs": 13261.375,
+    "text": "옮길"
+   },
+   {
+    "offsetMs": 13534.083,
+    "text": "수"
+   },
+   {
+    "offsetMs": 13647.708,
+    "text": "있어요"
+   }
+  ]
+ },
+ "scene-10": {
+  "hash": "152212c449024486",
+  "resynthMs": 19416.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "이제"
+   },
+   {
+    "offsetMs": 572.708,
+    "text": "의사코드로"
+   },
+   {
+    "offsetMs": 1402.291,
+    "text": "옮겨"
+   },
+   {
+    "offsetMs": 1743.166,
+    "text": "봅니다"
+   },
+   {
+    "offsetMs": 2856.833,
+    "text": "형식을"
+   },
+   {
+    "offsetMs": 3470.458,
+    "text": "좀"
+   },
+   {
+    "offsetMs": 3822.708,
+    "text": "정돈하는"
+   },
+   {
+    "offsetMs": 4402.291,
+    "text": "거예요"
+   },
+   {
+    "offsetMs": 5334.083,
+    "text": "한"
+   },
+   {
+    "offsetMs": 5584.083,
+    "text": "가지"
+   },
+   {
+    "offsetMs": 5879.541,
+    "text": "짚을게요"
+   },
+   {
+    "offsetMs": 7072.708,
+    "text": "의사코드는"
+   },
+   {
+    "offsetMs": 7993.166,
+    "text": "우리끼리"
+   },
+   {
+    "offsetMs": 8504.541,
+    "text": "약속한"
+   },
+   {
+    "offsetMs": 8981.833,
+    "text": "표기일"
+   },
+   {
+    "offsetMs": 9311.375,
+    "text": "뿐"
+   },
+   {
+    "offsetMs": 9959.083,
+    "text": "파이썬이"
+   },
+   {
+    "offsetMs": 10493.166,
+    "text": "읽지는"
+   },
+   {
+    "offsetMs": 10913.625,
+    "text": "않습니다"
+   },
+   {
+    "offsetMs": 12163.625,
+    "text": "정해진"
+   },
+   {
+    "offsetMs": 12697.708,
+    "text": "형식이"
+   },
+   {
+    "offsetMs": 13288.625,
+    "text": "하나로"
+   },
+   {
+    "offsetMs": 13800.0,
+    "text": "고정돼"
+   },
+   {
+    "offsetMs": 14300.0,
+    "text": "있지도"
+   },
+   {
+    "offsetMs": 14652.291,
+    "text": "않아요"
+   },
+   {
+    "offsetMs": 15617.041,
+    "text": "그러니까"
+   },
+   {
+    "offsetMs": 16344.333,
+    "text": "그대로"
+   },
+   {
+    "offsetMs": 16889.791,
+    "text": "실행해"
+   },
+   {
+    "offsetMs": 17276.125,
+    "text": "보려고"
+   },
+   {
+    "offsetMs": 17673.875,
+    "text": "하지"
+   },
+   {
+    "offsetMs": 17957.958,
+    "text": "않아도"
+   },
+   {
+    "offsetMs": 18276.125,
+    "text": "됩니다"
+   }
+  ]
+ },
+ "scene-11": {
+  "hash": "a70800729f0bdb54",
+  "resynthMs": 18120.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "절차에"
+   },
+   {
+    "offsetMs": 595.458,
+    "text": "분기가"
+   },
+   {
+    "offsetMs": 981.833,
+    "text": "있을"
+   },
+   {
+    "offsetMs": 1243.166,
+    "text": "땐"
+   },
+   {
+    "offsetMs": 1959.083,
+    "text": "순서도가"
+   },
+   {
+    "offsetMs": 2686.375,
+    "text": "한눈에"
+   },
+   {
+    "offsetMs": 3140.916,
+    "text": "보기"
+   },
+   {
+    "offsetMs": 3436.375,
+    "text": "좋습니다"
+   },
+   {
+    "offsetMs": 4663.625,
+    "text": "순서도는"
+   },
+   {
+    "offsetMs": 5470.458,
+    "text": "도형"
+   },
+   {
+    "offsetMs": 5834.083,
+    "text": "네"
+   },
+   {
+    "offsetMs": 5959.083,
+    "text": "가지면"
+   },
+   {
+    "offsetMs": 6527.291,
+    "text": "거의"
+   },
+   {
+    "offsetMs": 6902.291,
+    "text": "다"
+   },
+   {
+    "offsetMs": 7050.0,
+    "text": "읽혀요"
+   },
+   {
+    "offsetMs": 8094.333,
+    "text": "둥근"
+   },
+   {
+    "offsetMs": 8469.333,
+    "text": "사각형은"
+   },
+   {
+    "offsetMs": 9117.041,
+    "text": "시작과"
+   },
+   {
+    "offsetMs": 9594.333,
+    "text": "끝"
+   },
+   {
+    "offsetMs": 10185.208,
+    "text": "사각형은"
+   },
+   {
+    "offsetMs": 10787.5,
+    "text": "처리"
+   },
+   {
+    "offsetMs": 11469.333,
+    "text": "마름모는"
+   },
+   {
+    "offsetMs": 12026.125,
+    "text": "판단"
+   },
+   {
+    "offsetMs": 12832.958,
+    "text": "평행사변형은"
+   },
+   {
+    "offsetMs": 13787.5,
+    "text": "입출력"
+   },
+   {
+    "offsetMs": 14697.708,
+    "text": "이걸로"
+   },
+   {
+    "offsetMs": 15459.083,
+    "text": "우리"
+   },
+   {
+    "offsetMs": 15800.0,
+    "text": "시나리오를"
+   },
+   {
+    "offsetMs": 16447.708,
+    "text": "그려"
+   },
+   {
+    "offsetMs": 16720.458,
+    "text": "보겠습니다"
+   }
+  ]
+ },
+ "scene-12": {
+  "hash": "63a1ccdf36516418",
+  "resynthMs": 13008.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "한"
+   },
+   {
+    "offsetMs": 300.0,
+    "text": "가지"
+   },
+   {
+    "offsetMs": 640.916,
+    "text": "자주"
+   },
+   {
+    "offsetMs": 959.083,
+    "text": "보는"
+   },
+   {
+    "offsetMs": 1356.833,
+    "text": "실수만"
+   },
+   {
+    "offsetMs": 1902.291,
+    "text": "짚을게요"
+   },
+   {
+    "offsetMs": 3060.208,
+    "text": "판단"
+   },
+   {
+    "offsetMs": 3469.333,
+    "text": "마름모에서"
+   },
+   {
+    "offsetMs": 4264.791,
+    "text": "화살표가"
+   },
+   {
+    "offsetMs": 5014.791,
+    "text": "한"
+   },
+   {
+    "offsetMs": 5298.875,
+    "text": "방향만"
+   },
+   {
+    "offsetMs": 5719.333,
+    "text": "나가"
+   },
+   {
+    "offsetMs": 5912.5,
+    "text": "있으면"
+   },
+   {
+    "offsetMs": 6719.333,
+    "text": "흐름이"
+   },
+   {
+    "offsetMs": 7094.333,
+    "text": "막힌"
+   },
+   {
+    "offsetMs": 7401.125,
+    "text": "겁니다"
+   },
+   {
+    "offsetMs": 8527.291,
+    "text": "예와"
+   },
+   {
+    "offsetMs": 8925.0,
+    "text": "아니오"
+   },
+   {
+    "offsetMs": 9720.458,
+    "text": "두"
+   },
+   {
+    "offsetMs": 9890.916,
+    "text": "갈래가"
+   },
+   {
+    "offsetMs": 10300.0,
+    "text": "모두"
+   },
+   {
+    "offsetMs": 10561.375,
+    "text": "있어야"
+   },
+   {
+    "offsetMs": 11095.458,
+    "text": "순서도가"
+   },
+   {
+    "offsetMs": 11709.083,
+    "text": "끊기지"
+   },
+   {
+    "offsetMs": 12129.541,
+    "text": "않아요"
+   }
+  ]
+ },
+ "scene-13": {
+  "hash": "48995e6896efca8e",
+  "resynthMs": 18768.0,
+  "words": [
+   {
+    "offsetMs": 50.0,
+    "text": "오늘은"
+   },
+   {
+    "offsetMs": 663.625,
+    "text": "일상"
+   },
+   {
+    "offsetMs": 1072.708,
+    "text": "절차"
+   },
+   {
+    "offsetMs": 1413.625,
+    "text": "하나를"
+   },
+   {
+    "offsetMs": 1765.916,
+    "text": "자연어"
+   },
+   {
+    "offsetMs": 2675.0,
+    "text": "의사코드"
+   },
+   {
+    "offsetMs": 3743.166,
+    "text": "순서도로"
+   },
+   {
+    "offsetMs": 4413.625,
+    "text": "옮겨"
+   },
+   {
+    "offsetMs": 4720.458,
+    "text": "봤습니다"
+   },
+   {
+    "offsetMs": 5959.083,
+    "text": "셋"
+   },
+   {
+    "offsetMs": 6243.166,
+    "text": "중"
+   },
+   {
+    "offsetMs": 6504.541,
+    "text": "무엇이"
+   },
+   {
+    "offsetMs": 7084.083,
+    "text": "가장"
+   },
+   {
+    "offsetMs": 7504.541,
+    "text": "좋다는"
+   },
+   {
+    "offsetMs": 7947.708,
+    "text": "정답은"
+   },
+   {
+    "offsetMs": 8322.708,
+    "text": "없어요"
+   },
+   {
+    "offsetMs": 9379.541,
+    "text": "상황에"
+   },
+   {
+    "offsetMs": 9822.708,
+    "text": "따라"
+   },
+   {
+    "offsetMs": 10231.833,
+    "text": "골라"
+   },
+   {
+    "offsetMs": 10584.083,
+    "text": "쓰면"
+   },
+   {
+    "offsetMs": 10913.625,
+    "text": "됩니다"
+   },
+   {
+    "offsetMs": 12061.375,
+    "text": "다음"
+   },
+   {
+    "offsetMs": 12459.083,
+    "text": "강의는"
+   },
+   {
+    "offsetMs": 13015.916,
+    "text": "변수와"
+   },
+   {
+    "offsetMs": 13652.291,
+    "text": "자료형"
+   },
+   {
+    "offsetMs": 14652.291,
+    "text": "머릿속"
+   },
+   {
+    "offsetMs": 15186.375,
+    "text": "절차를"
+   },
+   {
+    "offsetMs": 15709.083,
+    "text": "코드로"
+   },
+   {
+    "offsetMs": 16084.083,
+    "text": "옮길"
+   },
+   {
+    "offsetMs": 16368.166,
+    "text": "때"
+   },
+   {
+    "offsetMs": 16720.458,
+    "text": "처음"
+   },
+   {
+    "offsetMs": 17050.0,
+    "text": "만나는"
+   },
+   {
+    "offsetMs": 17459.083,
+    "text": "도구입니다"
+   }
+  ]
+ }
+}

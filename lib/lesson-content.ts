@@ -10,6 +10,8 @@ export type LessonVideo = {
   transcriptSummary: string;
   /** Next.js public/ 기준 절대 경로. 없으면 placeholder 카드만 노출. */
   videoSrc?: string;
+  /** WebVTT 자막 경로 (public/ 기준). 있으면 <track>으로 연결 — 브라우저 CC 버튼으로 on/off. */
+  captionsSrc?: string;
 };
 
 export type LessonNavTarget = {
@@ -47,6 +49,7 @@ export const pythonLesson1Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 Python이 어떤 언어인지, 코드가 어떤 흐름으로 실행되는지 한눈에 보여드려요. 가장 짧은 코드 한 줄로 컴퓨터에게 인사하는 모습을 함께 따라가 볼게요.",
     videoSrc: "/videos/python-lesson-1.mp4",
+    captionsSrc: "/captions/python-lesson-1.vtt",
   },
   navigation: {
     previous: null,
@@ -66,6 +69,7 @@ export const pythonLesson2Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 코드를 쓰기 전에 절차를 머리 밖으로 꺼내 정리하는 세 가지 방법 — 자연어, 의사코드, 순서도 — 를 배웁니다. 셋이 어떻게 다른지, 언제 어떤 걸 쓰는지 편의점 결제 시나리오 하나로 따라가 볼게요.",
     videoSrc: "/videos/python-lesson-2.mp4",
+    captionsSrc: "/captions/python-lesson-2.vtt",
   },
   navigation: {
     previous: { number: 1, title: "파이썬 개요 & 개발환경" },
@@ -85,6 +89,7 @@ export const pythonLesson3Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 자기소개 카드를 만들며 변수의 개념과 사용법을 익히고, 문자열·정수·실수 세 가지 자료형이 각각 어떤 값에 어울리는지 살펴봅니다. 마지막엔 print 로 변수에 담긴 값을 한 줄씩 출력해 결과를 확인해 볼게요.",
     videoSrc: "/videos/python-lesson-3.mp4",
+    captionsSrc: "/captions/python-lesson-3.vtt",
   },
   navigation: {
     previous: { number: 2, title: "코딩의 표현 방법" },
@@ -104,6 +109,7 @@ export const pythonLesson4Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 input() 한 줄로 사용자 값을 받아 변수에 담는 방법부터, int() 형변환의 필요성, 산술·비교·논리 연산자가 어떤 결과를 만드는지 차례로 살펴봅니다. 두 숫자를 받아 합·차·곱·몫을 출력하는 짧은 코드를 함께 읽으며 '받고 → 계산하고 → 보여주는' 흐름을 손으로 따라가 볼게요.",
     videoSrc: "/videos/python-lesson-4.mp4",
+    captionsSrc: "/captions/python-lesson-4.vtt",
   },
   navigation: {
     previous: { number: 3, title: "변수와 자료형" },
@@ -123,6 +129,7 @@ export const pythonLesson5Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 시험 점수에 따라 합격·재시험·불합격으로 갈라지는 예제로 if / elif / else 의 흐름을 따라가 봅니다. 마지막엔 로그인 상태와 관리자 권한을 함께 따지는 2단 중첩 코드를 읽으며, 입력값이 어느 분기로 흘러 들어가는지 한 줄씩 짚어 볼게요.",
     videoSrc: "/videos/python-lesson-5.mp4",
+    captionsSrc: "/captions/python-lesson-5.vtt",
   },
   navigation: {
     previous: { number: 4, title: "입력과 연산자" },
@@ -142,6 +149,7 @@ export const pythonLesson6Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 2강의 순서도에서 보았던 '위로 되돌아오는 고리'가 코드에서 어떻게 반복문이 되는지 따라가 봅니다. for 와 range 로 정해진 횟수만큼 반복하는 흐름, while 로 조건이 거짓이 될 때까지 반복하는 흐름, 그리고 break · continue 로 루프의 진행을 끊거나 건너뛰는 모습을 한 줄씩 짚어 볼게요.",
     videoSrc: "/videos/python-lesson-6.mp4",
+    captionsSrc: "/captions/python-lesson-6.vtt",
   },
   navigation: {
     previous: { number: 5, title: "조건문" },
@@ -161,6 +169,7 @@ export const pythonLesson7Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 여러 값을 하나의 묶음으로 다루는 리스트를 배웁니다. 자리 번호(인덱스)가 0부터 시작한다는 점, append 로 끝에 더하고 del 로 자리를 빼고 자리 값을 바꾸는 세 동작이 리스트의 모양과 길이를 어떻게 바꾸는지, for 로 값을 하나씩 따라가는 흐름을 학생 점수 묶음 하나로 따라가 볼게요. 마지막엔 2차원 리스트에서 행과 열로 한 칸을 짚는 방법도 살펴봅니다.",
     videoSrc: "/videos/python-lesson-7.mp4",
+    captionsSrc: "/captions/python-lesson-7.vtt",
   },
   navigation: {
     previous: { number: 6, title: "반복문" },
@@ -180,6 +189,7 @@ export const pythonLesson8Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 리스트 너머의 세 가지 자료구조 — 이름표(키)로 값을 찾는 딕셔너리, 만든 뒤 바꿀 수 없는 튜플, 중복 없이 모으는 셋 — 을 배웁니다. 같은 데이터를 리스트와 딕셔너리로 나란히 두고 어느 쪽이 의미가 바로 보이는지 비교한 뒤, 좌표와 태그 예시로 각 자료구조가 언제 어울리는지 한 문장 기준으로 골라 보는 흐름을 따라가 볼게요.",
     videoSrc: "/videos/python-lesson-8.mp4",
+    captionsSrc: "/captions/python-lesson-8.vtt",
   },
   navigation: {
     previous: { number: 7, title: "리스트" },
@@ -199,6 +209,7 @@ export const pythonLesson9Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 반복되는 작업을 이름 붙은 박스로 묶는 함수를 배웁니다. def 로 정의한 함수가 부를 때만 실행된다는 점, 넣어 준 값이 매개변수로 흘러 들어가는 흐름, 그리고 화면에 보여 주는 print 와 값을 돌려주는 return 이 어떻게 다른지 같은 함수의 두 버전을 나란히 비교하며 따라가 볼게요. 마지막엔 함수 안에서 만든 변수가 왜 함수 밖에서는 보이지 않는지도 살펴봅니다.",
     videoSrc: "/videos/python-lesson-9.mp4",
+    captionsSrc: "/captions/python-lesson-9.vtt",
   },
   navigation: {
     previous: { number: 8, title: "딕셔너리 & 자료구조" },
@@ -218,6 +229,7 @@ export const pythonLesson10Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 남이 미리 만들어 둔 코드 묶음을 가져와 쓰는 import 와, 무작위 값을 만드는 random 모듈을 배웁니다. import 는 도구 상자를 데려오는 것일 뿐 도구를 실제로 부르는 것과 다른 일이라는 점, random.randint 로 범위 안 정수를 뽑고 random.choice 로 목록에서 하나를 고르는 두 도구의 쓰임 차이를 주사위와 가위바위보로 따라가 볼게요.",
     videoSrc: "/videos/python-lesson-10.mp4",
+    captionsSrc: "/captions/python-lesson-10.vtt",
   },
   navigation: {
     previous: { number: 9, title: "함수" },
@@ -237,6 +249,7 @@ export const pythonLesson11Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 프로그램이 끝나도 결과가 사라지지 않도록 파일에 저장하고 다시 불러오는 방법을 배웁니다. with open 한 줄로 파일을 안전하게 열고, 쓰기 모드에서 write 로 저장하고 읽기 모드에서 read 로 불러오는 흐름을 메모 한 줄로 따라가 볼게요. 쓰기 모드가 기존 내용을 덮어쓴다는 점, with 블록이 끝나면 파일이 자동으로 닫힌다는 점도 짚어 봅니다.",
     videoSrc: "/videos/python-lesson-11.mp4",
+    captionsSrc: "/captions/python-lesson-11.vtt",
   },
   navigation: {
     previous: { number: 10, title: "모듈 & 랜덤" },
@@ -256,6 +269,7 @@ export const pythonLesson12Content: LessonContent = {
     transcriptSummary:
       "이 영상에서는 새로운 문법을 배우는 대신, 내가 짠 코드가 제대로 작동하지 않을 때 어떻게 해결해야 하는지 알아봅니다. 빨간 에러 메시지(Traceback)의 마지막 줄부터 읽으며 문법 오류를 찾아내는 방법, 에러는 없지만 결과가 틀릴 때 print() 문으로 중간값을 확인하며 논리 오류를 잡는 방법을 배웁니다. 그래도 해결하기 어렵다면 해당 개념 강의로 돌아가거나, AI에게 코드와 에러 메시지를 함께 질문하는 올바른 태도까지! 다음 '계산기 만들기' 프로젝트에서 막히더라도 스스로 헤쳐 나갈 수 있는 '디버깅의 힘'을 함께 키워볼까요?",
     videoSrc: "/videos/python-lesson-12.mp4",
+    captionsSrc: "/captions/python-lesson-12.vtt",
   },
   navigation: {
     previous: { number: 11, title: "파일 입출력" },
