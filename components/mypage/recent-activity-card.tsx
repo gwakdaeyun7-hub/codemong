@@ -21,8 +21,10 @@ export function RecentActivityCard({ items }: { items: RecentLessonItem[] }) {
         <p className="mt-1 text-xs text-zinc-500">
           아직 학습한 강의가 없어요. Python 1강부터 시작해볼까요?
         </p>
+        {/* courseId 는 정식 id(be-python) 로 — 진도는 lessonRef "<courseId>/<lessonId>" 로 저장되므로
+            여기서 python 별칭으로 보내면 그 학습이 be-python 기준 집계(홈·학습 현황)에서 빠진다. */}
         <Link
-          href="/courses/python/lessons/lesson-1"
+          href="/courses/be-python/lessons/lesson-1"
           className="mt-4 inline-flex h-10 items-center gap-1.5 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:brightness-105"
         >
           Python 1강 시작하기
