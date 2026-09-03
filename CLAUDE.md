@@ -36,7 +36,7 @@
 | `/reset-password` | 새 비밀번호 설정 | recovery 임시 세션 사용 (proxy 가드 예외) |
 | `/verify-email` | 이메일 인증 안내 | |
 | `/auth/callback` | OAuth/이메일확인/비번복구 공용 콜백 | Route Handler. PKCE `exchangeCodeForSession` |
-| `/skill` | 실력향상 대시보드 | 문제 은행 입구 — **내 실력 레이더(종합 5축) + 주간 성장 리포트(로그인 시)** + 단원 카드(4~9강, 문제 수·난이도 분포·해결 N/M 진행바). 비로그인 열람 가능. stub 에서 승격 |
+| `/skill` | 실력향상 대시보드 | 문제 은행 입구 — **내 실력 레이더(종합 5축 — 제출 표본이 있을 때만 렌더, `meta.hasUserData`) + 주간 성장 리포트(로그인 시)** + 단원 카드(4~9강, 문제 수·난이도 분포·해결 N/M 진행바). 평균 범례는 코호트 실집계일 때만 노출. 비로그인 열람 가능. stub 에서 승격 |
 | `/skill/[lessonId]` | 단원 문제 목록 | **단원 실력 레이더(그 단원 표본만, 제출 있을 때만)** + 문제별 난이도 칩(하/중/상)·해결 배지. `getProblemSet("be-python", lessonId)` 없으면 `notFound()`. 비로그인 열람 가능 |
 | `/skill/[lessonId]/[problemId]` | 문제 페이지 (시험 환경) | **로그인 필수**(제출 저장 — `redirect('/login?next=...')`). **프로그래머스식 2-pane**(좌 지문 흰 카드 / 우 다크 에디터 존: solution.py 탭+CodeMirror+실행 결과 콘솔+버튼 바) + **백준식 stdin/stdout 채점**(Pyodide `gradeStep` 재사용). 버튼 2개만: 「코드 실행」=공개 케이스만(기대 출력 비교 노출, 기록 X) / 「제출 후 채점하기」=공개+히든 전체(히든은 "히든 N" ✓/✗만) → `submitProblemAction` 저장. 하단 내 제출 히스토리(펼침: 코드 원문, AI 진단은 aiStatus=ok 일 때만 표시 — C단계 전이라 아직 없음) |
 | `/mypage` | 마이페이지 홈 | 프로필 카드 + **학습 현황(실측 4지표 — 완료 강의 N/M·해결 문제 N/M·연속 학습·연습 통과 N/M, `getLearningStats`)** + 성장 레이더(코드 품질 5축 실측 — 문제당 최신 제출 집계, **데모값 없음**: 표본 없는 축은 "측정 전", 표본 0이면 차트 대신 안내 카드) + 주간 성장 리포트(열 때 생성) + **최근 학습(실데이터 `listRecentLessons`)** |
@@ -164,11 +164,12 @@
 1. **작성자 표시 정보 스냅샷**: 댓글/게시글 작성 시 `user_metadata.nickname`과 `avatar_url`을 그대로 컬럼에 저장. 이유 = Supabase `auth.users`는 Prisma 외부 스키마라 join 불가, admin API 조회는 매번 외부 호출이라 느림. 트레이드오프: 닉네임 변경 후 과거 댓글 표시명 안 바뀜 (신규 댓글에만 반영).
 2. **soft delete**: Post/Comment에 `deletedAt` 컬럼. 삭제된 댓글은 답글이 있으면 "삭제된 댓글입니다"로 자리 유지, 답글도 없으면 노출 X.
 3. **카운트 캐시**: `Post.likeCount` / `Post.commentCount` / `Comment.likeCount` — 매번 `count()` 안 하도록 increment/decrement를 트랜잭션으로.
-4. **lesson 참조**: lesson은 정적 `lib/lesson-plan.ts` mock이라 외래키 대신 `lessonRef` 문자열 (포맷: `<courseId>/<lessonId>`). 메타 매핑은 application code에서.
+4. **lesson 참조**: lesson은 정적 `lib/lesson-plan.ts` mock이라 외래키 대신 `lessonRef` 문자열 (포맷: `<courseId>/<lessonId>`). 메타 매핑은 application code에서. ⚠️ **courseId 별칭 주의** — 룩업 함수는 `python`/`be-python` 둘 다 매칭하지만 `lessonRef` 에는 그때 URL 의 courseId 가 그대로 박히고, 진도 집계는 `startsWith("<courseId>/")` 로 한 접두사만 센다. 즉 `python/lesson-1` 로 쌓인 학습은 `be-python` 기준 집계(홈 이수율·마이페이지 학습 현황·뱃지)에서 빠진다. **새 링크·CTA 는 항상 정식 id `be-python` 을 쓸 것** (2026-09-04 마이페이지 "최근 학습" CTA 가 이 문제로 수정됨).
 5. **답글 1-depth**: parentId가 있는 댓글에는 추가 답글 불가. application code에서 강제 (`parent.parentId !== null`이면 reject).
 6. **진도 2층 구조**: 영상 90% 시청 + 완료 버튼 = "학습 완료"(이수율, `learnCompletedAt`), 퀴즈 통과 = "이해 완료"(이해도, `quizPassedAt`/`quizBestScore`). lesson은 Prisma 외부라 외래키 대신 `lessonRef` 문자열 (`LessonLike`와 동일 패턴).
 7. **프로젝트 진도**: `ProjectProgress` 도 `lessonRef`+`userId` 복합 PK (`LessonProgress`와 동일 패턴). 스텝별 통과·작성 코드는 정규화하지 않고 `stepStatuses`/`submittedCode` Json 컬럼에 맵으로 저장. 채점은 클라이언트(Pyodide) 결과(`passed`)만 기록 — 학습용이라 정답 노출/우회 위험이 낮아 서버 재검증은 미구현 (신뢰가 필요해지면 얹는다).
-8. **알림 생성**: 댓글/답글/좋아요 액션에서 **best-effort**(try/catch 로 실패해도 원 액션·트랜잭션 불변), **본인→본인 skip**(자기 글에 자기가 단 행위는 알림 X). 갱신은 폴링/Realtime 이 아니라 **"열 때 조회"**(`top-nav` 가 매 페이지 server render 시 안읽음 수+목록 조회). 무기한 보관(자동삭제 X), 종 목록은 최신 10개만 노출.
+8. **집계 쿼리 요청 단위 캐시**: `getCourseLessonStatuses` / `getCourseExerciseStatuses` / `getCourseSolveStatuses` / `getLearningCalendar` 는 React `cache()` 로 감싸 **같은 요청 안의 중복 호출을 1회로 합친다** (한 페이지가 이 맵을 직접 쓰면서 `getCourseCompletion`·`getLearningStats` 도 내부적으로 같은 걸 필요로 하기 때문 — 캘린더 페이지의 6개월 집계가 두 번 돌던 문제). 요청 스코프라 mutation 후 `revalidatePath` 흐름과 충돌하지 않고, 현재 이 4개를 Server Action 안에서 호출하는 곳은 없다(있게 되면 쓰기 직후 읽기가 낡을 수 있으니 주의).
+9. **알림 생성**: 댓글/답글/좋아요 액션에서 **best-effort**(try/catch 로 실패해도 원 액션·트랜잭션 불변), **본인→본인 skip**(자기 글에 자기가 단 행위는 알림 X). 갱신은 폴링/Realtime 이 아니라 **"열 때 조회"**(`top-nav` 가 매 페이지 server render 시 안읽음 수+목록 조회). 무기한 보관(자동삭제 X), 종 목록은 최신 10개만 노출.
 
 ### Auth
 
