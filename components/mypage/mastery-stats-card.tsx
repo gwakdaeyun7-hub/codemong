@@ -1,3 +1,5 @@
+import type { LearningStats } from "@/lib/learning/stats-queries";
+
 import { mypageIcons } from "./icon-map";
 
 type Stat = {
@@ -15,29 +17,63 @@ const TONE_BG: Record<Stat["tone"], string> = {
   sky: "bg-sky-50 text-sky-600",
 };
 
-// MVP: 학습 통계 데이터 모델이 아직 없어 mock 데이터로 자리만 잡아둠.
-// 실제 mastery 계산 / streak / 배지는 backend 라운드에서 lib/learning-stats.ts 같은 모듈로 분리해 연결.
-const MOCK_STATS: Stat[] = [
-  { label: "학습한 강의", value: "0개", hint: "수강 시작 후 자동 집계", icon: "book", tone: "violet" },
-  { label: "평균 이해도", value: "—", hint: "퀴즈 풀이 후 집계", icon: "target", tone: "emerald" },
-  { label: "연속 학습", value: "0일", hint: "오늘부터 시작", icon: "flame", tone: "amber" },
-  { label: "획득 배지", value: "0개", hint: "이해도 마일스톤 달성 시", icon: "award", tone: "sky" },
-];
+// 학습 현황 — 전부 실데이터(getLearningStats). 네 지표 모두 다른 화면과 같은 집계를 쓴다:
+//   완료 강의 = 홈/강의 목록 이수율과 동일(getCourseCompletion), 연속 학습일 = 학습 캘린더와 동일,
+//   해결 문제 = 실력향상 트랙, 연습 통과 = 강의 목록 "N/M 통과" 합.
+// "평균 이해도"는 퀴즈(이해도 2층)가 미구현이라 지표에서 제외했다 — 없는 숫자를 만들지 않는다.
+export function MasteryStatsCard({ stats }: { stats: LearningStats }) {
+  const items: Stat[] = [
+    {
+      label: "완료한 강의",
+      value: `${stats.completedLessons}/${stats.totalLessons}`,
+      hint: "영상 학습 + 그 강 연습 통과",
+      icon: "book",
+      tone: "violet",
+    },
+    {
+      label: "해결한 문제",
+      value: `${stats.solvedProblems}/${stats.totalProblems}`,
+      hint: "실력향상 문제 은행",
+      icon: "target",
+      tone: "emerald",
+    },
+    {
+      label: "연속 학습",
+      value: `${stats.streak}일`,
+      hint: `학습한 날 ${stats.activeDays}일`,
+      icon: "flame",
+      tone: "amber",
+    },
+    {
+      label: "연습 통과",
+      value: `${stats.passedExercises}/${stats.totalExercises}`,
+      hint: "강별 연습 문제",
+      icon: "award",
+      tone: "sky",
+    },
+  ];
 
-export function MasteryStatsCard() {
+  const hasActivity =
+    stats.completedLessons > 0 ||
+    stats.solvedProblems > 0 ||
+    stats.passedExercises > 0 ||
+    stats.activeDays > 0;
+
   return (
     <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
       <div className="mb-5 flex items-center justify-between">
         <div>
           <h2 className="text-base font-bold text-zinc-900">학습 현황</h2>
           <p className="mt-0.5 text-xs text-zinc-500">
-            아직 학습 기록이 없습니다. 첫 강의를 시작해보세요.
+            {hasActivity
+              ? "내 학습 기록으로 집계한 값이에요."
+              : "아직 학습 기록이 없습니다. 첫 강의를 시작해보세요."}
           </p>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {MOCK_STATS.map((stat) => {
+        {items.map((stat) => {
           const Icon = mypageIcons[stat.icon];
           return (
             <div
@@ -52,7 +88,7 @@ export function MasteryStatsCard() {
               <p className="mt-3 text-xs font-medium text-zinc-500">
                 {stat.label}
               </p>
-              <p className="mt-0.5 text-lg font-bold text-zinc-900">
+              <p className="mt-0.5 text-lg font-bold tabular-nums text-zinc-900">
                 {stat.value}
               </p>
               <p className="mt-0.5 truncate text-[11px] text-zinc-400">

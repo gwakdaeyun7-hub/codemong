@@ -101,8 +101,12 @@ export async function buildWeeklyReportData(userId: string, weekStartDate: Date)
       ? Math.round((submissions.filter((s) => s.passed).length / submissionCount) * 100)
       : 0;
 
+  // 실제로 측정된 축만 스냅샷에 담는다 — 표본 없는 축을 0점으로 기록하면
+  // 카드가 "0점"으로 보여주고 약점 축 추천도 그 축으로 쏠린다(측정 안 한 축이 항상 최저).
   const axisScores: Record<string, number> = {};
-  for (const p of radar.points) axisScores[p.axisKey] = p.userValue;
+  for (const p of radar.points) {
+    if (p.userMeasured) axisScores[p.axisKey] = p.userValue;
+  }
 
   const prevScores = prevReport ? asScoreMap(prevReport.axisScores) : {};
   const axisDeltas: Record<string, number> = {};

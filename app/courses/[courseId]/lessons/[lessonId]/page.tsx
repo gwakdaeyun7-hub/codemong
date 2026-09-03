@@ -40,6 +40,7 @@ import {
 import { getCourseExerciseStatuses } from "@/lib/learning/exercise-queries";
 import { getCourseLessonStatuses, getLessonProgress } from "@/lib/learning/progress-queries";
 import { getProjectProgress } from "@/lib/learning/project-queries";
+import { deriveBadges, getLearningStats } from "@/lib/learning/stats-queries";
 import { getLessonPlan } from "@/lib/lesson-plan";
 import { getProject } from "@/lib/project-content";
 
@@ -134,6 +135,9 @@ export default async function LessonContentPage({
   const remainingMinutes = plan.lessons
     .filter((l) => lessonStatuses[l.id] !== "completed")
     .reduce((acc, l) => acc + l.durationMinutes, 0);
+
+  // 뱃지 — 실데이터 파생 (강의 목록 사이드바와 동일 소스).
+  const badges = deriveBadges(await getLearningStats(courseId, user.id));
 
   return (
     <>
@@ -234,7 +238,7 @@ export default async function LessonContentPage({
                 remainingMinutes={remainingMinutes}
               />
               <TipsCard tips={plan.tips} />
-              <BadgesCard badges={plan.badges} />
+              <BadgesCard badges={badges} />
             </aside>
           </div>
         </div>

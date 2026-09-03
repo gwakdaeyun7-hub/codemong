@@ -188,11 +188,13 @@ export async function submitProblemAction(
   // 제출 1건이 바꾸는 화면 재검증:
   //  · 문제 페이지 — 제출 히스토리
   //  · 단원 페이지 / 대시보드 — 해결 배지, 해결 N/M
-  //  · /mypage — 성장 레이더 (D단계에서 ProblemSubmission 합산 예정이라 미리 포함)
+  //  · /mypage — 성장 레이더 + 학습 현황(해결 문제 수)
+  //  · /mypage/calendar — 뱃지(문제 해결 조건) + 캘린더 칸
   revalidatePath(`/skill/${lessonId}/${problemId}`);
   revalidatePath(`/skill/${lessonId}`);
   revalidatePath("/skill");
   revalidatePath("/mypage");
+  revalidatePath("/mypage/calendar");
 
   return { ok: true, ai };
 }

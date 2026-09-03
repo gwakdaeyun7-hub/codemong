@@ -16,6 +16,7 @@ import { getCourseDetail } from "@/lib/course-detail"
 import { courses } from "@/lib/courses"
 import { getCourseExerciseStatuses } from "@/lib/learning/exercise-queries"
 import { getCourseLessonStatuses } from "@/lib/learning/progress-queries"
+import { deriveBadges, getLearningStats } from "@/lib/learning/stats-queries"
 import { getLessonPlan } from "@/lib/lesson-plan"
 
 // Next.js 16 App Router: dynamic route params 는 Promise 로 들어옴.
@@ -45,6 +46,9 @@ export default async function CourseLessonsPage({
     ...l,
     status: statusMap[l.id] ?? l.status,
   }))
+
+  // 뱃지 — 실데이터 파생(강 완료·연속일·연습 통과·문제 해결). 비로그인이면 전부 미획득.
+  const badges = deriveBadges(await getLearningStats(courseId, user?.id ?? null))
 
   // 강의별 연습 통과 현황 — 하위 "코드 연습" 카드의 N/M 배지용. 비로그인이면 빈 맵(배지 없음).
   // (키는 연습이 있는 강의 lessonId 만 존재 — 카드 쪽에서 undefined 면 "N문제"만 표시.)
@@ -110,7 +114,7 @@ export default async function CourseLessonsPage({
               remainingMinutes={remainingMinutes}
             />
             <TipsCard tips={plan.tips} />
-            <BadgesCard badges={plan.badges} />
+            <BadgesCard badges={badges} />
           </aside>
         </div>
       </main>

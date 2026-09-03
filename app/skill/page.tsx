@@ -43,8 +43,8 @@ export default async function SkillPage() {
           </p>
         </header>
 
-        {/* 종합 실력 레이더 (로그인 시) — 제출이 쌓이면 실측, 아니면 예시값 안내 */}
-        {user && radar && (
+        {/* 종합 실력 레이더 (로그인 + 제출 표본 있을 때만) — 표시되는 값은 전부 실측 */}
+        {user && radar && radar.meta.hasUserData && (
           <section className="mb-5 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-zinc-200/80 sm:p-6">
             <h2 className="text-sm font-bold text-zinc-900">내 실력 레이더</h2>
             <p className="mt-1 text-[12px] text-zinc-500">
@@ -58,10 +58,12 @@ export default async function SkillPage() {
               <span className="inline-flex items-center gap-1.5 text-zinc-600">
                 <span className="inline-block size-2.5 rounded-sm bg-violet-500" />나
               </span>
-              <span className="inline-flex items-center gap-1.5 text-zinc-600">
-                <span className="inline-block size-2.5 rounded-sm bg-amber-500" />
-                전체 평균
-              </span>
+              {radar.meta.averageLive && (
+                <span className="inline-flex items-center gap-1.5 text-zinc-600">
+                  <span className="inline-block size-2.5 rounded-sm bg-amber-500" />
+                  전체 평균
+                </span>
+              )}
             </div>
             {!radar.meta.aiLive && (
               <p className="mt-2 text-center text-[11px] text-zinc-400">

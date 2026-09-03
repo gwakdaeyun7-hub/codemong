@@ -16,6 +16,11 @@ export type Lesson = {
   kind?: "video" | "project"
 }
 
+/**
+ * 뱃지 표시 데이터. 획득 여부(acquired)는 정적 값이 아니라
+ * `lib/learning/stats-queries.ts` 의 deriveBadges 가 실데이터에서 파생한다.
+ * (이 파일은 prisma 를 import 하지 않는 순수 모듈이라 타입만 여기 둔다.)
+ */
 export type LessonBadge = {
   id: string
   label: string
@@ -24,6 +29,8 @@ export type LessonBadge = {
   acquired: boolean
   /** 옅은 배경 톤 키 — rose, amber, sky, violet, emerald 등 */
   tone: string
+  /** 획득 조건 설명 (예: "3일 연속 학습") */
+  hint?: string
 }
 
 export type LessonPlan = {
@@ -31,7 +38,6 @@ export type LessonPlan = {
   totalLessons: number
   lessons: Lesson[]
   tips: string[]
-  badges: LessonBadge[]
 }
 
 export const pythonLessonPlan: LessonPlan = {
@@ -58,14 +64,7 @@ export const pythonLessonPlan: LessonPlan = {
     "배운 예제를 살짝 바꿔서 실험해 보세요",
     "이해 안 되면 다시보기로 복습하세요",
   ],
-  // 뱃지 시스템은 아직 미구현 — 전부 미획득(준비 중) 상태. 라벨/아이콘/톤은 향후 정의를 위해 보존.
-  badges: [
-    { id: "badge-starter", label: "첫걸음", iconHint: "Rocket", acquired: false, tone: "rose" },
-    { id: "badge-streak", label: "연속 학습", iconHint: "Flame", acquired: false, tone: "amber" },
-    { id: "badge-speed", label: "스피드", iconHint: "Zap", acquired: false, tone: "sky" },
-    { id: "badge-grit", label: "끈기", iconHint: "Target", acquired: false, tone: "violet" },
-    { id: "badge-finisher", label: "완주", iconHint: "Trophy", acquired: false, tone: "emerald" },
-  ],
+  // 뱃지는 정적 데이터가 아니라 실데이터 파생 — lib/learning/stats-queries.ts 의 deriveBadges 참조.
 }
 
 /**

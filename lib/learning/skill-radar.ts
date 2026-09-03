@@ -6,14 +6,16 @@
 // 데이터 소스 (D단계 실측 승급 완료):
 //  · 결정적 2축 (구문 정확도 / 로직 구현도) — ExerciseAttempt(연습) + ProblemSubmission(시험) 실집계.
 //  · AI 3축 (개념 이해도 / 코드 효율성 / 문제 해석력) — ProblemSubmission 의 Gemini 3축 점수 실집계.
-//  · 코호트 평균(averageValue) — 전 유저 실집계 + unstable_cache(5m). 표본 부족 시 데모 평균 유지.
+//  · 코호트 평균(averageValue) — 전 유저 실집계 + unstable_cache(5m).
 //
 // ⚠️ 집계 규칙 (사용자 확정 — 반복 제출로 평균을 부풀릴 수 없게):
 //  · 같은 문제/연습에 여러 번 제출해도 **문제당 최신 1건만** 반영한다 (다시 풀면 최신 기준 갱신).
 //  · AI 3축은 문제당 "최신 ok(채점 성공)" 제출 1건.
 //  · 난이도 가중치는 MVP 미적용.
-// 데이터가 없는 축은 데모값으로 폴백한다 (빈 차트 방지 — 어떤 축이 실측인지는 meta 로 내려
-// growth-report-card 가 카피에 반영).
+//
+// 데모값 없음 — 표시되는 숫자는 전부 실측이다. 표본이 없는 축은 0 + userMeasured=false 로 내려,
+// 호출부가 "측정 전"으로 표기하거나(성장 리포트 카피) 아예 렌더를 생략한다(meta.hasUserData).
+// 코호트 표본이 부족하면 평균 곡선도 그리지 않는다(averageMeasured=false).
 
 import { unstable_cache } from "next/cache";
 
@@ -68,10 +70,14 @@ export const PYTHON_SKILL_AXES: SkillAxis[] = [
 export type RadarPoint = {
   axisKey: string;
   label: string;
-  /** 0..100 — 사용자 값 */
+  /** 0..100 — 사용자 값. 표본이 없으면 0 (지어낸 값을 넣지 않는다) */
   userValue: number;
-  /** 0..100 — 전체(코호트) 평균 */
+  /** 0..100 — 전체(코호트) 평균. 표본 부족이면 0 */
   averageValue: number;
+  /** 이 축에 사용자 표본이 실제로 있는지 */
+  userMeasured: boolean;
+  /** 이 축의 코호트 평균이 실집계인지 */
+  averageMeasured: boolean;
 };
 
 export type SkillRadarMeta = {
@@ -79,20 +85,13 @@ export type SkillRadarMeta = {
   deterministicLive: boolean;
   /** AI 3축(개념/효율/해석)이 실측인지 */
   aiLive: boolean;
-  /** 전체 평균이 실집계인지 (표본 충분) — false 면 데모 평균 */
+  /** 전체 평균이 실집계인지 (표본 충분) */
   averageLive: boolean;
+  /** 사용자 표본이 하나라도 있는지 — false 면 차트 대신 빈 상태를 보여준다 */
+  hasUserData: boolean;
 };
 
-// 고정 데모 데이터 — 데이터가 없을 때의 폴백 (빈 차트 방지).
-const DEMO_VALUES: Record<string, { user: number; average: number }> = {
-  syntax: { user: 80, average: 72 },
-  logic: { user: 68, average: 66 },
-  concept: { user: 70, average: 65 },
-  efficiency: { user: 55, average: 63 },
-  interpretation: { user: 73, average: 64 },
-};
-
-// 코호트 평균을 실집계로 노출할 최소 표본 (미만이면 데모 평균 — 소수 인원 노이즈 방지).
+// 코호트 평균을 노출할 최소 표본 (미만이면 평균 곡선을 숨긴다 — 소수 인원 노이즈 방지).
 // 유저 1명뿐이면 평균=본인 점수라 두 곡선이 겹치므로 최소 2명은 유지한다.
 const MIN_COHORT_USERS = 2;
 const MIN_COHORT_SAMPLES = 5;
@@ -262,23 +261,27 @@ function buildPoints(
   const isAiAxis = (key: string) =>
     key === "concept" || key === "efficiency" || key === "interpretation";
 
+  // 표본이 없는 축은 0 으로 둔다 — 데모값을 사용자 점수처럼 그리지 않는다.
   const points = PYTHON_SKILL_AXES.map((axis) => {
-    const demo = DEMO_VALUES[axis.key] ?? { user: 0, average: 0 };
     const liveUser = user ? (user[axis.key as keyof RadarStats] as number | null) : null;
     const cohortValue = cohort.stats[axis.key as keyof RadarStats] as number | null;
     const cohortLive = isAiAxis(axis.key) ? cohortAiLive : cohortDetLive;
+    const averageMeasured = cohortLive && cohortValue !== null;
     return {
       axisKey: axis.key,
       label: axis.label,
-      userValue: liveUser ?? demo.user,
-      averageValue: cohortLive && cohortValue !== null ? cohortValue : demo.average,
+      userValue: liveUser ?? 0,
+      averageValue: averageMeasured ? cohortValue : 0,
+      userMeasured: liveUser !== null,
+      averageMeasured,
     };
   });
 
   const meta: SkillRadarMeta = {
     deterministicLive: user !== null && user.detSamples > 0,
     aiLive: user !== null && user.aiSamples > 0,
-    averageLive: cohortDetLive || cohortAiLive,
+    averageLive: points.some((p) => p.averageMeasured),
+    hasUserData: points.some((p) => p.userMeasured),
   };
   return { points, meta };
 }

@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils"
 import type { LessonBadge } from "@/lib/lesson-plan"
 
 export function BadgesCard({ badges }: { badges: LessonBadge[] }) {
+  const acquiredCount = badges.filter((b) => b.acquired).length
   return (
     <section className="rounded-2xl bg-white p-5 ring-1 ring-zinc-200/80 shadow-sm sm:p-6">
       <header className="mb-3 flex items-center gap-2 text-sm font-semibold text-zinc-900">
@@ -20,8 +21,8 @@ export function BadgesCard({ badges }: { badges: LessonBadge[] }) {
           <Award className="size-3.5" strokeWidth={2.25} />
         </span>
         획득한 뱃지
-        <span className="ml-auto rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-500">
-          준비 중
+        <span className="ml-auto rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium tabular-nums text-zinc-600">
+          {acquiredCount}/{badges.length}
         </span>
       </header>
 
@@ -51,7 +52,7 @@ function BadgeIcon({ badge }: { badge: LessonBadge }) {
       <span
         aria-hidden
         className="inline-flex size-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-400 ring-1 ring-zinc-200/80 sm:size-11"
-        title={`${badge.label} (미획득)`}
+        title={badge.hint ? `${badge.label} — ${badge.hint}` : `${badge.label} (미획득)`}
       >
         <Lock className="size-4" strokeWidth={2.25} />
       </span>

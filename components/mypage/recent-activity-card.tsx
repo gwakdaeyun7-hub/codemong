@@ -1,16 +1,17 @@
 import Link from "next/link";
 
+import type { RecentLessonItem } from "@/lib/learning/stats-queries";
+
 import { mypageIcons } from "./icon-map";
 
-// MVP: 실제 시청 이력 모델이 없어 mock. 학습 진도 테이블 추가 시
-// lib/learning-stats.ts 같은 모듈에서 fetch 해서 props 로 넘기는 형태로 교체.
-const MOCK_RECENT: { lessonId: string; title: string; href: string }[] = [];
-
-export function RecentActivityCard() {
+// 최근 학습 — 실데이터(listRecentLessons). 영상 진도/프로젝트 진도의 updatedAt 최신순.
+// 기록이 없을 때만 1강 시작 안내를 보여준다.
+export function RecentActivityCard({ items }: { items: RecentLessonItem[] }) {
   const ChevronRight = mypageIcons.chevronRight;
   const Sparkles = mypageIcons.sparkles;
+  const Check = mypageIcons.check;
 
-  if (MOCK_RECENT.length === 0) {
+  if (items.length === 0) {
     return (
       <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
         <div className="mb-1 flex items-center gap-2">
@@ -33,18 +34,34 @@ export function RecentActivityCard() {
 
   return (
     <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-      <h2 className="mb-4 text-base font-bold text-zinc-900">최근 학습</h2>
+      <div className="mb-4 flex items-center gap-2">
+        <Sparkles className="size-4 text-violet-500" />
+        <h2 className="text-base font-bold text-zinc-900">최근 학습</h2>
+      </div>
       <ul className="space-y-2">
-        {MOCK_RECENT.map((item) => (
+        {items.map((item) => (
           <li key={item.lessonId}>
             <Link
               href={item.href}
-              className="flex items-center justify-between rounded-xl border border-zinc-100 bg-white px-4 py-3 transition hover:border-violet-200 hover:bg-violet-50/30"
+              className="flex items-center justify-between gap-3 rounded-xl border border-zinc-100 bg-white px-4 py-3 transition hover:border-violet-200 hover:bg-violet-50/30"
             >
-              <span className="text-sm font-medium text-zinc-700">
-                {item.title}
+              <span className="flex min-w-0 items-center gap-2">
+                <span className="shrink-0 text-[11px] font-semibold text-violet-600">
+                  {item.lessonNumber}강
+                </span>
+                <span className="truncate text-sm font-medium text-zinc-700">
+                  {item.title}
+                </span>
               </span>
-              <ChevronRight className="size-4 text-zinc-400" />
+              <span className="flex shrink-0 items-center gap-1.5">
+                {item.completed && (
+                  <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
+                    <Check className="size-3" strokeWidth={2.5} />
+                    완료
+                  </span>
+                )}
+                <ChevronRight className="size-4 text-zinc-400" />
+              </span>
             </Link>
           </li>
         ))}

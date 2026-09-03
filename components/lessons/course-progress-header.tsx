@@ -17,7 +17,7 @@ type Props = {
   completedCount: number
   /** 전체 강의 수 */
   totalCount: number
-  /** 누적 학습 시간 (예: "약 10시간") */
+  /** 코스 전체 예상 학습 시간 (예: "약 10시간") — 커리큘럼 기준값이라 사용자별 누적 시간이 아니다. */
   totalHours: string
 }
 
@@ -66,7 +66,7 @@ export function CourseProgressHeader({
         <Stat
           icon={<Clock className="size-3.5" strokeWidth={2.25} />}
           value={totalHours}
-          label="누적 시간"
+          label="총 학습 시간"
           tone="text-violet-500"
         />
         <Stat

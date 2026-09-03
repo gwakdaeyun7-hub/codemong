@@ -6,7 +6,7 @@ import { LevelBadge } from "@/components/level-badge"
 import { StatusBadge } from "@/components/status-badge"
 import { cn } from "@/lib/utils"
 
-import type { Course, CourseStatus } from "@/lib/courses"
+import type { CourseCardData, CourseStatus } from "@/lib/courses"
 
 // 카드 하단 액션 — status 기반으로 라벨/색상이 달라짐.
 // 모든 status 에서 강좌 상세 페이지(`/courses/{id}`)로 이동.
@@ -60,7 +60,7 @@ function CardAction({
   )
 }
 
-export function CourseCard({ course }: { course: Course }) {
+export function CourseCard({ course }: { course: CourseCardData }) {
   const { status, level, progress, icon, title, description } = course
   const ratio =
     progress.total === 0 ? 0 : Math.min(100, (progress.current / progress.total) * 100)

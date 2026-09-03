@@ -67,14 +67,14 @@ export async function passExerciseAction(
   //  · lessons (목록)          — 강별 N/M 배지 + 강 완료 status (getCourseExerciseStatuses / getCourseLessonStatuses)
   //  · lessons/[lessonId]      — 영상 상세 우측 통계 + 진입 카드 N/M + 단일 강 완료 (getCourseLessonStatuses / getLessonProgress)
   //  · / (홈)                  — 코스 이수율 카드 (getCourseCompletion)
-  //  · /mypage                 — 성장 레이더는 현재 고정 데모 데이터라 연습 통과와 무관.
-  //                              (실데이터 레이더로 되돌리면 다시 필요해지므로 revalidate 는 유지)
+  //  · /mypage                 — 학습 현황(연습 통과 수·완료 강의)·성장 레이더 결정적 2축·뱃지가 함께 바뀜
   // (강좌 소개 /courses/[courseId] 는 이수율/진행률을 조회하지 않아 제외.)
   revalidatePath(`/courses/${courseId}/lessons/${lessonId}/practice`);
   revalidatePath(`/courses/${courseId}/lessons`);
   revalidatePath(`/courses/${courseId}/lessons/${lessonId}`);
   revalidatePath("/");
   revalidatePath("/mypage");
+  revalidatePath("/mypage/calendar"); // 뱃지(연습 통과 조건) + 캘린더 칸
 
   return { ok: true };
 }

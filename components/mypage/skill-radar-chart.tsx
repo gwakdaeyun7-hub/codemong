@@ -40,6 +40,8 @@ export function SkillRadarChart({ points }: { points: RadarPoint[] }) {
   if (n === 0) return null;
 
   const userPoly = polygonPoints(points.map((p) => p.userValue));
+  // 코호트 표본이 부족하면 평균 곡선을 아예 그리지 않는다 (0 폴리곤/데모값 표시 금지).
+  const showAverage = points.some((p) => p.averageMeasured);
   const basePoly = polygonPoints(points.map((p) => p.averageValue));
 
   return (
@@ -76,15 +78,17 @@ export function SkillRadarChart({ points }: { points: RadarPoint[] }) {
         );
       })}
 
-      {/* 전체 평균 곡선 폴리곤 (amber 실선 — 사용자 violet 과 뚜렷이 대비) */}
-      <polygon
-        points={basePoly}
-        fill="#f59e0b"
-        fillOpacity={0.12}
-        stroke="#d97706"
-        strokeWidth={1.5}
-        strokeLinejoin="round"
-      />
+      {/* 전체 평균 곡선 폴리곤 (amber 실선 — 사용자 violet 과 뚜렷이 대비). 실집계일 때만 */}
+      {showAverage && (
+        <polygon
+          points={basePoly}
+          fill="#f59e0b"
+          fillOpacity={0.12}
+          stroke="#d97706"
+          strokeWidth={1.5}
+          strokeLinejoin="round"
+        />
+      )}
 
       {/* 사용자 폴리곤 (violet) */}
       <polygon

@@ -82,10 +82,12 @@ export default async function SkillLessonPage({
               <span className="inline-flex items-center gap-1.5 text-zinc-600">
                 <span className="inline-block size-2.5 rounded-sm bg-violet-500" />나
               </span>
-              <span className="inline-flex items-center gap-1.5 text-zinc-600">
-                <span className="inline-block size-2.5 rounded-sm bg-amber-500" />
-                전체 평균
-              </span>
+              {lessonRadar.meta.averageLive && (
+                <span className="inline-flex items-center gap-1.5 text-zinc-600">
+                  <span className="inline-block size-2.5 rounded-sm bg-amber-500" />
+                  전체 평균
+                </span>
+              )}
             </div>
           </section>
         )}
