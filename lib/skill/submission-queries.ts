@@ -1,6 +1,8 @@
 // 실력향상(시험) 트랙 조회 — Server Component 용.
 // exercise-queries.ts 패턴 답습: 비로그인이면 빈 결과, 현재 존재하는 문제 id 에 한해 카운트.
 
+import { cache } from "react";
+
 import { prisma } from "@/lib/prisma";
 import { listProblemSets } from "@/lib/problems";
 import type { Prisma } from "@/lib/generated/prisma/client";
@@ -60,7 +62,9 @@ export type CourseSolveStatuses = {
   solvedProblems: Record<string, boolean>;
 };
 
-export async function getCourseSolveStatuses(
+// cache() = 같은 요청 안에서 중복 호출 1회로 합침 (실력향상 화면이 직접 쓰고
+// getLearningStats 도 해결 문제 수를 같은 함수로 센다).
+export const getCourseSolveStatuses = cache(async function getCourseSolveStatuses(
   courseId: string,
   userId: string | undefined,
 ): Promise<CourseSolveStatuses> {
@@ -92,4 +96,4 @@ export async function getCourseSolveStatuses(
     byLesson[lessonId].solved += 1;
   }
   return { byLesson, solvedProblems };
-}
+});

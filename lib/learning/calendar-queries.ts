@@ -13,6 +13,8 @@
 //  · ProjectProgress   프로젝트 완료 시점
 // 서버 전용(prisma). 조회 범위는 기본 6개월 — 캘린더 월 이동에 필요한 만큼만.
 
+import { cache } from "react";
+
 import { prisma } from "@/lib/prisma";
 import { getLessonPlan } from "@/lib/lesson-plan";
 import { themeOfLesson, type LessonThemeKey } from "./lesson-themes";
@@ -113,7 +115,9 @@ function axesOf(deductions: unknown): string[] {
   return out;
 }
 
-export async function getLearningCalendar(
+// cache() = 같은 요청 안에서 중복 호출 1회로 합침 (캘린더 페이지가 이 집계와
+// getLearningStats(내부에서 또 호출)를 함께 쓰기 때문 — 6개월 집계를 두 번 돌리지 않는다).
+export const getLearningCalendar = cache(async function getLearningCalendar(
   userId: string | null,
   monthsBack = 6,
 ): Promise<LearningCalendar> {
@@ -314,4 +318,4 @@ export async function getLearningCalendar(
   }
 
   return { days, streak, activeDays: Object.keys(days).length };
-}
+});

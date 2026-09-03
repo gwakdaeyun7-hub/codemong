@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { prisma } from "@/lib/prisma";
 import { getExercises } from "@/lib/exercise-content";
 import { getCourseExerciseStatuses } from "@/lib/learning/exercise-queries";
@@ -102,7 +104,9 @@ export async function getCourseCompletion(
 // lessonRef 는 "<courseId>/<lessonId>" 포맷이라 courseId prefix 로 이 코스 진도만 모은다.
 // 연습 통과 수는 getCourseExerciseStatuses 로 코스 전체를 한 번에 조회(per-lesson N+1 회피).
 // 비로그인이면 전부 not-started.
-export async function getCourseLessonStatuses(
+// cache() = 같은 요청 안에서 중복 호출 1회로 합침. 한 페이지에서 이 맵을 직접 쓰고
+// getCourseCompletion / getLearningStats 도 내부적으로 같은 맵을 필요로 하기 때문.
+export const getCourseLessonStatuses = cache(async function getCourseLessonStatuses(
   courseId: string,
   userId: string | null,
 ): Promise<Record<string, LessonStatus>> {
@@ -163,7 +167,7 @@ export async function getCourseLessonStatuses(
   }
 
   return result;
-}
+});
 
 // ExerciseProgress.passed(Json) 에서 "현재 존재하는 문제 id" 에 한해 true 인 개수를 센다.
 // getCourseExerciseStatuses 와 동일한 카운팅 규칙 (삭제된 문제 잔재 방어 + min(passed, total) 보장).

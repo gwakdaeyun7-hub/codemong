@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { prisma } from "@/lib/prisma";
 import { getExercises } from "@/lib/exercise-content";
 import { getLessonPlan } from "@/lib/lesson-plan";
@@ -33,7 +35,9 @@ export async function getExerciseProgress(
 //  · 연습 없는 강(2강 등)은 결과 맵에 키를 넣지 않는다.
 // 구현: lesson-plan 으로 코스의 lessonId 목록을 얻어 연습 있는 강만 추리고(getExercises),
 //       그 강들의 ExerciseProgress 를 userId 로 한 번에 조회(lessonRef in [...])해서 매핑한다.
-export async function getCourseExerciseStatuses(
+// cache() = 같은 요청 안에서 중복 호출 1회로 합침 (강의 목록이 직접 쓰고
+// getCourseLessonStatuses / getLearningStats 도 같은 맵을 필요로 한다).
+export const getCourseExerciseStatuses = cache(async function getCourseExerciseStatuses(
   courseId: string,
   userId: string | null,
 ): Promise<Record<string, { passed: number; total: number }>> {
@@ -75,4 +79,4 @@ export async function getCourseExerciseStatuses(
   }
 
   return result;
-}
+});
