@@ -61,8 +61,8 @@
 | File | Exports |
 |------|---------|
 | `lib/courses.ts` | `Course` 타입(정적 메타만 — 제목·설명·난이도·아이콘) + `CourseCardData`(`Course` + 사용자별 `status`/`progress`) + `courses` 1개(Python) + `backendCourses`. 진행 상태는 이 파일에 두지 않고 홈이 이수율 실데이터로 조립 |
-| `lib/course-detail.ts` | `CourseDetail` 타입 + `pythonCourseDetail` + `getCourseDetail(id)` |
-| `lib/lesson-plan.ts` | `Lesson` (`kind?: "video" \| "project"` — 미지정/video=영상강의, project=직접 코드 구현) / `LessonStatus` / `LessonBadge`(표시용 타입 + `hint?`) 타입 + `pythonLessonPlan` (13강, lesson-13=project) + `getLessonPlan(id)`. `totalLessons` 13. **뱃지 배열은 없음** — 획득 여부는 `stats-queries.ts` 의 `deriveBadges` 가 실데이터에서 파생 |
+| `lib/course-detail.ts` | `CourseDetail` 타입 + `pythonCourseDetail` + `getCourseDetail(id)`. `stats.totalHours` = **"약 4.5시간"**(lesson-plan durationMinutes 합 265분 기준 — 실력향상 34문제는 별도 트랙이라 제외), `enrolledCount`/`rating`/`reviews` 는 실데이터가 없어 **미노출**(조건부 렌더 — 가짜 수치·후기 금지 원칙) |
+| `lib/lesson-plan.ts` | `Lesson`(정적 메타만 — `kind?: "video" \| "project"`, **`status` 없음**) / `LessonWithStatus`(= `Lesson` + 사용자별 status, 렌더용) / `LessonStatus` / `LessonBadge`(표시용 + `hint?`) 타입 + `pythonLessonPlan` (13강, lesson-13=project) + `getLessonPlan(id)`. `totalLessons` 13. **뱃지 배열 없음** — 획득 여부는 `stats-queries.ts` 의 `deriveBadges` 가 파생. **`durationMinutes` = 영상 ffprobe 실측(분 반올림) + 그 강 연습 문제 수 × 7분** (합 265분 = 4시간 25분. 영상 실측 합계는 43분 — 강당 2.6~4.5분). 영상 재렌더·연습 추가 시 이 값도 갱신, UI 라벨은 "예상 N분" |
 | `lib/lesson-content.ts` | `LessonContent` 타입 + `pythonLesson1Content` ~ `pythonLesson12Content` + `getLessonContent(courseId, lessonId)`. `LessonVideo.captionsSrc?` = WebVTT 자막 경로(`/captions/python-lesson-N.vtt`, 12강 전부 연결) |
 | `lib/quiz-content.ts` | `QuizPool` (`"evaluation" \| "practice"`) / `QuizQuestion` / `Misconception` / `QuizOption` / `DisallowedAnswer` 타입 + `pythonLesson1Quiz` / `pythonLesson2Quiz` + `pythonLesson1Misconceptions` / `pythonLesson2Misconceptions` + `getQuiz(courseId, lessonId)` / `getMisconceptions(courseId, lessonId)`. 강의당 30문항 (Pool A 10 + Pool B 20). 모든 문항이 `pool` (필수) + `isomorphGroup` (선택, 같은 학습목표·오개념을 다른 surface 로 묻는 isomorph 묶음 ID) 필드 보유. 보기마다 `misconceptionId` 라벨. 추천 알고리즘 진단 신호 = `misconceptionId` + `isomorphGroup` + `pool`. |
 | `lib/auth/actions.ts` | Server Actions 8개 (이메일 가입/로그인, OAuth Google·Kakao, 로그아웃, 비번 재설정/변경, 닉네임 변경) + Supabase 에러 한국어 매핑 |
@@ -217,7 +217,7 @@
 8. **카피 톤**: 한국어, 입문자 친화, 정직. "쉬워요!" 같은 과장 금지. 이모지 거의 안 씀.
 9. **버튼형 mutation 알림 = `useToast`, `alert()` 금지**: 좋아요/삭제/완료 등 버튼형 액션의 성공·실패 알림은 `components/toast.tsx` 의 `useToast` 로 통일 (`alert()` 쓰지 말 것). 핸들러는 `startTransition` 내부 `try/catch` 로 server action 의 `!result.ok` 뿐 아니라 예상 못한 throw 도 잡아 "잠시 후 다시 시도해 주세요." toast 로 안내. 단 폼(댓글/게시글/신고)의 입력 검증은 inline(FormFeedback) 유지 — toast 로 옮기지 말 것.
 10. **프로젝트형 강의(13~15강)**: 영상 없이 텍스트 문제 → 직접 코드 작성·실행·채점하는 **코딩테스트 스타일**(문제 1개를 한 번에 완성해 제출, 스텝 누적 아님) 미션 (영상 강의 1~12강과 별개 트랙). 실행 엔진은 **Pyodide**(브라우저 Python, CDN 로드 — 서버 채점 X). 13강 「계산기 만들기」는 **1~6강 문법만** 사용 (함수·리스트·딕셔너리·try·split 미사용) — 강의가 다룬 범위 안에서만 풀리도록. 14·15강도 이 패턴 답습.
-11. **화면 숫자는 전부 실집계 — 가짜/데모 수치 금지** (2026-09-04 사용자 지시). 데이터 소스가 없으면 지표를 **아예 빼거나**("평균 이해도"는 퀴즈 미구현이라 제외), "측정 전"으로 표기하거나, 그 카드·곡선을 **렌더하지 않는다**. 빈 화면 방지용 데모값을 채우지 말 것. 새 집계는 만들지 말고 기존 단일 진실 원천을 조합한다(`lib/learning/stats-queries.ts` 패턴) — 화면 간 숫자가 어긋나면 안 된다. 저장 모델이 없는 지표(뱃지)도 기존 데이터에서 파생하면 실데이터가 된다. 라벨이 값의 의미와 맞는지도 함께 볼 것(코스 예상 시간을 "누적 시간"으로 쓰지 않기).
+11. **화면 숫자는 전부 실집계 — 가짜/데모 수치 금지** (2026-09-04 사용자 지시). 데이터 소스가 없으면 지표를 **아예 빼거나**("평균 이해도"는 퀴즈 미구현이라 제외), "측정 전"으로 표기하거나, 그 카드·곡선을 **렌더하지 않는다**. 빈 화면 방지용 데모값을 채우지 말 것. 새 집계는 만들지 말고 기존 단일 진실 원천을 조합한다(`lib/learning/stats-queries.ts` 패턴) — 화면 간 숫자가 어긋나면 안 된다. 저장 모델이 없는 지표(뱃지)도 기존 데이터에서 파생하면 실데이터가 된다. 라벨이 값의 의미와 맞는지도 함께 볼 것(코스 예상 시간을 "누적 시간"으로 쓰지 않기). **정적 커리큘럼 수치도 실측에 맞춘다** — 강의 길이는 영상 ffprobe 실측 + 연습 수 × 7분이고, 추정이 섞이면 라벨에 "예상"을 붙인다(강당 12~30분·총 10시간처럼 근거 없이 부풀린 값 금지).
 
 ---
 
@@ -303,7 +303,7 @@ videos/
 
 **영상 정책**:
 - 영상 1편 = 강의 1개 (lesson 1대1 매핑). **Python 기초 = 12강 = 영상 12편, 전편 완성·임베드 완료** (확정 커리큘럼은 메모리 `python_curriculum_12.md` 참조). 13강은 영상이 아니라 프로젝트형.
-- 길이 기본 180초.
+- 길이 기본 180초. (완성된 12편 실측 = 강당 156~271초, 합계 43분 — 새 영상 완성 시 `lib/lesson-plan.ts` 의 `durationMinutes` 와 `course-detail.ts` 의 `totalHours` 를 실측으로 갱신할 것.)
 - 카피 톤은 기존 CodeMong 톤 (한국어, 입문자 친화·정직, 과장/이모지 자제) + **"입문자 수준 + 정석적인 강의 느낌"** (학원 인강 스타일, 차분·구조화, 쇼츠톤·과장 X).
 - **자막 = WebVTT on/off 제공 (2026-08-27 정책 변경, 사용자 합의)**. burn-in 은 여전히 금지 — 자막은 앱 레이어에서 `<track kind="subtitles">` 로 연결하고 기본 꺼짐(브라우저 CC 버튼 토글). 생성 파이프라인: `scripts/generate_captions.py` — `02-audio/timestamps.json` 씬 경계(정확) + edge-tts WordBoundary 재추출(문장 시각, 오차 ~0.1초)로 `public/captions/python-lesson-N.vtt` 생성. 코드 낭독 구절은 강별 `02-audio/caption-rewrites.json`(낭독 조각→실제 코드 표기, 01-script.md 코드가 정답 소스)로 재작성, 발음형 표기는 스크립트 내 전역 RULES 로 표준 복원. 새 영상 완성 시 이 스크립트 실행 + `lesson-content.ts` 의 `captionsSrc` 연결까지가 마무리 단계. *lower-third 같은 씬별 디자인 텍스트 카드는 자막이 아니라 시각 디자인 요소 — 별개.*
 - 디자인 토큰: Remotion도 Tailwind v4 → 메인 앱과 violet-500 액센트 등 공유 가능 (의도된 결과).
