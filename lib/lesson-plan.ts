@@ -9,12 +9,22 @@ export type Lesson = {
   /** 강의 번호 (1-based, UI에서 그대로 노출) */
   number: number
   title: string
-  /** 예상 학습 시간(분) */
+  /**
+   * 예상 학습 시간(분) = 실제 영상 길이(ffprobe 실측, 분 단위 반올림) + 그 강 연습 문제 수 × 7분.
+   * 영상 길이는 사실, 연습 7분은 추정치라 UI 라벨에 "예상"을 반드시 붙인다.
+   * 영상을 다시 렌더하거나 연습 문제를 추가하면 이 값도 함께 갱신할 것.
+   */
   durationMinutes: number
-  status: LessonStatus
   /** 강의 종류 — 미지정/"video"=영상 강의, "project"=직접 코드 구현 프로젝트(13강~) */
   kind?: "video" | "project"
 }
+
+/**
+ * 화면 렌더용 — 정적 강의 메타 + 사용자별 진도.
+ * status 는 정적 데이터에 두지 않는다(사용자마다 다름). 페이지가
+ * `getCourseLessonStatuses` 결과를 붙여서 만든다.
+ */
+export type LessonWithStatus = Lesson & { status: LessonStatus }
 
 /**
  * 뱃지 표시 데이터. 획득 여부(acquired)는 정적 값이 아니라
@@ -43,20 +53,26 @@ export type LessonPlan = {
 export const pythonLessonPlan: LessonPlan = {
   courseId: "be-python",
   totalLessons: 13,
+  // durationMinutes 산출 (2026-09-04 실측 반영):
+  //   영상 = public/videos/python-lesson-N.mp4 ffprobe 실측을 분 단위 반올림 (합계 43분)
+  //   연습 = 그 강 exercise-content.ts 문제 수 × 7분 (추정 — UI 라벨에 "예상" 표기)
+  //   강별 내역: 1강 3+7 / 2강 3+0(연습 없음) / 3강 4+14 / 4강 4+21 / 5강 3+21 / 6강 4+21 /
+  //             7강 5+21 / 8강 4+21 / 9강 3+21 / 10강 3+14 / 11강 3+7 / 12강 4+14
+  //   13강은 영상 없는 프로젝트(계산기) — 문제 1개를 직접 완성하는 시간 40분으로 추정
   lessons: [
-    { id: "lesson-1", number: 1, title: "파이썬 개요 & 개발환경", durationMinutes: 18, status: "completed" },
-    { id: "lesson-2", number: 2, title: "코딩의 표현 방법", durationMinutes: 12, status: "completed" },
-    { id: "lesson-3", number: 3, title: "변수와 자료형", durationMinutes: 18, status: "completed" },
-    { id: "lesson-4", number: 4, title: "입력과 연산자", durationMinutes: 16, status: "completed" },
-    { id: "lesson-5", number: 5, title: "조건문", durationMinutes: 20, status: "completed" },
-    { id: "lesson-6", number: 6, title: "반복문", durationMinutes: 22, status: "completed" },
-    { id: "lesson-7", number: 7, title: "리스트", durationMinutes: 22, status: "completed" },
-    { id: "lesson-8", number: 8, title: "딕셔너리 & 자료구조", durationMinutes: 20, status: "in-progress" },
-    { id: "lesson-9", number: 9, title: "함수", durationMinutes: 24, status: "in-progress" },
-    { id: "lesson-10", number: 10, title: "모듈 & 랜덤", durationMinutes: 18, status: "not-started" },
-    { id: "lesson-11", number: 11, title: "파일 입출력", durationMinutes: 20, status: "not-started" },
-    { id: "lesson-12", number: 12, title: "디버깅 & AI 활용", durationMinutes: 22, status: "not-started" },
-    { id: "lesson-13", number: 13, title: "계산기 만들기", durationMinutes: 30, status: "not-started", kind: "project" },
+    { id: "lesson-1", number: 1, title: "파이썬 개요 & 개발환경", durationMinutes: 10 },
+    { id: "lesson-2", number: 2, title: "코딩의 표현 방법", durationMinutes: 3 },
+    { id: "lesson-3", number: 3, title: "변수와 자료형", durationMinutes: 18 },
+    { id: "lesson-4", number: 4, title: "입력과 연산자", durationMinutes: 25 },
+    { id: "lesson-5", number: 5, title: "조건문", durationMinutes: 24 },
+    { id: "lesson-6", number: 6, title: "반복문", durationMinutes: 25 },
+    { id: "lesson-7", number: 7, title: "리스트", durationMinutes: 26 },
+    { id: "lesson-8", number: 8, title: "딕셔너리 & 자료구조", durationMinutes: 25 },
+    { id: "lesson-9", number: 9, title: "함수", durationMinutes: 24 },
+    { id: "lesson-10", number: 10, title: "모듈 & 랜덤", durationMinutes: 17 },
+    { id: "lesson-11", number: 11, title: "파일 입출력", durationMinutes: 10 },
+    { id: "lesson-12", number: 12, title: "디버깅 & AI 활용", durationMinutes: 18 },
+    { id: "lesson-13", number: 13, title: "계산기 만들기", durationMinutes: 40, kind: "project" },
   ],
   tips: [
     "매일 짧게라도 코드를 직접 쳐보세요",

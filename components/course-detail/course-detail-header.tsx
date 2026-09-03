@@ -31,7 +31,7 @@ export function CourseDetailHeader({
       icon: <Clock className="size-4" strokeWidth={2.25} />,
       tone: "bg-rose-50 text-rose-500",
       value: stats.totalHours,
-      label: "총 학습 시간",
+      label: "예상 학습 시간",
     },
     {
       icon: <BookOpen className="size-4" strokeWidth={2.25} />,

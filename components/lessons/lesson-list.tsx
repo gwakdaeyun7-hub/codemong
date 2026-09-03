@@ -10,7 +10,7 @@ import { useState } from "react"
 import { LessonCard } from "@/components/lessons/lesson-card"
 import { cn } from "@/lib/utils"
 
-import type { Lesson, LessonStatus } from "@/lib/lesson-plan"
+import type { LessonStatus, LessonWithStatus } from "@/lib/lesson-plan"
 
 type FilterKey = LessonStatus
 
@@ -52,7 +52,7 @@ export function LessonList({
   courseId,
   exerciseStatuses,
 }: {
-  lessons: Lesson[]
+  lessons: LessonWithStatus[]
   /** 강의 카드의 액션 버튼 Link href prefix 용 */
   courseId: string
   /**

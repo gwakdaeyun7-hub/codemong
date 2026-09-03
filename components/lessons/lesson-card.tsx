@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { getExercises } from "@/lib/exercise-content";
 import { getProject } from "@/lib/project-content";
 
-import type { Lesson, LessonStatus } from "@/lib/lesson-plan";
+import type { LessonStatus, LessonWithStatus } from "@/lib/lesson-plan";
 
 const STATUS_LABEL: Record<LessonStatus, string> = {
   completed: "완료",
@@ -43,7 +43,7 @@ export function LessonCard({
   courseId,
   exerciseStatus,
 }: {
-  lesson: Lesson;
+  lesson: LessonWithStatus;
   /** 강의 상세 라우트 prefix 용 — `/courses/{courseId}/lessons/{lessonId}` */
   courseId: string;
   /**
@@ -109,7 +109,7 @@ export function LessonCard({
           </div>
           <p className="mt-1 flex items-center gap-1 text-[11px] text-zinc-500 sm:text-xs">
             <Clock className="size-3" strokeWidth={2.25} aria-hidden />
-            {lesson.durationMinutes}분
+            예상 {lesson.durationMinutes}분
           </p>
           {project && project.concepts.length > 0 && (
             <div className="mt-1.5 flex flex-wrap gap-1">

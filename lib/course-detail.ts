@@ -53,8 +53,10 @@ export const pythonCourseDetail: CourseDetail = {
   levelLabel: "초급",
   description: "변수와 함수부터 차근차근 배웁니다",
   stats: {
-    // 총 학습 시간 = 영상 시청(약 4시간) + 복습·실습 포함 기준. 영상 길이 합보다 큰 건 의도된 것.
-    totalHours: "약 10시간",
+    // 예상 학습 시간 = lesson-plan 의 durationMinutes 합계 265분(4시간 25분) → 표기 "약 4.5시간".
+    // (강별 = 영상 실측 + 연습 문제 수 × 7분. 영상 실측 합계는 43분.)
+    // 실력향상 문제 은행(34문제)은 별도 트랙이라 이 값에 포함하지 않는다.
+    totalHours: "약 4.5시간",
     totalLessons: "13강",
     // enrolledCount·rating: 실제 수강생/평점 데이터가 없어 미노출 (정직 톤 — 가짜 수치 금지).
   },

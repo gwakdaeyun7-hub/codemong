@@ -42,9 +42,10 @@ export default async function CourseLessonsPage({
   // 강의별 실제 진도(이수율) — 로그인 사용자의 LessonProgress 기반. 비로그인이면 전부 미시작.
   const user = await getCurrentUser()
   const statusMap = await getCourseLessonStatuses(courseId, user?.id ?? null)
+  // statusMap 은 코스의 모든 강의 키를 채워 오므로(비로그인이면 전부 not-started) 폴백이 필요 없다.
   const lessons = plan.lessons.map((l) => ({
     ...l,
-    status: statusMap[l.id] ?? l.status,
+    status: statusMap[l.id] ?? ("not-started" as const),
   }))
 
   // 뱃지 — 실데이터 파생(강 완료·연속일·연습 통과·문제 해결). 비로그인이면 전부 미획득.
