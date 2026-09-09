@@ -70,7 +70,12 @@ export default async function LessonPracticePage({
           </p>
         </header>
 
-        <ExerciseRunner set={set} lessonRef={lessonRef} initialPassed={passed} />
+        <ExerciseRunner
+          set={set}
+          lessonRef={lessonRef}
+          lessonHref={lessonHref}
+          initialPassed={passed}
+        />
       </main>
 
       <SiteFooter />

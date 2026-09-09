@@ -6,12 +6,17 @@
 //   allPassed 채점 시 passExerciseAction 으로 서버에 통과를 기록한다.
 //   채점 자체는 클라(Pyodide)에서 끝나고 — 통과 결과(✓)는 저장 성공/실패와 무관하게 즉시 표시,
 //   저장 실패만 toast 로 알린다 (낙관적 표시).
+// 통과 배너는 "지금 선택한 문제가 통과 상태"면 뜬다(재방문 포함). 남은 문제가 있으면 [다음 문제]
+//   (다음 미해결 문제로 이동), 이 강 연습을 전부 통과했으면 [강의로 돌아가기] — 판정은 순번이 아니라
+//   통과 개수 기준(문제를 건너뛰며 풀어도 정확). 상단의 작은 "강의로 돌아가기" 링크는 중간 이탈용이라
+//   그대로 두고, 완료 순간의 다음 행동은 사용자 시선이 있는 이 배너에서 안내한다.
 // 채점·실행 엔진은 프로젝트 강의와 동일한 Pyodide(lib/project/grader.ts)를 재사용한다.
 // (아이콘이 적어 icon-map 없이 직접 import — components/project · lesson-content 와 동일한 예외.)
 
 import { useEffect, useMemo, useState, useTransition } from "react";
 import dynamic from "next/dynamic";
-import { Check, Play, RotateCcw, Send } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Check, Play, RotateCcw, Send } from "lucide-react";
 
 import { useToast } from "@/components/toast";
 import { isEffectivelyEmptyCode } from "@/lib/code-inspect";
@@ -38,6 +43,7 @@ const CodeEditor = dynamic(() => import("@/components/project/code-editor"), {
 export function ExerciseRunner({
   set,
   lessonRef,
+  lessonHref,
   initialPassed,
 }: {
   set: ExerciseSet;
@@ -46,6 +52,8 @@ export function ExerciseRunner({
    * set.courseId 는 데이터의 정식 courseId("be-python")라 URL courseId 와 다를 수 있어 쓰지 않는다.
    */
   lessonRef: string;
+  /** 강의 상세 경로 — 전부 통과 시 배너의 [강의로 돌아가기] 링크 (페이지가 URL 기준으로 만들어 넘김) */
+  lessonHref: string;
   /** DB 조회 초기 통과 상태 (exerciseId → 통과 여부). 비로그인/없으면 생략 */
   initialPassed?: Record<string, boolean>;
 }) {
@@ -87,6 +95,17 @@ export function ExerciseRunner({
     () => set.exercises.filter((ex) => passedById[ex.id]).length,
     [set.exercises, passedById],
   );
+  // 이 강 연습 전부 통과 — 순번이 아니라 개수로 판정 (건너뛰며 풀어도 정확).
+  const allExercisesPassed = passedCount === set.exercises.length;
+  // [다음 문제] 목적지 — 현재 이후부터 한 바퀴 돌며 첫 미해결 문제. 전부 통과면 -1.
+  const nextUnsolvedIndex = useMemo(() => {
+    const n = set.exercises.length;
+    for (let step = 1; step < n; step++) {
+      const i = (activeIndex + step) % n;
+      if (!passedById[set.exercises[i].id]) return i;
+    }
+    return -1;
+  }, [set.exercises, passedById, activeIndex]);
 
   function goTo(index: number) {
     if (index < 0 || index >= set.exercises.length) return;
@@ -403,23 +422,33 @@ export function ExerciseRunner({
           </div>
         )}
 
-        {/* 통과 안내 + 다음 문제 */}
+        {/* 통과 안내 + 다음 행동 — 남은 문제가 있으면 [다음 문제], 전부 통과면 [강의로 돌아가기].
+            재방문 때도 뜨는 배너라 완료 문구는 감탄 없이 사실만 적는다. */}
         {passed && (
           <div className="mt-4 flex items-center justify-between gap-3 rounded-xl bg-emerald-50 px-4 py-3 ring-1 ring-emerald-200">
             <p className="text-[13px] font-medium text-emerald-800">
-              통과했어요!{" "}
-              {activeIndex < set.exercises.length - 1
-                ? "다음 문제도 풀어보세요."
-                : "모든 문제를 풀었어요."}
+              {allExercisesPassed
+                ? "이 강 연습을 모두 통과했어요."
+                : "통과했어요! 다음 문제도 풀어보세요."}
             </p>
-            {activeIndex < set.exercises.length - 1 && (
-              <button
-                type="button"
-                onClick={() => goTo(activeIndex + 1)}
-                className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-[13px] font-semibold text-white transition hover:bg-emerald-700"
+            {allExercisesPassed ? (
+              <Link
+                href={lessonHref}
+                className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-[13px] font-semibold text-white transition hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
               >
-                다음 문제
-              </button>
+                강의로 돌아가기
+                <ArrowRight className="size-3.5" strokeWidth={2.5} aria-hidden />
+              </Link>
+            ) : (
+              nextUnsolvedIndex >= 0 && (
+                <button
+                  type="button"
+                  onClick={() => goTo(nextUnsolvedIndex)}
+                  className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-[13px] font-semibold text-white transition hover:bg-emerald-700"
+                >
+                  다음 문제
+                </button>
+              )
             )}
           </div>
         )}
