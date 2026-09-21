@@ -1,0 +1,150 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "generatedAt": "2026-09-21T08:39:43.165Z",
+  "results": [
+    {
+      "id": "A",
+      "name": "전축 100 · 제출 1회 · 약한 축 없음 (동점 — 실데이터 케이스)",
+      "input": "지난주 실력향상 문제 제출 1회, 통과율 100%\n축별 점수: 구문 정확도 100, 로직 구현도 100, 개념 이해도 100, 코드 효율성 100, 문제 해석력 100\n전주 대비 변화: 없음 (첫 리포트)\n가장 약한 축: 없음 (모든 축 동점)",
+      "comment": "지난주에는 실력향상 문제를 1회 제출했고 통과율은 100%였어요. 모든 축에서 높은 점수를 기록하며 문법과 로직을 안정적으로 다루고 있어요. 이제 다음 단원의 문제들로 넘어가서 새로운 개념을 학습해 보세요.",
+      "usage": {
+        "promptTokenCount": 873,
+        "candidatesTokenCount": 72,
+        "totalTokenCount": 945,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 873
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "id": "B",
+      "name": "보통 · 첫 리포트(delta 없음) · 로직 최저",
+      "input": "지난주 실력향상 문제 제출 4회, 통과율 50%\n축별 점수: 구문 정확도 90, 로직 구현도 55, 개념 이해도 60, 코드 효율성 100, 문제 해석력 100\n전주 대비 변화: 없음 (첫 리포트)\n가장 약한 축: 로직 구현도",
+      "comment": "지난주 실력향상 문제를 4회 제출했고 통과율은 50%예요. 코드 효율성과 문제 해석력 점수가 100점으로 가장 높게 나타났어요. 로직 구현도를 높이기 위해 예시 입력을 손으로 직접 따라가며 출력을 맞춰 본 뒤 코드로 옮겨 보세요.",
+      "usage": {
+        "promptTokenCount": 865,
+        "candidatesTokenCount": 79,
+        "totalTokenCount": 944,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 865
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "id": "C",
+      "name": "보통 · 전주 대비 로직 +15 (가장 많이 오른 축이자 최저 축)",
+      "input": "지난주 실력향상 문제 제출 6회, 통과율 67%\n축별 점수: 구문 정확도 92, 로직 구현도 70, 개념 이해도 75, 코드 효율성 95, 문제 해석력 88\n전주 대비 변화: 구문 정확도 +2, 로직 구현도 +15, 개념 이해도 -5, 코드 효율성 +0, 문제 해석력 +8\n가장 약한 축: 로직 구현도",
+      "comment": "지난주에는 실력향상 문제를 6번 제출했고 그중 67%를 통과했어요. 로직 구현도 점수가 지난주보다 15점 올라서 이전보다 더 복잡한 문제를 해결하는 데 익숙해졌어요. 다음 주에는 예시 입력을 손으로 직접 따라가며 출력을 맞춰 본 뒤 코드로 옮겨 보세요.",
+      "usage": {
+        "promptTokenCount": 888,
+        "candidatesTokenCount": 88,
+        "totalTokenCount": 976,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 888
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "id": "D",
+      "name": "저조 · 통과율 0% (정직하게 말하는지)",
+      "input": "지난주 실력향상 문제 제출 2회, 통과율 0%\n축별 점수: 구문 정확도 40, 로직 구현도 20, 개념 이해도 30, 코드 효율성 60, 문제 해석력 35\n전주 대비 변화: 없음 (첫 리포트)\n가장 약한 축: 로직 구현도",
+      "comment": "지난주에는 실력향상 문제를 2회 제출했고 통과율은 0%였어요. 코드 효율성 점수가 60점으로 가장 높게 나타났는데, 불필요한 중복 없이 코드를 작성하는 능력이 있어요. 다음 주에는 예시 입력을 손으로 직접 따라가며 출력을 맞춰 본 뒤 코드로 옮겨 보세요.",
+      "usage": {
+        "promptTokenCount": 862,
+        "candidatesTokenCount": 87,
+        "totalTokenCount": 949,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 862
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "id": "E",
+      "name": "AI 축 미측정 · 결정적 2축만 (구문 100 과대해석 여부)",
+      "input": "지난주 실력향상 문제 제출 3회, 통과율 33%\n축별 점수: 구문 정확도 100, 로직 구현도 45\n전주 대비 변화: 없음 (첫 리포트)\n가장 약한 축: 로직 구현도",
+      "comment": "지난주에는 실력향상 문제를 3회 제출했고 통과율은 33%예요. 구문 정확도 점수가 높아 문법 오류 없이 코드를 잘 작성했어요. 다음 주에는 예시 입력을 손으로 직접 따라가며 출력을 맞춰 본 뒤 코드로 옮겨 보세요.",
+      "usage": {
+        "promptTokenCount": 843,
+        "candidatesTokenCount": 73,
+        "totalTokenCount": 916,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 843
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "id": "F",
+      "name": "하락 주 · 대부분 축이 내려감",
+      "input": "지난주 실력향상 문제 제출 5회, 통과율 40%\n축별 점수: 구문 정확도 80, 로직 구현도 50, 개념 이해도 65, 코드 효율성 70, 문제 해석력 60\n전주 대비 변화: 구문 정확도 -10, 로직 구현도 -20, 개념 이해도 +0, 코드 효율성 -5, 문제 해석력 +5\n가장 약한 축: 로직 구현도",
+      "comment": "지난주에는 실력향상 문제를 5회 제출했고 그중 40%를 통과했어요. 문제 해석력 점수가 지난주보다 5점 올라서 요구사항을 꼼꼼히 확인하는 모습이 좋았어요. 다음 주에는 로직 구현도를 높이기 위해 예시 입력을 손으로 직접 따라가며 출력을 맞춰 본 뒤 코드로 옮겨 보세요.",
+      "usage": {
+        "promptTokenCount": 889,
+        "candidatesTokenCount": 88,
+        "totalTokenCount": 977,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 889
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "id": "G",
+      "name": "약한 축 = 문제 해석력 (로직 외 축 행동 지침 확인)",
+      "input": "지난주 실력향상 문제 제출 3회, 통과율 67%\n축별 점수: 구문 정확도 100, 로직 구현도 90, 개념 이해도 85, 코드 효율성 95, 문제 해석력 55\n전주 대비 변화: 없음 (첫 리포트)\n가장 약한 축: 문제 해석력",
+      "comment": "지난주에는 실력향상 문제를 3회 제출했고 통과율은 67%였어요. 구문 정확도가 100점으로 문법 오류 없이 코드를 작성했어요. 다음 주에는 제출하기 전에 문제의 출력 형식과 경계값 조건을 하나씩 다시 체크해 보세요.",
+      "usage": {
+        "promptTokenCount": 863,
+        "candidatesTokenCount": 73,
+        "totalTokenCount": 936,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 863
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "id": "H",
+      "name": "약한 축 = 구문 정확도 (실행 오류가 잦은 학습자)",
+      "input": "지난주 실력향상 문제 제출 4회, 통과율 25%\n축별 점수: 구문 정확도 50, 로직 구현도 60, 개념 이해도 80, 코드 효율성 90, 문제 해석력 85\n전주 대비 변화: 없음 (첫 리포트)\n가장 약한 축: 구문 정확도",
+      "comment": "지난주 실력향상 문제 4회를 제출했고 통과율은 25%였어요. 코드 효율성 점수가 90점으로 가장 높게 나타났어요. 다음 주에는 제출 전에 실행 버튼으로 코드를 먼저 돌려 보고 오류 메시지를 꼼꼼히 읽어 보세요.",
+      "usage": {
+        "promptTokenCount": 863,
+        "candidatesTokenCount": 73,
+        "totalTokenCount": 936,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 863
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    }
+  ]
+}

@@ -4,7 +4,12 @@ import { getCurrentUser } from "@/lib/auth/get-user";
 import { prisma } from "@/lib/prisma";
 import { isAiEnabled } from "@/lib/ai/config";
 import { GeminiError, generateJson } from "@/lib/ai/gemini";
-import { PYTHON_SKILL_AXES } from "@/lib/learning/skill-radar";
+import {
+  buildWeeklyCommentInput,
+  WEEKLY_COMMENT_SCHEMA,
+  WEEKLY_COMMENT_SYSTEM,
+  type WeeklyCommentInput,
+} from "./weekly-comment-prompt";
 import {
   buildWeeklyReportData,
   kstWeekStartDate,
@@ -18,47 +23,19 @@ import {
 //  · 없고 지난주 제출이 1건 이상이면 생성 후 반환 (유저·주당 1행 멱등 — 복합 PK)
 //  · 지난주 제출이 0건이면 행을 만들지 않고 report: null (카드가 "지난주 제출이 없어요" 표시)
 // LLM 코멘트는 best-effort — 실패/키 없음이면 llmComment=null 로 숫자 리포트만 저장.
+// 프롬프트·입력 조립은 weekly-comment-prompt.ts(SSOT) — 수정 시 `pnpm ai:weekly` 로 시나리오 전후 비교.
 
 export type WeeklyReportResult =
   | { ok: true; report: WeeklyReportPayload | null }
   | { ok: false; error: string };
 
-const COMMENT_SCHEMA = {
-  type: "OBJECT",
-  properties: { comment: { type: "STRING" } },
-  required: ["comment"],
-} as const;
-
-const COMMENT_SYSTEM = `당신은 파이썬 입문자 교육 플랫폼의 주간 학습 리포트 작성자입니다. 주어진 숫자 요약만 근거로 학습자에게 보여줄 한국어 코멘트를 2~3문장으로 작성합니다. 입문자 친화적이고 정직한 톤, 과장 금지, 이모지 금지. 잘한 점 하나와 다음 주에 집중할 축 하나를 짚어줍니다. 숫자에 없는 사실을 지어내지 않습니다.`;
-
-async function generateComment(data: {
-  submissionCount: number;
-  passRate: number;
-  axisScores: Record<string, number>;
-  axisDeltas: Record<string, number>;
-  weakestAxis: string | null;
-}): Promise<string | null> {
+async function generateComment(data: WeeklyCommentInput): Promise<string | null> {
   if (!isAiEnabled()) return null;
-  const label = (k: string) => PYTHON_SKILL_AXES.find((a) => a.key === k)?.label ?? k;
-  const lines = [
-    `지난주 제출 ${data.submissionCount}회, 통과율 ${data.passRate}%`,
-    `축별 점수: ${Object.entries(data.axisScores)
-      .map(([k, v]) => `${label(k)} ${v}`)
-      .join(", ")}`,
-  ];
-  const deltas = Object.entries(data.axisDeltas);
-  if (deltas.length > 0) {
-    lines.push(
-      `전주 대비 변화: ${deltas.map(([k, v]) => `${label(k)} ${v >= 0 ? "+" : ""}${v}`).join(", ")}`,
-    );
-  }
-  if (data.weakestAxis) lines.push(`가장 약한 축: ${label(data.weakestAxis)}`);
-
   try {
     const { data: raw } = await generateJson({
-      system: COMMENT_SYSTEM,
-      user: lines.join("\n"),
-      schema: COMMENT_SCHEMA,
+      system: WEEKLY_COMMENT_SYSTEM,
+      user: buildWeeklyCommentInput(data),
+      schema: WEEKLY_COMMENT_SCHEMA,
       maxOutputTokens: 400,
     });
     const comment =

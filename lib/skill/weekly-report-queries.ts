@@ -114,9 +114,15 @@ export async function buildWeeklyReportData(userId: string, weekStartDate: Date)
     if (typeof prevScores[k] === "number") axisDeltas[k] = v - prevScores[k];
   }
 
+  // 최저 축 — 단, 측정된 축이 전부 같은 점수(예: 전부 100)면 약점이라 부를 축이 없다.
+  // 단순 최소값을 쓰면 첫 축(구문)이 잡혀 "만점인데 구문을 더 보라"는 억지 권고가 나왔음(2026-09-11 실데이터).
   let weakestAxis: string | null = null;
-  for (const [k, v] of Object.entries(axisScores)) {
-    if (weakestAxis === null || v < axisScores[weakestAxis]) weakestAxis = k;
+  const values = Object.values(axisScores);
+  const allTied = values.length > 0 && values.every((v) => v === values[0]);
+  if (!allTied) {
+    for (const [k, v] of Object.entries(axisScores)) {
+      if (weakestAxis === null || v < axisScores[weakestAxis]) weakestAxis = k;
+    }
   }
 
   return { submissionCount, passRate, axisScores, axisDeltas, weakestAxis };
