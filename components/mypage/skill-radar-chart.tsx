@@ -35,7 +35,14 @@ function polygonPoints(values: number[]): string {
     .join(" ");
 }
 
-export function SkillRadarChart({ points }: { points: RadarPoint[] }) {
+export function SkillRadarChart({
+  points,
+  ariaLabel = "코딩 역량 레이더 차트 (나 vs 전체 평균)",
+}: {
+  points: RadarPoint[];
+  /** 두 번째 폴리곤(amber)이 "전체 평균"이 아닐 때(예: 주간 리포트의 전주 스냅샷) 설명을 바꿔 준다 */
+  ariaLabel?: string;
+}) {
   const n = points.length;
   if (n === 0) return null;
 
@@ -49,7 +56,7 @@ export function SkillRadarChart({ points }: { points: RadarPoint[] }) {
       viewBox={`0 0 ${VW} ${VH}`}
       className="mx-auto h-auto w-full max-w-[360px]"
       role="img"
-      aria-label="코딩 역량 레이더 차트 (나 vs 전체 평균)"
+      aria-label={ariaLabel}
     >
       {/* 동심 격자 */}
       {RINGS.map((r) => (

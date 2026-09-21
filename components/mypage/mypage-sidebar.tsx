@@ -13,6 +13,7 @@ const NAV = [
   { href: "/mypage/posts", label: "내 글", icon: mypageIcons.penSquare },
   { href: "/mypage/likes", label: "좋아요", icon: mypageIcons.heart },
   { href: "/mypage/calendar", label: "학습 캘린더", icon: mypageIcons.calendar },
+  { href: "/mypage/weekly", label: "주간 성장 리포트", icon: mypageIcons.chart },
   { href: "/mypage/settings", label: "설정", icon: mypageIcons.settings },
 ] as const;
 
@@ -61,9 +62,7 @@ export function MypageSidebar() {
               aria-current={isActive ? "page" : undefined}
               className={cn(
                 "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition",
-                isActive
-                  ? "bg-violet-50 text-violet-700"
-                  : "text-zinc-600 hover:bg-zinc-50",
+                isActive ? "bg-violet-50 text-violet-700" : "text-zinc-600 hover:bg-zinc-50",
               )}
             >
               <Icon className="size-4" />
