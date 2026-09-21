@@ -47,7 +47,7 @@ export const LESSON_THEMES: LessonTheme[] = [
   {
     key: "advanced",
     label: "함수·응용",
-    lessons: [9, 10, 11, 12, 13],
+    lessons: [9, 10, 11, 12, 13, 14, 15],
     lightClass: "bg-amber-100 text-amber-800 ring-1 ring-amber-200",
     deepClass: "bg-amber-500 text-white",
     dotClass: "bg-amber-500",

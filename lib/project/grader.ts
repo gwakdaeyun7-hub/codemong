@@ -87,7 +87,13 @@ function buildWrapper(userCode: string, stdin: string[], seed?: number): string 
   // 학습자 코드는 exec 로 실행 → 래퍼와의 들여쓰기 충돌이 없다.
   return [
     ...seedLines,
-    "import sys, io, json, builtins",
+    "import sys, io, json, builtins, os, tempfile",
+    "",
+    // 파일 입출력(11강)은 브라우저 가상 파일 시스템에 남는다 — 실행마다 빈 임시 폴더로 옮겨
+    // 이전 실행의 result.txt 같은 잔재가 채점을 오염시키지 않게 한다.
+    "__cm_cwd = os.getcwd()",
+    "__cm_tmp = tempfile.mkdtemp()",
+    "os.chdir(__cm_tmp)",
     "",
     "class __CMOut(io.StringIO):",
     "    def write(self, s):",
@@ -116,6 +122,7 @@ function buildWrapper(userCode: string, stdin: string[], seed?: number): string 
     "    __cm_err = type(__cm_e).__name__ + ': ' + str(__cm_e)",
     "finally:",
     "    sys.stdout = __cm_old",
+    "    os.chdir(__cm_cwd)",
     "__cm_out = __cm_buf.getvalue()",
   ].join("\n");
 }
@@ -141,16 +148,36 @@ export type InputRequester = (prompt: string) => Promise<string>;
 // 그러면 입력을 화면 내 커스텀 UI(Promise) 로 받을 수 있다 — input() 을 만날 때마다 멈춰서
 // 모달이 뜨고, 입력하면 진행. Web Worker/SharedArrayBuffer/특수 헤더 없이 메인스레드에서 동작.
 function buildAsyncWrapper(userCode: string): string {
-  const transformed = userCode.replace(/\binput\s*\(/g, "await __cm_ainput(");
+  // 학습자가 정의한 함수 이름 수집 — 함수 안에서 input() 을 부르면 await 가 필요하므로
+  // 모든 def 를 async def 로, 그 함수 호출을 await 호출로 바꾼다 (14·15강 "함수로 기능 분리").
+  // 입문자 코드(최상위 def + 단순 호출) 범위를 노린 변환이라 람다·메서드·고차 함수는 다루지 않는다.
+  // 텍스트 치환이라 문자열 리터럴 안의 "input(" 도 바뀐다 — 프로젝트 지문/은행 문장에 input() 을
+  // 글자로 넣지 말 것 (14강 퀴즈 문항에서 실제로 걸려 "키보드로 입력받은 값"으로 바꿈).
+  const fnNames = [...userCode.matchAll(/^[ \t]*def[ \t]+([A-Za-z_]\w*)[ \t]*\(/gm)].map(
+    (m) => m[1],
+  );
+  let transformed = userCode.replace(/\binput\s*\(/g, "await __cm_ainput(");
+  if (fnNames.length > 0) {
+    transformed = transformed.replace(/^([ \t]*)def([ \t]+)/gm, "$1async def$2");
+    const names = fnNames.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+    // "def name(" / "obj.name(" / 이미 "await name(" 인 곳은 제외
+    transformed = transformed.replace(
+      new RegExp(`(?<![\\w.])(?<!def[ \\t]+)(?<!await[ \\t]+)(${names})[ \\t]*\\(`, "g"),
+      "await $1(",
+    );
+  }
   const body = transformed
     .split("\n")
     .map((line) => "    " + line)
     .join("\n");
   return [
-    "import sys, io",
+    "import sys, io, os, tempfile",
     "__cm_buf = io.StringIO()",
     "__cm_old = sys.stdout",
     "__cm_err = ''",
+    "__cm_cwd = os.getcwd()",
+    "__cm_tmp = tempfile.mkdtemp()",
+    "os.chdir(__cm_tmp)",
     "async def __cm_main():",
     "    pass",
     body,
@@ -163,6 +190,7 @@ function buildAsyncWrapper(userCode: string): string {
     "    __cm_err = type(__cm_e).__name__ + ': ' + str(__cm_e)",
     "finally:",
     "    sys.stdout = __cm_old",
+    "    os.chdir(__cm_cwd)",
     "__cm_out = __cm_buf.getvalue()",
   ].join("\n");
 }

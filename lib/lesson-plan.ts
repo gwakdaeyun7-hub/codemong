@@ -52,7 +52,7 @@ export type LessonPlan = {
 
 export const pythonLessonPlan: LessonPlan = {
   courseId: "be-python",
-  totalLessons: 13,
+  totalLessons: 15,
   // durationMinutes 산출 (2026-09-04 실측 반영):
   //   영상 = public/videos/python-lesson-N.mp4 ffprobe 실측을 분 단위 반올림 (합계 43분)
   //   연습 = 그 강 exercise-content.ts 문제 수 × 7분 (추정 — UI 라벨에 "예상" 표기)
@@ -73,6 +73,8 @@ export const pythonLessonPlan: LessonPlan = {
     { id: "lesson-11", number: 11, title: "파일 입출력", durationMinutes: 10 },
     { id: "lesson-12", number: 12, title: "디버깅 & AI 활용", durationMinutes: 18 },
     { id: "lesson-13", number: 13, title: "계산기 만들기", durationMinutes: 40, kind: "project" },
+    { id: "lesson-14", number: 14, title: "랜덤 복습 퀴즈", durationMinutes: 50, kind: "project" },
+    { id: "lesson-15", number: 15, title: "키오스크 만들기", durationMinutes: 60, kind: "project" },
   ],
   tips: [
     "매일 짧게라도 코드를 직접 쳐보세요",

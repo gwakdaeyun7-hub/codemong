@@ -111,7 +111,8 @@ export function ProjectRunner({
     setRunning(true);
     setConsoleOut(null);
     try {
-      const result = await gradeStep(code, project.tests);
+      // seed 가 있는 프로젝트(14강 랜덤 퀴즈)는 채점만 결정적으로 — "실행"은 진짜 무작위
+      const result = await gradeStep(code, project.tests, project.seed);
       setCases(result.cases);
       if (result.allPassed) {
         setCompleted(true);

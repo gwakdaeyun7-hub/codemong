@@ -4,7 +4,7 @@
 // 라우팅: /courses/[courseId]/lessons/[lessonId]
 //   - courseId ∈ {python, be-python}
 //   - 영상 강의: lessonId ∈ {"lesson-1" ~ "lesson-12"} (getLessonContent 매칭) → 영상 카드
-//   - 프로젝트 강의: lessonId == "lesson-13" (getProject 매칭) → 영상 대신 ProjectRunner
+//   - 프로젝트 강의: getProject 매칭(13~15강) → 영상 대신 ProjectRunner
 //   - 그 외엔 notFound()
 //   - 로그인 필수 (영상/프로젝트 모두) — 비로그인은 로그인 후 이 강의로 돌아오게 한다.
 //
@@ -64,7 +64,7 @@ export default async function LessonContentPage({
   const courseMeta =
     courses.find((c) => c.id === courseId) ?? courses.find((c) => c.id === "be-python");
 
-  // 본문 분기: 프로젝트형(lesson-13) 우선, 아니면 영상 강의.
+  // 본문 분기: 프로젝트형(13~15강, getProject) 우선, 아니면 영상 강의.
   const project = getProject(courseId, lessonId);
   const content = project ? undefined : getLessonContent(courseId, lessonId);
 
@@ -91,7 +91,7 @@ export default async function LessonContentPage({
   // 이 강의 연습 통과 수 — 진입 카드 "N/M 통과" 배지용 (연습 없으면 카드 자체가 안 뜸).
   const exercisePassedCount = exerciseStatuses[lessonId]?.passed;
 
-  // 영상 강의 이전/다음 라우트 — 콘텐츠 등록된 영상 강의 또는 프로젝트 강의(lesson-13)면 활성 링크.
+  // 영상 강의 이전/다음 라우트 — 콘텐츠 등록된 영상 강의 또는 프로젝트 강의면 활성 링크.
   // (12강 → 13강 계산기처럼 영상→프로젝트 전환도 getProject 로 매칭해 링크 활성화)
   let previousHref: string | null = null;
   let nextHref: string | null = null;
@@ -107,22 +107,27 @@ export default async function LessonContentPage({
     nextHref = resolveLessonHref(content.navigation.next);
   }
 
-  // 프로젝트 강의 네비 — 이전 강의(번호-1)만, 다음은 없음(현재 마지막 강).
+  // 프로젝트 강의 네비 — 이전/다음 모두 번호±1 로 잡고, 영상 콘텐츠든 프로젝트든 등록돼 있으면 활성 링크.
+  // (13강 계산기 → 14강 랜덤 퀴즈 → 15강 키오스크처럼 프로젝트끼리도 이어진다. 마지막 강이면 next=null.)
   let projectNav: LessonNavData | null = null;
   let projectPrevHref: string | null = null;
+  let projectNextHref: string | null = null;
   let projectDurationMinutes = 45;
   if (project) {
     const projectLesson = plan.lessons.find((l) => l.id === lessonId);
     if (projectLesson) projectDurationMinutes = projectLesson.durationMinutes;
     const prevLesson = plan.lessons.find((l) => l.number === project.lessonNumber - 1);
+    const nextLesson = plan.lessons.find((l) => l.number === project.lessonNumber + 1);
+    const hrefIfRegistered = (id: string | undefined): string | null =>
+      id && (getLessonContent(courseId, id) || getProject(courseId, id))
+        ? `/courses/${courseId}/lessons/${id}`
+        : null;
     projectNav = {
       previous: prevLesson ? { number: prevLesson.number, title: prevLesson.title } : null,
-      next: null,
+      next: nextLesson ? { number: nextLesson.number, title: nextLesson.title } : null,
     };
-    projectPrevHref =
-      prevLesson && getLessonContent(courseId, prevLesson.id)
-        ? `/courses/${courseId}/lessons/${prevLesson.id}`
-        : null;
+    projectPrevHref = hrefIfRegistered(prevLesson?.id);
+    projectNextHref = hrefIfRegistered(nextLesson?.id);
   }
 
   // 강좌 상단 헤더용 카운트 — 실제 진도(lessonStatuses) 기반. (강의 목록 화면과 동일 산식)
@@ -184,7 +189,7 @@ export default async function LessonContentPage({
                     <LessonNavigation
                       navigation={projectNav}
                       previousHref={projectPrevHref}
-                      nextHref={null}
+                      nextHref={projectNextHref}
                     />
                   )}
                   <CommentSection target={{ kind: "lesson", lessonRef }} />
