@@ -181,7 +181,7 @@ export const pythonLesson14Project: Project = {
     "파이썬 개념 문제를 딕셔너리 리스트로 모아 두고, 무작위로 뽑아 출제·채점한 뒤 결과를 파일에 남기는 복습 퀴즈를 완성하는 미션입니다.",
   goal: "리스트·딕셔너리로 문제 은행 → random 으로 무작위 출제 → 함수로 채점·저장을 한 프로그램에 담습니다.",
   concepts: ["리스트", "딕셔너리", "함수", "random", "파일 입출력"],
-  prompt: `1~12강에서 배운 것만으로 "랜덤 복습 퀴즈" 프로그램을 완성하세요. 퀴즈 문제 자체가 앞에서 배운 파이썬 내용이라, 만들면서 한 번 더 복습하게 됩니다.
+  prompt: `7~12강에서 배운 것(리스트·딕셔너리·함수·random·파일 입출력)을 중심으로 "랜덤 복습 퀴즈" 프로그램을 완성하세요. 입력·조건문·반복문 같은 1~6강 기초는 그대로 씁니다. 퀴즈 문제 자체가 앞에서 배운 파이썬 내용이라, 만들면서 한 번 더 복습하게 됩니다.
 
 문제 은행은 아래 8문항을 딕셔너리 리스트로 만듭니다. 각 문항은 {"question": 질문, "answer": 정답} 형태입니다. 질문 문구는 조금 바꿔도 되지만, 문항의 순서와 정답은 그대로 두세요. (채점에 쓰입니다)
 1) 값을 화면에 보여주는 함수의 이름은? → print
@@ -435,6 +435,7 @@ export const pythonLesson15Project: Project = {
 
 메뉴는 아래 4가지를 딕셔너리로 만듭니다. (이름 → 가격, 원 단위 정수)
 아메리카노 3000 / 카페라떼 4000 / 녹차 3500 / 샌드위치 5500
+메뉴를 순서대로 출력할 수 있게 이름만 담은 리스트도 함께 만들어 두세요. (7강 리스트 + 8강 딕셔너리 조회)
 
 프로그램은 다음 순서로 동작합니다.
 1) 시작하면 "[메뉴]" 를 출력한 뒤, 메뉴 이름과 가격을 한 줄에 하나씩 "아메리카노 3000원" 형태로 출력합니다.
@@ -453,6 +454,7 @@ export const pythonLesson15Project: Project = {
 
 [규칙]
 · 함수를 최소 3개 만들어 역할을 나눕니다: 메뉴 출력 / 주문을 리스트에 담기 / 영수증 줄들을 만들어 돌려주기.
+· 9강에서는 함수에 숫자·문자열만 넘겼지만, 여기서는 주문 리스트를 함수에 그대로 넘겨 담고 읽습니다. 넘기는 방법은 똑같아요 — 괄호 안에 변수 이름을 적으면 됩니다.
 · 주문 하나는 {"name": 이름, "count": 수량} 딕셔너리로 리스트에 담습니다. 같은 메뉴를 두 번 담으면 영수증에도 두 줄로 나옵니다. (합치지 않아도 됩니다)
 · 금액 = 가격 × 수량. 정수로 계산하고, 문자열과 이어 붙일 땐 str() 로 바꿉니다.
 · 파일에 여러 줄을 적을 땐 줄마다 f.write(줄 + "\\n") 처럼 씁니다. "\\n" 은 줄바꿈 글자예요. 파일은 with open("receipt.txt", "w") 로 쓰고, with open("receipt.txt", "r") 로 다시 읽습니다.
@@ -484,10 +486,11 @@ export const pythonLesson15Project: Project = {
 
 `,
   solutionCode: `menu = {"아메리카노": 3000, "카페라떼": 4000, "녹차": 3500, "샌드위치": 5500}
+names = ["아메리카노", "카페라떼", "녹차", "샌드위치"]
 
 def show_menu():
     print("[메뉴]")
-    for name in menu:
+    for name in names:
         print(name + " " + str(menu[name]) + "원")
 
 def add_order(orders, name, count):
@@ -531,16 +534,17 @@ else:
     print("영수증 저장 완료")
 `,
   hints: [
-    '메뉴 딕셔너리부터 만드세요. menu = {"아메리카노": 3000, "카페라떼": 4000, "녹차": 3500, "샌드위치": 5500}. 메뉴 출력 함수는 def show_menu(): 안에서 "[메뉴]" 를 출력하고, for name in menu: 로 이름을 하나씩 꺼내 print(name + " " + str(menu[name]) + "원") 합니다(8강). 가격은 숫자라서 str() 로 바꿔야 이어 붙일 수 있어요.',
+    '메뉴 딕셔너리와 이름 리스트를 함께 만드세요. menu = {"아메리카노": 3000, ...} 와 names = ["아메리카노", "카페라떼", "녹차", "샌드위치"]. 메뉴 출력 함수는 def show_menu(): 안에서 "[메뉴]" 를 출력하고, for name in names: 로 이름을 하나씩 꺼내(7강) print(name + " " + str(menu[name]) + "원") 으로 그 이름의 가격을 조회해 출력합니다(8강). 가격은 숫자라서 str() 로 바꿔야 이어 붙일 수 있어요.',
     'orders = [] 를 만들고 while True: 로 반복하세요. name = input() 으로 이름을 받아 if name == "종료": break. 그 다음 if name in menu: 로 메뉴에 있는지 확인하고, else: 에서 "메뉴에 없습니다" 를 출력하면 자동으로 다음 반복(다시 이름 입력)으로 갑니다(6강). 없는 메뉴일 땐 수량을 묻지 않도록 int(input()) 은 if 안쪽에 두세요.',
     '메뉴에 있으면 count = int(input()) 으로 수량을 받고, if count < 1: "수량은 1 이상이어야 합니다" 를 출력, else: 에서 담기 함수를 부르세요. def add_order(orders, name, count): 안에서 orders.append({"name": name, "count": count}) 로 딕셔너리를 리스트에 넣고 print(name + " " + str(count) + "개 담았습니다") 합니다(7강·9강).',
     '반복이 끝나면 if len(orders) == 0: "주문한 메뉴가 없습니다". 아니면 def make_receipt(orders): 로 영수증 줄을 만드세요 — lines = ["[영수증]"] 에서 시작해 for order in orders: 마다 price = menu[order["name"]] * order["count"] 를 계산해 lines.append(order["name"] + " x " + str(order["count"]) + " = " + str(price) + "원"), total 에 price 를 누적하고 마지막에 "합계 " + str(total) + "원" 을 append 한 뒤 return lines. 파일은 with open("receipt.txt", "w") as f: 안에서 for line in lines: f.write(line + "\\n"), 다시 "r" 로 열어 print(f.read()), 끝으로 "영수증 저장 완료" 를 출력합니다(11강).',
     `정답 예시:
 menu = {"아메리카노": 3000, "카페라떼": 4000, "녹차": 3500, "샌드위치": 5500}
+names = ["아메리카노", "카페라떼", "녹차", "샌드위치"]
 
 def show_menu():
     print("[메뉴]")
-    for name in menu:
+    for name in names:
         print(name + " " + str(menu[name]) + "원")
 
 def add_order(orders, name, count):
