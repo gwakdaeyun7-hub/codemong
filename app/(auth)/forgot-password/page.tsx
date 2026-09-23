@@ -9,7 +9,7 @@ export default function ForgotPasswordPage() {
   return (
     <AuthLayout
       title="비밀번호를 잊으셨나요?"
-      description="가입하신 이메일을 입력하시면 비밀번호 재설정 링크를 보내드립니다."
+      description="가입한 이메일을 입력하면 비밀번호 재설정 링크를 보내드려요."
       footer={
         <>
           비밀번호가 기억나셨나요?{" "}

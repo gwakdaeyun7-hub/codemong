@@ -120,7 +120,7 @@ export function ProjectRunner({
           try {
             const res = await passProjectAction(lessonRef, code);
             if (res.ok) {
-              success("프로젝트를 완료했어요. 축하합니다!");
+              success("프로젝트를 완료했어요.");
             } else {
               toastError(res.error);
             }
@@ -298,7 +298,7 @@ export function ProjectRunner({
           {completed && (
             <div className="rounded-xl bg-emerald-50 px-4 py-3 ring-1 ring-emerald-200">
               <p className="text-[13px] font-medium text-emerald-800">
-                통과했어요! 계산기를 완성했습니다.
+                통과했어요. 「{project.title}」를 완성했어요.
               </p>
             </div>
           )}

@@ -30,9 +30,6 @@ export default async function MyLikesPage() {
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
           좋아요
         </h1>
-        <p className="mt-1 text-sm text-zinc-500">
-          내가 좋아요 표시한 강의와 글이 모입니다.
-        </p>
       </header>
 
       <section className="space-y-3">

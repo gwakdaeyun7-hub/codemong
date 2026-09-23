@@ -140,7 +140,7 @@ export function ExamDdayCard({
           <p className="flex items-start gap-2 text-[13px] leading-relaxed text-amber-900">
             <Target className="mt-0.5 size-4 shrink-0 text-amber-600" aria-hidden />
             <span>
-              {next.dday === 0 ? "오늘이 시험날이에요!" : `시험까지 ${next.dday}일 남았어요!`}{" "}
+              {next.dday === 0 ? "오늘이 시험날이에요." : `시험까지 ${next.dday}일 남았어요.`}{" "}
               {weakest.reason === "score" ? (
                 <>
                   그동안 가장 점수가 낮았던 <span className="font-semibold">{weakest.title}</span>{" "}

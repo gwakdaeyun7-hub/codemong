@@ -130,7 +130,7 @@ const l3ex2: Exercise = {
   prompt: `age 라는 변수에 먼저 5 를 넣었다가, 다시 6 을 넣은 뒤, age 를 출력하세요.
 
 같은 변수에 새 값을 넣으면 이전 값은 사라집니다. 그래서 출력은 5 가 아니라 6 이 됩니다.`,
-  note: `변수는 "값을 담는 상자"라서, 새 값을 넣으면 들어 있던 값이 밀려나고 마지막에 넣은 값만 남아요 (3강). 직접 출력해서 정말 6 이 나오는지 확인해 보세요.`,
+  note: `변수는 "값을 담는 상자"라서, 새 값을 넣으면 들어 있던 값이 밀려나고 마지막에 넣은 값만 남아요 (3강).`,
   conceptTags: ["3강 변수", "3강 재할당"],
   example: { stdin: [], stdout: "6" },
   starterCode: `age = 5
@@ -472,7 +472,7 @@ const l6ex3: Exercise = {
   prompt: `정수 N 을 입력받아, N 단을 출력하세요. (N×1 부터 N×9 까지의 결과를 한 줄에 하나씩)
 
 예) 2 → 2, 4, 6, 8, 10, 12, 14, 16, 18`,
-  note: `반복(6강)과 곱셈(4강)을 합치는 문제예요. range(1, 10) 으로 1부터 9까지 돌면서, 매번 N * i 를 출력하면 한 단이 완성됩니다. (영상에서 구구단을 직접 다루진 않았지만, 배운 for·range·곱셈만으로 풀 수 있어요.)`,
+  note: `반복(6강)과 곱셈(4강)을 합치는 문제예요. range(1, 10) 으로 1부터 9까지 돌면서, 매번 N * i 를 출력하면 한 단이 완성됩니다.`,
   conceptTags: ["6강 for/range", "4강 곱셈"],
   example: { stdin: ["2"], stdout: "2\n4\n6\n8\n10\n12\n14\n16\n18" },
   starterCode: `n = int(input())
@@ -880,7 +880,7 @@ const l10ex2: Exercise = {
 목록(리스트) 중에서 하나를 고를 땐 random.choice 를 씁니다 (10강).
 
 random.choice(["가위", "바위", "보"]) 처럼요.`,
-  note: `randint 는 "범위 안의 숫자", choice 는 "목록에서 하나"를 뽑아요(10강). [실행] 은 매번 다른 걸 뽑지만, [제출] 채점은 고정된 방식으로 확인하니 random.choice 에 ["가위", "바위", "보"] 세 개를 그대로 넣으면 통과합니다.`,
+  note: `randint 는 "범위 안의 숫자", choice 는 "목록에서 하나"를 뽑아요(10강). random.choice 에 ["가위", "바위", "보"] 세 개를 그대로 넣으면 통과합니다.`,
   conceptTags: ["10강 import", "10강 random.choice"],
   seed: 5,
   starterCode: `import random

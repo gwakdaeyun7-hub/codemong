@@ -112,7 +112,7 @@ export function EmailSignupForm() {
       </div>
 
       <p className="text-xs text-zinc-500">
-        가입 시 CodeMong 의 서비스 정책에 동의하는 것으로 간주됩니다.
+        가입하면 CodeMong 의 서비스 정책에 동의한 것으로 봐요.
       </p>
 
       <button

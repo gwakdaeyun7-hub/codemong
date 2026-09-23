@@ -64,10 +64,6 @@ export default async function LessonPracticePage({
           <h1 className="mt-1 text-lg font-bold tracking-tight text-zinc-900 sm:text-xl">
             {set.title}
           </h1>
-          <p className="mt-1.5 text-[13px] leading-relaxed text-zinc-600 sm:text-sm">
-            이 강에서 배운 문법으로 푸는 코딩 연습 문제예요. 코드를 직접 작성하고 제출하면 자동으로
-            채점됩니다.
-          </p>
         </header>
 
         <ExerciseRunner

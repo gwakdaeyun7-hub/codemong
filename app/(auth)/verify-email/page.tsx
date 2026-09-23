@@ -14,7 +14,7 @@ export default async function VerifyEmailPage({
 
   return (
     <AuthLayout
-      title="이메일을 확인해주세요"
+      title="이메일을 확인해 주세요"
       footer={
         <>
           잘못된 이메일을 입력하셨나요?{" "}
@@ -44,8 +44,8 @@ export default async function VerifyEmailPage({
             )}
           </p>
           <p className="text-zinc-500">
-            메일의 링크를 클릭하면 가입이 완료됩니다. 메일이 보이지 않는다면
-            스팸함도 확인해주세요.
+            메일의 링크를 누르면 가입이 끝나요. 메일이 보이지 않으면
+            스팸함도 확인해 주세요.
           </p>
         </div>
 

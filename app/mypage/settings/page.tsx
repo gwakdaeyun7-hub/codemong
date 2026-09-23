@@ -21,9 +21,6 @@ export default async function SettingsPage() {
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
           설정
         </h1>
-        <p className="mt-1 text-sm text-zinc-500">
-          프로필 정보와 계정 보안을 관리하세요.
-        </p>
       </header>
 
       <SettingsSection
@@ -36,7 +33,6 @@ export default async function SettingsPage() {
       {isEmailUser ? (
         <SettingsSection
           title="비밀번호"
-          description="안전을 위해 정기적으로 변경하는 것을 권장합니다."
         >
           <PasswordChangeForm />
         </SettingsSection>
@@ -72,7 +68,7 @@ export default async function SettingsPage() {
               로 문의해주세요.
             </p>
             <p className="text-xs text-rose-600">
-              자동 삭제는 백엔드 라운드에서 추가될 예정입니다.
+              자동 삭제는 아직 지원하지 않아요.
             </p>
           </div>
         </div>

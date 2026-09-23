@@ -91,10 +91,10 @@ export function LearningCalendar({
             </span>
             <div>
               <p className="text-xl font-bold text-white sm:text-2xl">
-                {calendar.streak}일 연속 열공 중!
+                {calendar.streak}일 연속 학습 중
               </p>
               <p className="mt-0.5 text-[13px] text-violet-100">
-                최근 6개월 동안 {calendar.activeDays}일 학습했어요. 오늘도 이어가 볼까요?
+                최근 6개월 동안 {calendar.activeDays}일 학습했어요.
               </p>
             </div>
           </div>
@@ -260,8 +260,7 @@ export function LearningCalendar({
           <>
             <h2 className="text-sm font-bold text-zinc-900">날짜별 학습 리포트</h2>
             <p className="mt-2 text-[13px] leading-relaxed text-zinc-500">
-              캘린더에서 날짜를 누르면 그날 들은 강의, 푼 문제와 정답률, 자주 나온 오답 태그를 볼 수
-              있어요.
+              날짜를 선택하면 그날의 학습 내용이 나와요.
             </p>
           </>
         )}

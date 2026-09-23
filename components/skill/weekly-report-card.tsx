@@ -90,7 +90,7 @@ export function WeeklyReportCard({ variant = "summary" }: { variant?: "summary" 
         <>
           <h2 className="text-base font-bold text-zinc-900">지난주 성장</h2>
           <p className="mt-0.5 text-[12px] text-zinc-500">
-            5개 축의 누적 점수를 전주 스냅샷과 비교해요. 문제를 새로 제출한 축만 움직입니다.
+            문제를 새로 제출한 축만 점수가 움직여요.
           </p>
         </>
       ) : (
@@ -220,7 +220,7 @@ export function WeeklyReportCard({ variant = "summary" }: { variant?: "summary" 
             <p className="mt-3 text-[12px] leading-relaxed text-zinc-600">
               지금 가장 약한 축은{" "}
               <span className="font-semibold text-violet-700">{state.report.weakestAxisLabel}</span>
-              이에요. 이 축을 다루는 문제를 골라 풀면 균형 있게 성장할 수 있어요.
+              이에요.
             </p>
           )}
 

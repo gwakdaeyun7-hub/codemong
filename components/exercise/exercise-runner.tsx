@@ -395,8 +395,7 @@ export function ExerciseRunner({
               채점 결과 — {passedCases}/{cases.length} 통과
             </p>
             <p className="text-[11px] text-zinc-400">
-              채점은 정해진 입력들을 자동으로 넣어 코드가 여러 경우에 맞게 도는지 확인해요. (위에서
-              직접 입력한 값과는 별개)
+              정해진 입력들로 자동 채점한 결과예요.
             </p>
             {cases.map((c, i) => (
               <div

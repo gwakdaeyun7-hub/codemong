@@ -69,12 +69,12 @@ export const pythonCourseDetail: CourseDetail = {
     { text: "파일 읽고 쓰는 작은 프로그램 완성하기", iconHint: "FileText" },
   ],
   roadmap: [
-    { step: 1, label: "개념설명", description: "변수, 함수 등 기초 문법을 예제로 익혀요" },
-    { step: 2, label: "개념응용", description: "배운 문법을 작은 코드에 직접 적용해요" },
-    { step: 3, label: "문제해결", description: "퀴즈와 미니 과제로 실력을 점검해요" },
-    { step: 4, label: "학습완료", description: "각 단원의 핵심 개념을 정리하고 마무리해요" },
-    { step: 5, label: "성장피드백", description: "오답을 분석해 약한 부분을 보완해요" },
-    { step: 6, label: "다음단계추천", description: "데이터 분석, 웹 백엔드 등 다음 길을 안내해요" },
+    { step: 1, label: "개념설명", description: "강의 영상으로 문법을 익혀요" },
+    { step: 2, label: "개념응용", description: "강별 연습 문제로 배운 문법을 바로 코드로 써 봐요" },
+    { step: 3, label: "문제해결", description: "실력향상 문제에서 전체 코드를 작성하고 자동 채점받아요" },
+    { step: 4, label: "학습완료", description: "영상과 연습을 모두 마치면 그 강의가 완료로 기록돼요" },
+    { step: 5, label: "성장피드백", description: "AI 진단과 5축 레이더, 주간 리포트로 약한 부분을 봐요" },
+    { step: 6, label: "다음단계추천", description: "준비 중 — 다음 코스 안내는 아직 없어요" },
   ],
   recommendedFor: [
     "코딩 자체가 처음이라 두려운 분",
@@ -89,8 +89,8 @@ export const pythonCourseDetail: CourseDetail = {
     "주 3~4시간 학습 시간 확보 권장",
   ],
   cta: {
-    headline: "준비됐나요? Python 첫 줄을 함께 써봐요!",
-    subtext: "강의 목록에서 첫 번째 강의부터 순서대로 시작합니다.",
+    headline: "Python 첫 줄을 함께 써봐요",
+    subtext: "영상 12강 + 프로젝트 3강, 예상 6시간",
     buttonLabel: "학습 시작",
   },
   // 실제 수강생 후기가 쌓이기 전까지 미노출 (가짜 후기 금지). 빈 배열이면 소개 페이지에서 후기 섹션을 렌더하지 않는다.

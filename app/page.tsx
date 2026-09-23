@@ -33,7 +33,7 @@ export default async function HomePage() {
             코드 학습
           </h1>
           <p className="mt-1 text-sm text-zinc-500">
-            강의 영상으로 기초부터 차근차근 배워보세요.
+            영상 강의와 연습 문제로 배우는 코스예요.
           </p>
         </div>
 

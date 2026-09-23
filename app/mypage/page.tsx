@@ -24,7 +24,6 @@ export default async function MypagePage() {
     <div className="space-y-5">
       <header>
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900">마이페이지</h1>
-        <p className="mt-1 text-sm text-zinc-500">내 학습 현황과 프로필을 확인하세요.</p>
       </header>
 
       <ProfileSummaryCard user={user} />

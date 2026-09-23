@@ -280,7 +280,7 @@ export function ProblemRunner({
                 </p>
               ) : cases === null ? (
                 <p className="font-mono text-[12px] text-zinc-500">
-                  코드 실행 또는 제출을 누르면 결과가 여기에 표시됩니다.
+                  아직 실행 결과가 없어요.
                 </p>
               ) : (
                 <div className="flex flex-col gap-1.5">

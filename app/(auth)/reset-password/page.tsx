@@ -20,7 +20,7 @@ export default async function ResetPasswordPage() {
   return (
     <AuthLayout
       title="새 비밀번호 설정"
-      description="사용하실 새 비밀번호를 입력해주세요."
+      description="새 비밀번호를 입력해 주세요."
     >
       <ResetPasswordForm />
     </AuthLayout>
